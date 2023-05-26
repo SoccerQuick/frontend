@@ -49,17 +49,17 @@
 권성경  
 이민우  
 
-##### <BackEnd>  
+##### BackEnd
 안동현  
 신성민
 
 ### 기술 스택
-##### <FrontEnd>
+##### FrontEnd
 - React.js
 - TypeScript
 - Styled Component
 ...
-##### <BackEnd>
+##### BackEnd
 - Node.js + Express
 ...
 
