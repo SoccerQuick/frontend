@@ -82,9 +82,24 @@
 - Gather
 ...
 
-##### 코드 컨벤션
-...
+##### FrontEnd branch
+master
+├── dev
+│   ├── feature
+│   │   ├── feature_dw
+│   │   ├── feature_ss
+│   │   ├── feature_sk
+│___│___└── feature_mw
+
+##### BackEnd branch
+
 ##### Commit 컨벤션
+
+##### 코드 컨벤션
+
+
+...
+
 ...
 ##### .env 설정
 ...
