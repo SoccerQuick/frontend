@@ -35,47 +35,47 @@
   - 구장/ 플랫폼에 관한 리뷰 기능
 
 ### 팀 구성원
-> 최도원 (FrontEnd) `ENTJ`  
-> 김승섭 (FrontEnd) `INFP`  
-> 권성경 (FrontEnd) `INFP`  
-> 이민우 (FrontEnd) `ENTJ`  
-> 안동현 (BackEnd) ` `  
-> 신성민 (BackEnd) ` `  
+최도원 (FrontEnd) `ENTJ`  
+김승섭 (FrontEnd) `INFP`  
+권성경 (FrontEnd) `INFP`  
+이민우 (FrontEnd) `ENTJ`  
+안동현 (BackEnd) ` `  
+신성민 (BackEnd) ` `  
 
 ### 구성원 역할
 ##### FrontEnd  
-> 최도원  
-> 김승섭  
-> 권성경  
-> 이민우  
+최도원  
+김승섭  
+권성경  
+이민우  
 
 ##### <BackEnd>  
-> 안동현  
-> 신성민
+안동현  
+신성민
 
 ### 기술 스택
 ##### <FrontEnd>
-> - React.js
-> - TypeScript
-> - Styled Component
->  ...
+- React.js
+- TypeScript
+- Styled Component
+...
 ##### <BackEnd>
-> - Node.js + Express
->  ...
->
+- Node.js + Express
+...
+
 ##### Deploy
 > - 
 ##### Collaboration Tools
-> - Figma
-> - Discord
-> - Gather
->  ...
->
+- Figma
+- Discord
+- Gather
+...
+
 ##### 코드 컨벤션
-> ...
+...
 ##### Commit 컨벤션
-> ...
+...
 ##### .env 설정
-> ...
+...
 ##### Copyright
-> ...
+...
