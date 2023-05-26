@@ -64,7 +64,7 @@
 ...
 
 ##### Deploy
-> - 
+...
 ##### Collaboration Tools
 - Figma
 - Discord
