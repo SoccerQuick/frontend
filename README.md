@@ -20,8 +20,9 @@
    
 
 ### 서비스 소개
+<hr>
 
-#### 클라이언트
+##### 클라이언트
   - 모바일 사용자를 고려한 플랫폼 디자인 제공
   - 회원가입, 로그인, 회원정보 수정 등 유저 정보 관련 CRUD
   - 개인 프로필에서 내가 참여한 매치, Man of the Match 등 분류된 정보들을 조회, 해당 매치로 이동 가능
@@ -35,7 +36,7 @@
   - 사용자 간 개인 채팅 기능 제공
   - 사용자 간 팔로우 기능
   - 구장/ 플랫폼에 관한 리뷰 기능
-#### 서버
+##### 서버
 
 ### 팀 구성원
 최도원 (FrontEnd) `ENTJ`  
@@ -46,29 +47,33 @@
 신성민 (BackEnd) ` `  
 
 ### 구성원 역할
-#### FrontEnd  
+<hr>
+
+##### FrontEnd  
 최도원  
 김승섭  
 권성경  
 이민우  
 
-#### BackEnd
+##### BackEnd
 안동현  
 신성민
 
 ### 기술 스택
-#### FrontEnd
+<hr>
+
+##### FrontEnd
 - React.js
 - TypeScript
 - Styled Component
 ...
-#### BackEnd
+##### BackEnd
 - Node.js + Express
 ...
 
-#### Deploy
+##### Deploy
 ...
-#### Collaboration Tools
+##### Collaboration Tools
 - Figma
 - Discord
 - Gather
@@ -76,9 +81,9 @@
 
 ##### 코드 컨벤션
 ...
-#### Commit 컨벤션
+##### Commit 컨벤션
 ...
-#### .env 설정
+##### .env 설정
 ...
-#### Copyright
+##### Copyright
 ...
