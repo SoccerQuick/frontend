@@ -9,9 +9,11 @@ function DefaultHeader() {
 export default DefaultHeader;
 
 const Header = styled.div`
-  position: fixed;
+  display: flex;
+  height: 50px;
+  background-color: skyblue;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  background-color: beige;
+  z-index: 1;
+  width: 100%;
 `;

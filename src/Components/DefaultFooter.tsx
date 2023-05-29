@@ -9,9 +9,11 @@ function DefaultFooter() {
 export default DefaultFooter;
 
 const Footer = styled.div`
+  display: flex;
+  height: 50px;
+  background-color: skyblue;
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: beige;
+  z-index: 1;
+  width: 100%;
 `;
