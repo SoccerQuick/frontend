@@ -7,7 +7,7 @@ import FindingTeam from './FindingTeam';
 
 function TeamPage() {
   const [searchMode, setSearchMode] = React.useState<string>('all'); // 사용을 안 할것 같기도 하네..
-  const [data, setData] = React.useState<any[]>([]);
+  const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
 
