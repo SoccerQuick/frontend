@@ -6,11 +6,12 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route></Route>
-      </Routes>
-    </BrowserRouter>
+    <div>안녕하세용~</div>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route></Route>
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 
