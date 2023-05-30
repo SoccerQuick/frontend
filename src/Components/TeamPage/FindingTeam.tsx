@@ -102,6 +102,19 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <button>경기시간대(체크박스)</button>
+          <button
+            onClick={() => {
+              setFindTeamSort({
+                status: null,
+                area: null,
+                skill: null,
+                position: null,
+                gender: null,
+              });
+            }}
+          >
+            초기화
+          </button>
         </TeamPageOption>
       </Teampage>
       <Teampage>
