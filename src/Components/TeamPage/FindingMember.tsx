@@ -166,6 +166,7 @@ function FindingMember(props: FindingMemberProps) {
                 <th>Number</th>
                 <th>Title</th>
                 <th>Author</th>
+                <th>Area</th>
                 <th>Status</th>
                 <th>모집현황(GK)</th>
                 <th>모집현황(Player)</th>
@@ -178,9 +179,9 @@ function FindingMember(props: FindingMemberProps) {
               {filteredData.map((item) => (
                 <tr key={item.num}>
                   <td>{item.num}</td>
-
                   <td>{item.title}</td>
                   <td>{item.author}</td>
+                  <td>{item.area}</td>
                   <td>{item.status}</td>
                   <td>{item.gk !== '' ? `모집완료(${item.gk})` : '모집 중'}</td>
                   <td>
@@ -188,7 +189,7 @@ function FindingMember(props: FindingMemberProps) {
                       ? '모집완료'
                       : `${item.player.length} / ${item.player_need} `}
                   </td>
-                  <td>{item.random === 1 ? '가능' : '불가능'}</td>
+                  <td>{item.allowRandom}</td>
                   <td>
                     <button
                       onClick={() => {
@@ -272,11 +273,12 @@ const dummydata_findingMember = [
     num: 1,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
+    area: '서울',
     status: '모집중',
     gk: 'ㄱㅁㅇ',
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    random: 1,
+    allowRandom: '가능',
     searchMode: '팀원 구해요',
     body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
   },
@@ -284,11 +286,12 @@ const dummydata_findingMember = [
     num: 2,
     title: '랏키퍼구합니다',
     author: 'ㄱㅁㅇ2',
+    area: '서울',
     status: '모집중',
     gk: '',
     player_need: 4,
     player: ['고마오', '고마워', '고마옹', '고맙당'],
-    random: 1,
+    allowRandom: '가능',
     searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
   },
@@ -296,11 +299,12 @@ const dummydata_findingMember = [
     num: 3,
     title: '랏필드구합니다',
     author: 'ㄱㅁㅇ3',
+    area: '서울',
     status: '모집중',
     gk: '귀엽네',
     player_need: 4,
     player: ['귀여움', '졸귀', '귀엽ㅎ'],
-    random: 0,
+    allowRandom: '불가능',
     searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
   },
@@ -308,11 +312,12 @@ const dummydata_findingMember = [
     num: 4,
     title: '다구했어요ㅎㅎ',
     author: 'ㄱㅁㅇ4',
+    area: '서울',
     status: '모집완료',
     gk: '올리버칸',
     player_need: 4,
     player: ['호날두', '메시', '음바페', '네이마르'],
-    random: 1,
+    allowRandom: '가능',
     searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
   },
@@ -320,11 +325,12 @@ const dummydata_findingMember = [
     num: 5,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
+    area: '서울',
     status: '모집중',
     gk: 'ㄱㅁㅇ',
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    random: 1,
+    allowRandom: '가능',
     searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
   },
@@ -332,11 +338,12 @@ const dummydata_findingMember = [
     num: 6,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
+    area: '서울',
     status: '모집중',
     gk: 'ㄱㅁㅇ',
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    random: 1,
+    allowRandom: '가능',
     searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
   },
@@ -344,11 +351,12 @@ const dummydata_findingMember = [
     num: 7,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
+    area: '서울',
     status: '모집중',
     gk: 'ㄱㅁㅇ',
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    random: 1,
+    allowRandom: '가능',
     searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
   },
