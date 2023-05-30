@@ -36,17 +36,16 @@ const Main = () => {
           </div>
         </div>
       </div>
-      </div>
       <div className="body"></div>
+      </div>
       <div className="footer">
         <div className='footer-content'>
           <p className='footer-title'>soccerquick.com</p>
           <p>싸커퀵에서 풋살을 한눈에</p>
           <p>이용 약관 | 개인정보 처리방침 | 사업자 정보 확인</p>
-          <p>싸커퀵 | 서울특별시 감자구 고구마동</p>
-          <p>대표 메일 contact@soccerquick.com | 마케팅 제안 marketing@soccerquick.com</p>
+          <p>싸커퀵 | 서울특별시 감자구 고구마동 <br />대표 메일 contact@soccerquick.com | 마케팅 제안 marketing@soccerquick.com</p>
           <p>주식회사 고구마컴퍼니 | 사업자번호 123-456789-0 | 대표 고구마 </p>
-          <p>Copyright SOCCERQUICK All rights reserved.</p>
+          <p>Copyright <b>SOCCERQUICK</b> All rights reserved.</p>
         </div>
       </div>
       </>
