@@ -20,6 +20,8 @@ type InputProps = {
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  check?: boolean;
 };
 
 // input 컴포넌트
@@ -30,17 +32,22 @@ export function ModalInput({
   placeholder,
   value,
   onChange,
+  error,
+  check,
 }: InputProps) {
   return (
     <InputBox>
       <InputText>{text}</InputText>
-      <StyledInput
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
+      <InputBar check={check}>
+        <StyledInput
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+        <span>{error}</span>
+      </InputBar>
     </InputBox>
   );
 }
@@ -223,6 +230,13 @@ const InputText = styled.div`
   line-height: 15px;
   color: #727f88;
   margin-bottom: 6px;
+`;
+
+const InputBar = styled.div<{ check?: boolean }>`
+  & > span {
+    margin-left: 5px;
+    color: ${(props) => (props.check ? 'blue' : 'red')};
+  }
 `;
 
 const StyledInput = styled.input`
