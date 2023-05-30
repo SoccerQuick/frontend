@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Modal, ModalInput, ModalButton } from '../Commons/Modal';
 
-// 안뇽
+// 잘가
 
 // 더미 데이터 type
 type User = {
