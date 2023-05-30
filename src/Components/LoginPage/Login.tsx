@@ -90,6 +90,7 @@ Login.defaultProps = {
   ],
 };
 
+// 로그인용 Modal 컴포넌트 -> 추후 회원가입와 컴포넌트 공용화를 위해 분리 예정
 function Login({ users }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

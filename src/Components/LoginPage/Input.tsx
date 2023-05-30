@@ -34,6 +34,7 @@ const StyledInput = styled.input`
   }
 `;
 
+// input이 받게 될 데이터 type
 type InputProps = {
   name: string;
   type: string;
@@ -42,6 +43,7 @@ type InputProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+// input 컴포넌트
 function Input({ name, type, placeholder, value, onChange }: InputProps) {
   return (
     <InputBox>
