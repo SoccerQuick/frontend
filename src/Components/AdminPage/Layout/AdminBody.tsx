@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AdminTeamManager from '../Contents/AdminTeamManagePage';
 import AdminUserManager from '../Contents/AdminUserManagePage';
 import AdminMain from '../Contents/AdminMainPage';
-
+import AdminModal from './AdminModal';
 type props = {
   mainButton: boolean;
   setMainButton: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +11,10 @@ type props = {
   setUserButton: React.Dispatch<React.SetStateAction<boolean>>;
   teamButton: boolean;
   setTeamButton: React.Dispatch<React.SetStateAction<boolean>>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalData: any[];
+  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 function AdminBody(props: props) {
@@ -18,8 +22,30 @@ function AdminBody(props: props) {
     <>
       <BodyContainer>
         {props.mainButton && <AdminMain />}
-        {props.userButton && <AdminUserManager />}
-        {props.teamButton && <AdminTeamManager />}
+        {props.userButton && (
+          <AdminUserManager
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            modalData={props.modalData}
+            setModalData={props.setModalData}
+          />
+        )}
+        {props.teamButton && (
+          <AdminTeamManager
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            modalData={props.modalData}
+            setModalData={props.setModalData}
+          />
+        )}
+        {props.showModal && (
+          <AdminModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            modalData={props.modalData}
+            setModalData={props.setModalData}
+          />
+        )}
       </BodyContainer>
     </>
   );
@@ -28,7 +54,7 @@ function AdminBody(props: props) {
 export default AdminBody;
 
 const BodyContainer = styled.div`
-  background-color: skyblue;
+  // background-color: skyblue;
   padding: 2rem 2rem;
   height: 100%;
 `;
