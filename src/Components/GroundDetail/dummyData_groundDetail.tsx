@@ -1,5 +1,10 @@
 const playGroundDetailDummy = {
   title: '고양 싸커스토리 축구클럽 운정점',
+  image: [
+    'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_half.jpg',
+    'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_goal.jpg',
+    'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_corner.jpg',
+  ],
   address: {
     shortAddress: '경기 / 고양시',
     fullAddress: '경기도 고양시 일산서구 덕이로 310-2',
@@ -25,6 +30,7 @@ const playGroundDetailDummy = {
     ],
   },
   url: 'https://www.plabfootball.com/stadium/3415/info/',
+  source: '(주)플랩',
 };
 
 export default playGroundDetailDummy;
