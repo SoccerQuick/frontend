@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import AdminLeftBar from '../Components/AdminPage/AdminLeftBar';
-import AdminBody from '../Components/AdminPage/AdminBody';
+import AdminLeftBar from '../Components/AdminPage/Layout/AdminLeftBar';
+import AdminBody from '../Components/AdminPage/Layout/AdminBody';
 
 function AdminPage() {
+  const [mainButton, setMainButton] = React.useState<boolean>(false);
+  const [userButton, setUserButton] = React.useState<boolean>(false);
+  const [teamButton, setTeamButton] = React.useState<boolean>(false);
+
   return (
     <AdminContainer>
       <HeaderContainer>
@@ -11,10 +15,24 @@ function AdminPage() {
       </HeaderContainer>
       <BodyContainer>
         <BodyLeftBar>
-          <AdminLeftBar />
+          <AdminLeftBar
+            mainButton={mainButton}
+            setMainButton={setMainButton}
+            userButton={userButton}
+            setUserButton={setUserButton}
+            teamButton={teamButton}
+            setTeamButton={setTeamButton}
+          />
         </BodyLeftBar>
         <BodyMain>
-          <AdminBody />
+          <AdminBody
+            mainButton={mainButton}
+            setMainButton={setMainButton}
+            userButton={userButton}
+            setUserButton={setUserButton}
+            teamButton={teamButton}
+            setTeamButton={setTeamButton}
+          />
         </BodyMain>
       </BodyContainer>
       <FooterContainer>
