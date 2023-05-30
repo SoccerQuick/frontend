@@ -1,21 +1,92 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import Select from 'react-select';
+import SortingOptions from './SortingOptions';
 
 type FindingMemberProps = {
   searchMode: string;
 };
 
+type FindMemberSort = {
+  status: string | null;
+  area: string | null;
+  allowRandom: string | null;
+  members: number | null;
+  gender: string | null;
+};
+
 function FindingMember(props: FindingMemberProps) {
   const searchMode = props.searchMode;
+  const [findMemberSort, setFindMemberSort] = React.useState<FindMemberSort>({
+    status: null,
+    area: null,
+    allowRandom: null,
+    members: null,
+    gender: null,
+  });
+  const [filteredData, setFilteredData] = React.useState(
+    dummydata_findingMember
+  );
+
   return (
     <>
       <Teampage>
         <TeamPageOption>
-          <button>모집상태(드롭다운)</button>
-          <button>지역(드롭다운)</button>
-          <button>랜덤모집허용여부(드롭다운)</button>
-          <button>현재인원(입력)</button>
-          <button>성별(드롭다운)</button>
+          <SelectCategory
+            options={SortingOptions.findingMember.status}
+            defaultValue={SortingOptions.findingMember.status[0]}
+            styles={SelectStyles}
+            onChange={(selectedOption: any) => {
+              setFindMemberSort((init: any) => ({
+                ...init,
+                status: selectedOption.label,
+              }));
+            }}
+          />
+          <SelectCategory
+            options={SortingOptions.findingMember.area}
+            defaultValue={SortingOptions.findingMember.area[0]}
+            styles={SelectStyles}
+            onChange={(selectedOption: any) => {
+              setFindMemberSort((init: any) => ({
+                ...init,
+                area: selectedOption.label,
+              }));
+            }}
+          />
+          <SelectCategory
+            options={SortingOptions.findingMember.allowRandom}
+            defaultValue={SortingOptions.findingMember.allowRandom[0]}
+            styles={SelectStyles}
+            onChange={(selectedOption: any) => {
+              setFindMemberSort((init: any) => ({
+                ...init,
+                allowRandom: selectedOption.label,
+              }));
+            }}
+          />
+          <SelectCategory
+            options={SortingOptions.findingMember.members}
+            defaultValue={SortingOptions.findingMember.members[0]}
+            styles={SelectStyles}
+            onChange={(selectedOption: any) => {
+              setFindMemberSort((init: any) => ({
+                ...init,
+                members: selectedOption.label,
+              }));
+            }}
+          />
+          <SelectCategory
+            options={SortingOptions.findingMember.gender}
+            defaultValue={SortingOptions.findingMember.gender[0]}
+            styles={SelectStyles}
+            onChange={(selectedOption: any) => {
+              setFindMemberSort((init: any) => ({
+                ...init,
+                gender: selectedOption.label,
+              }));
+            }}
+          />
           <button>경기시간대(체크박스)</button>
         </TeamPageOption>
       </Teampage>
@@ -37,7 +108,7 @@ function FindingMember(props: FindingMemberProps) {
               </tr>
             </thead>
             <tbody>
-              {dummydata_findingMember.map((item) => (
+              {filteredData.map((item) => (
                 <tr key={item.num}>
                   <td>{item.num}</td>
 
@@ -69,6 +140,13 @@ function FindingMember(props: FindingMemberProps) {
           </table>{' '}
         </TeamPageBody>
       </Teampage>
+      <div style={{ fontSize: 25 }}>
+        모집상태 : {findMemberSort.status}
+        ...활동지역 : {findMemberSort.area}
+        ... 랜덤허용여부 : {findMemberSort.allowRandom}
+        ...현재인원 : {findMemberSort.members}
+        ... 성별 : {findMemberSort.gender}
+      </div>
     </>
   );
 }
@@ -78,6 +156,7 @@ export default FindingMember;
 const Teampage = styled.div`
   display: flex;
   justify-content: center;
+  font-size: 2.2rem;
 `;
 
 const TeamPageBody = styled.div`
@@ -106,6 +185,28 @@ const TeamPageOption = styled.div`
   margin: 10px 10px;
 `;
 
+// Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
+const SelectCategory = styled(Select)`
+  width: 16rem;
+  font-size: 2rem;
+`;
+// Select 라이브러리에서 사용할 세부 스타일 속성
+const SelectStyles = {
+  control: (provided: any) => ({
+    ...provided,
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#38D411' : 'white',
+    color: state.isSelected ? 'white' : 'black',
+    ':hover': {
+      backgroundColor: state.isSelected ? '#38D411' : '#96DF84',
+    },
+  }),
+};
+
 const dummydata_findingMember = [
   {
     num: 1,
@@ -117,6 +218,7 @@ const dummydata_findingMember = [
     player: ['gogumao', 'cutehane', 'gomao'],
     random: 1,
     searchMode: '팀원 구해요',
+    body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
   },
   {
     num: 2,
@@ -128,6 +230,7 @@ const dummydata_findingMember = [
     player: ['고마오', '고마워', '고마옹', '고맙당'],
     random: 1,
     searchMode: '팀원 구해요',
+    body: 'ㄱㅁㅇ',
   },
   {
     num: 3,
@@ -139,6 +242,7 @@ const dummydata_findingMember = [
     player: ['귀여움', '졸귀', '귀엽ㅎ'],
     random: 0,
     searchMode: '팀원 구해요',
+    body: 'ㄱㅁㅇ',
   },
   {
     num: 4,
@@ -150,6 +254,7 @@ const dummydata_findingMember = [
     player: ['호날두', '메시', '음바페', '네이마르'],
     random: 1,
     searchMode: '팀원 구해요',
+    body: 'ㄱㅁㅇ',
   },
   {
     num: 5,
@@ -161,6 +266,7 @@ const dummydata_findingMember = [
     player: ['gogumao', 'cutehane', 'gomao'],
     random: 1,
     searchMode: '팀원 구해요',
+    body: 'ㄱㅁㅇ',
   },
   {
     num: 6,
@@ -172,6 +278,7 @@ const dummydata_findingMember = [
     player: ['gogumao', 'cutehane', 'gomao'],
     random: 1,
     searchMode: '팀원 구해요',
+    body: 'ㄱㅁㅇ',
   },
   {
     num: 7,
@@ -183,5 +290,6 @@ const dummydata_findingMember = [
     player: ['gogumao', 'cutehane', 'gomao'],
     random: 1,
     searchMode: '팀원 구해요',
+    body: 'ㄱㅁㅇ',
   },
 ];
