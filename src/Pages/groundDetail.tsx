@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
+import './groundDetail.css';
 
 interface groundDataType {
   title: string;
@@ -37,21 +38,21 @@ const GroundDetail = () => {
   return (
     <>
       <Header />
-      <div className="GroundDetailBody">
+      <div className="GroundDetail">
         <div className="slider">
           <img src={groundData && groundData.image[0]} alt="" />
         </div>
         <div className="GroundDetailHeader">
           <div className="groundDetailHeaderContent">
-            <p className="header-location">
+            <p className="headerLocation">
               {groundData && groundData.address.shortAddress}
             </p>
-            <h2 className="header-title">{groundData && groundData.title}</h2>
-            <div className="header-address">
-              <p className="header-address-detail">
+            <h2 className="headerTitle">{groundData && groundData.title}</h2>
+            <div className="headerAddress">
+              <div className="headerAddress-detail">
                 {groundData && groundData.address.fullAddress}
-              </p>
-              <p>주소복사</p>
+              </div>
+              <p className="copy">주소복사</p>
               <p>지도보기</p>
             </div>
           </div>
