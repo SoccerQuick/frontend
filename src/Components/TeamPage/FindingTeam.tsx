@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import FilterlingOptions from './FilterlingOptions';
+import axios from 'axios';
 
 type FindingTeamProps = {
   searchMode: string;
