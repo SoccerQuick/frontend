@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import SortingOptions from './SortingOptions';
+import FilterlingOptions from './FilterlingOptions';
 
 type FindingTeamProps = {
   searchMode: string;
@@ -32,8 +32,8 @@ function FindingTeam(props: FindingTeamProps) {
       <Teampage>
         <TeamPageOption>
           <SelectCategory
-            options={SortingOptions.findingTeam.status}
-            defaultValue={SortingOptions.findingTeam.status[0]}
+            options={FilterlingOptions.findingTeam.status}
+            defaultValue={FilterlingOptions.findingTeam.status[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamSort((init: any) => ({
@@ -46,8 +46,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingTeam.area}
-            defaultValue={SortingOptions.findingTeam.area[0]}
+            options={FilterlingOptions.findingTeam.area}
+            defaultValue={FilterlingOptions.findingTeam.area[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamSort((init: any) => ({
@@ -60,8 +60,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingTeam.skill}
-            defaultValue={SortingOptions.findingTeam.skill[0]}
+            options={FilterlingOptions.findingTeam.skill}
+            defaultValue={FilterlingOptions.findingTeam.skill[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamSort((init: any) => ({
@@ -74,8 +74,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingTeam.position}
-            defaultValue={SortingOptions.findingTeam.position[0]}
+            options={FilterlingOptions.findingTeam.position}
+            defaultValue={FilterlingOptions.findingTeam.position[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamSort((init: any) => ({
@@ -88,8 +88,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingTeam.gender}
-            defaultValue={SortingOptions.findingTeam.gender[0]}
+            options={FilterlingOptions.findingTeam.gender}
+            defaultValue={FilterlingOptions.findingTeam.gender[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamSort((init: any) => ({

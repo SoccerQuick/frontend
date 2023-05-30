@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import SortingOptions from './SortingOptions';
+import FilteringOptions from './FilterlingOptions';
 
 type FindingMemberProps = {
   searchMode: string;
@@ -33,8 +33,8 @@ function FindingMember(props: FindingMemberProps) {
       <Teampage>
         <TeamPageOption>
           <SelectCategory
-            options={SortingOptions.findingMember.status}
-            defaultValue={SortingOptions.findingMember.status[0]}
+            options={FilteringOptions.findingMember.status}
+            defaultValue={FilteringOptions.findingMember.status[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
@@ -44,8 +44,8 @@ function FindingMember(props: FindingMemberProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingMember.area}
-            defaultValue={SortingOptions.findingMember.area[0]}
+            options={FilteringOptions.findingMember.area}
+            defaultValue={FilteringOptions.findingMember.area[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
@@ -55,8 +55,8 @@ function FindingMember(props: FindingMemberProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingMember.allowRandom}
-            defaultValue={SortingOptions.findingMember.allowRandom[0]}
+            options={FilteringOptions.findingMember.allowRandom}
+            defaultValue={FilteringOptions.findingMember.allowRandom[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
@@ -66,8 +66,8 @@ function FindingMember(props: FindingMemberProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingMember.members}
-            defaultValue={SortingOptions.findingMember.members[0]}
+            options={FilteringOptions.findingMember.members}
+            defaultValue={FilteringOptions.findingMember.members[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
@@ -77,8 +77,8 @@ function FindingMember(props: FindingMemberProps) {
             }}
           />
           <SelectCategory
-            options={SortingOptions.findingMember.gender}
-            defaultValue={SortingOptions.findingMember.gender[0]}
+            options={FilteringOptions.findingMember.gender}
+            defaultValue={FilteringOptions.findingMember.gender[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
