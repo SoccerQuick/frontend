@@ -7,6 +7,7 @@ import Login from './Components/LoginPage/Login';
 import Register from './Components/RegisterPage/Register';
 import TeamPage from './Pages/TeamPage';
 import Main from './Pages/mainlayout';
+import GroundDetail from './Pages/groundDetail';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/teampage" element={<TeamPage />}></Route>
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/review" element={<ReviewPage />}></Route>
+        <Route path="/groundDetail" element={<GroundDetail />}></Route>
       </Routes>
     </BrowserRouter>
   );
