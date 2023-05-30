@@ -34,16 +34,16 @@ function FindingMember(props: FindingMemberProps) {
   }, []);
 
   const fetchData = () => {
-    axios
-      .get('gomao.com')
-      .then((res) => {
-        // 가져온 데이터가 있다면 data에 저장한다.
-        setData(res.data);
-      })
-      .catch((error) => {
-        // 가져온 데이터가 없다면 dummyData를 사용한다.
-        setData(dummydata_findingMember);
-      });
+    // axios
+    //   .get('gomao.com')
+    //   .then((res) => {
+    //     // 가져온 데이터가 있다면 data에 저장한다.
+    //     setData(res.data);
+    //   })
+    //   .catch((error) => {
+    //     // 가져온 데이터가 없다면 dummyData를 사용한다.
+    setData(dummydata_findingMember);
+    // });
   };
 
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
