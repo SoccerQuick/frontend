@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import FilteringOptions from './FilterlingOptions';
+import FilteringOptions from '../FilterlingOptions';
+import DetailModal from '../ModalPage/FindingMemberDetail';
 import axios from 'axios';
 
 type FindingMemberProps = {

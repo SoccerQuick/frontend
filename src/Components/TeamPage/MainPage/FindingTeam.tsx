@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import FilterlingOptions from './FilterlingOptions';
+import FilterlingOptions from '../FilterlingOptions';
+import DetailModal from '../ModalPage/FindingTeamDetail';
 import axios from 'axios';
 
 type FindingTeamProps = {
@@ -185,7 +186,13 @@ function FindingTeam(props: FindingTeamProps) {
                   <td>{item.skill}</td>
                   <td>{item.gender}</td>
                   <td>
-                    <button>조회</button>
+                    <button
+                      onClick={() => {
+                        DetailModal(data[item.num - 1]);
+                      }}
+                    >
+                      조회
+                    </button>
                   </td>
                   <td>
                     <button>초대</button>

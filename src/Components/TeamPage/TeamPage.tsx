@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import DefaultFooter from '../DefaultFooter';
 import DefaultHeader from '../DefaultHeader';
-import FindingMember from './FindingMember';
-import FindingTeam from './FindingTeam';
+import FindingMember from './MainPage/FindingMember';
+import FindingTeam from './MainPage/FindingTeam';
+import DetailModal from './ModalPage/FindingTeamDetail';
 
 function TeamPage() {
   const [searchMode, setSearchMode] = React.useState<string>('all'); // 사용을 안 할것 같기도 하네..
