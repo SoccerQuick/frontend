@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import TeamPage from './Components/TeamPage/TeamPage';
+import TeamPage from './Pages/TeamPage';
 
 function App() {
   return (

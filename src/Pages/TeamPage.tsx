@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import DefaultFooter from '../DefaultFooter';
-import DefaultHeader from '../DefaultHeader';
-import FindingMember from './MainPage/FindingMember';
-import FindingTeam from './MainPage/FindingTeam';
-import TeamPageModal from './ModalPage/TeamPageModal';
+import DefaultFooter from '../Components/DefaultFooter';
+import DefaultHeader from '../Components/DefaultHeader';
+import FindingMember from '../Components/TeamPage/MainPage/FindingMember';
+import FindingTeam from '../Components/TeamPage/MainPage/FindingTeam';
+import TeamPageModal from '../Components/TeamPage/ModalPage/TeamPageModal';
 
 function TeamPage() {
   const [searchMode, setSearchMode] = React.useState<string>('all'); // 사용을 안 할것 같기도 하네..
