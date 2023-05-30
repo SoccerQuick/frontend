@@ -2,15 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../styles/icon/search.svg';
 import MypageIcon from '../styles/icon/mypage.svg';
+import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
+
+import './main.css';
 
 const Main = () => {
   return (
+    <>
     <div className="wrap">
       <div className="header">
         <div className="logo-main">
           <a className="logo-main-img">
-            <img src="" alt="싸커퀵" />
+            <img src={SoccerquickLogo} alt="싸커퀵" />
           </a>
         </div>
         <div className="header-menu">
@@ -32,9 +36,20 @@ const Main = () => {
           </div>
         </div>
       </div>
+      </div>
       <div className="body"></div>
-      <div className="footer"></div>
-    </div>
+      <div className="footer">
+        <div className='footer-content'>
+          <p className='footer-title'>soccerquick.com</p>
+          <p>싸커퀵에서 풋살을 한눈에</p>
+          <p>이용 약관 | 개인정보 처리방침 | 사업자 정보 확인</p>
+          <p>싸커퀵 | 서울특별시 감자구 고구마동</p>
+          <p>대표 메일 contact@soccerquick.com | 마케팅 제안 marketing@soccerquick.com</p>
+          <p>주식회사 고구마컴퍼니 | 사업자번호 123-456789-0 | 대표 고구마 </p>
+          <p>Copyright SOCCERQUICK All rights reserved.</p>
+        </div>
+      </div>
+      </>
   );
 };
 

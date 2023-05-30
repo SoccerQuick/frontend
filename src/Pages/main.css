@@ -1,0 +1,85 @@
+@import url(../styles/fonts/Roboto/fonts-Roboto.css);
+
+.wrap {
+    width: 98.4rem;
+    max-width: 102.4rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    height: 6rem;
+    margin: 1.4rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    /* background-color: red; */
+}
+
+.logo-main-img > img {
+    width: 13rem;
+    height: 6rem;
+}
+
+.header-menu {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.1rem;
+}
+
+.header-search-bar {
+    width: 35rem;
+    height: 4rem;
+    background-color: #F7F7F7;
+    margin: 0;
+    padding: 0.8rem;
+    display: inline-block;
+    border-radius: 0.6rem;
+}
+
+.search-icon {
+    /* background-color: red; */
+    margin-bottom: 3rem;
+}
+
+.header-search-bar input {
+    color: #3e5463;
+    font-size: 1.4rem;
+    border: none;
+    background: none;
+    width: calc(100%-60px);
+    padding: 0;
+    line-height: 2.5rem;
+}
+
+.header-mypage {
+    margin: 0.3rem 2rem 0 2rem;
+}
+.body {
+    height: 50rem;
+}
+.footer {
+    width: 100%;
+    height: 36rem;
+    background-color: #2A2A2A;
+}
+
+.footer-content {
+    width: 98.4rem;
+    max-width: 102.4rem;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    color: white;
+}
+
+.footer-title {
+
+font-family: 'Roboto' , 'Noto Sans KR', 'Spoqa Han Sans Neo' ;
+font-style: italic;
+font-weight: 600;
+font-size: 1.9rem;
+line-height: normal;
+letter-spacing: 0rem;
+text-align: left;
+
+}
