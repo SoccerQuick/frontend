@@ -18,6 +18,7 @@ type RegisterProps = {
   name: string;
   phonenumber: string;
   gender: string;
+  term: boolean;
 };
 
 function Register() {
@@ -28,6 +29,7 @@ function Register() {
     name: '',
     phonenumber: '',
     gender: '',
+    term: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +44,19 @@ function Register() {
       ...prevData,
       gender: e.target.value,
     }));
+  };
+  const handleTermCheck = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (formData.term) {
+      setFormData((prevData) => ({
+        ...prevData,
+        term: false,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        term: true,
+      }));
+    }
   };
 
   const handleDoubleCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -107,7 +122,7 @@ function Register() {
             { value: '여', label: '여' },
           ]}
         />
-        <ModalTerms>
+        <ModalTerms onClick={handleTermCheck} term={formData.term}>
           플랩풋볼 서비스 이용 약관 및 개인 정보 수집 및 이용에 동의합니다.
         </ModalTerms>
         <RegisterText>
