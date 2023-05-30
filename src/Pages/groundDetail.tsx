@@ -1,33 +1,70 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 
+interface groundDataType {
+  title: string;
+  image: string[];
+  address: {
+    shortAddress: string;
+    fullAddress: string;
+  };
+  provided: string[];
+  nonProvided: string[];
+  reservation: {
+    [key: string]: string[];
+  };
+  url: string;
+  source: string;
+}
+
 const GroundDetail = () => {
+  const [groundData, setGroundData] = useState<groundDataType>();
+  const [reservationData, setReservationData] = useState<string[]>([]);
+
+  useEffect(() => {
+    setGroundData(GroundDummy);
+  }, []);
+
+  useEffect(() => {
+    if (groundData) {
+      setReservationData(Object.keys(groundData.reservation));
+    }
+  }, [groundData]);
+
   return (
     <>
       <Header />
       <div className="GroundDetailBody">
-        <div className="slider"></div>
+        <div className="slider">
+          <img src={groundData && groundData.image[0]} alt="" />
+        </div>
         <div className="GroundDetailHeader">
           <div className="groundDetailHeaderContent">
-            <p className="header-location"></p>
-            <h2 className="header-title"></h2>
+            <p className="header-location">
+              {groundData && groundData.address.shortAddress}
+            </p>
+            <h2 className="header-title">{groundData && groundData.title}</h2>
             <div className="header-address">
-              <p className="header-address-detail"></p>
+              <p className="header-address-detail">
+                {groundData && groundData.address.fullAddress}
+              </p>
               <p>주소복사</p>
               <p>지도보기</p>
             </div>
           </div>
           <div className="groundDetailHeaderBtn">
-            <button>홈페이지 바로가기</button>
+            <button>
+              <a href={groundData && groundData.url}>홈페이지 바로가기</a>
+            </button>
             <button>찜</button>
           </div>
         </div>
-        <div className="source">이 구장 정보는 ㅇㅇ에서 제공됩니다.</div>
+        <div className="source">
+          이 구장 정보는 {groundData && groundData.source}에서 제공됩니다.
+        </div>
 
         <div className="groundChar">
           <div className="groundDetailBodyTop">
@@ -39,17 +76,17 @@ const GroundDetail = () => {
           <div className="ProvidedItems">
             <p>제공 항목</p>
             <ul>
-              <li>무료주차</li>
-              <li>샤워실</li>
-              <li>풋살화 대여</li>
+              {groundData &&
+                groundData.provided.map((data) => <li key={data}>{data}</li>)}
             </ul>
           </div>
           <div className="nonProvidedItems">
             <p>비제공 항목</p>
             <ul>
-              <li>고양이</li>
-              <li>강아지</li>
-              <li>고슴도치</li>
+              {groundData &&
+                groundData.nonProvided.map((data) => (
+                  <li key={data}>{data}</li>
+                ))}
             </ul>
           </div>
         </div>
@@ -59,23 +96,29 @@ const GroundDetail = () => {
           </div>
           <div className="ground-map"></div>
           <div className="groundAddressDetail">
-            <p>경기도 감자시 고구마구</p>
+            <p>{groundData && groundData.address.fullAddress}</p>
             <p className="copyAddress">주소 복사</p>
           </div>
         </div>
         <div className="reservationDetail">
           <div className="groundDetailBodyTop">
-            <h2>🏷 시설 특징</h2>
+            <h2>📝 예약 취소 및 환불 규정</h2>
             <p>
               변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.
             </p>
           </div>
           <div className="reservationDetailContent">
             <div>
-              <h3>일반</h3>
-              <ul>
-                <li>7일 전 취소 시 100% 환불</li>
-              </ul>
+              {reservationData &&
+                reservationData.map((data) => (
+                  <>
+                    <h3 key={data}>{data}</h3>
+                    {groundData &&
+                      groundData.reservation[data].map((liData) => (
+                        <li key={liData}>{liData}</li>
+                      ))}
+                  </>
+                ))}
             </div>
           </div>
         </div>
