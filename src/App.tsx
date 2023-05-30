@@ -7,6 +7,7 @@ import Login from './Components/LoginPage/Login';
 import Register from './Components/RegisterPage/Register';
 import TeamPage from './Pages/TeamPage';
 import Main from './Pages/mainlayout';
+import Admin from './Pages/AdminPage';
 
 function App() {
   return (
@@ -14,10 +15,11 @@ function App() {
       <Routes>
         <Route path="/main" element={<Main />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/teampage" element={<TeamPage />}></Route>
+        <Route path="/teampage" element={<TeamPage />} />
         <Route path="/" element={<MainPage />}></Route>
-        <Route path="/review" element={<ReviewPage />}></Route>
+        <Route path="/review" element={<ReviewPage />} />
       </Routes>
     </BrowserRouter>
   );
