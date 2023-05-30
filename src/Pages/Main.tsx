@@ -1,31 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 export default function Main() {
   return (
-    <MainContainer>
-      <h1>Main Page</h1>
-      <HeaderContainer>Header</HeaderContainer>
-      <BodyContainer>
-        <BodyUpperContainer>
-          <BodyImage
-            src="https://media.istockphoto.com/id/1219371111/ko/%EC%82%AC%EC%A7%84/%EC%86%90%EC%A0%84%EB%93%B1-%EC%8A%B9%EB%A6%AC-%EA%B3%A8-%EB%84%93%EC%9D%80-%EA%B0%81%EB%8F%84%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%B5%EC%9D%84-%EB%B0%9C%EB%A1%9C-%EA%B2%BD%EA%B8%B0%EC%9E%A5%EC%97%90%EC%84%9C-%ED%96%89%EB%8F%99%EC%97%90-%EC%B6%95%EA%B5%AC-%EB%98%90%EB%8A%94-%EC%B6%95%EA%B5%AC-%EC%84%A0%EC%88%98-%EC%95%A1%EC%85%98-%EC%9A%B4%EB%8F%99-%EA%B2%BD%EC%9F%81.jpg?s=1024x1024&w=is&k=20&c=-fn9c-jeiDsf7Kx-kNodP_rkWz20lweZ3m0iIQnsJMo="
-            alt="footyImg"
-          />
-          <SearchContainer>
-            <SearchContainerText>
-              가까운 매치를 찾아보세요 !
-            </SearchContainerText>
-            <SearchFormContainer>
-              <SearchFormInput placeholder="🔎 어디에서 공 찰래?" />
-              <SearchFormButton>매치 찾기</SearchFormButton>
-            </SearchFormContainer>
-          </SearchContainer>
-        </BodyUpperContainer>
-        <BodyLowerContainer>abc</BodyLowerContainer>
-      </BodyContainer>
-      <FooterContainer>Footer</FooterContainer>
-    </MainContainer>
+    <>
+      <Header />
+      <MainContainer>
+        <h1>Main Page</h1>
+        <HeaderContainer>Header</HeaderContainer>
+        <BodyContainer>
+          <BodyUpperContainer>
+            <BodyImage
+              src="https://media.istockphoto.com/id/1219371111/ko/%EC%82%AC%EC%A7%84/%EC%86%90%EC%A0%84%EB%93%B1-%EC%8A%B9%EB%A6%AC-%EA%B3%A8-%EB%84%93%EC%9D%80-%EA%B0%81%EB%8F%84%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%B5%EC%9D%84-%EB%B0%9C%EB%A1%9C-%EA%B2%BD%EA%B8%B0%EC%9E%A5%EC%97%90%EC%84%9C-%ED%96%89%EB%8F%99%EC%97%90-%EC%B6%95%EA%B5%AC-%EB%98%90%EB%8A%94-%EC%B6%95%EA%B5%AC-%EC%84%A0%EC%88%98-%EC%95%A1%EC%85%98-%EC%9A%B4%EB%8F%99-%EA%B2%BD%EC%9F%81.jpg?s=1024x1024&w=is&k=20&c=-fn9c-jeiDsf7Kx-kNodP_rkWz20lweZ3m0iIQnsJMo="
+              alt="footyImg"
+            />
+            <SearchContainer>
+              <SearchContainerText>
+                가까운 매치를 찾아보세요 !
+              </SearchContainerText>
+              <SearchFormContainer>
+                <SearchFormInput placeholder="🔎 어디에서 공 찰래?" />
+                <SearchFormButton>매치 찾기</SearchFormButton>
+              </SearchFormContainer>
+            </SearchContainer>
+          </BodyUpperContainer>
+          <BodyLowerContainer>abc</BodyLowerContainer>
+        </BodyContainer>
+        <FooterContainer>Footer</FooterContainer>
+      </MainContainer>
+      <Footer />
+    </>
   );
 }
 
