@@ -11,7 +11,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/teampage" element={<TeamPage />}></Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/teampage" element={<TeamPage />}></Route>
