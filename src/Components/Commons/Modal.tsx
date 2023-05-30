@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const ModalBox = styled.div`
+const ModalBox = styled.div<{ long: boolean }>`
   position: absolute;
   width: 583px;
-  height: 501px;
+  height: ${(props) => (props.long ? '942px' : '501px')};
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -19,9 +19,17 @@ const ModalBox = styled.div`
   border-radius: 16px;
 `;
 
-const Logo = styled.img``;
+const Logo = styled.img`
+  width: 115px;
+  height: 60px;
+`;
 
-const FormBox = styled.form``;
+const FormBox = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const BottomLine = styled.div`
   width: 503px;
@@ -85,6 +93,48 @@ const StyledInput = styled.input`
   }
 `;
 
+const Select = styled.select`
+  outline: none;
+  width: 503px;
+  height: 49px;
+  text-align: center;
+  margin-top: 32px;
+  background: #ffffff;
+  color: #727f88;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
+
+  &:focus {
+    border: 1px solid #727f88;
+  }
+`;
+
+const TermBox = styled.div`
+  display: flex;
+  justify-contents: flex;
+  align-self: start;
+  margin-top: 25px;
+  align-items: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #eeeeee;
+
+  & > span {
+    margin-left: 10px;
+  }
+`;
+
+const Button = styled.button`
+  width: 503px;
+  height: 49px;
+  background: #09cf00;
+  border-radius: 8px;
+  color: #fff;
+  margin-top: 32px;
+`;
+
 // input이 받게 될 데이터 type
 type InputProps = {
   name: string;
@@ -95,7 +145,7 @@ type InputProps = {
 };
 
 // input 컴포넌트
-export function Input({
+export function ModalInput({
   name,
   type,
   placeholder,
@@ -116,16 +166,83 @@ export function Input({
   );
 }
 
-// modal 컴포넌트
-export function Modal(props: { children: React.ReactNode }) {
+// button 컴포넌트
+export function ModalButton(props: { children: string }) {
+  return <Button>{props.children}</Button>;
+}
+
+// select가 받게 될 데이터 type
+type Option = {
+  value: string;
+  label: string;
+};
+
+type SelectProps = {
+  options: Option[];
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+};
+
+// select 컴포넌트
+export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   return (
-    <ModalBox>
-      <Logo src="./Images/soccerquick-logo.png" alt="logo image" />
+    <Select value={value} onChange={onChange}>
+      <option value="" disabled hidden>
+        성별
+      </option>
+      {options.map((option, idx) => (
+        <option key={`gender-${idx}`} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </Select>
+  );
+}
+
+export function ModalTerms(props: { children: string }) {
+  return (
+    <TermBox>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="20" height="20" rx="10" fill="#D9D9D9" />
+        <path d="M5 8.84211L9.24242 14L15 7" stroke="white" />
+      </svg>
+      <span>{props.children}</span>
+    </TermBox>
+  );
+}
+
+Modal.defaultProps = {
+  long: false,
+  register: false,
+};
+
+// modal 컴포넌트
+export function Modal(props: {
+  children: React.ReactNode;
+  long: boolean;
+  register: boolean;
+}) {
+  return (
+    <ModalBox long={props.long}>
+      <Logo src="../Images/soccerquick.png" alt="logo" />
       <FormBox>{props.children}</FormBox>
       <BottomLine />
       <ModalTextBox>
-        아직 아이디가 없으신가요?
-        <Link to="/">회원가입 하기</Link>
+        {props.register ? (
+          <>
+            이미 회원이신가요?<Link to="/login">로그인 하기</Link>
+          </>
+        ) : (
+          <>
+            아직 아이디가 없으신가요?<Link to="/register">회원가입 하기</Link>
+          </>
+        )}
       </ModalTextBox>
     </ModalBox>
   );

@@ -1,15 +1,5 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { Modal, Input } from '../Commons/Modal';
-
-const LoginButton = styled.button`
-  width: 503px;
-  height: 49px;
-  background: #09cf00;
-  border-radius: 8px;
-  color: #fff;
-  margin-top: 32px;
-`;
+import { Modal, ModalInput, ModalButton } from '../Commons/Modal';
 
 // 더미 데이터 type
 type User = {
@@ -46,21 +36,21 @@ function Login({ users }: Props) {
 
   return (
     <Modal>
-      <Input
+      <ModalInput
         name="이메일"
         type="email"
         placeholder="이메일을 입력해주세요."
         value={email}
         onChange={handleEmailChange}
       />
-      <Input
+      <ModalInput
         name="비밀번호"
         type="password"
         placeholder="비밀번호를 입력해주세요."
         value={password}
         onChange={handlePasswordChange}
       />
-      <LoginButton>로그인</LoginButton>
+      <ModalButton>로그인</ModalButton>
     </Modal>
   );
 }
