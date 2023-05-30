@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import FilteringOptions from './FilterlingOptions';
+import axios from 'axios';
 
 type FindingMemberProps = {
   searchMode: string;
 };
 
-type FindMemberSort = {
+type FindMemberFilter = {
   status: string | null;
   area: string | null;
   allowRandom: string | null;
@@ -17,16 +18,54 @@ type FindMemberSort = {
 
 function FindingMember(props: FindingMemberProps) {
   const searchMode = props.searchMode;
-  const [findMemberSort, setFindMemberSort] = React.useState<FindMemberSort>({
-    status: null,
-    area: null,
-    allowRandom: null,
-    members: null,
-    gender: null,
-  });
+  const [findMemberFilter, setFindMemberFilter] =
+    React.useState<FindMemberFilter>({
+      status: null,
+      area: null,
+      allowRandom: null,
+      members: null,
+      gender: null,
+    });
+
+  //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
+  const [data, setData] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    axios
+      .get('gomao.com')
+      .then((res) => {
+        // 가져온 데이터가 있다면 data에 저장한다.
+        setData(res.data);
+      })
+      .catch((error) => {
+        // 가져온 데이터가 없다면 dummyData를 사용한다.
+        setData(dummydata_findingMember);
+      });
+  };
+
+  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] = React.useState(
     dummydata_findingMember
   );
+  React.useEffect(() => {
+    const newData = data.filter((item) => {
+      const filterList = Object.keys(findMemberFilter);
+      for (let key of filterList) {
+        if (
+          findMemberFilter[key as keyof FindMemberFilter] !== null &&
+          findMemberFilter[key as keyof FindMemberFilter] !== item[key]
+        ) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    setFilteredData(newData);
+  }, [data, findMemberFilter]);
 
   return (
     <>
@@ -37,7 +76,7 @@ function FindingMember(props: FindingMemberProps) {
             defaultValue={FilteringOptions.findingMember.status[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindMemberSort((init: any) => ({
+              setFindMemberFilter((init: any) => ({
                 ...init,
                 status:
                   selectedOption.value === 'option0'
@@ -51,7 +90,7 @@ function FindingMember(props: FindingMemberProps) {
             defaultValue={FilteringOptions.findingMember.area[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindMemberSort((init: any) => ({
+              setFindMemberFilter((init: any) => ({
                 ...init,
                 area:
                   selectedOption.value === 'option0'
@@ -65,7 +104,7 @@ function FindingMember(props: FindingMemberProps) {
             defaultValue={FilteringOptions.findingMember.allowRandom[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindMemberSort((init: any) => ({
+              setFindMemberFilter((init: any) => ({
                 ...init,
                 allowRandom:
                   selectedOption.value === 'option0'
@@ -79,7 +118,7 @@ function FindingMember(props: FindingMemberProps) {
             defaultValue={FilteringOptions.findingMember.members[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindMemberSort((init: any) => ({
+              setFindMemberFilter((init: any) => ({
                 ...init,
                 members:
                   selectedOption.value === 'option0'
@@ -93,7 +132,7 @@ function FindingMember(props: FindingMemberProps) {
             defaultValue={FilteringOptions.findingMember.gender[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindMemberSort((init: any) => ({
+              setFindMemberFilter((init: any) => ({
                 ...init,
                 gender:
                   selectedOption.value === 'option0'
@@ -105,7 +144,7 @@ function FindingMember(props: FindingMemberProps) {
           <button>경기시간대(체크박스)</button>
           <button
             onClick={() => {
-              setFindMemberSort({
+              setFindMemberFilter({
                 status: null,
                 area: null,
                 allowRandom: null,
@@ -165,16 +204,9 @@ function FindingMember(props: FindingMemberProps) {
                 </tr>
               ))}
             </tbody>
-          </table>{' '}
+          </table>
         </TeamPageBody>
       </Teampage>
-      <div style={{ fontSize: 25 }}>
-        모집상태 : {findMemberSort.status}
-        ...활동지역 : {findMemberSort.area}
-        ... 랜덤허용여부 : {findMemberSort.allowRandom}
-        ...현재인원 : {findMemberSort.members}
-        ... 성별 : {findMemberSort.gender}
-      </div>
     </>
   );
 }

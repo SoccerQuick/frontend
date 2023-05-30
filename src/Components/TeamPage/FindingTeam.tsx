@@ -7,18 +7,18 @@ import axios from 'axios';
 type FindingTeamProps = {
   searchMode: string;
 };
-interface FindTeamSort {
+type FindTeamFilter = {
   status: string | null;
   area: string | null;
   skill: string | null;
   position: string | null;
   gender: string | null;
   // playtime: string | null;
-}
+};
 
 function FindingTeam(props: FindingTeamProps) {
   const searchMode = props.searchMode;
-  const [findTeamSort, setFindTeamSort] = React.useState<FindTeamSort>({
+  const [findTeamFilter, setFindTeamFilter] = React.useState<FindTeamFilter>({
     status: null,
     area: null,
     skill: null,
@@ -26,7 +26,44 @@ function FindingTeam(props: FindingTeamProps) {
     gender: null,
     // playtime: null,
   });
+
+  //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
+  const [data, setData] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    axios
+      .get('gomao.com')
+      .then((res) => {
+        // 가져온 데이터가 있다면 data에 저장한다.
+        setData(res.data);
+      })
+      .catch((error) => {
+        // 가져온 데이터가 없다면 dummyData를 사용한다.
+        setData(dummydata_findingTeam);
+      });
+  };
+
+  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] = React.useState(dummydata_findingTeam);
+  React.useEffect(() => {
+    const newData = data.filter((item) => {
+      const filterList = Object.keys(findTeamFilter);
+      for (let key of filterList) {
+        if (
+          findTeamFilter[key as keyof FindTeamFilter] !== null &&
+          findTeamFilter[key as keyof FindTeamFilter] !== item[key]
+        ) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    setFilteredData(newData);
+  }, [data, findTeamFilter]);
 
   return (
     <>
@@ -37,7 +74,7 @@ function FindingTeam(props: FindingTeamProps) {
             defaultValue={FilterlingOptions.findingTeam.status[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindTeamSort((init: any) => ({
+              setFindTeamFilter((init: any) => ({
                 ...init,
                 status:
                   selectedOption.value === 'option0'
@@ -51,7 +88,7 @@ function FindingTeam(props: FindingTeamProps) {
             defaultValue={FilterlingOptions.findingTeam.area[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindTeamSort((init: any) => ({
+              setFindTeamFilter((init: any) => ({
                 ...init,
                 area:
                   selectedOption.value === 'option0'
@@ -65,7 +102,7 @@ function FindingTeam(props: FindingTeamProps) {
             defaultValue={FilterlingOptions.findingTeam.skill[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindTeamSort((init: any) => ({
+              setFindTeamFilter((init: any) => ({
                 ...init,
                 skill:
                   selectedOption.value === 'option0'
@@ -79,7 +116,7 @@ function FindingTeam(props: FindingTeamProps) {
             defaultValue={FilterlingOptions.findingTeam.position[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindTeamSort((init: any) => ({
+              setFindTeamFilter((init: any) => ({
                 ...init,
                 position:
                   selectedOption.value === 'option0'
@@ -93,7 +130,7 @@ function FindingTeam(props: FindingTeamProps) {
             defaultValue={FilterlingOptions.findingTeam.gender[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
-              setFindTeamSort((init: any) => ({
+              setFindTeamFilter((init: any) => ({
                 ...init,
                 gender:
                   selectedOption.value === 'option0'
@@ -105,7 +142,7 @@ function FindingTeam(props: FindingTeamProps) {
           <button>경기시간대(체크박스)</button>
           <button
             onClick={() => {
-              setFindTeamSort({
+              setFindTeamFilter({
                 status: null,
                 area: null,
                 skill: null,
@@ -143,7 +180,7 @@ function FindingTeam(props: FindingTeamProps) {
                   <td>{item.title}</td>
                   <td>{item.author}</td>
                   <td>{item.area}</td>
-                  <td>{item.status === 1 ? '완료' : '미완료'}</td>
+                  <td>{item.status}</td>
                   <td>{item.position}</td>
                   <td>{item.skill}</td>
                   <td>{item.gender}</td>
@@ -159,13 +196,6 @@ function FindingTeam(props: FindingTeamProps) {
           </table>
         </TeamPageBody>
       </Teampage>
-      <div style={{ fontSize: 25 }}>
-        모집상태 : {findTeamSort.status}
-        ...활동지역 : {findTeamSort.area}
-        ... 실력수준 : {findTeamSort.skill}
-        ...포지션 : {findTeamSort.position}
-        ... 성별 : {findTeamSort.gender}
-      </div>
     </>
   );
 }
@@ -232,7 +262,7 @@ const dummydata_findingTeam = [
     title: '중수 필더 팀 구합니다',
     author: '그리즈만',
     area: '영국',
-    status: 0,
+    status: '미완료',
     position: 'player',
     skill: 'expert',
     gender: '남',
@@ -242,7 +272,7 @@ const dummydata_findingTeam = [
     title: '거의그냥 거미손 팀구함ㅎ',
     author: '마누엘 노이어',
     area: '독일',
-    status: 0,
+    status: '미완료',
     position: 'goalkeeper',
     skill: 'legendary',
     gender: '남',
@@ -252,7 +282,7 @@ const dummydata_findingTeam = [
     title: '나 이민우. 우승팀 들어간다. 불러라.',
     author: '이민우',
     area: '부산',
-    status: 0,
+    status: '미완료',
     position: 'player',
     skill: '우주최강수준',
     gender: '남',
@@ -262,7 +292,7 @@ const dummydata_findingTeam = [
     title: '축구고수 권성경 팀구함',
     author: '권성경',
     area: '경기',
-    status: 0,
+    status: '미완료',
     position: 'player',
     skill: '민우보다잘함',
     gender: '여',
