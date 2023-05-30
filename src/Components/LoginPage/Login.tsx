@@ -16,9 +16,12 @@ type Props = {
 Login.defaultProps = {
   users: [
     {
-      key: 1,
-      id: 'abc',
-      pw: 1234,
+      userId: 'abc',
+      password: 1234,
+    },
+    {
+      userId: 'ababcc',
+      password: 1234,
     },
   ],
 };
