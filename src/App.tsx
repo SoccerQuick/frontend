@@ -10,8 +10,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/teampage" element={<TeamPage />}></Route>
-        <Route path="/" element={<Main />} />
-        <Route path="/reviews" element={<Reviews />} />
       </Routes>
     </BrowserRouter>
   );
