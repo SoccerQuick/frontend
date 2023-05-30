@@ -70,17 +70,13 @@ function TeamPage() {
           </TeamPageHeader>
         </Teampage>
         {showModal === true && (
-          <Modal>
-            <ModalPage>
-              <TeamPageModal
-                searchMode={searchMode}
-                showModal={showModal}
-                setShowModal={setShowModal}
-                modalData={modalData}
-                setModalData={setModalData}
-              />
-            </ModalPage>
-          </Modal>
+          <TeamPageModal
+            searchMode={searchMode}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            modalData={modalData}
+            setModalData={setModalData}
+          />
         )}
         {findingMember === true && (
           <FindingMember
