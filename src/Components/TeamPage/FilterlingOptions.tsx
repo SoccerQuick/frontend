@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SortingOptions = {
+const FilterlingOptions = {
   findingTeam: {
     status: [
       { value: 'option0', label: '모집상태' },
@@ -69,4 +69,4 @@ const SortingOptions = {
   },
 };
 
-export default SortingOptions;
+export default FilterlingOptions;

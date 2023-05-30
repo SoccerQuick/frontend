@@ -39,7 +39,10 @@ function FindingMember(props: FindingMemberProps) {
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
                 ...init,
-                status: selectedOption.label,
+                status:
+                  selectedOption.value === 'option0'
+                    ? null
+                    : selectedOption.label,
               }));
             }}
           />
@@ -50,7 +53,10 @@ function FindingMember(props: FindingMemberProps) {
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
                 ...init,
-                area: selectedOption.label,
+                area:
+                  selectedOption.value === 'option0'
+                    ? null
+                    : selectedOption.label,
               }));
             }}
           />
@@ -61,7 +67,10 @@ function FindingMember(props: FindingMemberProps) {
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
                 ...init,
-                allowRandom: selectedOption.label,
+                allowRandom:
+                  selectedOption.value === 'option0'
+                    ? null
+                    : selectedOption.label,
               }));
             }}
           />
@@ -72,7 +81,10 @@ function FindingMember(props: FindingMemberProps) {
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
                 ...init,
-                members: selectedOption.label,
+                members:
+                  selectedOption.value === 'option0'
+                    ? null
+                    : selectedOption.label,
               }));
             }}
           />
@@ -83,7 +95,10 @@ function FindingMember(props: FindingMemberProps) {
             onChange={(selectedOption: any) => {
               setFindMemberSort((init: any) => ({
                 ...init,
-                gender: selectedOption.label,
+                gender:
+                  selectedOption.value === 'option0'
+                    ? null
+                    : selectedOption.label,
               }));
             }}
           />
