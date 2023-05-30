@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import TeamPage from './Components/Teampage/TeamPage';
+import TeamPage from './Components/TeamPage/TeamPage';
+
 import Main from './Pages/Main';
 import Reviews from './Pages/Reviews';
 
