@@ -7,6 +7,8 @@ function AdminPage() {
   const [mainButton, setMainButton] = React.useState<boolean>(false);
   const [userButton, setUserButton] = React.useState<boolean>(false);
   const [teamButton, setTeamButton] = React.useState<boolean>(false);
+  const [showModal, setShowModal] = React.useState<boolean>(false);
+  const [modalData, setModalData] = React.useState<any>([]);
 
   return (
     <AdminContainer>
@@ -32,6 +34,10 @@ function AdminPage() {
             setUserButton={setUserButton}
             teamButton={teamButton}
             setTeamButton={setTeamButton}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            modalData={modalData}
+            setModalData={setModalData}
           />
         </BodyMain>
       </BodyContainer>
