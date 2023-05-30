@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import FilterlingOptions from '../FilterlingOptions';
-import DetailModal from '../ModalPage/FindingTeamDetail';
 import axios from 'axios';
 
 type FindingTeamProps = {
   searchMode: string;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalData: any[];
+  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
 };
 type FindTeamFilter = {
   status: string | null;
@@ -19,6 +22,9 @@ type FindTeamFilter = {
 
 function FindingTeam(props: FindingTeamProps) {
   const searchMode = props.searchMode;
+  const setShowModal = props.setShowModal;
+  const modalData = props.modalData;
+  const setModalData = props.setModalData;
   const [findTeamFilter, setFindTeamFilter] = React.useState<FindTeamFilter>({
     status: null,
     area: null,
@@ -188,7 +194,8 @@ function FindingTeam(props: FindingTeamProps) {
                   <td>
                     <button
                       onClick={() => {
-                        DetailModal(data[item.num - 1]);
+                        setShowModal(true);
+                        setModalData(data[item.num - 1]);
                       }}
                     >
                       조회

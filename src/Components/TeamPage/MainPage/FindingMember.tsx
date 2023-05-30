@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import FilteringOptions from '../FilterlingOptions';
-import DetailModal from '../ModalPage/FindingMemberDetail';
 import axios from 'axios';
 
 type FindingMemberProps = {
   searchMode: string;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalData: any[];
+  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 type FindMemberFilter = {
@@ -19,6 +22,8 @@ type FindMemberFilter = {
 
 function FindingMember(props: FindingMemberProps) {
   const searchMode = props.searchMode;
+  const setShowModal = props.setShowModal;
+  const setModalData = props.setModalData;
   const [findMemberFilter, setFindMemberFilter] =
     React.useState<FindMemberFilter>({
       status: null,
@@ -194,7 +199,8 @@ function FindingMember(props: FindingMemberProps) {
                   <td>
                     <button
                       onClick={() => {
-                        alert(item.player);
+                        setShowModal(true);
+                        setModalData(data[item.num - 1]);
                       }}
                     >
                       조회
