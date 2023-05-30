@@ -22,6 +22,7 @@ const ModalBox = styled.div<{ long: boolean }>`
 const Logo = styled.img`
   width: 115px;
   height: 60px;
+  margin-bottom: 24px;
 `;
 
 const FormBox = styled.form`
@@ -230,7 +231,7 @@ export function Modal(props: {
 }) {
   return (
     <ModalBox long={props.long}>
-      <Logo src="../Images/soccerquick.png" alt="logo" />
+      <Logo src="/Images/soccerquick.png" alt="logo" />
       <FormBox>{props.children}</FormBox>
       <BottomLine />
       <ModalTextBox>
