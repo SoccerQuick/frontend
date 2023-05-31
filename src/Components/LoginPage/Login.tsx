@@ -9,32 +9,22 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const url = 'http://localhost:9999/users/';
+const postLoginUrl = 'http://localhost:8800/auth/login';
 
 // 더미 데이터 type
 type UserProps = {
-  key: number | null;
   userId: string;
   password: string;
 };
 
-// 로그인용 Modal 컴포넌트 -> 추후 회원가입와 컴포넌트 공용화를 위해 분리 예정
+// 로그인 Modal 컴포넌트
 function Login() {
-  const [users, setUsers] = useState<UserProps[]>([]);
   const [formData, setFormData] = useState<UserProps>({
-    key: null,
     userId: '',
     password: '',
   });
-  const [isLogin, setIsLogin] = useState<boolean>(false); // reduce
   const [loginError, setLoginError] = useState<string>('');
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    axios.get(url).then((res) => setUsers(res.data));
-    return setUsers([]);
-  }, []);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,40 +35,45 @@ function Login() {
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const id = formData.userId;
-    const pw = formData.password;
+    const data = {
+      user_id: formData.userId,
+      password: formData.password,
+    };
 
-    if (!id) {
+    if (!data.user_id) {
       setLoginError('아이디를 입력해주세요.');
       return;
-    } else if (!pw) {
+    } else if (!data.password) {
       setLoginError('비밀번호를 입력해주세요.');
       return;
     }
 
-    const check = checkUsers(id, pw);
-    if (check) {
-      setIsLogin(true);
-      setLoginError('');
-      navigate('/');
-    } else {
-      setIsLogin(false);
-      setLoginError('존재하지 않는 계정입니다.');
-    }
+    checkUsers(data);
   };
 
-  const checkUsers = (id: string, pw: string) => {
-    return users.find((user) => user.userId === id && user.password === pw);
+  // 아이디, 비번이 db안에 있으면 로그인 안되면 에러 메세지 표기
+  const checkUsers = (data: { user_id: string; password: string }) => {
+    axios
+      .post(postLoginUrl, data)
+      .then((res) => {
+        console.log(res.data);
+        setLoginError('');
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginError('존재하지 않는 계정입니다.');
+      });
   };
 
   return (
     <Modal>
       <ModalForm onSubmit={handleSubmit}>
         <ModalInput
-          text="이메일"
+          text="아이디"
           name="userId"
           type="text"
-          placeholder="이메일을 입력해주세요."
+          placeholder="아이디를 입력해주세요."
           value={formData.userId}
           onChange={handleFormChange}
         />
