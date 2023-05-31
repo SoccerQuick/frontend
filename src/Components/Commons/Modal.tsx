@@ -20,6 +20,8 @@ type InputProps = {
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  check?: boolean;
 };
 
 // input 컴포넌트
@@ -30,17 +32,22 @@ export function ModalInput({
   placeholder,
   value,
   onChange,
+  error,
+  check,
 }: InputProps) {
   return (
     <InputBox>
       <InputText>{text}</InputText>
-      <StyledInput
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
+      <InputBar check={check}>
+        <StyledInput
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+        <span>{error}</span>
+      </InputBar>
     </InputBox>
   );
 }
@@ -87,9 +94,13 @@ export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   );
 }
 
-export function ModalTerms(props: { children: string }) {
+export function ModalTerms(props: {
+  children: string;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  term: boolean;
+}) {
   return (
-    <TermBox>
+    <TermBox onClick={props.onClick} term={props.term}>
       <svg
         width="20"
         height="20"
@@ -97,7 +108,11 @@ export function ModalTerms(props: { children: string }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="20" height="20" rx="10" fill="#D9D9D9" />
+        {props.term ? (
+          <rect width="20" height="20" rx="10" fill="#727f88" />
+        ) : (
+          <rect width="20" height="20" rx="10" fill="#D9D9D9" />
+        )}
         <path d="M5 8.84211L9.24242 14L15 7" stroke="white" />
       </svg>
       <span>{props.children}</span>
@@ -217,6 +232,13 @@ const InputText = styled.div`
   margin-bottom: 6px;
 `;
 
+const InputBar = styled.div<{ check?: boolean }>`
+  & > span {
+    margin-left: 5px;
+    color: ${(props) => (props.check ? 'blue' : 'red')};
+  }
+`;
+
 const StyledInput = styled.input`
   width: 503px;
   height: 49px;
@@ -246,7 +268,7 @@ const Select = styled.select`
   }
 `;
 
-const TermBox = styled.div`
+const TermBox = styled.div<{ term: boolean }>`
   display: flex;
   justify-contents: flex;
   align-self: start;
@@ -256,7 +278,7 @@ const TermBox = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #eeeeee;
+  color: ${(props) => (props.term ? ' #727f88' : '#eeeeee')};
 
   & > span {
     margin-left: 10px;
