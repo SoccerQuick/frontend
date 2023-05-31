@@ -20,6 +20,8 @@ type InputProps = {
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  message?: string;
+  check?: boolean;
 };
 
 // input 컴포넌트
@@ -30,17 +32,22 @@ export function ModalInput({
   placeholder,
   value,
   onChange,
+  message,
+  check,
 }: InputProps) {
   return (
     <InputBox>
       <InputText>{text}</InputText>
-      <StyledInput
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
+      <InputBar check={check}>
+        <StyledInput
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+        <span>{message}</span>
+      </InputBar>
     </InputBox>
   );
 }
@@ -87,9 +94,13 @@ export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   );
 }
 
-export function ModalTerms(props: { children: string }) {
+export function ModalTerms(props: {
+  children: string;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  term: boolean;
+}) {
   return (
-    <TermBox>
+    <TermBox onClick={props.onClick} term={props.term}>
       <svg
         width="20"
         height="20"
@@ -97,7 +108,11 @@ export function ModalTerms(props: { children: string }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="20" height="20" rx="10" fill="#D9D9D9" />
+        {props.term ? (
+          <rect width="20" height="20" rx="10" fill="#727f88" />
+        ) : (
+          <rect width="20" height="20" rx="10" fill="#D9D9D9" />
+        )}
         <path d="M5 8.84211L9.24242 14L15 7" stroke="white" />
       </svg>
       <span>{props.children}</span>
@@ -140,7 +155,7 @@ export function Modal(props: {
 const ModalBox = styled.div<{ long: boolean }>`
   position: absolute;
   width: 583px;
-  height: ${(props) => (props.long ? '942px' : '501px')};
+  height: ${(props) => (props.long ? '1200px' : '501px')};
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -230,6 +245,17 @@ const StyledInput = styled.input`
   }
 `;
 
+const InputBar = styled.div<{ check?: boolean }>`
+  & > span {
+    margin-left: 5px;
+    color: ${(props) => (props.check ? 'blue' : 'red')};
+  }
+
+  & > input {
+    border-color: ${(props) => (props.check ? '#e3e5e8' : '#e3e5e8')};
+  }
+`;
+
 const Select = styled.select`
   outline: none;
   width: 503px;
@@ -246,7 +272,7 @@ const Select = styled.select`
   }
 `;
 
-const TermBox = styled.div`
+const TermBox = styled.div<{ term: boolean }>`
   display: flex;
   justify-contents: flex;
   align-self: start;
@@ -256,7 +282,13 @@ const TermBox = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #eeeeee;
+  color: ${(props) => (props.term ? ' #727f88' : '#eeeeee')};
+
+  /*드래그 방지*/
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* 인터넷익스플로러 */
+  user-select: none;
 
   & > span {
     margin-left: 10px;
