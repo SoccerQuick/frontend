@@ -280,6 +280,12 @@ const TermBox = styled.div<{ term: boolean }>`
   line-height: 17px;
   color: ${(props) => (props.term ? ' #727f88' : '#eeeeee')};
 
+  /*드래그 방지*/
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* 인터넷익스플로러 */
+  user-select: none;
+
   & > span {
     margin-left: 10px;
   }
