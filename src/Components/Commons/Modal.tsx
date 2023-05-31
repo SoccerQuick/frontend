@@ -20,7 +20,7 @@ type InputProps = {
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
+  message?: string;
   check?: boolean;
 };
 
@@ -32,7 +32,7 @@ export function ModalInput({
   placeholder,
   value,
   onChange,
-  error,
+  message,
   check,
 }: InputProps) {
   return (
@@ -46,7 +46,7 @@ export function ModalInput({
           value={value}
           onChange={onChange}
         />
-        <span>{error}</span>
+        <span>{message}</span>
       </InputBar>
     </InputBox>
   );
@@ -155,7 +155,7 @@ export function Modal(props: {
 const ModalBox = styled.div<{ long: boolean }>`
   position: absolute;
   width: 583px;
-  height: ${(props) => (props.long ? '942px' : '501px')};
+  height: ${(props) => (props.long ? '1200px' : '501px')};
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -232,13 +232,6 @@ const InputText = styled.div`
   margin-bottom: 6px;
 `;
 
-const InputBar = styled.div<{ check?: boolean }>`
-  & > span {
-    margin-left: 5px;
-    color: ${(props) => (props.check ? 'blue' : 'red')};
-  }
-`;
-
 const StyledInput = styled.input`
   width: 503px;
   height: 49px;
@@ -249,6 +242,17 @@ const StyledInput = styled.input`
 
   ::placeholder {
     color: #eeeeee;
+  }
+`;
+
+const InputBar = styled.div<{ check?: boolean }>`
+  & > span {
+    margin-left: 5px;
+    color: ${(props) => (props.check ? 'blue' : 'red')};
+  }
+
+  & > input {
+    border-color: ${(props) => (props.check ? '#e3e5e8' : '#e3e5e8')};
   }
 `;
 
@@ -279,6 +283,12 @@ const TermBox = styled.div<{ term: boolean }>`
   font-size: 14px;
   line-height: 17px;
   color: ${(props) => (props.term ? ' #727f88' : '#eeeeee')};
+
+  /*드래그 방지*/
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* 인터넷익스플로러 */
+  user-select: none;
 
   & > span {
     margin-left: 10px;

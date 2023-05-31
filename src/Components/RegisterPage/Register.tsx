@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, FormEvent } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import {
   Modal,
   ModalInput,
@@ -11,131 +12,151 @@ import {
   ModalForm,
 } from '../Commons/Modal';
 
-const url = 'http://localhost:9999/users/';
+const postSignupUrl = 'http://localhost:8800/auth/signup'; // 회원가입 정보를 보낼 api
+const getUserUrl = 'http://localhost:8800/user'; // 이메일 입력시 유저id가 중복인지 체크할 api
 
-// 데이터  type
-type UserProps = {
-  key: number | null;
-  userId: string;
+// 회원가입 양식 정보 type
+type RegisterFormProps = {
+  user_id: string;
   password: string;
-};
-
-type RegisterProps = {
-  email: string;
-  password: string;
-  passwordCheck: string;
   name: string;
-  phonenumber: string;
-  gender: string;
-  term: boolean;
+  nick_name: string;
+  email: string;
+  phone_number: string;
 };
 
 function Register() {
-  const [formData, setFormData] = useState<RegisterProps>({
-    email: '',
+  // 회원가입 정보를 서버로 보내는 상태 변수
+  const [formData, setFormData] = useState<RegisterFormProps>({
+    user_id: '',
     password: '',
-    passwordCheck: '',
     name: '',
-    phonenumber: '',
-    gender: '',
-    term: false,
+    nick_name: '',
+    email: '',
+    phone_number: '',
   });
-  const [emailList, setEmailList] = useState<string[]>([]);
-  const [isEmailCheck, setIsEmailCheck] = useState<boolean>(false);
-  const [emailMsg, setEmailMsg] = useState('');
-  const [isPasswordCheck, setIsPasswordCheck] = useState<boolean>(false);
-  const [passwordMsg, setPasswordMsg] = useState('');
 
-  async function fetchData() {
-    await axios
-      .get(url)
-      .then((res) => res.data)
-      .then((data) => data.map((user: UserProps) => user.userId))
-      .then((email: string[]) => setEmailList(email));
-  }
+  // 회원가입 양식에 맞게 입력했는지 체크하는 상태관리
+  const [userId, setUserId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [phonenumber, setPhonenumber] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const [termCheck, setTermCheck] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // 양식 확인인데 일반 보류
+  // const [isUserId, setIsUserId] = useState<boolean>(false);
+  // const [isPassword, setIsPassword] = useState<boolean>(false);
+  // const [isName, setIsName] = useState<boolean>(false);
+  // const [isNickname, setIsNickname] = useState<boolean>(false);
+  // const [isEmail, setIsEmail] = useState<boolean>(false);
+  // const [isPhonenumber, setIsPhonenumber] = useState<boolean>(false);
+  // const [isGender, setIsGender] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-    if (name === 'email') {
-      setIsEmailCheck(false);
-      setEmailMsg('');
-    }
+  const navigate = useNavigate();
+
+  const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setUserId(e.target.value);
   };
 
-  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserIdCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      passwordCheck: value,
-    }));
-    checkPassword(formData.password, value);
+    axios
+      .get(`${getUserUrl}/${userId}`)
+      .then((res) => res.data)
+      .then((result) => {
+        if (result) {
+          alert('이미 존재하는 아이디입니다.');
+        }
+      })
+      .catch(() => alert('사용 가능한 아이디입니다.'));
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setNickname(e.target.value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPhonenumber(e.target.value);
   };
 
   const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      gender: e.target.value,
-    }));
+    e.preventDefault();
+    setGender(e.target.value);
   };
 
   const handleTermCheck = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (formData.term) {
-      setFormData((prevData) => ({
-        ...prevData,
-        term: false,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        term: true,
-      }));
-    }
-  };
-
-  const handleDoubleCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formData.email.length) {
-      setEmailMsg('이메일을 입력해주세요!');
-      return;
-    }
-
-    const check = emailList.find((email) => email === formData.email);
-    if (check) {
-      setEmailMsg('중복된 이메일입니다!');
+    if (termCheck) {
+      setTermCheck(false);
     } else {
-      setEmailMsg('사용가능한 이메일입니다!');
-      setIsEmailCheck(true);
+      setTermCheck(true);
     }
   };
 
-  const checkPassword = (password: string, passwordCheck: string) => {
-    if (!passwordCheck.length) {
-      setPasswordMsg('');
-      setIsPasswordCheck(false);
-      return;
-    }
-
-    if (password !== passwordCheck) {
-      setPasswordMsg('비밀번호와 일치하지 않습니다!');
-      setIsPasswordCheck(false);
-    } else {
-      setPasswordMsg('비밀번호와 일치합니다!');
-      setIsPasswordCheck(true);
-    }
-  };
-
+  // 서버로 회원정보 전송
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+
+    setFormData((prev) => ({
+      ...prev,
+      user_id: userId,
+      password: password,
+      name: name,
+      nick_name: nickname,
+      email: email,
+      phone_number: phonenumber,
+    }));
+
+    // axios
+    //   .post(postSignupUrl, formData)
+    //   .then((res) => console.log(res.data))
+    //   .catch((err) => console.error(err));
+
+    // fetch 버전
+    fetch(postSignupUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // 올바른 Content-Type 형식으로 수정
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // 요청에 대한 응답 처리
+        alert(data.message);
+        setErrorMsg('');
+        navigate('/login');
+      })
+      .catch((error) => {
+        // 오류 처리
+        console.error(error);
+        setErrorMsg(error.message);
+      });
   };
 
   return (
@@ -143,17 +164,16 @@ function Register() {
       <ModalForm onSubmit={handleSubmit}>
         <EmailCheck>
           <ModalInput
-            text="이메일"
-            name="email"
-            type="email"
-            placeholder="이메일을 입력해주세요."
-            value={formData.email}
-            onChange={handleChange}
-            error={emailMsg}
-            check={isEmailCheck}
+            text="아이디"
+            name="userId"
+            type="text"
+            placeholder="아이디를 입력해주세요."
+            value={userId}
+            onChange={handleUserIdChange}
           />
-          <ModalButton onClick={handleDoubleCheck}>
-            {isEmailCheck ? '✔' : '중복확인'}
+          <ModalButton onClick={handleUserIdCheck}>
+            중복확인
+            {/* {formCheck.isEmailCheck ? '✔' : '중복확인'} */}
           </ModalButton>
         </EmailCheck>
         <ModalInput
@@ -161,45 +181,59 @@ function Register() {
           name="password"
           type="password"
           placeholder="비밀번호를 입력해주세요."
-          value={formData.password}
-          onChange={handleChange}
+          value={password}
+          onChange={handlePasswordChange}
         />
         <ModalInput
           text="비밀번호 확인"
           name="passwordCheck"
           type="password"
           placeholder="비밀번호를 입력해주세요."
-          value={formData.passwordCheck}
+          value={passwordCheck}
           onChange={handlePasswordCheck}
-          check={isPasswordCheck}
-          error={passwordMsg}
         />
         <ModalInput
           text="이름"
           name="name"
           type="text"
           placeholder="이름을 입력해주세요."
-          value={formData.name}
-          onChange={handleChange}
+          value={name}
+          onChange={handleNameChange}
+        />
+        <ModalInput
+          text="별명"
+          name="nickname"
+          type="text"
+          placeholder="별명을 입력해주세요."
+          value={nickname}
+          onChange={handleNicknameChange}
+        />
+        <ModalInput
+          text="이메일"
+          name="email"
+          type="email"
+          placeholder="이메일을 입력해주세요."
+          value={email}
+          onChange={handleEmailChange}
         />
         <ModalInput
           text="전화번호"
           name="phonenumber"
           type="tel"
           placeholder="전화번호를 입력해주세요."
-          value={formData.phonenumber}
-          onChange={handleChange}
+          value={phonenumber}
+          onChange={handlePhoneNumberChange}
         />
         <ModalSelectBox
-          value={formData.gender}
+          value={gender}
           onChange={handleGenderChange}
           options={[
             { value: '남', label: '남' },
             { value: '여', label: '여' },
           ]}
         />
-        <ModalTerms onClick={handleTermCheck} term={formData.term}>
-          플랩풋볼 서비스 이용 약관 및 개인 정보 수집 및 이용에 동의합니다.
+        <ModalTerms onClick={handleTermCheck} term={termCheck}>
+          Soccer-Quick 서비스 이용 약관 및 개인 정보 수집 및 이용에 동의합니다.
         </ModalTerms>
         <RegisterText>
           회원가입 시 <span>매치 찜하기</span> 기능과{' '}
