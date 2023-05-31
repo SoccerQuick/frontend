@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-type props = {
-  searchMode: string;
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any;
-  setModalData: React.Dispatch<React.SetStateAction<any>>;
-};
+// type props = {
+//   searchMode: string;
+//   showModal: boolean;
+//   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+//   modalData: any;
+//   setModalData: React.Dispatch<React.SetStateAction<any>>;
+// };
 
-function DetailModal(props: props) {
+function DetailModal(props: any) {
   const modalData = props.modalData;
   const setShowModal = props.setShowModal;
   return (
@@ -37,10 +37,10 @@ function DetailModal(props: props) {
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(modalData).map(([key, value]) => (
+                {Object.entries(props.modalData).map(([key, value]) => (
                   <tr key={key}>
                     <td>{key}</td>
-                    <td>{modalData[key]}</td>
+                    <td>{JSON.stringify(value)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -95,8 +95,8 @@ const ModalPage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50rem;
-  height: 50rem;
+  width: fit-content;
+  height: fit-content;
   background-color: rgba(255, 255, 255);
   z-index: 999;
 `;
