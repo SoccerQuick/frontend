@@ -69,7 +69,7 @@ function TeamPage() {
             </button>
           </TeamPageHeader>
         </Teampage>
-        {showModal === true && (
+        {showModal && (
           <TeamPageModal
             searchMode={searchMode}
             showModal={showModal}
@@ -78,7 +78,7 @@ function TeamPage() {
             setModalData={setModalData}
           />
         )}
-        {findingMember === true && (
+        {findingMember && (
           <FindingMember
             searchMode={searchMode}
             showModal={showModal}
@@ -87,7 +87,7 @@ function TeamPage() {
             setModalData={setModalData}
           />
         )}
-        {findingTeam === true && (
+        {findingTeam && (
           <FindingTeam
             searchMode={searchMode}
             showModal={showModal}

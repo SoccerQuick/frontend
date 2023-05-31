@@ -172,6 +172,7 @@ const SelectStyles = {
   control: (provided: any) => ({
     ...provided,
     border: '1px solid #ccc',
+    height: '5.5rem',
     borderRadius: '4px',
   }),
   option: (provided: any, state: any) => ({
