@@ -58,12 +58,12 @@ type ButtonProps = {
 
 // button 컴포넌트
 export function ModalButton({ children, onClick }: ButtonProps) {
-  return <Button onClick={onClick}>{children}</Button>;
+  return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
 
 // submit button 컴포넌트
 export function ModalSubmitButton(props: { children: string }) {
-  return <Button type="submit">{props.children}</Button>;
+  return <StyledButton type="submit">{props.children}</StyledButton>;
 }
 
 // select가 받게 될 데이터 type
@@ -81,7 +81,7 @@ type SelectProps = {
 // select 컴포넌트
 export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   return (
-    <Select value={value} onChange={onChange}>
+    <StyledSelect value={value} onChange={onChange}>
       <option value="" disabled hidden>
         성별
       </option>
@@ -90,7 +90,7 @@ export function ModalSelectBox({ options, value, onChange }: SelectProps) {
           {option.label}
         </option>
       ))}
-    </Select>
+    </StyledSelect>
   );
 }
 
@@ -256,7 +256,7 @@ const InputBar = styled.div<{ check?: boolean }>`
   }
 `;
 
-const Select = styled.select`
+const StyledSelect = styled.select`
   outline: none;
   width: 503px;
   height: 49px;
@@ -295,7 +295,7 @@ const TermBox = styled.div<{ term: boolean }>`
   }
 `;
 
-const Button = styled.button`
+const StyledButton = styled.button`
   width: 503px;
   height: 49px;
   background: #09cf00;

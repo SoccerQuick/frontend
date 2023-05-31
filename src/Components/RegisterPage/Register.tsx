@@ -13,7 +13,7 @@ import {
 } from '../Commons/Modal';
 
 const postSignupUrl = 'http://localhost:8800/auth/signup'; // 회원가입 정보를 보낼 api
-const getUserUrl = 'http://localhost:8800/user'; // 이메일 입력시 유저id가 중복인지 체크할 api
+const postIdCheckUrl = 'http://localhost:8800/auth/id-check'; // 이메일 입력시 유저id가 중복인지 체크할 api
 
 // 회원가입 양식 정보 type
 type RegisterFormProps = {
@@ -39,14 +39,41 @@ function Register() {
   // 회원가입 양식에 맞게 입력했는지 체크하는 상태관리
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [phonenumber, setPhonenumber] = useState<string>('');
   const [gender, setGender] = useState<string>('');
   const [termCheck, setTermCheck] = useState<boolean>(false);
+
+  const [checkUserId, setCheckUserId] = useState<boolean>(false);
+  const [checkPassword, setCheckPassword] = useState<boolean>(false);
+
+  const [userIdMsg, setUserIdMsg] = useState<string>('');
+  const [passwordMsg, setPasswordMsg] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
+
+  useEffect(() => {
+    if (!password || !passwordConfirm) {
+      setPasswordMsg('');
+    } else if (password === passwordConfirm) {
+      setPasswordMsg('비밀번호가 일치합니다!');
+      setCheckPassword(true);
+    } else {
+      setPasswordMsg('비밀번호가 일치하지 않습니다!');
+      setCheckPassword(false);
+    }
+    return () => {};
+  }, [password, passwordConfirm]);
+
+  useEffect(() => {
+    if (userIdMsg.includes('사')) {
+      setCheckUserId(true);
+    } else {
+      setCheckUserId(false);
+    }
+  }, [userIdMsg]);
 
   // 양식 확인인데 일반 보류
   // const [isUserId, setIsUserId] = useState<boolean>(false);
@@ -62,19 +89,18 @@ function Register() {
   const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserId(e.target.value);
+    setUserIdMsg('');
   };
 
   const handleUserIdCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     axios
-      .get(`${getUserUrl}/${userId}`)
+      .post(`${postIdCheckUrl}`, { user_id: userId })
       .then((res) => res.data)
       .then((result) => {
-        if (result) {
-          alert('이미 존재하는 아이디입니다.');
-        }
+        setUserIdMsg(() => result.message);
       })
-      .catch(() => alert('사용 가능한 아이디입니다.'));
+      .catch((err) => console.log(err));
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +108,10 @@ function Register() {
     setPassword(e.target.value);
   };
 
-  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPasswordConfirm(e.target.value);
+  };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -150,7 +179,6 @@ function Register() {
         // 요청에 대한 응답 처리
         alert(data.message);
         setErrorMsg('');
-        navigate('/login');
       })
       .catch((error) => {
         // 오류 처리
@@ -170,10 +198,11 @@ function Register() {
             placeholder="아이디를 입력해주세요."
             value={userId}
             onChange={handleUserIdChange}
+            message={userIdMsg}
+            check={checkUserId}
           />
           <ModalButton onClick={handleUserIdCheck}>
-            중복확인
-            {/* {formCheck.isEmailCheck ? '✔' : '중복확인'} */}
+            {checkUserId ? '✔' : '중복확인'}
           </ModalButton>
         </EmailCheck>
         <ModalInput
@@ -189,8 +218,10 @@ function Register() {
           name="passwordCheck"
           type="password"
           placeholder="비밀번호를 입력해주세요."
-          value={passwordCheck}
+          value={passwordConfirm}
           onChange={handlePasswordCheck}
+          message={passwordMsg}
+          check={checkPassword}
         />
         <ModalInput
           text="이름"
