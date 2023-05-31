@@ -64,25 +64,26 @@ const GroundDetail = () => {
           </div>
         </div>
         <div className="source">
-          이 구장 정보는 {groundData && groundData.source}에서 제공됩니다.
+          이 구장 정보는 <span>{groundData && groundData.source}</span>에서
+          제공됩니다.
         </div>
 
-        <div className="groundChar">
-          <div className="groundDetailBodyTop">
+        <div className="groundChar contentsBox">
+          <div className="contentsTitle">
             <h2>🏷 시설 특징</h2>
             <p>
               변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.
             </p>
           </div>
-          <div className="ProvidedItems">
-            <p>제공 항목</p>
+          <div className="providedItems">
+            <p className="smallTtitle">제공 항목</p>
             <ul>
               {groundData &&
                 groundData.provided.map((data) => <li key={data}>{data}</li>)}
             </ul>
           </div>
-          <div className="nonProvidedItems">
-            <p>비제공 항목</p>
+          <div className="non providedItems">
+            <p className="smallTtitle">비제공 항목</p>
             <ul>
               {groundData &&
                 groundData.nonProvided.map((data) => (
@@ -91,8 +92,8 @@ const GroundDetail = () => {
             </ul>
           </div>
         </div>
-        <div className="groundLocation">
-          <div className="groundDetailBodyTop">
+        <div className="groundLocation contentsBox">
+          <div className="contentsTitle">
             <h2>🗺 위치</h2>
           </div>
           <div className="ground-map"></div>
@@ -101,8 +102,8 @@ const GroundDetail = () => {
             <p className="copyAddress">주소 복사</p>
           </div>
         </div>
-        <div className="reservationDetail">
-          <div className="groundDetailBodyTop">
+        <div className="reservationDetail contentsBox">
+          <div className="contentsTitle">
             <h2>📝 예약 취소 및 환불 규정</h2>
             <p>
               변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.

@@ -9,7 +9,7 @@ const playGroundDetailDummy = {
     shortAddress: '경기 / 고양시',
     fullAddress: '경기도 고양시 일산서구 덕이로 310-2',
   },
-  provided: ['풋살화 대여', '남녀 구분 화장실'],
+  provided: ['풋살화 대여', '남녀 구분 화장실', '공 대여', '조끼 대여'],
   nonProvided: ['무료 주차', '샤워실'],
   reservation: {
     일반: [
