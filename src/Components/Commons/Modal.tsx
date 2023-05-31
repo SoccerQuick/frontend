@@ -155,7 +155,7 @@ export function Modal(props: {
 const ModalBox = styled.div<{ long: boolean }>`
   position: absolute;
   width: 583px;
-  height: ${(props) => (props.long ? '942px' : '501px')};
+  height: ${(props) => (props.long ? '1200px' : '501px')};
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
