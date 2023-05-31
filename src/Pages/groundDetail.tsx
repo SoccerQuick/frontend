@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 import './groundDetail.css';
+import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 
 interface groundDataType {
   title: string;
@@ -96,7 +97,9 @@ const GroundDetail = () => {
           <div className="contentsTitle">
             <h2>🗺 위치</h2>
           </div>
-          <div className="ground-map"></div>
+          <div className="ground-map">
+            <OneMarkerMap />
+          </div>
           <div className="groundAddressDetail">
             <p>{groundData && groundData.address.fullAddress}</p>
             <p className="copyAddress">주소 복사</p>
