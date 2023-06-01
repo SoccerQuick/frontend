@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
-import './groundDetail.css';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
+import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
+import starIcon from '../styles/icon/star.svg';
+import homeIcon from '../styles/icon/home.svg';
+import './groundDetail.css';
 
 interface groundDataType {
   title: string;
@@ -41,7 +44,8 @@ const GroundDetail = () => {
       <Header />
       <div className="GroundDetail">
         <div className="slider">
-          <img src={groundData && groundData.image[0]} alt="" />
+          {/* <img src={groundData && groundData.image[0]} alt="" /> */}
+          {groundData && <GroundDetailCarousel groundImg={groundData.image} />}
         </div>
         <div className="GroundDetailHeader">
           <div className="groundDetailHeaderContent">
@@ -59,9 +63,14 @@ const GroundDetail = () => {
           </div>
           <div className="groundDetailHeaderBtn">
             <button>
-              <a href={groundData && groundData.url}>홈페이지 바로가기</a>
+              <a href={groundData && groundData.url}>
+                <img src={homeIcon} alt="" />
+                홈페이지 바로가기
+              </a>
             </button>
-            <button>찜</button>
+            <button>
+              <img src={starIcon} alt="" />찜
+            </button>
           </div>
         </div>
         <div className="source">
@@ -98,7 +107,9 @@ const GroundDetail = () => {
             <h2>🗺 위치</h2>
           </div>
           <div className="ground-map">
-            <OneMarkerMap />
+            {groundData && (
+              <OneMarkerMap address={groundData.address.fullAddress} />
+            )}
           </div>
           <div className="groundAddressDetail">
             <p>{groundData && groundData.address.fullAddress}</p>
