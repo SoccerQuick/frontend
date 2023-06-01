@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
+import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 import './groundDetail.css';
@@ -43,7 +44,8 @@ const GroundDetail = () => {
       <Header />
       <div className="GroundDetail">
         <div className="slider">
-          <img src={groundData && groundData.image[0]} alt="" />
+          {/* <img src={groundData && groundData.image[0]} alt="" /> */}
+          {groundData && <GroundDetailCarousel groundImg={groundData.image} />}
         </div>
         <div className="GroundDetailHeader">
           <div className="groundDetailHeaderContent">

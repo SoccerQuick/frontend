@@ -1,0 +1,99 @@
+import React, { useEffect, useState, useRef } from 'react';
+import styled from 'styled-components';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+const groundDetailCarousel: React.FC<{ groundImg: string[] }> = ({
+  groundImg,
+}) => {
+  return (
+    <Wrap>
+      <Slider
+        dots={true}
+        infinite
+        speed={500}
+        slidesToShow={1}
+        slidesToScroll={1}
+        customPaging={(idx) => (
+          <PagingImg>
+            <img src={groundImg[idx]} />
+          </PagingImg>
+        )}
+      >
+        {groundImg &&
+          groundImg.map((img) => (
+            <ImageItems>
+              <Img src={img} alt="" />
+            </ImageItems>
+          ))}
+      </Slider>
+    </Wrap>
+  );
+};
+
+export default groundDetailCarousel;
+
+const ImageItems = styled.div`
+  width: 98.5rem;
+  height: 55rem;
+`;
+
+const Img = styled.img`
+  width: 98.5rem;
+  height: 55rem;
+`;
+
+const PagingImg = styled.div`
+  display: block;
+  width: 12rem;
+  height: 7rem;
+  img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const Wrap = styled.div`
+  /* position: relative; */
+  padding-bottom: 70px;
+  overflow: hidden;
+
+  // 1. Global style 추가했던 것을 슬라이드 상단에 Wrap을 만들어 여기서 선언했습니다.
+  .slick-dots {
+    bottom: -8.5rem;
+    text-align: start;
+  }
+  /* .slick-slide {
+    display: inline-block;
+  } */
+
+  // 2. 제가 추가한 커스텀 클래스입니다.
+  // pagination 부분입니다.
+  /* .slick-dots.slick-thumb {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    transform: translate(-50%);
+
+    &.slick-active {
+      span {
+        filter: none;
+      }
+    }
+  } */
+  .slick-dots li {
+    /* position: relative;
+      display: inline-block; */
+    width: 12rem;
+    height: 7rem;
+    margin: 0 0.4rem;
+  }
+  .slick-dots li.slick-active {
+    filter: brightness(0.5);
+  }
+`;
