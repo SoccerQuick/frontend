@@ -22,6 +22,9 @@ function FindingGround(props: FindingGroundProps) {
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
 
+  // Left Bar에서 설정한 필터링 옵션이 담기는 상태. get 요청 보낼 때 전달해주어야 함.
+  const [filterOption, setFilterOption] = React.useState<string[]>([]);
+
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<any[]>([]);
   React.useEffect(() => {
@@ -48,11 +51,14 @@ function FindingGround(props: FindingGroundProps) {
 
   return (
     <div style={{ width: '100%' }}>
-      <SearchFilter />
+      <SearchFilter
+        filterOption={filterOption}
+        setFilterOption={setFilterOption}
+      />
       <Searchpage>
         <SearchPageBody>
           <table>
-            <caption>경기장 목록</caption>
+            {/* <caption>경기장 목록</caption> */}
             <thead>
               <tr
                 style={{
@@ -60,9 +66,9 @@ function FindingGround(props: FindingGroundProps) {
                   borderBottom: '1px solid #DDDDDD',
                 }}
               >
-                <th>Number</th>
-                <th>Area</th>
-                <th>Title</th>
+                <th>순번</th>
+                <th>지역</th>
+                <th>경기장</th>
                 <th>상세조회</th>
               </tr>
             </thead>
@@ -109,12 +115,13 @@ export default FindingGround;
 const Searchpage = styled.div`
   display: flex;
   //   justify-content: center;
-  font-size: 2.2rem;
+  font-size: 1.7rem;
 `;
 
 const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 3rem 3rem;
   //   background-color: beige;
   width: 100%;
   table {

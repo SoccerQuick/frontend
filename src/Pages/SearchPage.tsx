@@ -54,17 +54,3 @@ function SearchPage() {
 }
 
 export default SearchPage;
-
-const SearchPageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-const SearchPageHeader = styled.div`
-  display: flex;
-  width: 70%;
-  background-color: yellowgreen;
-`;
-const SearchPageOption = styled.div`
-  display: flex;
-  margin: 10px 10px;
-`;
