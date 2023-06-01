@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClipUrl = (url: string) => {
+const ClipUrl = (url: string, message: string) => {
   const textarea = document.createElement('textarea');
 
   document.body.appendChild(textarea);
@@ -10,7 +10,7 @@ const ClipUrl = (url: string) => {
   document.execCommand('copy');
   document.body.removeChild(textarea);
 
-  alert('주소가 복사되었습니다.');
+  alert(message);
 };
 
 export default ClipUrl;

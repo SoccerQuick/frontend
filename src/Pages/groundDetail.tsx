@@ -5,6 +5,7 @@ import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/ScrollToTarget';
+import ClipUrl from '../ClipUrl';
 import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
@@ -52,7 +53,18 @@ const GroundDetail = () => {
             <h2>{groundData && groundData.title}</h2>
             <HeaderAddress>
               <div>{groundData && groundData.address.fullAddress}</div>
-              <p className="copy">주소복사</p>
+              <p
+                className="copy"
+                onClick={() =>
+                  groundData &&
+                  ClipUrl(
+                    groundData.address.fullAddress,
+                    '주소가 복사되었습니다.'
+                  )
+                }
+              >
+                주소복사
+              </p>
               <p onClick={() => ScrollToTarget('mapElement')}>지도보기</p>
             </HeaderAddress>
           </GroundDetailHeaderContent>
@@ -108,7 +120,17 @@ const GroundDetail = () => {
           </div>
           <GroundAddressDetail>
             <p>{groundData && groundData.address.fullAddress}</p>
-            <p>주소 복사</p>
+            <p
+              onClick={() =>
+                groundData &&
+                ClipUrl(
+                  groundData.address.fullAddress,
+                  '주소가 복사되었습니다.'
+                )
+              }
+            >
+              주소 복사
+            </p>
           </GroundAddressDetail>
         </ContentsBox>
         <ContentsBox>
@@ -173,14 +195,12 @@ const GroundDetailHeaderContent = styled.div`
 const HeaderAddress = styled.div`
   display: flex;
   font-size: 1.5rem;
+  cursor: pointer;
   p {
     color: #727f88;
     text-decoration: underline;
     :nth-child(2) {
       margin: auto 1rem auto 2rem;
-    }
-    :last-child {
-      cursor: pointer;
     }
   }
 `;
@@ -296,6 +316,7 @@ const GroundAddressDetail = styled.div`
     color: #727f88;
     font-weight: 500;
     text-decoration: underline;
+    cursor: pointer;
   }
 `;
 
