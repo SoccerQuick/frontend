@@ -1,55 +1,60 @@
 import React, { useEffect, useState, useRef } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import styled from 'styled-components';
 
-const OneMarkerMap = () => {
+const OneMarkerMap: React.FC<{ address: string }> = ({ address }) => {
+  const { naver } = window;
   const mapElement = useRef(null);
-  //   const NAVER_CLIENT_ID = 'f5ud0dpuss';
-  //   const NAVER_CLIENT_SECRET = 'wm9rttVl92KKEHOWk5rYPZMck0NDjCMSsK4GjPNK';
-  //   const NAVER_GEOCODE_URL =
-  //     'https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=';
-
-  //   const address = '관양동 826';
-  //   const encodedAddress = encodeURIComponent(address);
-  //   console.log(encodedAddress);
-  //   const header = {
-  //     headers: {
-  //       'X-NCP-APIGW-API-KEY-ID': NAVER_CLIENT_ID,
-  //       'X-NCP-APIGW-API-KEY': NAVER_CLIENT_SECRET,
-  //     },
-  //     withCredentials: false,
-  //   };
-
-  //   console.log(NAVER_GEOCODE_URL + encodedAddress);
-
-  //   useEffect(() => {
-  //     axios
-  //       .get(NAVER_GEOCODE_URL + encodedAddress, header)
-  //       .then((res) => console.log(res))
-  //       .catch((e) => console.log(e));
-  //   }, []);
+  const [AddressX, setAddressX] = useState<number>(0);
+  const [AddressY, setAddressY] = useState<number>(0);
 
   useEffect(() => {
-    const { naver } = window;
+    naver.maps.Service.geocode({ query: address }, function (status, res) {
+      const resAddress = res.v2.addresses[0];
+      const x = Number(resAddress.x);
+      const y = Number(resAddress.y);
+      setAddressX(x);
+      setAddressY(y);
+    });
+  }, []);
+
+  useEffect(() => {
     if (!mapElement.current || !naver) return;
 
     // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new naver.maps.LatLng(37.5656, 126.9769);
+    const location = new naver.maps.LatLng(AddressY, AddressX);
     const mapOptions: naver.maps.MapOptions = {
       center: location,
       zoom: 17,
       zoomControl: true,
       zoomControlOptions: {
+        style: naver.maps.ZoomControlStyle.SMALL,
         position: naver.maps.Position.TOP_RIGHT,
       },
+      mapDataControl: false,
+      scaleControl: false,
+
+      //지도 줌인, 이동 허용할지 ? 못움직이게 하려면 아래 옵션 적용
+      //   draggable: false,
+      //   pinchZoom: false,
+      //   scrollWheel: false,
+      //   keyboardShortcuts: false,
+      //   disableDoubleTapZoom: true,
+      //   disableDoubleClickZoom: true,
+      //   disableTwoFingerTapZoom: true,
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
     new naver.maps.Marker({
       position: location,
       map,
     });
-  }, []);
+  }, [AddressX, AddressY]);
 
-  return <div ref={mapElement} style={{ minHeight: '400px' }} />;
+  return <Map ref={mapElement} />;
 };
 
 export default OneMarkerMap;
+
+const Map = styled.div`
+  height: 30rem;
+  margin: 2rem 0;
+`;
