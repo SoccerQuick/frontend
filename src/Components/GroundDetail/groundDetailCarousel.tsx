@@ -56,39 +56,15 @@ const PagingImg = styled.div`
 `;
 
 const Wrap = styled.div`
-  /* position: relative; */
   padding-bottom: 70px;
   overflow: hidden;
 
-  // 1. Global style 추가했던 것을 슬라이드 상단에 Wrap을 만들어 여기서 선언했습니다.
   .slick-dots {
     bottom: -8.5rem;
     text-align: start;
   }
-  /* .slick-slide {
-    display: inline-block;
-  } */
 
-  // 2. 제가 추가한 커스텀 클래스입니다.
-  // pagination 부분입니다.
-  /* .slick-dots.slick-thumb {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    transform: translate(-50%);
-
-    &.slick-active {
-      span {
-        filter: none;
-      }
-    }
-  } */
   .slick-dots li {
-    /* position: relative;
-      display: inline-block; */
     width: 12rem;
     height: 7rem;
     margin: 0 0.4rem;
