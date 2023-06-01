@@ -47,7 +47,7 @@
 }
 
 .groundDetailHeaderBtn button {
-  width: 19rem;
+  width: 20rem;
   height: 5rem;
   color: white;
   background: #09cf00;
@@ -59,8 +59,14 @@
   }
 }
 
+.groundDetailHeaderBtn img {
+  width: 2rem;
+  vertical-align: middle;
+  margin: 0 0.8rem 0.4rem 0;
+}
+
 .groundDetailHeaderBtn button:last-child {
-  width: 7.4rem;
+  width: 8rem;
   margin-left: 1.3rem;
 }
 
@@ -141,4 +147,16 @@
   color: #5d5d5d;
   background: #eeeeee;
   text-decoration: line-through;
+}
+
+.groundAddressDetail {
+  display: flex;
+  font-size: 1.7rem;
+}
+
+.groundAddressDetail p:nth-child(2) {
+  margin-left: 2rem;
+  color: #727f88;
+  font-weight: 500;
+  text-decoration: underline;
 }

@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
-import './groundDetail.css';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
+import starIcon from '../styles/icon/star.svg';
+import homeIcon from '../styles/icon/home.svg';
+import './groundDetail.css';
 
 interface groundDataType {
   title: string;
@@ -59,9 +61,14 @@ const GroundDetail = () => {
           </div>
           <div className="groundDetailHeaderBtn">
             <button>
-              <a href={groundData && groundData.url}>홈페이지 바로가기</a>
+              <a href={groundData && groundData.url}>
+                <img src={homeIcon} alt="" />
+                홈페이지 바로가기
+              </a>
             </button>
-            <button>찜</button>
+            <button>
+              <img src={starIcon} alt="" />찜
+            </button>
           </div>
         </div>
         <div className="source">
