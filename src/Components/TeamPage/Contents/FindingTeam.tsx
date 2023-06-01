@@ -164,7 +164,7 @@ function FindingTeam(props: FindingTeamProps) {
       <Teampage>
         <TeamPageBody>
           <table>
-            <caption>팀 구해요</caption>
+            <caption style={{ paddingBottom: '1.5rem' }}>팀 구해요</caption>
             <thead>
               <tr
                 style={{
