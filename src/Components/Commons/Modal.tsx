@@ -58,12 +58,12 @@ type ButtonProps = {
 
 // button 컴포넌트
 export function ModalButton({ children, onClick }: ButtonProps) {
-  return <Button onClick={onClick}>{children}</Button>;
+  return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
 
 // submit button 컴포넌트
 export function ModalSubmitButton(props: { children: string }) {
-  return <Button type="submit">{props.children}</Button>;
+  return <StyledButton type="submit">{props.children}</StyledButton>;
 }
 
 // select가 받게 될 데이터 type
@@ -81,7 +81,7 @@ type SelectProps = {
 // select 컴포넌트
 export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   return (
-    <Select value={value} onChange={onChange}>
+    <StyledSelect value={value} onChange={onChange}>
       <option value="" disabled hidden>
         성별
       </option>
@@ -90,7 +90,7 @@ export function ModalSelectBox({ options, value, onChange }: SelectProps) {
           {option.label}
         </option>
       ))}
-    </Select>
+    </StyledSelect>
   );
 }
 
@@ -130,6 +130,7 @@ export function Modal(props: {
   children: React.ReactNode;
   long: boolean;
   register: boolean;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }) {
   return (
     <ModalBox long={props.long}>
@@ -139,11 +140,12 @@ export function Modal(props: {
       <ModalTextBox>
         {props.register ? (
           <>
-            이미 회원이신가요?<Link to="/login">로그인 하기</Link>
+            이미 회원이신가요?<div onClick={props.onClick}>로그인 하기</div>
           </>
         ) : (
           <>
-            아직 아이디가 없으신가요?<Link to="/register">회원가입 하기</Link>
+            아직 아이디가 없으신가요?
+            <div onClick={props.onClick}>회원가입 하기</div>
           </>
         )}
       </ModalTextBox>
@@ -201,13 +203,16 @@ const ModalTextBox = styled.div`
   line-height: 17px;
   color: #898f9c;
 
-  & > a {
+  & > div {
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     text-decoration: underline;
     margin-left: 10px;
     color: #09cf00;
+  }
+  & > div:hover {
+    cursor: pointer;
   }
 `;
 
@@ -256,7 +261,7 @@ const InputBar = styled.div<{ check?: boolean }>`
   }
 `;
 
-const Select = styled.select`
+const StyledSelect = styled.select`
   outline: none;
   width: 503px;
   height: 49px;
@@ -295,7 +300,7 @@ const TermBox = styled.div<{ term: boolean }>`
   }
 `;
 
-const Button = styled.button`
+const StyledButton = styled.button`
   width: 503px;
   height: 49px;
   background: #09cf00;
