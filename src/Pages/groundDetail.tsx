@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
+import ScrollToTarget from '../Components/ScrollToTarget';
 import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
@@ -49,11 +50,11 @@ const GroundDetail = () => {
           <GroundDetailHeaderContent>
             <p>{groundData && groundData.address.shortAddress}</p>
             <h2>{groundData && groundData.title}</h2>
-            <div className="headerAddress">
+            <HeaderAddress>
               <div>{groundData && groundData.address.fullAddress}</div>
               <p className="copy">주소복사</p>
-              <p>지도보기</p>
-            </div>
+              <p onClick={() => ScrollToTarget('mapElement')}>지도보기</p>
+            </HeaderAddress>
           </GroundDetailHeaderContent>
           <GroundDetailHeaderBtn>
             <button>
@@ -96,7 +97,7 @@ const GroundDetail = () => {
             </ul>
           </ProvidedItems>
         </ContentsBox>
-        <ContentsBox>
+        <ContentsBox id="mapElement">
           <ContentsTitle>
             <h2>🗺 위치</h2>
           </ContentsTitle>
@@ -167,15 +168,19 @@ const GroundDetailHeaderContent = styled.div`
     font-weight: 400;
     margin: 0.5rem auto;
   }
-  .headerAddress {
-    display: flex;
-    font-size: 1.5rem;
-    p {
-      color: #727f88;
-      text-decoration: underline;
-    }
-    .copy {
+`;
+
+const HeaderAddress = styled.div`
+  display: flex;
+  font-size: 1.5rem;
+  p {
+    color: #727f88;
+    text-decoration: underline;
+    :nth-child(2) {
       margin: auto 1rem auto 2rem;
+    }
+    :last-child {
+      cursor: pointer;
     }
   }
 `;
