@@ -98,7 +98,9 @@ const GroundDetail = () => {
             <h2>🗺 위치</h2>
           </div>
           <div className="ground-map">
-            <OneMarkerMap />
+            {groundData && (
+              <OneMarkerMap address={groundData.address.fullAddress} />
+            )}
           </div>
           <div className="groundAddressDetail">
             <p>{groundData && groundData.address.fullAddress}</p>
