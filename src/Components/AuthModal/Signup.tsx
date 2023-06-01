@@ -3,12 +3,12 @@ import { useState, useEffect, FormEvent } from 'react';
 import styled from 'styled-components';
 import {
   Modal,
+  ModalForm,
   ModalInput,
   ModalSubmitButton,
   ModalButton,
   ModalSelectBox,
   ModalTerms,
-  ModalForm,
 } from '../Commons/Modal';
 
 const postSignupUrl = 'http://localhost:8800/auth/signup'; // 회원가입 정보를 보낼 api
@@ -190,90 +190,95 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
   };
 
   return (
-    <Modal long register onClick={handleIsLogin}>
+    <Modal long register onClick={handleIsLogin} setAuthModal={setAuthModal}>
       <ModalForm onSubmit={handleSubmit}>
-        <EmailCheck>
+        <ModalFormTop>
+          <EmailCheck>
+            <ModalInput
+              radius="top-left"
+              name="userId"
+              type="text"
+              placeholder="아이디"
+              value={userId}
+              onChange={handleUserIdChange}
+              message={userIdMsg}
+              check={checkUserId}
+            />
+            <ModalButton onClick={handleUserIdCheck}>
+              {checkUserId ? '✔' : '중복확인'}
+            </ModalButton>
+          </EmailCheck>
           <ModalInput
-            text="아이디"
-            name="userId"
-            type="text"
-            placeholder="아이디를 입력해주세요."
-            value={userId}
-            onChange={handleUserIdChange}
-            message={userIdMsg}
-            check={checkUserId}
+            radius="none"
+            name="password"
+            type="password"
+            placeholder="비밀번호 (8자이상, 숫자/영소문자 포함)"
+            value={password}
+            onChange={handlePasswordChange}
           />
-          <ModalButton onClick={handleUserIdCheck}>
-            {checkUserId ? '✔' : '중복확인'}
-          </ModalButton>
-        </EmailCheck>
-        <ModalInput
-          text="비밀번호"
-          name="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요. (8자이상, 숫자/영소문자 포함)"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <ModalInput
-          text="비밀번호 확인"
-          name="passwordCheck"
-          type="password"
-          placeholder="비밀번호를 다시 입력해주세요."
-          value={passwordConfirm}
-          onChange={handlePasswordCheck}
-          message={passwordMsg}
-          check={checkPassword}
-        />
-        <ModalInput
-          text="이름"
-          name="name"
-          type="text"
-          placeholder="이름을 입력해주세요."
-          value={name}
-          onChange={handleNameChange}
-        />
-        <ModalInput
-          text="별명"
-          name="nickname"
-          type="text"
-          placeholder="별명을 입력해주세요."
-          value={nickname}
-          onChange={handleNicknameChange}
-        />
-        <ModalInput
-          text="이메일"
-          name="email"
-          type="email"
-          placeholder="이메일을 입력해주세요."
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <ModalInput
-          text="전화번호"
-          name="phonenumber"
-          type="tel"
-          placeholder="전화번호를 입력해주세요."
-          value={phonenumber}
-          onChange={handlePhoneNumberChange}
-        />
-        <ModalSelectBox
-          value={gender}
-          onChange={handleGenderChange}
-          options={[
-            { value: '남', label: '남' },
-            { value: '여', label: '여' },
-          ]}
-        />
+          <ModalInput
+            radius="bottom"
+            name="passwordCheck"
+            type="password"
+            placeholder="비밀번호 확인"
+            value={passwordConfirm}
+            onChange={handlePasswordCheck}
+            message={passwordMsg}
+            check={checkPassword}
+          />
+        </ModalFormTop>
+        <ResponseText>{responseMsg}</ResponseText>
+        <ModalFormBottom>
+          <ModalInput
+            radius="top"
+            name="name"
+            type="text"
+            placeholder="이름"
+            value={name}
+            onChange={handleNameChange}
+          />
+          <ModalInput
+            radius="none"
+            name="nickname"
+            type="text"
+            placeholder="닉네임"
+            value={nickname}
+            onChange={handleNicknameChange}
+          />
+          <ModalInput
+            radius="none"
+            name="email"
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <ModalInput
+            radius="none"
+            name="phonenumber"
+            type="tel"
+            placeholder="핸드폰 번호"
+            value={phonenumber}
+            onChange={handlePhoneNumberChange}
+          />
+          <ModalSelectBox
+            value={gender}
+            onChange={handleGenderChange}
+            options={[
+              { value: '남', label: '남' },
+              { value: '여', label: '여' },
+            ]}
+          />
+        </ModalFormBottom>
+
         <ModalTerms onClick={handleTermCheck} term={termCheck}>
-          Soccer-Quick 서비스 이용 약관 및 개인 정보 수집 및 이용에 동의합니다.
+          싸커퀵 서비스 이용 약관 및 개인 정보 수집 및 이용에 동의합니다.
         </ModalTerms>
         <RegisterText>
           회원가입 시 <span>매치 찜하기</span> 기능과{' '}
           <span>싸커퀵 커뮤니티</span>를 이용할 수 있어요.
         </RegisterText>
         <ModalSubmitButton>회원가입</ModalSubmitButton>
-        <ResponseText>{responseMsg}</ResponseText>
       </ModalForm>
     </Modal>
   );
@@ -281,31 +286,40 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
 
 export default Signup;
 
+// styled-components
+const ModalFormTop = styled.div`
+  margin-bottom: 10px;
+`;
+
+const ModalFormBottom = styled.div`
+  margin-top: 10px;
+`;
+
 const EmailCheck = styled.div`
   display: flex;
   flex-direction: columns;
-  width: 503px;
+  width: 380px;
 
   & input {
     flex: 3;
-    max-width: 394px;
   }
 
   & button {
     flex: 1;
     margin: 0;
     align-self: flex-end;
-    min-width: 101px;
+    min-width: 90px;
+    border-radius: 0px 8px 0px 0px;
   }
 `;
 
 const RegisterText = styled.div`
-  align-self: start;
-  margin-top: 25px;
+  align-self: center;
+  margin-top: 20px;
   color: #898f9c;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 17px;
   & > span {
     color: #09cf00;
@@ -313,10 +327,9 @@ const RegisterText = styled.div`
 `;
 
 const ResponseText = styled.div`
-  margin-top: 25px;
-  color: #898f9c;
+  color: red;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 11px;
   line-height: 17px;
 `;
