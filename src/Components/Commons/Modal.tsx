@@ -130,6 +130,7 @@ export function Modal(props: {
   children: React.ReactNode;
   long: boolean;
   register: boolean;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }) {
   return (
     <ModalBox long={props.long}>
@@ -139,11 +140,12 @@ export function Modal(props: {
       <ModalTextBox>
         {props.register ? (
           <>
-            이미 회원이신가요?<Link to="/login">로그인 하기</Link>
+            이미 회원이신가요?<div onClick={props.onClick}>로그인 하기</div>
           </>
         ) : (
           <>
-            아직 아이디가 없으신가요?<Link to="/register">회원가입 하기</Link>
+            아직 아이디가 없으신가요?
+            <div onClick={props.onClick}>회원가입 하기</div>
           </>
         )}
       </ModalTextBox>
@@ -201,7 +203,7 @@ const ModalTextBox = styled.div`
   line-height: 17px;
   color: #898f9c;
 
-  & > a {
+  & > div {
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;

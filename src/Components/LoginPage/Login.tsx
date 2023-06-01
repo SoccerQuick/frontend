@@ -11,14 +11,19 @@ import { useNavigate } from 'react-router-dom';
 
 const postLoginUrl = 'http://localhost:8800/auth/login';
 
-// 더미 데이터 type
+// 로그인 요청 type
 type UserProps = {
   userId: string;
   password: string;
 };
 
+// Login 컴포넌트가 받는 props type
+type LoginProps = {
+  handleIsLogin: (e: React.MouseEvent<HTMLDivElement>) => void;
+};
+
 // 로그인 Modal 컴포넌트
-function Login() {
+function Login({ handleIsLogin }: LoginProps) {
   const [formData, setFormData] = useState<UserProps>({
     userId: '',
     password: '',
@@ -67,7 +72,7 @@ function Login() {
   };
 
   return (
-    <Modal>
+    <Modal onClick={handleIsLogin}>
       <ModalForm onSubmit={handleSubmit}>
         <ModalInput
           text="아이디"
