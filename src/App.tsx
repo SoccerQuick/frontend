@@ -19,7 +19,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/teampage" element={<TeamPage />} />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="/groundDetail" element={<GroundDetail />}></Route>
+        <Route path="/groundDetail" element={<GroundDetail />} />
       </Routes>
     </BrowserRouter>
   );
