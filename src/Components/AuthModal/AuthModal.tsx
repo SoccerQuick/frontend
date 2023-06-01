@@ -1,6 +1,6 @@
 import Signup from './Signup';
 import Login from './Login';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import react, { useState } from 'react';
 
 type AuthModalProps = {
@@ -35,7 +35,7 @@ function AuthModal({ setAuthModal }: AuthModalProps) {
 export default AuthModal;
 
 const ModalContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -45,4 +45,9 @@ const ModalContainer = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  ${(props) => css`
+    @media (max-height: 750px) {
+      overflow: auto;
+    }
+  `}
 `;

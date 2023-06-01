@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import {
   Modal,
   ModalForm,
@@ -9,6 +9,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const postLoginUrl = 'http://localhost:8800/auth/login';
+const footballurl = 'https://www.plabfootball.com/api/v2/stadium-groups/';
 
 // 로그인 요청 type
 type UserProps = {
@@ -70,8 +71,12 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
       });
   };
 
+  useEffect(() => {
+    axios.get(footballurl).then((res) => console.log(res.data));
+  }, []);
+
   return (
-    <Modal onClick={handleIsLogin}>
+    <Modal onClick={handleIsLogin} setAuthModal={setAuthModal}>
       <ModalForm onSubmit={handleSubmit}>
         <ModalInput
           text="아이디"
@@ -81,6 +86,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
           value={formData.userId}
           onChange={handleFormChange}
         />
+
         <ModalInput
           text="비밀번호"
           name="password"
@@ -89,7 +95,8 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
           value={formData.password}
           onChange={handleFormChange}
         />
-        {loginError && <LoginError>{loginError}</LoginError>}
+
+        {<LoginError>{loginError}</LoginError>}
         <ModalSubmitButton>로그인</ModalSubmitButton>
       </ModalForm>
     </Modal>
@@ -99,9 +106,10 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
 export default Login;
 
 const LoginError = styled.div`
-  margin-top: 15px;
   align-self: start;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
-  color: #ff003e;
+  margin-top: 16px;
+  padding-left: 5px;
+  color: red;
 `;

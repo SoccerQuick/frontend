@@ -76,24 +76,28 @@ function TeamPage() {
             setModalData={setModalData}
           />
         )}
-        {findingMember && (
-          <FindingMember
-            searchMode={searchMode}
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
-        {findingTeam && (
-          <FindingTeam
-            searchMode={searchMode}
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
+        <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
+          {findingMember && (
+            <FindingMember
+              searchMode={searchMode}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              modalData={modalData}
+              setModalData={setModalData}
+            />
+          )}
+        </div>
+        <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
+          {findingTeam && (
+            <FindingTeam
+              searchMode={searchMode}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              modalData={modalData}
+              setModalData={setModalData}
+            />
+          )}
+        </div>
       </div>
       <Footer />
     </>
