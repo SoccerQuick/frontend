@@ -6,6 +6,7 @@ import ReviewPage from './Pages/Review';
 import TeamPage from './Pages/TeamPage';
 import SearchPage from './Pages/SearchPage';
 import Main from './Pages/mainlayout';
+import GroundDetail from './Pages/groundDetail';
 import Admin from './Pages/AdminPage';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/teampage" element={<TeamPage />} />
         <Route path="/review" element={<ReviewPage />} />
+        <Route path="/groundDetail" element={<GroundDetail />} />
       </Routes>
     </BrowserRouter>
   );
