@@ -11,7 +11,10 @@ const FilterlingOptions = {
       { value: 'option0', label: '활동지역' },
       { value: 'option1', label: '서울' },
       { value: 'option2', label: '부산' },
-      { value: 'option3', label: '수원' },
+      { value: 'option3', label: '경기' },
+      { value: 'option4', label: '영국' },
+      { value: 'option5', label: '독일' },
+      { value: 'option6', label: '인천' },
     ],
     skill: [
       { value: 'option0', label: '실력수준' },
