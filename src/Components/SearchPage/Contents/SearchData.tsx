@@ -151,13 +151,11 @@ function FindingGround(props: FindingGroundProps) {
                   <td>{item.address.area}</td>
                   <td>{item.provided}</td>
                   <td>{item.nonProvided}</td>
-
                   <td>
                     <button
                       onClick={() => {
                         setShowModal(true);
                         setModalData(data[idx]);
-                        console.log(data[idx]);
                       }}
                     >
                       조회
