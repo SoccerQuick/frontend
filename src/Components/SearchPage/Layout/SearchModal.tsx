@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 function SearchModal(props: any) {
-  const modalData = props.modalData;
   const setShowModal = props.setShowModal;
   return (
     <>
@@ -21,22 +20,7 @@ function SearchModal(props: any) {
             X
           </button>
           <SearchPageBody>
-            <table>
-              <thead>
-                <tr>
-                  <th>속성</th>
-                  <th>값</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* {Object.entries(props.modalData).map(([key, value]) => (
-                  <tr key={key}>
-                    <td>{key}</td>
-                    <td>{JSON.stringify(value)}</td>
-                  </tr>
-                ))} */}
-              </tbody>
-            </table>
+            <div>상세정보 컴포넌트 넣어두면됨</div>
           </SearchPageBody>
         </ModalPage>
       </Modal>
