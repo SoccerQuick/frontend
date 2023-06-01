@@ -25,10 +25,3 @@ function FindingTeamDetail(props: any) {
 //   },
 
 export default FindingTeamDetail;
-
-const StyledHeader = styled.div`
-  z-index: 901;
-  display: flex;
-  margin-top: auto;
-  background-color: black;
-`;
