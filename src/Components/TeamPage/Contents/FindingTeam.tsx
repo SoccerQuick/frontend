@@ -295,6 +295,7 @@ const dummydata_findingTeam = [
     position: '필드플레이어',
     skill: '프로',
     gender: '남',
+    body: '나 모르냐고?',
   },
   {
     num: 2,
@@ -305,6 +306,7 @@ const dummydata_findingTeam = [
     position: '골키퍼',
     skill: '프로',
     gender: '남',
+    body: '나 모르냐고?',
   },
   {
     num: 3,
@@ -315,6 +317,7 @@ const dummydata_findingTeam = [
     position: '필드플레이어',
     skill: '프로',
     gender: '남',
+    body: "아이엠 Minu Lee? Isn't this enough?",
   },
   {
     num: 4,
@@ -325,5 +328,6 @@ const dummydata_findingTeam = [
     position: '상관없음',
     skill: '민우보다잘함',
     gender: '여',
+    body: '적어도 민우보단 잘하니까 팀초대좀요',
   },
 ];

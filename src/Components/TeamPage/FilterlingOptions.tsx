@@ -54,15 +54,6 @@ const FilterlingOptions = {
       { value: 'option1', label: '가능' },
       { value: 'option2', label: '불가능' },
     ],
-    members: [
-      { value: 'option0', label: '현재인원' },
-      { value: 'option1', label: '1' },
-      { value: 'option2', label: '2' },
-      { value: 'option3', label: '3' },
-      { value: 'option4', label: '4' },
-      { value: 'option5', label: '5' },
-      { value: 'option6', label: '6' },
-    ],
     gender: [
       { value: 'option0', label: '성별' },
       { value: 'option1', label: '남자' },
