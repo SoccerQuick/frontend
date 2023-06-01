@@ -146,7 +146,6 @@ function FindingTeam(props: FindingTeamProps) {
               }));
             }}
           />
-          <button>경기시간대(체크박스)</button>
           <button
             onClick={() => {
               setFindTeamFilter({
@@ -165,32 +164,36 @@ function FindingTeam(props: FindingTeamProps) {
       <Teampage>
         <TeamPageBody>
           <table>
-            <caption>팀 구해요</caption>
+            <caption style={{ paddingBottom: '1.5rem' }}>팀 구해요</caption>
             <thead>
-              <tr>
-                <th>Number</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Area</th>
-                <th>status</th>
-                <th>Position</th>
-                <th>skill</th>
-                <th>gender</th>
+              <tr
+                style={{
+                  paddingBottom: '1rem',
+                  borderBottom: '1px solid #DDDDDD',
+                }}
+              >
+                <th>순번</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>지역</th>
+                <th>포지션</th>
+                <th>실력</th>
+                <th>성별</th>
                 <th>상세조회</th>
                 <th>초대하기</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item) => (
-                <tr key={item.num}>
-                  <td>{item.num}</td>
-                  <td>{item.title}</td>
-                  <td>{item.author}</td>
-                  <td>{item.area}</td>
-                  <td>{item.status}</td>
-                  <td>{item.position}</td>
-                  <td>{item.skill}</td>
-                  <td>{item.gender}</td>
+                <StyledTr key={item.num}>
+                  <td style={{ width: '5%' }}>{item.num}</td>
+                  <td style={{ width: '30%' }}>{item.title}</td>
+                  <td style={{ width: '10%' }}>{item.author}</td>
+                  <td style={{ width: '5%' }}>{item.area}</td>
+
+                  <td style={{ width: '15%' }}>{item.position}</td>
+                  <td style={{ width: '10%' }}>{item.skill}</td>
+                  <td style={{ width: '5%' }}>{item.gender}</td>
                   <td>
                     <button
                       onClick={() => {
@@ -201,10 +204,14 @@ function FindingTeam(props: FindingTeamProps) {
                       조회
                     </button>
                   </td>
-                  <td>
-                    <button>초대</button>
-                  </td>
-                </tr>
+                  {item.status === '미완료' ? (
+                    <td>
+                      <button>초대</button>
+                    </td>
+                  ) : (
+                    <td>{item.status}</td>
+                  )}
+                </StyledTr>
               ))}
             </tbody>
           </table>
@@ -219,13 +226,13 @@ export default FindingTeam;
 const Teampage = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 2.2rem;
+  font-size: 1.7rem;
 `;
 
 const TeamPageBody = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: beige;
+  // background-color: beige;
   width: 70%;
   table {
     width: 100%;
@@ -250,8 +257,8 @@ const TeamPageOption = styled.div`
 
 // Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
 const SelectCategory = styled(Select)`
-  width: 16rem;
-  font-size: 2rem;
+  width: 14rem;
+  font-size: 1.4rem;
 `;
 // Select 라이브러리에서 사용할 세부 스타일 속성
 const SelectStyles = {
@@ -270,6 +277,14 @@ const SelectStyles = {
   }),
 };
 
+const StyledTr = styled.tr`
+  height: 4rem;
+  margin: 1rem 1rem;
+  padding: 2rem 1rem;
+  font-size: 1.6rem;
+  border-bottom: 0.1rem solid #dddddd;
+`;
+
 const dummydata_findingTeam = [
   {
     num: 1,
@@ -278,18 +293,20 @@ const dummydata_findingTeam = [
     area: '영국',
     status: '미완료',
     position: '필드플레이어',
-    skill: 'expert',
+    skill: '프로',
     gender: '남',
+    body: '나 모르냐고?',
   },
   {
     num: 2,
     title: '거의그냥 거미손 팀구함ㅎ',
     author: '마누엘 노이어',
     area: '독일',
-    status: '미완료',
+    status: '완료',
     position: '골키퍼',
-    skill: 'legendary',
+    skill: '프로',
     gender: '남',
+    body: '나 모르냐고?',
   },
   {
     num: 3,
@@ -298,8 +315,9 @@ const dummydata_findingTeam = [
     area: '부산',
     status: '미완료',
     position: '필드플레이어',
-    skill: '우주최강수준',
+    skill: '프로',
     gender: '남',
+    body: "아이엠 Minu Lee? Isn't this enough?",
   },
   {
     num: 4,
@@ -310,5 +328,6 @@ const dummydata_findingTeam = [
     position: '상관없음',
     skill: '민우보다잘함',
     gender: '여',
+    body: '적어도 민우보단 잘하니까 팀초대좀요',
   },
 ];
