@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import DefaultFooter from '../Components/DefaultFooter';
-import DefaultHeader from '../Components/DefaultHeader';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
-import FindingMember from '../Components/TeamPage/MainPage/FindingMember';
-import FindingTeam from '../Components/TeamPage/MainPage/FindingTeam';
-import TeamPageModal from '../Components/TeamPage/ModalPage/TeamPageModal';
+import FindingMember from '../Components/TeamPage/Contents/FindingMember';
+import FindingTeam from '../Components/TeamPage/Contents/FindingTeam';
+import TeamPageModal from '../Components/TeamPage/Layout/TeamPageModal';
 
 function TeamPage() {
   const [searchMode, setSearchMode] = React.useState<string>('all'); // 사용을 안 할것 같기도 하네..
@@ -69,7 +67,7 @@ function TeamPage() {
             </button>
           </TeamPageHeader>
         </Teampage>
-        {showModal === true && (
+        {showModal && (
           <TeamPageModal
             searchMode={searchMode}
             showModal={showModal}
@@ -78,7 +76,7 @@ function TeamPage() {
             setModalData={setModalData}
           />
         )}
-        {findingMember === true && (
+        {findingMember && (
           <FindingMember
             searchMode={searchMode}
             showModal={showModal}
@@ -87,7 +85,7 @@ function TeamPage() {
             setModalData={setModalData}
           />
         )}
-        {findingTeam === true && (
+        {findingTeam && (
           <FindingTeam
             searchMode={searchMode}
             showModal={showModal}
