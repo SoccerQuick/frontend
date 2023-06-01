@@ -1,72 +1,130 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import { FormEvent } from 'react';
 
-// form 이 받을 데이터 type
+// modal props type
+Modal.defaultProps = {
+  long: false,
+  register: false,
+};
+
+// Modal 컴포넌트
+export function Modal(props: {
+  children: React.ReactNode;
+  long: boolean;
+  register: boolean;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    props.setAuthModal(false);
+  };
+
+  return (
+    <ModalBox long={props.long}>
+      <ExitButton onClick={handleOnClick}>✖</ExitButton>
+      <Logo src="/Images/soccerquick.png" alt="logo" />
+      {props.children}
+      <BottomLine />
+      <ModalTextBox>
+        {props.register ? (
+          <>
+            이미 회원이신가요?<div onClick={props.onClick}>로그인 하기</div>
+          </>
+        ) : (
+          <>
+            아직 아이디가 없으신가요?
+            <div onClick={props.onClick}>회원가입 하기</div>
+          </>
+        )}
+      </ModalTextBox>
+    </ModalBox>
+  );
+}
+
+// form props type
 type FormProps = {
   children: React.ReactNode;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
+// ModalForm 컴포넌트
 export function ModalForm({ children, onSubmit }: FormProps) {
   return <StyledForm onSubmit={onSubmit}>{children}</StyledForm>;
 }
 
-// input이 받게 될 데이터 type
+// input props type
 type InputProps = {
-  text: string;
   name: string;
   type: string;
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  radius?: string;
+  text?: string;
   message?: string;
   check?: boolean;
 };
 
-// input 컴포넌트
+// ModalInput 컴포넌트
 export function ModalInput({
-  text,
   name,
   type,
   placeholder,
   value,
   onChange,
+  text,
   message,
+  radius,
   check,
 }: InputProps) {
+  let radiusString = '';
+  if (radius === 'top') {
+    radiusString = '8px 8px 0px 0px';
+  } else if (radius === 'bottom') {
+    radiusString = '0px 0px 8px 8px';
+  } else if (radius === 'top-left') {
+    radiusString = '8px 0px 0px 0px';
+  } else if (radius === 'none') {
+    radiusString = '0px';
+  } else {
+    radiusString = '';
+  }
   return (
-    <InputBox>
+    <InputBox check={check} text={text}>
       <InputText>{text}</InputText>
-      <InputBar check={check}>
+      <InputBar>
         <StyledInput
+          radius={radiusString}
           name={name}
           type={type}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
-        <span>{message}</span>
       </InputBar>
+      <span>{message}</span>
     </InputBox>
   );
 }
+
+// ModalSubmitButton 컴포넌트
+export function ModalSubmitButton(props: { children: string }) {
+  return <StyledButton type="submit">{props.children}</StyledButton>;
+}
+
+// ModalButton props type
 type ButtonProps = {
   children: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void | null;
 };
 
-// button 컴포넌트
+// ModalButton 컴포넌트
 export function ModalButton({ children, onClick }: ButtonProps) {
   return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
 
-// submit button 컴포넌트
-export function ModalSubmitButton(props: { children: string }) {
-  return <StyledButton type="submit">{props.children}</StyledButton>;
-}
-
-// select가 받게 될 데이터 type
+// ModalSelectBox options, props type
 type Option = {
   value: string;
   label: string;
@@ -94,6 +152,7 @@ export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   );
 }
 
+// ModalTerms 컴포넌트
 export function ModalTerms(props: {
   children: string;
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -102,8 +161,8 @@ export function ModalTerms(props: {
   return (
     <TermBox onClick={props.onClick} term={props.term}>
       <svg
-        width="20"
-        height="20"
+        width="18"
+        height="18"
         viewBox="0 0 20 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -120,44 +179,12 @@ export function ModalTerms(props: {
   );
 }
 
-Modal.defaultProps = {
-  long: false,
-  register: false,
-};
-
-// modal 컴포넌트
-export function Modal(props: {
-  children: React.ReactNode;
-  long: boolean;
-  register: boolean;
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-}) {
-  return (
-    <ModalBox long={props.long}>
-      <Logo src="/Images/soccerquick.png" alt="logo" />
-      {props.children}
-      <BottomLine />
-      <ModalTextBox>
-        {props.register ? (
-          <>
-            이미 회원이신가요?<div onClick={props.onClick}>로그인 하기</div>
-          </>
-        ) : (
-          <>
-            아직 아이디가 없으신가요?
-            <div onClick={props.onClick}>회원가입 하기</div>
-          </>
-        )}
-      </ModalTextBox>
-    </ModalBox>
-  );
-}
-
 // styled-components
+// Modal
 const ModalBox = styled.div<{ long: boolean }>`
-  position: absolute;
-  width: 583px;
-  height: ${(props) => (props.long ? '1200px' : '501px')};
+  position: fixed;
+  width: 480px;
+  height: ${(props) => (props.long ? '750px' : '450px')};
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -170,33 +197,39 @@ const ModalBox = styled.div<{ long: boolean }>`
   background: #fdfdfd;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
+
+  ${(props) => css`
+    @media (max-height: 750px) {
+      position: absolute;
+    }
+  `}
+`;
+
+const ExitButton = styled.button`
+  background-color: #fdfdfd;
+  border: none;
+  margin-left: auto;
+  margin-right: 15px;
 `;
 
 const Logo = styled.img`
   width: 115px;
   height: 60px;
-  margin-bottom: 24px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 15px;
 `;
 
 const BottomLine = styled.div`
-  width: 503px;
+  width: 380px;
   height: 0px;
   border: 1px solid #e3e5e8;
-  margin-top: 24px;
+  margin-top: 25px;
 `;
 
 const ModalTextBox = styled.div`
   display: flex;
   justify-contents: center;
   align-items: center;
-  margin-top: 24px;
+  margin: 15px 0;
 
   font-weight: 400;
   font-size: 14px;
@@ -216,15 +249,28 @@ const ModalTextBox = styled.div`
   }
 `;
 
-// input styled-components
-const InputBox = styled.div`
+// ModalForm
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 503px;
-  height: 70px;
+  justify-content: center;
+  align-items: center;
+`;
 
-  &:not(:first-child) {
-    margin-top: 24px;
+// ModalInput
+const InputBox = styled.div<{ check?: boolean; text?: string }>`
+  postition: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  height: ${(props) => (props.text ? '60px' : '45px')};
+  margin-top: ${(props) => (props.text ? '20px' : '0')};
+  & > span {
+    position: fixed;
+    left: auto;
+    right: 150px;
+    margin-top: 15px;
+    color: ${(props) => (props.check ? 'blue' : 'red')};
   }
 `;
 
@@ -233,16 +279,26 @@ const InputText = styled.div`
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  padding-left: 10px;
+  margin-bottom: 5px;
   color: #727f88;
-  margin-bottom: 6px;
 `;
 
-const StyledInput = styled.input`
-  width: 503px;
-  height: 49px;
+const InputBar = styled.div`
+  postition: absolute;
+  width: 100%;
+  height: 45px;
+  border-color: #e3e5e8;
+`;
+
+const StyledInput = styled.input<{ radius?: string }>`
+  width: 100%;
+  height: 100%;
   background: #ffffff;
   border: 1px solid #e3e5e8;
-  border-radius: 8px;
+  padding-left: 15px;
+
+  border-radius: ${(props) => props.radius || '8px'};
   color: black;
 
   ::placeholder {
@@ -250,42 +306,43 @@ const StyledInput = styled.input`
   }
 `;
 
-const InputBar = styled.div<{ check?: boolean }>`
-  & > span {
-    margin-left: 5px;
-    color: ${(props) => (props.check ? 'blue' : 'red')};
-  }
-
-  & > input {
-    border-color: ${(props) => (props.check ? '#e3e5e8' : '#e3e5e8')};
-  }
+// ModalSubmitButton, ModalButton
+const StyledButton = styled.button`
+  width: 100%;
+  height: 45px;
+  background: #09cf00;
+  border-radius: 8px;
+  color: #fff;
+  margin-top: 20px;
 `;
 
+// ModalSelect
 const StyledSelect = styled.select`
   outline: none;
-  width: 503px;
+  width: 100%;
   height: 49px;
   text-align: center;
-  margin-top: 32px;
   background: #ffffff;
   color: #727f88;
   border: 1px solid #e3e5e8;
-  border-radius: 8px;
+  border-radius: 0px 0px 8px 8px;
+  margin-bottom: 5px;
 
   &:focus {
     border: 1px solid #727f88;
   }
 `;
 
+// ModalTerms
 const TermBox = styled.div<{ term: boolean }>`
   display: flex;
   justify-contents: flex;
-  align-self: start;
+  align-self: center;
   margin-top: 25px;
   align-items: center;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 17px;
   color: ${(props) => (props.term ? ' #727f88' : '#eeeeee')};
 
@@ -298,13 +355,4 @@ const TermBox = styled.div<{ term: boolean }>`
   & > span {
     margin-left: 10px;
   }
-`;
-
-const StyledButton = styled.button`
-  width: 503px;
-  height: 49px;
-  background: #09cf00;
-  border-radius: 8px;
-  color: #fff;
-  margin-top: 32px;
 `;
