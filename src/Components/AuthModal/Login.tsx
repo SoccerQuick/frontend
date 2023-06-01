@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import {
   Modal,
   ModalForm,
@@ -7,7 +7,6 @@ import {
 } from '../Commons/Modal';
 import axios from 'axios';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const postLoginUrl = 'http://localhost:8800/auth/login';
 
@@ -20,16 +19,16 @@ type UserProps = {
 // Login 컴포넌트가 받는 props type
 type LoginProps = {
   handleIsLogin: (e: React.MouseEvent<HTMLDivElement>) => void;
+  setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // 로그인 Modal 컴포넌트
-function Login({ handleIsLogin }: LoginProps) {
+function Login({ handleIsLogin, setAuthModal }: LoginProps) {
   const [formData, setFormData] = useState<UserProps>({
     userId: '',
     password: '',
   });
   const [loginError, setLoginError] = useState<string>('');
-  const navigate = useNavigate();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -63,7 +62,7 @@ function Login({ handleIsLogin }: LoginProps) {
       .then((res) => {
         console.log(res.data);
         setLoginError('');
-        navigate('/');
+        setAuthModal(false);
       })
       .catch((err) => {
         console.log(err);

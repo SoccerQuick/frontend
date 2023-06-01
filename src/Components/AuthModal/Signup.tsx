@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect, FormEvent } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import {
   Modal,
   ModalInput,
@@ -18,6 +17,7 @@ const postIdCheckUrl = 'http://localhost:8800/auth/id-check'; // 이메일 입�
 // Signup 컴포넌트가 받는 props type
 type SignupProps = {
   handleIsLogin: (e: React.MouseEvent<HTMLDivElement>) => void;
+  setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // 회원가입 양식 정보 type
@@ -30,7 +30,7 @@ type SignupFormProps = {
   phone_number: string;
 };
 
-function Signup({ handleIsLogin }: SignupProps) {
+function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
   // 회원가입 정보를 서버로 보내는 상태 변수
   const [formData, setFormData] = useState<SignupFormProps>({
     user_id: '',
@@ -96,7 +96,7 @@ function Signup({ handleIsLogin }: SignupProps) {
           setResponseMsg(data.message);
         } else {
           alert(data.message);
-          navigate('/login');
+          setAuthModal(false);
         }
       })
       .catch((error) => {
@@ -104,8 +104,6 @@ function Signup({ handleIsLogin }: SignupProps) {
         alert(error.message);
       });
   }, [formData]);
-
-  const navigate = useNavigate();
 
   const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

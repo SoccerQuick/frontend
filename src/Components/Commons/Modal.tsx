@@ -211,6 +211,9 @@ const ModalTextBox = styled.div`
     margin-left: 10px;
     color: #09cf00;
   }
+  & > div:hover {
+    cursor: pointer;
+  }
 `;
 
 // input styled-components

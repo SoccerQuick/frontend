@@ -4,8 +4,20 @@ import SearchIcon from '../styles/icon/search.svg';
 import MypageIcon from '../styles/icon/mypage.svg';
 import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
+import AuthModal from './AuthModal/AuthModal';
+import { useState } from 'react';
 
 const Header = () => {
+  const [authModal, setAuthModal] = useState<boolean>(false);
+  const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (authModal) {
+      setAuthModal(false);
+    } else {
+      setAuthModal(true);
+    }
+  };
+
   return (
     <HeaderContainer>
       <LogoMain>
@@ -24,13 +36,14 @@ const Header = () => {
             />
           </div>
         </div>
-        <div className="header-mypage">
+        <div className="header-mypage" onClick={handleLoginModal}>
           <img className="mypage-icon" src={MypageIcon} alt="" />
         </div>
         <div className="header-more">
           <img className="more-icon" src={MoreIcon} alt="" />
         </div>
       </HeaderMenu>
+      {authModal && <AuthModal setAuthModal={setAuthModal} />}
     </HeaderContainer>
   );
 };
