@@ -7,7 +7,7 @@ Modal.defaultProps = {
   register: false,
 };
 
-// Modal 컴포넌트
+// Modal
 export function Modal(props: {
   children: React.ReactNode;
   long: boolean;
@@ -48,7 +48,7 @@ type FormProps = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
-// ModalForm 컴포넌트
+// ModalForm
 export function ModalForm({ children, onSubmit }: FormProps) {
   return <StyledForm onSubmit={onSubmit}>{children}</StyledForm>;
 }
@@ -66,7 +66,7 @@ type InputProps = {
   check?: boolean;
 };
 
-// ModalInput 컴포넌트
+// ModalInput
 export function ModalInput({
   name,
   type,
@@ -92,7 +92,7 @@ export function ModalInput({
   }
   return (
     <InputBox check={check} text={text}>
-      <InputText>{text}</InputText>
+      <InputText text={text}>{text}</InputText>
       <InputBar>
         <StyledInput
           radius={radiusString}
@@ -108,7 +108,7 @@ export function ModalInput({
   );
 }
 
-// ModalSubmitButton 컴포넌트
+// ModalSubmitButton
 export function ModalSubmitButton(props: { children: string }) {
   return <StyledButton type="submit">{props.children}</StyledButton>;
 }
@@ -119,7 +119,7 @@ type ButtonProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void | null;
 };
 
-// ModalButton 컴포넌트
+// ModalButton
 export function ModalButton({ children, onClick }: ButtonProps) {
   return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
@@ -136,7 +136,7 @@ type SelectProps = {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-// select 컴포넌트
+// select
 export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   return (
     <StyledSelect value={value} onChange={onChange}>
@@ -152,7 +152,7 @@ export function ModalSelectBox({ options, value, onChange }: SelectProps) {
   );
 }
 
-// ModalTerms 컴포넌트
+// ModalTerms
 export function ModalTerms(props: {
   children: string;
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -274,13 +274,13 @@ const InputBox = styled.div<{ check?: boolean; text?: string }>`
   }
 `;
 
-const InputText = styled.div`
+const InputText = styled.div<{ text?: string }>`
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
   padding-left: 10px;
-  margin-bottom: 5px;
+  padding-bottom: ${(props) => (props.text ? '5px' : '0')};
   color: #727f88;
 `;
 
@@ -346,7 +346,6 @@ const TermBox = styled.div<{ term: boolean }>`
   line-height: 17px;
   color: ${(props) => (props.term ? ' #727f88' : '#eeeeee')};
 
-  /*드래그 방지*/
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* 인터넷익스플로러 */

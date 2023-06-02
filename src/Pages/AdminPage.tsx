@@ -51,23 +51,17 @@ function AdminPage() {
 export default AdminPage;
 
 const AdminContainer = styled.div`
-  //   display: flex;
-  //   justify-content: center;
   font-size: 3rem;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
-  //   position: fixed;
   width: 100%;
   height: 3em;
   top: 0;
   background-color: beige;
 `;
 const BodyContainer = styled.div`
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
   background-color: skyblue;
   height: fit-content;
 `;

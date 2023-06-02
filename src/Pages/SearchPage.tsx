@@ -1,9 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
-
 import SearchModal from '../Components/SearchPage/Layout/SearchModal';
 
 function SearchPage() {
@@ -16,7 +14,6 @@ function SearchPage() {
       <div style={{ display: 'grid', justifyContent: 'center' }}>
         <div
           style={{
-            // display: 'flex',
             height: '25rem',
             width: '100%',
             backgroundColor: 'beige',
@@ -26,8 +23,6 @@ function SearchPage() {
         </div>
         <div
           style={{
-            // display: 'flex',
-            // gridAutoRows: 'min-content',
             height: '100rem',
             width: 'fit-content',
           }}

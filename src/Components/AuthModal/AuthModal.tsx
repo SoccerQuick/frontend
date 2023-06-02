@@ -1,13 +1,12 @@
 import Signup from './Signup';
 import Login from './Login';
 import styled, { css } from 'styled-components';
-import react, { useState } from 'react';
+import { useState } from 'react';
 
 type AuthModalProps = {
   setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// 로그인과 회원가입을 하나의 modal내에서 제공
 function AuthModal({ setAuthModal }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
