@@ -7,7 +7,6 @@ type AuthModalProps = {
   setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// 로그인과 회원가입을 하나의 modal내에서 제공
 function AuthModal({ setAuthModal }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
