@@ -3,7 +3,14 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import axios from 'axios';
 
-function AdminUserManager(props: any) {
+type props = {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalData: any[];
+  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+};
+
+function AdminUserManager(props: props) {
   // 검색조건을 선택하는 부분
   const [searchOption, setSearchOption] = React.useState<string | null>(null);
 
@@ -20,6 +27,7 @@ function AdminUserManager(props: any) {
     fetchData();
   }, []);
 
+  // DB에서 데이터를 가져오는 부분, 현재는 dummydata를 사용하고 있음.
   const fetchData = () => {
     // axios
     //   .get('gomao.com')
@@ -131,19 +139,13 @@ export default AdminUserManager;
 const UserManageContainer = styled.div`
   text-align: center;
   display: flex;
-  // margin-left: 1rem;
-  // padding-left: 1rem;
   justify-content: flex-end;
-  // background-color: rgb(245, 245, 245);
   width: 70%;
 `;
 const UserManageContainerTable = styled.div`
   text-align: center;
   display: flex;
-  // margin-left: 1rem;
-  // padding-left: 1rem;
   justify-content: space-between;
-  // background-color: rgb(245, 245, 245);
   width: 70%;
   table {
     width: 100%;
