@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FilterlingOptions = {
+const FilteringOptions = {
   findingGround: {
     provided: [
       { value: 'option0', label: '제공' },
@@ -19,4 +19,4 @@ const FilterlingOptions = {
   },
 };
 
-export default FilterlingOptions;
+export default FilteringOptions;
