@@ -16,12 +16,10 @@ type FindTeamFilter = {
   skill: string | null;
   position: string | null;
   gender: string | null;
-  // playtime: string | null;
 };
 
 function FindingTeam(props: FindingTeamProps) {
   const setShowModal = props.setShowModal;
-  const modalData = props.modalData;
   const setModalData = props.setModalData;
   const [findTeamFilter, setFindTeamFilter] = React.useState<FindTeamFilter>({
     status: null,
@@ -29,7 +27,6 @@ function FindingTeam(props: FindingTeamProps) {
     skill: null,
     position: null,
     gender: null,
-    // playtime: null,
   });
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분

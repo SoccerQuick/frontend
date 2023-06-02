@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
 import axios from 'axios';
-import FilterlingOptions from '../FilterlingOptions';
 
 type FindingGroundProps = {
   showModal: boolean;
