@@ -10,14 +10,14 @@ export function MyPageMenu({
   handleLoginModal,
 }: MyPageBarProps) {
   return (
-    <StyledBar onMouseLeave={handleMyPageMenu}>
-      <StyledBarItem onClick={handleLoginModal}>LogIn</StyledBarItem>
-      <StyledBarItem>MyPage</StyledBarItem>
-    </StyledBar>
+    <StyledMenu onMouseLeave={handleMyPageMenu}>
+      <StyledMenuItem onClick={handleLoginModal}>LogIn</StyledMenuItem>
+      <StyledMenuItem>MyPage</StyledMenuItem>
+    </StyledMenu>
   );
 }
 
-const StyledBar = styled.div`
+const StyledMenu = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -30,7 +30,7 @@ const StyledBar = styled.div`
   z-index: 1000;
 `;
 
-const StyledBarItem = styled.div`
+const StyledMenuItem = styled.div`
   flex: 1;
   border-bottom: 1px solid rgb(62, 84, 99);
   text-align: center;
