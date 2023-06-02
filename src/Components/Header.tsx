@@ -6,7 +6,7 @@ import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { useState } from 'react';
-import { MyPageBar } from './Commons/MyPageBar';
+import { MyPageMenu } from './Commons/MyPageMenu';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const Header = () => {
         <div className="header-mypage" onMouseEnter={handleMyPageMenu}>
           <img className="mypage-icon" src={MypageIcon} alt="" />
           {myPageMenu && (
-            <MyPageBar
+            <MyPageMenu
               handleMyPageMenu={handleMyPageMenu}
               handleLoginModal={handleLoginModal}
             />

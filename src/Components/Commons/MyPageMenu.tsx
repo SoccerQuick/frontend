@@ -5,7 +5,7 @@ type MyPageBarProps = {
   handleMyPageMenu: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-export function MyPageBar({
+export function MyPageMenu({
   handleMyPageMenu,
   handleLoginModal,
 }: MyPageBarProps) {

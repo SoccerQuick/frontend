@@ -1,7 +1,7 @@
 import Signup from './Signup';
 import Login from './Login';
 import styled, { css } from 'styled-components';
-import react, { useState } from 'react';
+import { useState } from 'react';
 
 type AuthModalProps = {
   setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
