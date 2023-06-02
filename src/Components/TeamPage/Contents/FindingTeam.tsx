@@ -5,7 +5,6 @@ import FilterlingOptions from '../FilterlingOptions';
 import axios from 'axios';
 
 type FindingTeamProps = {
-  searchMode: string;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any[];
@@ -21,7 +20,6 @@ type FindTeamFilter = {
 };
 
 function FindingTeam(props: FindingTeamProps) {
-  const searchMode = props.searchMode;
   const setShowModal = props.setShowModal;
   const modalData = props.modalData;
   const setModalData = props.setModalData;

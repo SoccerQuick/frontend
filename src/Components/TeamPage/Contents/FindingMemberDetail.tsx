@@ -75,7 +75,6 @@ const StyledDiv = styled.div`
   z-index: 902;
   display: flex;
   align-items: center;
-  //   justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
@@ -90,7 +89,6 @@ const StyledSecondDiv = styled.div`
   z-index: 902;
   display: flex;
   align-items: center;
-  //   justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
@@ -105,7 +103,6 @@ const StyledThirdDiv = styled.div`
   z-index: 902;
   display: flex;
   align-items: center;
-  //   justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
@@ -119,8 +116,6 @@ const StyledThirdDiv = styled.div`
 const StyledBodyContainer = styled.div`
   z-index: 902;
   display: flex;
-  //   align-items: center;
-  //   justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
