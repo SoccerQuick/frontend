@@ -44,13 +44,14 @@ const StyledBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+
   background-color: #fff;
+  color: #727f88;
   font-style: normal;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 2rem;
   letter-spacing: -0.12rem;
-  color: #727f88;
 `;
 
 const StyledBarItemContainer = styled.div`
