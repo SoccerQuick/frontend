@@ -4,12 +4,12 @@ import {
   ModalForm,
   ModalInput,
   ModalSubmitButton,
-} from '../Commons/Modal';
+} from '../Commons/AuthComponents';
 import axios from 'axios';
 import styled from 'styled-components';
 
 const postLoginUrl = 'http://localhost:8800/auth/login';
-const footballurl = 'https://www.plabfootball.com/api/v2/stadium-groups/';
+// const footballurl = 'https://www.plabfootball.com/api/v2/stadium-groups/';
 
 // 로그인 요청 type
 type UserProps = {
@@ -71,9 +71,9 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
       });
   };
 
-  useEffect(() => {
-    axios.get(footballurl).then((res) => console.log(res.data));
-  }, []);
+  // useEffect(() => {
+  //   axios.get(footballurl).then((res) => console.log(res.data));
+  // }, []);
 
   return (
     <Modal onClick={handleIsLogin} setAuthModal={setAuthModal}>

@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
+  const [userMenu, setUserMenu] = useState<boolean>(false);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (authModal) {
