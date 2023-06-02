@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import FilterlingOptions from '../FilterlingOptions';
+import { Link } from 'react-router-dom';
+import FilteringOptions from '../FilteringOptions';
 import axios from 'axios';
 
 type FindingTeamProps = {
@@ -72,8 +73,8 @@ function FindingTeam(props: FindingTeamProps) {
       <Teampage>
         <TeamPageOption>
           <SelectCategory
-            options={FilterlingOptions.findingTeam.status}
-            defaultValue={FilterlingOptions.findingTeam.status[0]}
+            options={FilteringOptions.findingTeam.status}
+            defaultValue={FilteringOptions.findingTeam.status[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamFilter((init: any) => ({
@@ -86,8 +87,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={FilterlingOptions.findingTeam.area}
-            defaultValue={FilterlingOptions.findingTeam.area[0]}
+            options={FilteringOptions.findingTeam.area}
+            defaultValue={FilteringOptions.findingTeam.area[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamFilter((init: any) => ({
@@ -100,8 +101,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={FilterlingOptions.findingTeam.skill}
-            defaultValue={FilterlingOptions.findingTeam.skill[0]}
+            options={FilteringOptions.findingTeam.skill}
+            defaultValue={FilteringOptions.findingTeam.skill[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamFilter((init: any) => ({
@@ -114,8 +115,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={FilterlingOptions.findingTeam.position}
-            defaultValue={FilterlingOptions.findingTeam.position[0]}
+            options={FilteringOptions.findingTeam.position}
+            defaultValue={FilteringOptions.findingTeam.position[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamFilter((init: any) => ({
@@ -128,8 +129,8 @@ function FindingTeam(props: FindingTeamProps) {
             }}
           />
           <SelectCategory
-            options={FilterlingOptions.findingTeam.gender}
-            defaultValue={FilterlingOptions.findingTeam.gender[0]}
+            options={FilteringOptions.findingTeam.gender}
+            defaultValue={FilteringOptions.findingTeam.gender[0]}
             styles={SelectStyles}
             onChange={(selectedOption: any) => {
               setFindTeamFilter((init: any) => ({
@@ -179,10 +180,14 @@ function FindingTeam(props: FindingTeamProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((item) => (
+              {filteredData.map((item, idx) => (
                 <StyledTr key={item.num}>
-                  <td style={{ width: '5%' }}>{item.num}</td>
-                  <td style={{ width: '30%' }}>{item.title}</td>
+                  <td style={{ width: '5%' }}>{idx + 1}</td>
+                  <td style={{ width: '30%' }}>
+                    <Link to={`/teampage/detail/${item.num}`}>
+                      {item.title}
+                    </Link>
+                  </td>
                   <td style={{ width: '10%' }}>{item.author}</td>
                   <td style={{ width: '5%' }}>{item.area}</td>
 
