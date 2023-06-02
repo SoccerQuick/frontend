@@ -49,6 +49,7 @@ const StyledBar = styled.div`
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 2rem;
+  letter-spacing: -0.12rem;
   color: #727f88;
 `;
 
