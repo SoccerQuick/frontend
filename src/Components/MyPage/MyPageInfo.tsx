@@ -32,21 +32,21 @@ function MyPageInfo() {
     }));
   };
 
-  useEffect(() => {
-    const id = 'aaa';
-    fetch(`http://localhost:8800/user/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json', // 올바른 Content-Type 형식으로 수정
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setFormData((prev) => ({ ...prev, result }));
-        console.log(formData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+
+  //   fetch(`http://localhost:8800/user/`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setFormData((prev) => ({ ...prev, result }));
+  //       console.log(formData);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <StyledInfoContainer>

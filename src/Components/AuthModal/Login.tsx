@@ -9,21 +9,20 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const postLoginUrl = 'http://localhost:8800/auth/login';
-// const footballurl = 'https://www.plabfootball.com/api/v2/stadium-groups/';
 
-// 로그인 요청 type
+// User type
 type UserProps = {
   userId: string;
   password: string;
 };
 
-// Login 컴포넌트가 받는 props type
+// Login  props type
 type LoginProps = {
   handleIsLogin: (e: React.MouseEvent<HTMLDivElement>) => void;
   setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// 로그인 Modal 컴포넌트
+// Login
 function Login({ handleIsLogin, setAuthModal }: LoginProps) {
   const [formData, setFormData] = useState<UserProps>({
     userId: '',
@@ -56,7 +55,6 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     checkUsers(data);
   };
 
-  // 아이디, 비번이 db안에 있으면 로그인 안되면 에러 메세지 표기
   const checkUsers = (data: { user_id: string; password: string }) => {
     axios
       .post(postLoginUrl, data)
@@ -70,10 +68,6 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         setLoginError('존재하지 않는 계정입니다.');
       });
   };
-
-  // useEffect(() => {
-  //   axios.get(footballurl).then((res) => console.log(res.data));
-  // }, []);
 
   return (
     <Modal onClick={handleIsLogin} setAuthModal={setAuthModal}>
