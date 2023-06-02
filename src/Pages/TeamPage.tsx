@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
+import HeaderCategory from '../Components/Commons/HeaderCategory';
 import FindingMember from '../Components/TeamPage/Contents/FindingMember';
 import FindingTeam from '../Components/TeamPage/Contents/FindingTeam';
 import TeamPageModal from '../Components/TeamPage/Layout/TeamPageModal';
@@ -16,6 +17,7 @@ function TeamPage() {
   return (
     <>
       <Header />
+      <HeaderCategory />
       <div
         style={{
           display: 'grid',
