@@ -4,12 +4,10 @@ const ClipUrl = (url: string, message: string) => {
   const textarea = document.createElement('textarea');
 
   document.body.appendChild(textarea);
-
   textarea.value = url;
-  textarea.select(); //textarea를 설정
+  textarea.select();
   document.execCommand('copy');
   document.body.removeChild(textarea);
-
   alert(message);
 };
 

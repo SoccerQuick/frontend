@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -34,6 +34,25 @@ const groundDetailCarousel: React.FC<{ groundImg: string[] }> = ({
 
 export default groundDetailCarousel;
 
+const Wrap = styled.div`
+  padding-bottom: 70px;
+  overflow: hidden;
+
+  .slick-dots {
+    bottom: -8.5rem;
+    text-align: start;
+  }
+
+  .slick-dots li {
+    width: 12rem;
+    height: 7rem;
+    margin: 0 0.4rem;
+  }
+  .slick-dots li.slick-active {
+    filter: brightness(0.5);
+  }
+`;
+
 const ImageItems = styled.div`
   width: 98.5rem;
   height: 55rem;
@@ -52,24 +71,5 @@ const PagingImg = styled.div`
     display: inline-block;
     width: 100%;
     height: 100%;
-  }
-`;
-
-const Wrap = styled.div`
-  padding-bottom: 70px;
-  overflow: hidden;
-
-  .slick-dots {
-    bottom: -8.5rem;
-    text-align: start;
-  }
-
-  .slick-dots li {
-    width: 12rem;
-    height: 7rem;
-    margin: 0 0.4rem;
-  }
-  .slick-dots li.slick-active {
-    filter: brightness(0.5);
   }
 `;
