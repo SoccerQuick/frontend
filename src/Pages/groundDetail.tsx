@@ -17,6 +17,7 @@ interface groundDataType {
     shortAddress: string;
     fullAddress: string;
   };
+  stadiums: { usage: string; facility: string; image: string[] }[];
   provided: string[];
   nonProvided: string[];
   reservation: {
@@ -39,6 +40,10 @@ const GroundDetail = () => {
       setReservationData(Object.keys(groundData.reservation));
     }
   }, [groundData]);
+
+  const splitStadiumDetail = (detail: string) => {
+    return detail.split('•');
+  };
 
   return (
     <>
@@ -84,7 +89,37 @@ const GroundDetail = () => {
           이 구장 정보는 <span>{groundData && groundData.source}</span>에서
           제공됩니다.
         </Source>
-
+        <ContentsBox>
+          <ContentsTitle>
+            <h2>🥅 시설 목록</h2>
+          </ContentsTitle>
+          <Stadiums>
+            {groundData &&
+              groundData.stadiums.map((data, idx) => (
+                <Stidum key={data.usage}>
+                  <div>
+                    <img src={data.image[0]} alt="stadiumImg" />
+                  </div>
+                  <StadiumDetail>
+                    <h2>{data.usage}</h2>
+                    <div>
+                      <p>
+                        규격: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                        {splitStadiumDetail(data.facility)[0]}
+                      </p>
+                      <p>
+                        장소: &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                        {splitStadiumDetail(data.facility)[1]}
+                      </p>
+                      <p>
+                        코트재질: &nbsp;{splitStadiumDetail(data.facility)[2]}
+                      </p>
+                    </div>
+                  </StadiumDetail>
+                </Stidum>
+              ))}
+          </Stadiums>
+        </ContentsBox>
         <ContentsBox>
           <ContentsTitle>
             <h2>🏷 시설 특징</h2>
@@ -99,14 +134,14 @@ const GroundDetail = () => {
                 groundData.provided.map((data) => <li key={data}>{data}</li>)}
             </ul>
           </ProvidedItems>
-          <ProvidedItems className="non">
+          <ProvidedItems>
             <p>비제공 항목</p>
-            <ul>
+            <NonProvidedItems>
               {groundData &&
                 groundData.nonProvided.map((data) => (
                   <li key={data}>{data}</li>
                 ))}
-            </ul>
+            </NonProvidedItems>
           </ProvidedItems>
         </ContentsBox>
         <ContentsBox id="mapElement">
@@ -288,11 +323,6 @@ const ProvidedItems = styled.div`
       background: #f2fff1;
     }
   }
-  .non > ul li {
-    color: #5d5d5d;
-    background: #eeeeee;
-    text-decoration: line-through;
-  }
   > p {
     display: inline-block;
     height: 2.7rem;
@@ -305,6 +335,14 @@ const ProvidedItems = styled.div`
     font-weight: 400;
     color: #888888;
     line-height: 2rem;
+  }
+`;
+
+const NonProvidedItems = styled.ul`
+  li {
+    color: #5d5d5d;
+    background: #eeeeee;
+    text-decoration: line-through;
   }
 `;
 
@@ -327,5 +365,48 @@ const ReservationDetailContent = styled.div`
   li {
     font-size: 1.6rem;
     margin-bottom: 0.4rem;
+  }
+`;
+
+const Stadiums = styled.div``;
+
+const Stidum = styled.div`
+  height: 15rem;
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  background-color: white;
+  filter: drop-shadow(0 0 3px #dddddd);
+  border-radius: 10px;
+
+  /* background-color: yellow; */
+  img {
+    width: 20rem;
+    height: 13rem;
+    margin: 0 10rem 0 1rem;
+    border-radius: 1rem;
+  }
+`;
+
+const StadiumDetail = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  width: 50%;
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+  h2 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+  }
+  p {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #3c3c3c;
   }
 `;
