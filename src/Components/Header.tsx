@@ -109,6 +109,6 @@ const HeaderSearchBar = styled.div`
 `;
 
 const HeaderMypage = styled.div`
-  position relative;
+  position: relative;
   margin: 0.3rem 2rem 0 2rem;
 `;
