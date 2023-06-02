@@ -9,18 +9,18 @@ import {
   ModalButton,
   ModalSelectBox,
   ModalTerms,
-} from '../Commons/Modal';
+} from '../Commons/AuthComponents';
 
-const postSignupUrl = 'http://localhost:8800/auth/signup'; // 회원가입 정보를 보낼 api
-const postIdCheckUrl = 'http://localhost:8800/auth/id-check'; // 이메일 입력시 유저id가 중복인지 체크할 api
+const postSignupUrl = 'http://localhost:8800/auth/signup'; // signup api url
+const postIdCheckUrl = 'http://localhost:8800/auth/id-check'; // id-check api url
 
-// Signup 컴포넌트가 받는 props type
+// Signup type
 type SignupProps = {
   handleIsLogin: (e: React.MouseEvent<HTMLDivElement>) => void;
   setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// 회원가입 양식 정보 type
+// Signup form type
 type SignupFormProps = {
   user_id: string;
   password: string;
@@ -31,7 +31,6 @@ type SignupFormProps = {
 };
 
 function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
-  // 회원가입 정보를 서버로 보내는 상태 변수
   const [formData, setFormData] = useState<SignupFormProps>({
     user_id: '',
     password: '',
@@ -41,7 +40,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
     phone_number: '',
   });
 
-  // 회원가입 양식에 맞게 입력했는지 체크하는 상태관리
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
@@ -85,13 +83,12 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
     fetch(postSignupUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // 올바른 Content-Type 형식으로 수정
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
       .then((data) => {
-        // 요청에 대한 응답 처리
         if (data.statusCode === 400) {
           setResponseMsg(data.message);
         } else {
@@ -100,7 +97,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
         }
       })
       .catch((error) => {
-        // 오류 처리
         alert(error.message);
       });
   }, [formData]);
@@ -166,7 +162,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
     }
   };
 
-  // 서버로 회원정보 전송
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

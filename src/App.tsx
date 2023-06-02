@@ -8,6 +8,7 @@ import SearchPage from './Pages/SearchPage';
 import Main from './Pages/mainlayout';
 import GroundDetail from './Pages/groundDetail';
 import Admin from './Pages/AdminPage';
+import MyPage from './Pages/MyPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/main" element={<Main />} />
         <Route path="/ground" element={<SearchPage />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/teampage" element={<TeamPage />} />
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/groundDetail" element={<GroundDetail />} />

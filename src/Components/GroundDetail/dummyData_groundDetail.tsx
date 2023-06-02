@@ -9,6 +9,33 @@ const playGroundDetailDummy = {
     shortAddress: '경기 / 고양시',
     fullAddress: '경기도 고양시 일산서구 덕이로 310-2',
   },
+  stadiums: [
+    {
+      usage: '다목적 구장',
+      facility: '90x50m •실외 •인조잔디',
+      image: [
+        'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_001.jpeg',
+        'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_003.jpeg',
+      ],
+    },
+    {
+      usage: '축구장',
+      facility: '100x64m •실외 •인조잔디',
+      image: [
+        'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_001.jpeg',
+        'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_002.jpeg',
+      ],
+    },
+    {
+      usage: '풋살장 (다목적 구장)',
+      facility: '20x40m •실외 •인조잔디',
+      image: [
+        'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A5.jpg',
+        'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A53.jpg',
+        'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A52.jpg',
+      ],
+    },
+  ],
   provided: ['풋살화 대여', '남녀 구분 화장실', '공 대여', '조끼 대여'],
   nonProvided: ['무료 주차', '샤워실'],
   reservation: {
