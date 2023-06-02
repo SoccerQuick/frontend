@@ -79,6 +79,7 @@ const LogoMain = styled.div`
 `;
 
 const HeaderMenu = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin-top: 1.1rem;
@@ -108,5 +109,6 @@ const HeaderSearchBar = styled.div`
 `;
 
 const HeaderMypage = styled.div`
+  position: relative;
   margin: 0.3rem 2rem 0 2rem;
 `;
