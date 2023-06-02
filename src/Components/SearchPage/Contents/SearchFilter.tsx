@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Select from 'react-select';
 import axios from 'axios';
 
 function SearchFilter(props: any) {
