@@ -5,7 +5,6 @@ import FilteringOptions from '../FilterlingOptions';
 import axios from 'axios';
 
 type FindingMemberProps = {
-  searchMode: string;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any[];
@@ -21,7 +20,6 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
-  const searchMode = props.searchMode;
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
   const [findMemberFilter, setFindMemberFilter] =
@@ -39,6 +37,7 @@ function FindingMember(props: FindingMemberProps) {
     fetchData();
   }, []);
 
+  // API 연결 대비 초안 작성, 현재는 dummy data를 가져오고 있음.
   const fetchData = () => {
     // axios
     //   .get('gomao.com')
@@ -52,10 +51,12 @@ function FindingMember(props: FindingMemberProps) {
     // });
   };
 
-  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
+  // 필터링 된 데이터를 관리하는 상태
   const [filteredData, setFilteredData] = React.useState(
     dummydata_findingMember
   );
+
+  // 정렬 조건이나 데이터가 변하면 자료를 필터링하는 부분
   React.useEffect(() => {
     const newData = data.filter((item) => {
       const filterList = Object.keys(findMemberFilter);
@@ -69,7 +70,6 @@ function FindingMember(props: FindingMemberProps) {
       }
       return true;
     });
-
     setFilteredData(newData);
   }, [data, findMemberFilter]);
 
@@ -119,20 +119,7 @@ function FindingMember(props: FindingMemberProps) {
               }));
             }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingMember.members}
-            defaultValue={FilteringOptions.findingMember.members[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindMemberFilter((init: any) => ({
-                ...init,
-                members:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
-          />
+
           <SelectCategory
             options={FilteringOptions.findingMember.gender}
             defaultValue={FilteringOptions.findingMember.gender[0]}
@@ -147,7 +134,6 @@ function FindingMember(props: FindingMemberProps) {
               }));
             }}
           />
-          <button>경기시간대(체크박스)</button>
           <button
             onClick={() => {
               setFindMemberFilter({
@@ -166,36 +152,42 @@ function FindingMember(props: FindingMemberProps) {
       <Teampage>
         <TeamPageBody>
           <table>
-            <caption>팀원 구해요</caption>
+            <caption style={{ paddingBottom: '1.5rem' }}>팀원 구해요</caption>
             <thead>
-              <tr>
-                <th>Number</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Area</th>
-                <th>Status</th>
+              <tr
+                style={{
+                  paddingBottom: '1rem',
+                  borderBottom: '1px solid #DDDDDD',
+                }}
+              >
+                <th>순번</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>지역</th>
                 <th>모집현황(GK)</th>
                 <th>모집현황(Player)</th>
-                <th>랜덤모집허용</th>
                 <th>상세조회</th>
                 <th>신청하기</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item) => (
-                <tr key={item.num}>
-                  <td>{item.num}</td>
-                  <td>{item.title}</td>
-                  <td>{item.author}</td>
-                  <td>{item.area}</td>
-                  <td>{item.status}</td>
-                  <td>{item.gk !== '' ? `모집완료(${item.gk})` : '모집 중'}</td>
-                  <td>
+                <StyledTr key={item.num}>
+                  <td style={{ width: '5%' }}>{item.num}</td>
+                  <td style={{ width: '30%' }}>{item.title}</td>
+                  <td style={{ width: '10%' }}>{item.author}</td>
+                  <td style={{ width: '5%' }}>{item.area}</td>
+                  <td style={{ width: '15%' }}>
+                    {item.gk_need === item.gk.length
+                      ? '모집완료'
+                      : `${item.gk.length} / ${item.gk_need} `}
+                  </td>
+                  <td style={{ width: '15%' }}>
                     {item.player_need === item.player.length
                       ? '모집완료'
                       : `${item.player.length} / ${item.player_need} `}
                   </td>
-                  <td>{item.allowRandom}</td>
+
                   <td>
                     <button
                       onClick={() => {
@@ -207,9 +199,22 @@ function FindingMember(props: FindingMemberProps) {
                     </button>
                   </td>
                   <td>
-                    <button>신청</button>
+                    {item.status === '모집중' ? (
+                      <button>신청</button>
+                    ) : (
+                      <td
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {item.status}
+                      </td>
+                    )}
                   </td>
-                </tr>
+                </StyledTr>
               ))}
             </tbody>
           </table>
@@ -224,25 +229,22 @@ export default FindingMember;
 const Teampage = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 2.2rem;
+  font-size: 1.7rem;
 `;
 
 const TeamPageBody = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: beige;
   width: 70%;
   table {
     width: 100%;
   }
 
   tr {
-    // display: flex;
     justify-content: space-between;
     align-items: center;
   }
   td {
-    // display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -255,8 +257,8 @@ const TeamPageOption = styled.div`
 
 // Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
 const SelectCategory = styled(Select)`
-  width: 16rem;
-  font-size: 2rem;
+  width: 14rem;
+  font-size: 1.4rem;
 `;
 // Select 라이브러리에서 사용할 세부 스타일 속성
 const SelectStyles = {
@@ -275,6 +277,15 @@ const SelectStyles = {
   }),
 };
 
+const StyledTr = styled.tr`
+  height: 4rem;
+  margin: 1rem 1rem;
+  padding: 2rem 1rem;
+  font-size: 1.6rem;
+  border-bottom: 0.1rem solid #dddddd;
+`;
+
+// 더미 데이터
 const dummydata_findingMember = [
   {
     num: 1,
@@ -282,7 +293,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ',
     area: '서울',
     status: '모집중',
-    gk: 'ㄱㅁㅇ',
+    gk_need: 1,
+    gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
@@ -295,7 +307,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ2',
     area: '서울',
     status: '모집중',
-    gk: '',
+    gk_need: 1,
+    gk: [],
     player_need: 4,
     player: ['고마오', '고마워', '고마옹', '고맙당'],
     allowRandom: '가능',
@@ -308,7 +321,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ3',
     area: '서울',
     status: '모집중',
-    gk: '귀엽네',
+    gk_need: 1,
+    gk: ['귀엽네'],
     player_need: 4,
     player: ['귀여움', '졸귀', '귀엽ㅎ'],
     allowRandom: '불가능',
@@ -321,7 +335,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ4',
     area: '서울',
     status: '모집완료',
-    gk: '올리버칸',
+    gk_need: 1,
+    gk: ['올리버칸'],
     player_need: 4,
     player: ['호날두', '메시', '음바페', '네이마르'],
     allowRandom: '가능',
@@ -334,7 +349,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ',
     area: '서울',
     status: '모집중',
-    gk: 'ㄱㅁㅇ',
+    gk_need: 1,
+    gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
@@ -347,7 +363,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ',
     area: '서울',
     status: '모집중',
-    gk: 'ㄱㅁㅇ',
+    gk_need: 1,
+    gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
@@ -360,7 +377,8 @@ const dummydata_findingMember = [
     author: 'ㄱㅁㅇ',
     area: '서울',
     status: '모집중',
-    gk: 'ㄱㅁㅇ',
+    gk_need: 1,
+    gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',

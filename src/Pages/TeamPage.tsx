@@ -1,16 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import DefaultFooter from '../Components/DefaultFooter';
-import DefaultHeader from '../Components/DefaultHeader';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
-import FindingMember from '../Components/TeamPage/MainPage/FindingMember';
-import FindingTeam from '../Components/TeamPage/MainPage/FindingTeam';
-import TeamPageModal from '../Components/TeamPage/ModalPage/TeamPageModal';
+import FindingMember from '../Components/TeamPage/Contents/FindingMember';
+import FindingTeam from '../Components/TeamPage/Contents/FindingTeam';
+import TeamPageModal from '../Components/TeamPage/Layout/TeamPageModal';
 
 function TeamPage() {
-  const [searchMode, setSearchMode] = React.useState<string>('all'); // 사용을 안 할것 같기도 하네..
-  const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
+  // const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -31,7 +28,6 @@ function TeamPage() {
             <TeamPageOption>
               <button
                 onClick={() => {
-                  // setSearchMode('all');
                   setFindingTeam(true);
                   setFindingMember(true);
                 }}
@@ -69,37 +65,34 @@ function TeamPage() {
             </button>
           </TeamPageHeader>
         </Teampage>
-        {showModal === true && (
-          <Modal>
-            <ModalPage>
-              <TeamPageModal
-                searchMode={searchMode}
-                showModal={showModal}
-                setShowModal={setShowModal}
-                modalData={modalData}
-                setModalData={setModalData}
-              />
-            </ModalPage>
-          </Modal>
-        )}
-        {findingMember === true && (
-          <FindingMember
-            searchMode={searchMode}
+        {showModal && (
+          <TeamPageModal
             showModal={showModal}
             setShowModal={setShowModal}
             modalData={modalData}
             setModalData={setModalData}
           />
         )}
-        {findingTeam === true && (
-          <FindingTeam
-            searchMode={searchMode}
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
+        <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
+          {findingMember && (
+            <FindingMember
+              showModal={showModal}
+              setShowModal={setShowModal}
+              modalData={modalData}
+              setModalData={setModalData}
+            />
+          )}
+        </div>
+        <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
+          {findingTeam && (
+            <FindingTeam
+              showModal={showModal}
+              setShowModal={setShowModal}
+              modalData={modalData}
+              setModalData={setModalData}
+            />
+          )}
+        </div>
       </div>
       <Footer />
     </>
