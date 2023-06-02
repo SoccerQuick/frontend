@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Footer from '../Components/Footer';
-import Header from '../Components/Header';
-import HeaderCategory from '../Components/Commons/HeaderCategory';
-import FindingMember from '../Components/TeamPage/Contents/FindingMember';
-import FindingTeam from '../Components/TeamPage/Contents/FindingTeam';
-import TeamPageModal from '../Components/TeamPage/Layout/TeamPageModal';
+import Footer from '../../Components/Footer';
+import Header from '../../Components/Header';
+import { Routes, Route } from 'react-router-dom';
+import FindPage from './FindPage';
+import SubmitPage from './SubmitPage';
+import DetailPage from './DetailPage';
+import EditPage from './EditPage';
 
 function TeamPage() {
   // const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
@@ -17,11 +18,8 @@ function TeamPage() {
   return (
     <>
       <Header />
-      <HeaderCategory />
       <div
         style={{
-          display: 'grid',
-          gridAutoRows: 'min-content',
           height: '100rem',
         }}
       >
@@ -67,34 +65,12 @@ function TeamPage() {
             </button>
           </TeamPageHeader>
         </Teampage>
-        {showModal && (
-          <TeamPageModal
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
-        <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
-          {findingMember && (
-            <FindingMember
-              showModal={showModal}
-              setShowModal={setShowModal}
-              modalData={modalData}
-              setModalData={setModalData}
-            />
-          )}
-        </div>
-        <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
-          {findingTeam && (
-            <FindingTeam
-              showModal={showModal}
-              setShowModal={setShowModal}
-              modalData={modalData}
-              setModalData={setModalData}
-            />
-          )}
-        </div>
+        <Routes>
+          <Route path="/submit" element={<SubmitPage />} />
+          <Route path="/detail" element={<DetailPage />} />
+          <Route path="/edit" element={<EditPage />} />
+          <Route path="/" element={<FindPage />} />
+        </Routes>
       </div>
       <Footer />
     </>
@@ -115,28 +91,4 @@ const TeamPageHeader = styled.div`
 const TeamPageOption = styled.div`
   display: flex;
   margin: 10px 10px;
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-`;
-
-const ModalPage = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50rem;
-  height: 50rem;
-  background-color: rgba(255, 255, 255);
-  z-index: 999;
 `;

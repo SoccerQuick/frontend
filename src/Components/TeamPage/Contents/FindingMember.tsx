@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
-import FilteringOptions from '../FilterlingOptions';
+import FilteringOptions from '../FilteringOptions';
 import axios from 'axios';
 
 type FindingMemberProps = {
@@ -171,10 +172,14 @@ function FindingMember(props: FindingMemberProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((item) => (
+              {filteredData.map((item, idx) => (
                 <StyledTr key={item.num}>
-                  <td style={{ width: '5%' }}>{item.num}</td>
-                  <td style={{ width: '30%' }}>{item.title}</td>
+                  <td style={{ width: '5%' }}>{idx + 1}</td>
+                  <td style={{ width: '30%' }}>
+                    <Link to={`/teampage/detail/${item.num}`}>
+                      {item.title}
+                    </Link>
+                  </td>
                   <td style={{ width: '10%' }}>{item.author}</td>
                   <td style={{ width: '5%' }}>{item.area}</td>
                   <td style={{ width: '15%' }}>
@@ -298,8 +303,21 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
-    searchMode: '팀원 구해요',
     body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
+    applicant: [
+      {
+        nickName: '고고마오',
+        position: 'gk',
+        skill: '세미프로',
+        body: '저 자신있습니다',
+      },
+      {
+        nickName: '고구마',
+        position: 'player',
+        skill: '세미프로',
+        body: '캐리해드림ㅎㅎ',
+      },
+    ],
   },
   {
     num: 2,
@@ -312,8 +330,8 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['고마오', '고마워', '고마옹', '고맙당'],
     allowRandom: '가능',
-    searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 3,
@@ -326,8 +344,8 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['귀여움', '졸귀', '귀엽ㅎ'],
     allowRandom: '불가능',
-    searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 4,
@@ -340,8 +358,8 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['호날두', '메시', '음바페', '네이마르'],
     allowRandom: '가능',
-    searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 5,
@@ -354,8 +372,8 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
-    searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 6,
@@ -368,8 +386,8 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
-    searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 7,
@@ -382,7 +400,7 @@ const dummydata_findingMember = [
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
     allowRandom: '가능',
-    searchMode: '팀원 구해요',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
 ];

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import MainPage from './Pages/Main';
 import ReviewPage from './Pages/Review';
-import TeamPage from './Pages/TeamPage';
+import TeamPage from './Pages/TeamPage/MainPage';
 import SearchPage from './Pages/SearchPage';
 import Main from './Pages/mainlayout';
 import GroundDetail from './Pages/groundDetail';
@@ -19,7 +19,7 @@ function App() {
         <Route path="/ground" element={<SearchPage />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/teampage" element={<TeamPage />} />
+        <Route path="/teampage/*" element={<TeamPage />} />
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/groundDetail" element={<GroundDetail />} />
       </Routes>
