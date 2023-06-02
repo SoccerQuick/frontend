@@ -12,12 +12,6 @@ type FindingGroundProps = {
   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-type FindMemberFilter = {
-  provided: string | null;
-  area: string | null;
-  nonProvided: string | null;
-};
-
 function FindingGround(props: FindingGroundProps) {
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
@@ -31,6 +25,7 @@ function FindingGround(props: FindingGroundProps) {
     fetchData();
   }, []);
 
+  // DB에서 데이터를 가져오는 부분, 현재는 더미데이터를 불러오고 있음
   const fetchData = () => {
     // axios
     //   .get('gomao.com')
@@ -58,7 +53,6 @@ function FindingGround(props: FindingGroundProps) {
       <Searchpage>
         <SearchPageBody>
           <table>
-            {/* <caption>경기장 목록</caption> */}
             <thead>
               <tr
                 style={{
@@ -114,7 +108,6 @@ export default FindingGround;
 
 const Searchpage = styled.div`
   display: flex;
-  //   justify-content: center;
   font-size: 1.7rem;
 `;
 
@@ -122,18 +115,15 @@ const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 3rem 3rem;
-  //   background-color: beige;
   width: 100%;
   table {
     width: 100%;
   }
   tr {
-    // display: flex;
     justify-content: space-between;
     align-items: center;
   }
   td {
-    // display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -145,7 +135,6 @@ const StyledTableCell = styled.div`
   height: 2.7rem;
   padding: 0.3rem 0.8rem;
   margin: 1rem 1rem;
-  //   background: #fafafa;
   border-radius: 0.4rem;
   font-size: 1.5rem;
   font-weight: 400;

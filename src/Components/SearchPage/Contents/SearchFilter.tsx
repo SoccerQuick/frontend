@@ -74,8 +74,6 @@ const SearchPageOption = styled.div`
   border-radius: 1rem;
   justify-content: center;
   align-items: center;
-  //   background-color: skyblue;
-  //   align-items: center;
   margin: 10px 10px;
 `;
 
