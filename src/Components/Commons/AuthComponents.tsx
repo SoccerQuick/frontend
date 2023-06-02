@@ -92,7 +92,7 @@ export function ModalInput({
   }
   return (
     <InputBox check={check} text={text}>
-      <InputText>{text}</InputText>
+      <InputText text={text}>{text}</InputText>
       <InputBar>
         <StyledInput
           radius={radiusString}
@@ -274,13 +274,13 @@ const InputBox = styled.div<{ check?: boolean; text?: string }>`
   }
 `;
 
-const InputText = styled.div`
+const InputText = styled.div<{ text?: string }>`
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
   padding-left: 10px;
-  margin-bottom: 5px;
+  padding-bottom: ${(props) => (props.text ? '5px' : '0')};
   color: #727f88;
 `;
 

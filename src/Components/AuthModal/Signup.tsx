@@ -9,7 +9,7 @@ import {
   ModalButton,
   ModalSelectBox,
   ModalTerms,
-} from '../Commons/Modal';
+} from '../Commons/AuthComponents';
 
 const postSignupUrl = 'http://localhost:8800/auth/signup'; // 회원가입 정보를 보낼 api
 const postIdCheckUrl = 'http://localhost:8800/auth/id-check'; // 이메일 입력시 유저id가 중복인지 체크할 api
