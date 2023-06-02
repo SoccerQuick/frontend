@@ -4,7 +4,6 @@ import FindingTeamDetail from '../Contents/FindingTeamDetail';
 import FindingMemberDetail from '../Contents/FindingMemberDetail';
 
 type props = {
-  searchMode: string;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any;
@@ -101,12 +100,10 @@ const DetailPage = styled.div`
   }
 
   tr {
-    // display: flex;
     justify-content: space-between;
     align-items: center;
   }
   td {
-    // display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -122,7 +119,6 @@ const StyledHeader = styled.div`
   top: 0;
   margin-top: 4rem;
   padding-bottom: 1rem;
-  // background-color: skyblue;
   width: 90%;
   border-bottom: 1px solid #dddddd;
 `;
@@ -130,8 +126,6 @@ const StyledHeader = styled.div`
 const StyledSubTitle = styled.div`
   z-index: 901;
   display: flex;
-  // align-items: center;
-  // justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;

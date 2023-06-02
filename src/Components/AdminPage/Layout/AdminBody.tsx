@@ -54,7 +54,6 @@ function AdminBody(props: props) {
 export default AdminBody;
 
 const BodyContainer = styled.div`
-  // background-color: skyblue;
   padding: 2rem 2rem;
   height: 100%;
 `;

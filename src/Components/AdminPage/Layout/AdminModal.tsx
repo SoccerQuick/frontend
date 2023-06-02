@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// type props = {
-//   searchMode: string;
-//   showModal: boolean;
-//   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-//   modalData: any;
-//   setModalData: React.Dispatch<React.SetStateAction<any>>;
-// };
+type props = {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalData: any;
+  setModalData: React.Dispatch<React.SetStateAction<any>>;
+};
 
-function DetailModal(props: any) {
+function DetailModal(props: props) {
   const modalData = props.modalData;
   const setShowModal = props.setShowModal;
   return (

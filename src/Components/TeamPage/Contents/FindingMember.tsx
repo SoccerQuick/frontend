@@ -5,7 +5,6 @@ import FilteringOptions from '../FilterlingOptions';
 import axios from 'axios';
 
 type FindingMemberProps = {
-  searchMode: string;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any[];
@@ -21,7 +20,6 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
-  const searchMode = props.searchMode;
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
   const [findMemberFilter, setFindMemberFilter] =
@@ -39,6 +37,7 @@ function FindingMember(props: FindingMemberProps) {
     fetchData();
   }, []);
 
+  // API 연결 대비 초안 작성, 현재는 dummy data를 가져오고 있음.
   const fetchData = () => {
     // axios
     //   .get('gomao.com')
@@ -52,10 +51,12 @@ function FindingMember(props: FindingMemberProps) {
     // });
   };
 
-  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
+  // 필터링 된 데이터를 관리하는 상태
   const [filteredData, setFilteredData] = React.useState(
     dummydata_findingMember
   );
+
+  // 정렬 조건이나 데이터가 변하면 자료를 필터링하는 부분
   React.useEffect(() => {
     const newData = data.filter((item) => {
       const filterList = Object.keys(findMemberFilter);
@@ -69,7 +70,6 @@ function FindingMember(props: FindingMemberProps) {
       }
       return true;
     });
-
     setFilteredData(newData);
   }, [data, findMemberFilter]);
 
@@ -164,10 +164,8 @@ function FindingMember(props: FindingMemberProps) {
                 <th>제목</th>
                 <th>작성자</th>
                 <th>지역</th>
-
                 <th>모집현황(GK)</th>
                 <th>모집현황(Player)</th>
-
                 <th>상세조회</th>
                 <th>신청하기</th>
               </tr>
@@ -200,15 +198,7 @@ function FindingMember(props: FindingMemberProps) {
                       조회
                     </button>
                   </td>
-                  <td
-                    style={
-                      {
-                        // display: 'flex',
-                        // justifyContent: 'center',
-                        // alignContent: 'center',
-                      }
-                    }
-                  >
+                  <td>
                     {item.status === '모집중' ? (
                       <button>신청</button>
                     ) : (
@@ -245,19 +235,16 @@ const Teampage = styled.div`
 const TeamPageBody = styled.div`
   display: flex;
   justify-content: space-between;
-  // background-color: beige;
   width: 70%;
   table {
     width: 100%;
   }
 
   tr {
-    // display: flex;
     justify-content: space-between;
     align-items: center;
   }
   td {
-    // display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -298,6 +285,7 @@ const StyledTr = styled.tr`
   border-bottom: 0.1rem solid #dddddd;
 `;
 
+// 더미 데이터
 const dummydata_findingMember = [
   {
     num: 1,

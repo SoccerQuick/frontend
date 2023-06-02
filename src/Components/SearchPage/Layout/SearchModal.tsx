@@ -41,12 +41,10 @@ const SearchPageBody = styled.div`
   }
 
   tr {
-    // display: flex;
     justify-content: space-between;
     align-items: center;
   }
   td {
-    // display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Select from 'react-select';
 import axios from 'axios';
-import FilterlingOptions from '../FilterlingOptions';
 
 function SearchFilter(props: any) {
   // 버튼의 상태를 관리할 변수
@@ -74,8 +72,6 @@ const SearchPageOption = styled.div`
   border-radius: 1rem;
   justify-content: center;
   align-items: center;
-  //   background-color: skyblue;
-  //   align-items: center;
   margin: 10px 10px;
 `;
 
