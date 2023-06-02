@@ -41,24 +41,12 @@ function FindingTeamDetail(props: any) {
   );
 }
 
-// {
-//     num: 3,
-//     title: '나 이민우. 우승팀 들어간다. 불러라.',
-//     author: '이민우',
-//     area: '부산',
-//     status: '미완료',
-//     position: '필드플레이어',
-//     skill: '프로',
-//     gender: '남',
-//   },
-
 export default FindingTeamDetail;
 
 const StyledDiv = styled.div`
   z-index: 902;
   display: flex;
   align-items: center;
-  //   justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
@@ -72,8 +60,6 @@ const StyledDiv = styled.div`
 const StyledBodyContainer = styled.div`
   z-index: 902;
   display: flex;
-  //   align-items: center;
-  //   justify-content: space-between;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
