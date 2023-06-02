@@ -6,17 +6,19 @@ import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { useState } from 'react';
+import { MyPageBar } from './Commons/MyPageBar';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
-  const [userMenu, setUserMenu] = useState<boolean>(false);
+  const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (authModal) {
-      setAuthModal(false);
-    } else {
-      setAuthModal(true);
-    }
+    setAuthModal((prev) => !prev);
+    setMyPageMenu((prev) => !prev);
+  };
+  const handleMyPageMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setMyPageMenu((prev) => !prev);
   };
 
   return (
@@ -37,8 +39,14 @@ const Header = () => {
             />
           </div>
         </div>
-        <div className="header-mypage" onClick={handleLoginModal}>
+        <div className="header-mypage" onMouseEnter={handleMyPageMenu}>
           <img className="mypage-icon" src={MypageIcon} alt="" />
+          {myPageMenu && (
+            <MyPageBar
+              handleMyPageMenu={handleMyPageMenu}
+              handleLoginModal={handleLoginModal}
+            />
+          )}
         </div>
         <div className="header-more">
           <img className="more-icon" src={MoreIcon} alt="" />
@@ -97,6 +105,7 @@ const HeaderMenu = styled.div`
     }
   }
   .header-mypage {
+    position: relative;
     margin: 0.3rem 2rem 0 2rem;
   }
 `;
