@@ -21,26 +21,26 @@ const Header = () => {
   return (
     <HeaderContainer>
       <LogoMain>
-        <a className="logo-main-img">
-          <img src={SoccerquickLogo} alt="싸커퀵" />
+        <a>
+          <img src={SoccerquickLogo} alt="SoccerQuick" />
         </a>
       </LogoMain>
       <HeaderMenu>
-        <div className="header-search">
-          <div className="header-search-bar">
-            <img className="search-icon" src={SearchIcon} alt="" />
+        <div>
+          <HeaderSearchBar>
+            <img src={SearchIcon} alt="" />
             <input
               type="search"
               placeholder="지역으로 풋살장 찾기"
               maxLength={100}
             />
-          </div>
+          </HeaderSearchBar>
         </div>
-        <div className="header-mypage" onClick={handleLoginModal}>
-          <img className="mypage-icon" src={MypageIcon} alt="" />
-        </div>
-        <div className="header-more">
-          <img className="more-icon" src={MoreIcon} alt="" />
+        <HeaderMypage onClick={handleLoginModal}>
+          <img src={MypageIcon} alt="" />
+        </HeaderMypage>
+        <div>
+          <img src={MoreIcon} alt="" />
         </div>
       </HeaderMenu>
       {authModal && <AuthModal setAuthModal={setAuthModal} />}
@@ -77,25 +77,27 @@ const HeaderMenu = styled.div`
     width: 2.5rem;
     height: 100%;
   }
-  .header-search-bar {
-    width: 35rem;
-    height: 4rem;
-    background-color: #f7f7f7;
-    margin: 0;
-    padding: 0.8rem;
-    display: inline-block;
-    border-radius: 0.6rem;
-    input {
-      color: #3e5463;
-      font-size: 1.4rem;
-      border: none;
-      background: none;
-      width: 85%;
-      padding: 0 0 0 1rem;
-      line-height: 2.5rem;
-    }
+`;
+
+const HeaderSearchBar = styled.div`
+  width: 35rem;
+  height: 4rem;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0.8rem;
+  display: inline-block;
+  border-radius: 0.6rem;
+  input {
+    color: #3e5463;
+    font-size: 1.4rem;
+    border: none;
+    background: none;
+    width: 85%;
+    padding: 0 0 0 1rem;
+    line-height: 2.5rem;
   }
-  .header-mypage {
-    margin: 0.3rem 2rem 0 2rem;
-  }
+`;
+
+const HeaderMypage = styled.div`
+  margin: 0.3rem 2rem 0 2rem;
 `;

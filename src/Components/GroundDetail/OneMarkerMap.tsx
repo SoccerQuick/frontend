@@ -32,15 +32,6 @@ const OneMarkerMap: React.FC<{ address: string }> = ({ address }) => {
       },
       mapDataControl: false,
       scaleControl: false,
-
-      //지도 줌인, 이동 허용할지 ? 못움직이게 하려면 아래 옵션 적용
-      //   draggable: false,
-      //   pinchZoom: false,
-      //   scrollWheel: false,
-      //   keyboardShortcuts: false,
-      //   disableDoubleTapZoom: true,
-      //   disableDoubleClickZoom: true,
-      //   disableTwoFingerTapZoom: true,
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
     new naver.maps.Marker({
