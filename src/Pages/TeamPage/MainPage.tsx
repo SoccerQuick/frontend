@@ -69,7 +69,17 @@ function TeamPage() {
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/detail" element={<DetailPage />} />
           <Route path="/edit" element={<EditPage />} />
-          <Route path="/" element={<FindPage />} />
+          <Route
+            path="/"
+            element={
+              <FindPage
+                findingTeam={findingTeam}
+                findingMember={findingMember}
+                showModal={showModal}
+                setShowModal={setShowModal}
+              />
+            }
+          />
         </Routes>
       </div>
       <Footer />
