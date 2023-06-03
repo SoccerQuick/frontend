@@ -67,7 +67,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
       setPasswordMsg('비밀번호가 일치하지 않습니다!');
       setCheckPassword(false);
     }
-    return () => {};
   }, [password, passwordConfirm]);
 
   useEffect(() => {
