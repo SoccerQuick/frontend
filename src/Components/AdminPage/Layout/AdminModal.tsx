@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface UserData {
-  admin_id: string;
+  admin_id?: string;
   user_id: string;
   name: string;
   nick_name: string;
