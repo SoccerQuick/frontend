@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import FindPage from './FindPage';
 import SubmitPage from './SubmitPage';
 import DetailPage from './DetailPage';
@@ -69,7 +69,17 @@ function TeamPage() {
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/detail" element={<DetailPage />} />
           <Route path="/edit" element={<EditPage />} />
-          <Route path="/" element={<FindPage />} />
+          <Route
+            path="/"
+            element={
+              <FindPage
+                findingTeam={findingTeam}
+                findingMember={findingMember}
+                showModal={showModal}
+                setShowModal={setShowModal}
+              />
+            }
+          />
         </Routes>
       </div>
       <Footer />
