@@ -112,27 +112,49 @@ function AdminUserManager() {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((item, idx) => (
-              <tr key={idx}>
-                <td>{idx + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.role}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      setShowModal(true);
-                      setModalData(item);
-                    }}
-                  >
-                    조회
-                  </button>
-                </td>
-                <td>
-                  <button>정보수정</button>
-                </td>
-              </tr>
-            ))}
+            {filteredData.length > 0
+              ? filteredData.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>{idx + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.role}</td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          setShowModal(true);
+                          setModalData(item);
+                        }}
+                      >
+                        조회
+                      </button>
+                    </td>
+                    <td>
+                      <button>정보수정</button>
+                    </td>
+                  </tr>
+                ))
+              : data.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>{idx + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.role}</td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          setShowModal(true);
+                          setModalData(item);
+                        }}
+                      >
+                        조회
+                      </button>
+                    </td>
+                    <td>
+                      <button>정보수정</button>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </UserManageContainerTable>
