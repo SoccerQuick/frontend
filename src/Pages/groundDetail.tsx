@@ -7,7 +7,7 @@ import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarouse
 import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
-import ScrollToTarget from '../Components/scrollToTarget';
+import ScrollToTarget from '../Components/ScrollToTarget';
 // import ClipUrl from '../Components/ClipUrl';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
