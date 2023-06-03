@@ -10,12 +10,22 @@ export default function HeaderCategory() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isHome = location.pathname === '/';
   const isMainPage = location.pathname === '/main';
   const isReviewPage = location.pathname === '/review';
   const isTeampage = location.pathname === '/teampage';
 
   return (
     <StyledHeaderCategory>
+      <StyledCategoryText
+        focused={isHome}
+        onClick={() => {
+          navigate('/');
+        }}
+      >
+        홈
+      </StyledCategoryText>
+
       <StyledCategoryText
         focused={isMainPage}
         onClick={() => {
@@ -24,6 +34,7 @@ export default function HeaderCategory() {
       >
         풋살 매치
       </StyledCategoryText>
+
       <StyledCategoryText
         focused={isReviewPage}
         onClick={() => {
@@ -32,6 +43,7 @@ export default function HeaderCategory() {
       >
         풋살 후기
       </StyledCategoryText>
+
       <StyledCategoryText
         focused={isTeampage}
         onClick={() => {
