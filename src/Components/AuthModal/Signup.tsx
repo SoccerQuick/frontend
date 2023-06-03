@@ -12,7 +12,7 @@ import {
 } from '../Commons/AuthComponents';
 
 const postSignupUrl = 'http://localhost:8800/auth/signup'; // signup api url
-const postIdCheckUrl = 'http://localhost:8800/auth/id-check'; // id-check api url
+const postIdCheckUrl = 'http://localhost:8800/auth/id'; // id-check api url
 
 // Signup type
 type SignupProps = {
@@ -28,6 +28,7 @@ type SignupFormProps = {
   nick_name: string;
   email: string;
   phone_number: string;
+  gender: string;
 };
 
 function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
@@ -38,6 +39,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
     nick_name: '',
     email: '',
     phone_number: '',
+    gender: '',
   });
 
   const [userId, setUserId] = useState<string>('');
@@ -67,7 +69,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
       setPasswordMsg('비밀번호가 일치하지 않습니다!');
       setCheckPassword(false);
     }
-    return () => {};
   }, [password, passwordConfirm]);
 
   useEffect(() => {
@@ -79,16 +80,14 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
   }, [userIdMsg]);
 
   useEffect(() => {
-    // fetch 버전
-    fetch(postSignupUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    axios
+      .post(postSignupUrl, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        const data = response.data;
         if (data.statusCode === 400) {
           setResponseMsg(data.message);
         } else {
@@ -97,7 +96,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
         }
       })
       .catch((error) => {
-        alert(error.message);
+        setResponseMsg(error.response.data.message);
       });
   }, [formData]);
 
@@ -181,6 +180,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
       nick_name: nickname,
       email: email,
       phone_number: phonenumber,
+      gender: gender,
     }));
   };
 

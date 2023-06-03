@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Select from 'react-select';
-import FilteringOptions from '../FilterlingOptions';
+import { Link } from 'react-router-dom';
+import FilteringOptions from '../../Commons/FilteringOptions';
 import axios from 'axios';
+import DropDown from '../../Commons/DropDown';
 
 type FindingMemberProps = {
   showModal: boolean;
@@ -10,16 +11,19 @@ type FindingMemberProps = {
   modalData: any[];
   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
 };
-
 type FindMemberFilter = {
   status: string | null;
   area: string | null;
   allowRandom: string | null;
-  members: number | null;
   gender: string | null;
 };
 
 function FindingMember(props: FindingMemberProps) {
+  const [status, setStatus] = React.useState('');
+  const [area, setArea] = React.useState('');
+  const [allowRandom, setAllowRandom] = React.useState('');
+  const [gender, setGender] = React.useState('');
+
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
   const [findMemberFilter, setFindMemberFilter] =
@@ -27,7 +31,6 @@ function FindingMember(props: FindingMemberProps) {
       status: null,
       area: null,
       allowRandom: null,
-      members: null,
       gender: null,
     });
 
@@ -51,21 +54,36 @@ function FindingMember(props: FindingMemberProps) {
     // });
   };
 
+  // 필터링 조건을 갱신하는 부분
+  React.useEffect(() => {
+    const filter = {
+      status: status === '모집상태' ? '' : status,
+      area: area === '활동지역' ? '' : area,
+      allowRandom: allowRandom === '랜덤매칭' ? '' : allowRandom,
+      gender: gender === '성별' ? '' : gender,
+    };
+    setFindMemberFilter(filter);
+  }, [status, area, allowRandom, gender]);
+
   // 필터링 된 데이터를 관리하는 상태
   const [filteredData, setFilteredData] = React.useState(
     dummydata_findingMember
   );
 
-  // 정렬 조건이나 데이터가 변하면 자료를 필터링하는 부분
+  // 데이터를 필터링하는 부분, 상관없음일 경우 무조건 결과에 포함시킨다.
   React.useEffect(() => {
     const newData = data.filter((item) => {
       const filterList = Object.keys(findMemberFilter);
       for (let key of filterList) {
-        if (
-          findMemberFilter[key as keyof FindMemberFilter] !== null &&
-          findMemberFilter[key as keyof FindMemberFilter] !== item[key]
-        ) {
-          return false;
+        if (findMemberFilter[key as keyof FindMemberFilter] === '상관없음') {
+          return true;
+        } else {
+          if (
+            findMemberFilter[key as keyof FindMemberFilter] !== '' &&
+            findMemberFilter[key as keyof FindMemberFilter] !== item[key]
+          ) {
+            return false;
+          }
         }
       }
       return true;
@@ -77,72 +95,36 @@ function FindingMember(props: FindingMemberProps) {
     <>
       <Teampage>
         <TeamPageOption>
-          <SelectCategory
-            options={FilteringOptions.findingMember.status}
-            defaultValue={FilteringOptions.findingMember.status[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindMemberFilter((init: any) => ({
-                ...init,
-                status:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingMember.status}
+            selected={status}
+            setSelected={setStatus}
+            style={{ width: '16rem' }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingMember.area}
-            defaultValue={FilteringOptions.findingMember.area[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindMemberFilter((init: any) => ({
-                ...init,
-                area:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingMember.area}
+            selected={area}
+            setSelected={setArea}
+            style={{ width: '16rem' }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingMember.allowRandom}
-            defaultValue={FilteringOptions.findingMember.allowRandom[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindMemberFilter((init: any) => ({
-                ...init,
-                allowRandom:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingMember.allowRandom}
+            selected={allowRandom}
+            setSelected={setAllowRandom}
+            style={{ width: '16rem' }}
           />
-
-          <SelectCategory
-            options={FilteringOptions.findingMember.gender}
-            defaultValue={FilteringOptions.findingMember.gender[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindMemberFilter((init: any) => ({
-                ...init,
-                gender:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingMember.gender}
+            selected={gender}
+            setSelected={setGender}
+            style={{ width: '16rem' }}
           />
           <button
             onClick={() => {
-              setFindMemberFilter({
-                status: null,
-                area: null,
-                allowRandom: null,
-                members: null,
-                gender: null,
-              });
+              setStatus('');
+              setArea('');
+              setAllowRandom('');
+              setGender('');
             }}
           >
             초기화
@@ -171,10 +153,14 @@ function FindingMember(props: FindingMemberProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((item) => (
+              {filteredData.map((item, idx) => (
                 <StyledTr key={item.num}>
-                  <td style={{ width: '5%' }}>{item.num}</td>
-                  <td style={{ width: '30%' }}>{item.title}</td>
+                  <td style={{ width: '5%' }}>{idx + 1}</td>
+                  <td style={{ width: '30%' }}>
+                    <Link to={`/teampage/detail/${item.num}`}>
+                      {item.title}
+                    </Link>
+                  </td>
                   <td style={{ width: '10%' }}>{item.author}</td>
                   <td style={{ width: '5%' }}>{item.area}</td>
                   <td style={{ width: '15%' }}>
@@ -199,7 +185,7 @@ function FindingMember(props: FindingMemberProps) {
                     </button>
                   </td>
                   <td>
-                    {item.status === '모집중' ? (
+                    {item.status === '미완료' ? (
                       <button>신청</button>
                     ) : (
                       <td
@@ -255,28 +241,6 @@ const TeamPageOption = styled.div`
   margin: 10px 10px;
 `;
 
-// Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
-const SelectCategory = styled(Select)`
-  width: 14rem;
-  font-size: 1.4rem;
-`;
-// Select 라이브러리에서 사용할 세부 스타일 속성
-const SelectStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? '#38D411' : 'white',
-    color: state.isSelected ? 'white' : 'black',
-    ':hover': {
-      backgroundColor: state.isSelected ? '#38D411' : '#96DF84',
-    },
-  }),
-};
-
 const StyledTr = styled.tr`
   height: 4rem;
   margin: 1rem 1rem;
@@ -292,97 +256,117 @@ const dummydata_findingMember = [
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
     area: '서울',
-    status: '모집중',
+    status: '미완료',
+    gender: '남',
     gk_need: 1,
     gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    allowRandom: '가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '허용',
     body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
+    applicant: [
+      {
+        nickName: '고고마오',
+        position: 'gk',
+        skill: '세미프로',
+        body: '저 자신있습니다',
+      },
+      {
+        nickName: '고구마',
+        position: 'player',
+        skill: '세미프로',
+        body: '캐리해드림ㅎㅎ',
+      },
+    ],
   },
   {
     num: 2,
     title: '랏키퍼구합니다',
     author: 'ㄱㅁㅇ2',
     area: '서울',
-    status: '모집중',
+    status: '미완료',
+    gender: '남',
     gk_need: 1,
     gk: [],
     player_need: 4,
     player: ['고마오', '고마워', '고마옹', '고맙당'],
-    allowRandom: '가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '허용',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 3,
     title: '랏필드구합니다',
     author: 'ㄱㅁㅇ3',
     area: '서울',
-    status: '모집중',
+    status: '미완료',
+    gender: '남',
     gk_need: 1,
     gk: ['귀엽네'],
     player_need: 4,
     player: ['귀여움', '졸귀', '귀엽ㅎ'],
-    allowRandom: '불가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '비허용',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 4,
     title: '다구했어요ㅎㅎ',
     author: 'ㄱㅁㅇ4',
     area: '서울',
-    status: '모집완료',
+    status: '완료',
+    gender: '상관없음',
     gk_need: 1,
     gk: ['올리버칸'],
     player_need: 4,
     player: ['호날두', '메시', '음바페', '네이마르'],
-    allowRandom: '가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '허용',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 5,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
     area: '서울',
-    status: '모집중',
+    status: '미완료',
+    gender: '남',
     gk_need: 1,
     gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    allowRandom: '가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '허용',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 6,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
     area: '서울',
-    status: '모집중',
+    status: '미완료',
+    gender: '남',
     gk_need: 1,
     gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    allowRandom: '가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '허용',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
   {
     num: 7,
     title: '팀구합니다',
     author: 'ㄱㅁㅇ',
     area: '서울',
-    status: '모집중',
+    status: '미완료',
+    gender: '상관없음',
     gk_need: 1,
     gk: ['ㄱㅁㅇ'],
     player_need: 4,
     player: ['gogumao', 'cutehane', 'gomao'],
-    allowRandom: '가능',
-    searchMode: '팀원 구해요',
+    allowRandom: '허용',
     body: 'ㄱㅁㅇ',
+    applicant: [],
   },
 ];

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import MyPageBar from '../Components/MyPage/MyPageBar';
-import MyPageInfo from '../Components/MyPage/MyPageInfo';
+import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
 
 function MyPage() {
   return (
@@ -21,6 +21,7 @@ function MyPage() {
 export default MyPage;
 
 const MyPageContainer = styled.div`
+  justify-content: center;
   width: 98.4rem;
   height: auto;
   padding: 0 2rem;

@@ -3,6 +3,7 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
 import SearchModal from '../Components/SearchPage/Layout/SearchModal';
+import HeaderCategory from '../Components/Commons/HeaderCategory';
 
 function SearchPage() {
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -11,6 +12,7 @@ function SearchPage() {
   return (
     <>
       <Header />
+      <HeaderCategory />
       <div style={{ display: 'grid', justifyContent: 'center' }}>
         <div
           style={{

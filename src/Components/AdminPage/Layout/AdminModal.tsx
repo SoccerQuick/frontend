@@ -1,15 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
+interface UserData {
+  admin_id?: string;
+  user_id: string;
+  name: string;
+  nick_name: string;
+  email: string;
+  phone_number: string;
+  role: string;
+  createdAt: string;
+}
+
 type props = {
-  showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any;
-  setModalData: React.Dispatch<React.SetStateAction<any>>;
+  modalData: UserData;
 };
 
 function DetailModal(props: props) {
-  const modalData = props.modalData;
   const setShowModal = props.setShowModal;
   return (
     <>
