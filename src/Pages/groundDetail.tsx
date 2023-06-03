@@ -4,13 +4,14 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
+import Stadiums from '../Components/GroundDetail/Stadiums';
 import ScrollToTarget from '../Components/ScrollToTarget';
 import ClipUrl from '../Components/ClipUrl';
 import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 
-interface groundDataType {
+export interface groundDataType {
   title: string;
   image: string[];
   address: {
@@ -93,32 +94,7 @@ const GroundDetail = () => {
           <ContentsTitle>
             <h2>🥅 시설 목록</h2>
           </ContentsTitle>
-          <Stadiums>
-            {groundData &&
-              groundData.stadiums.map((data, idx) => (
-                <Stidum key={data.usage}>
-                  <div>
-                    <img src={data.image[0]} alt="stadiumImg" />
-                  </div>
-                  <StadiumDetail>
-                    <h2>{data.usage}</h2>
-                    <div>
-                      <p>
-                        규격: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                        {splitStadiumDetail(data.facility)[0]}
-                      </p>
-                      <p>
-                        장소: &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                        {splitStadiumDetail(data.facility)[1]}
-                      </p>
-                      <p>
-                        코트재질: &nbsp;{splitStadiumDetail(data.facility)[2]}
-                      </p>
-                    </div>
-                  </StadiumDetail>
-                </Stidum>
-              ))}
-          </Stadiums>
+          {groundData && <Stadiums stadiumsData={groundData.stadiums} />}
         </ContentsBox>
         <ContentsBox>
           <ContentsTitle>
@@ -365,48 +341,5 @@ const ReservationDetailContent = styled.div`
   li {
     font-size: 1.6rem;
     margin-bottom: 0.4rem;
-  }
-`;
-
-const Stadiums = styled.div``;
-
-const Stidum = styled.div`
-  height: 15rem;
-  display: flex;
-  align-items: center;
-  margin-top: 3rem;
-  background-color: white;
-  filter: drop-shadow(0 0 3px #dddddd);
-  border-radius: 10px;
-
-  /* background-color: yellow; */
-  img {
-    width: 20rem;
-    height: 13rem;
-    margin: 0 10rem 0 1rem;
-    border-radius: 1rem;
-  }
-`;
-
-const StadiumDetail = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-between;
-  width: 50%;
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-  h2 {
-    font-size: 1.9rem;
-    font-weight: 500;
-    margin-top: 0;
-    display: flex;
-    align-items: center;
-  }
-  p {
-    font-size: 1.6rem;
-    font-weight: 400;
-    color: #3c3c3c;
   }
 `;
