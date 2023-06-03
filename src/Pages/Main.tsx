@@ -134,7 +134,7 @@ export default function Main() {
 const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 98.4rem;
   margin: 0 auto; /* 좌우 여백 자동 조정 */
 `;
 
@@ -144,13 +144,13 @@ const StyledImageContainer = styled.div`
   background-color: #f2f5f7;
   justify-content: center;
   align-items: center;
-  height: 55vh; /* 화면 높이의 특정 비율로 설정 */
+  height: 45vh; /* 화면 높이의 특정 비율로 설정 */
   position: relative;
 `;
 
 const StyledImage = styled.img`
-  width: 70%;
-  height: 70vh;
+  width: 100%;
+  height: 45vh;
   position: absolute;
   top: 0;
 `;
@@ -160,8 +160,8 @@ const StyledImageContents = styled.div`
   flex-direction: column;
   justify-content: space-around;
   position: absolute;
-  top: 50%;
-  left: 20%;
+  top: 30%;
+  left: 10%;
 
   width: 40%;
 `;
@@ -169,13 +169,13 @@ const StyledImageContents = styled.div`
 const StyledImageText = styled.h1`
   color: white;
   .big-text {
-    font-weight: 900;
-    font-size: 6rem;
+    font-weight: 800;
+    font-size: 4.5rem;
     font-style: italic;
   }
 
   .small-text {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: lighter;
     margin-bottom: 2rem;
   }
@@ -189,12 +189,13 @@ const StyledInputContainer = styled.div`
   border-radius: 1rem;
   opacity: 0.8;
   padding: 2rem;
-  height: 18vh;
+  height: 15vh;
+  width: 50rem;
 
   overflow: hidden;
 
   .input-header-text {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
   }
 
@@ -208,7 +209,7 @@ const StyledInputContainer = styled.div`
 
   .input-text {
     padding: 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     border: none;
     border-radius: 1rem;
     background-color: white;
@@ -217,7 +218,7 @@ const StyledInputContainer = styled.div`
 
   .find-match-button {
     padding: 1rem;
-    font-size: 2rem;
+    font-size: 1.2rem;
     border-radius: 1rem;
     background-color: #00980f;
   }
@@ -226,7 +227,7 @@ const StyledInputContainer = styled.div`
 const StyledListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20vh 1rem 1rem 1rem;
+  padding: 5vh 1rem 1rem 1rem;
   width: 98.4rem;
   margin: 1.4rem auto;
 `;
@@ -235,6 +236,7 @@ const StyledFieldList = styled.div`
   .field-list-header-text {
     text-decoration: underline;
     text-underline-position: under;
+    padding: 1rem;
   }
 
   .field-list {
