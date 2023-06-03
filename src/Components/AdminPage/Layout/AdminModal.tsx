@@ -1,10 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+interface UserData {
+  admin_id: string;
+  user_id: string;
+  name: string;
+  nick_name: string;
+  email: string;
+  phone_number: string;
+  role: string;
+  createdAt: string;
+}
+
 type props = {
-  // showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  data: any;
+  modalData: UserData;
 };
 
 function DetailModal(props: props) {
@@ -34,7 +44,7 @@ function DetailModal(props: props) {
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(props.data).map(([key, value]) => (
+                {Object.entries(props.modalData).map(([key, value]) => (
                   <tr key={key}>
                     <td>{key}</td>
                     <td>{JSON.stringify(value)}</td>
