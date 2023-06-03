@@ -61,7 +61,7 @@ function DropDown(props: Props) {
         </div>
         <div>
           <img
-            src="./dropdown.png"
+            src="/dropdown.png"
             style={{
               flex: 1,
               width: '5rem',
