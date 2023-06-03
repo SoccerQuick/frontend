@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import FilteringOptions from '../FilteringOptions';
+import FilteringOptions from '../../Commons/FilteringOptions';
 import DropDown from '../../Commons/DropDown';
 import axios from 'axios';
 

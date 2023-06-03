@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import AdminModal from '../Layout/AdminModal';
 import DropDown from '../../Commons/DropDown';
+import FilterlingOptions from '../../Commons/FilteringOptions';
 
 interface UserData {
   admin_id?: string;
@@ -24,7 +25,6 @@ function AdminUserManager() {
   // 검색어를 설정하는 부분
   const [inputValue, setInputValue] = React.useState<string>('');
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     setInputValue(e.target.value);
   };
 
@@ -76,7 +76,7 @@ function AdminUserManager() {
     <>
       <UserManageContainer>
         <DropDown
-          list={filterlingOptions.status}
+          list={FilterlingOptions.adminUserPage.status}
           selected={option}
           setSelected={setOption}
           style={{ width: '16rem' }}
@@ -171,69 +171,3 @@ const UserManageContainerTable = styled.div`
     text-align: center;
   }
 `;
-
-const filterlingOptions = {
-  status: ['통합검색', '닉네임', 'e-mail', '권한'],
-};
-
-const UserData = [
-  {
-    userId: 'admin',
-    password: '$2b$10$W2zlQImZpwqidTkPrSmloeLAeYziEUM4ANT47m41.I6r2Aaqf6dwa',
-    userName: '고구마',
-    userEmail: 'goguma@gamza.com',
-    role: 'admin',
-    favoritePlaygrounds: [],
-    isBanned: false,
-    banEndDate: null,
-    createdAt: {
-      $date: '2023-05-27T12:04:28.314Z',
-    },
-    updatedAt: {
-      $date: '2023-05-27T12:04:28.314Z',
-    },
-    __v: 0,
-  },
-  {
-    _id: {
-      $oid: '6471f2b249afe8edd996ae37',
-    },
-    userId: 'goguma',
-    password: '$2b$10$J7W.i/E8OG3JpJLKYCTh2u1KW0RnQoRCmictMRAuOqTvPxxMW7qAC',
-    userName: '고구마유저11',
-    userEmail: 'goguma@goguma11',
-    role: 'user',
-    favoritePlaygrounds: [],
-    isBanned: true,
-    banEndDate: {
-      $date: '2023-06-01T11:53:50.936Z',
-    },
-    createdAt: {
-      $date: '2023-05-27T12:08:18.091Z',
-    },
-    updatedAt: {
-      $date: '2023-05-30T11:53:50.938Z',
-    },
-    __v: 0,
-  },
-  {
-    _id: {
-      $oid: '647264e9585f29edb8c2a25f',
-    },
-    userId: 'goguma1',
-    password: '$2b$10$GgidQdHUL1hgL7n6B3dAKuU4y2jFKbi8XG4YrfZ3/2uyqh2BIjUt6',
-    userName: '고구마유저113',
-    userEmail: 'goguma@goguma113',
-    role: 'manager',
-    favoritePlaygrounds: [],
-    isBanned: false,
-    banEndDate: null,
-    createdAt: {
-      $date: '2023-05-27T20:15:37.556Z',
-    },
-    updatedAt: {
-      $date: '2023-05-29T11:54:44.176Z',
-    },
-    __v: 0,
-  },
-];

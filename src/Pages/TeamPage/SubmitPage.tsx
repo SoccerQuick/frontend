@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import FilteringOptions from '../../Components/TeamPage/FilteringOptions';
+import FilteringOptions from '../../Components/Commons/FilteringOptions';
 
 function SubmitPage() {
   return (

@@ -1,6 +1,9 @@
 import React from 'react';
 
-const FilterlingOptions = {
+const Filterling_Options = {
+  adminUserPage: {
+    status: ['통합검색', '닉네임', 'e-mail', '권한'],
+  },
   findingTeam: {
     status: ['모집상태', '미완료', '완료'],
     area: ['활동지역', '서울', '부산', '경기', '인천'],
@@ -31,4 +34,4 @@ const FilterlingOptions = {
   },
 };
 
-export default FilterlingOptions;
+export default Filterling_Options;
