@@ -56,7 +56,21 @@ function DropDown(props: Props) {
           setClick(!click);
         }}
       >
-        {selected.length > 0 ? selected : list[0]}
+        <div style={{ overflow: 'hidden', flex: 3 }}>
+          {selected.length > 0 ? selected : list[0]}
+        </div>
+        <div>
+          <img
+            src="./dropdown.png"
+            style={{
+              flex: 1,
+              width: '5rem',
+              height: '3rem',
+              alignSelf: 'center',
+              paddingLeft: '0.9rem',
+            }}
+          />
+        </div>
       </DropdownButton>
       {click && (
         <DropdownMenu>
@@ -87,8 +101,13 @@ const DropdownWrapper = styled.div`
 
 const DropdownButton = styled.button`
   background-color: #fff;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  overflow: hidden;
+  align-items: center;
   color: #333;
-  padding: 10px 15px;
+  padding-left: 2rem;
   width: 100%;
   height: 100%;
   border: 1px solid #ddd;
@@ -109,15 +128,15 @@ const DropdownMenu = styled.div`
 
 const DropdownItem = styled.button<DropdownItemProps>`
   display: block;
-  padding: 10px 15px;
+  padding: 9px 7px;
   text-decoration: none;
   width: 100%;
-  color: #333;
+  color: ${(props) => (props.picked ? '#fff' : '#333')};
   border: none;
   background: none;
   cursor: pointer;
-  background-color: ${(props) => (props.picked ? '#38d411' : '#fff')};
+  background-color: ${(props) => (props.picked ? 'rgb(2,208,0)' : '#fff')};
   &:hover {
-    background-color: #96df84;
+    background-color: ${(props) => !props.picked && '#dedede;'};
   }
 `;
