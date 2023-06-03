@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import FilteringOptions from '../FilteringOptions';
+import DropDown from '../../Commons/DropDown';
 import axios from 'axios';
 
 type FindingTeamProps = {
@@ -20,6 +21,12 @@ type FindTeamFilter = {
 };
 
 function FindingTeam(props: FindingTeamProps) {
+  const [status, setStatus] = React.useState('');
+  const [area, setArea] = React.useState('');
+  const [skill, setSkill] = React.useState('');
+  const [position, setPosition] = React.useState('');
+  const [gender, setGender] = React.useState('');
+
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
   const [findTeamFilter, setFindTeamFilter] = React.useState<FindTeamFilter>({
@@ -49,22 +56,39 @@ function FindingTeam(props: FindingTeamProps) {
     // });
   };
 
+  // 필터링 조건을 갱신하는 부분
+  React.useEffect(() => {
+    const filter = {
+      status: status === '모집상태' ? '' : status,
+      area: area === '활동지역' ? '' : area,
+      skill: skill === '실력수준' ? '' : skill,
+      position: position === '포지션' ? '' : position,
+      gender: gender === '성별' ? '' : gender,
+    };
+    setFindTeamFilter(filter);
+  }, [status, area, skill, position, gender]);
+
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] = React.useState(dummydata_findingTeam);
+
+  // 데이터를 필터링하는 부분, 상관없음일 경우 무조건 결과에 포함시킨다.
   React.useEffect(() => {
     const newData = data.filter((item) => {
       const filterList = Object.keys(findTeamFilter);
       for (let key of filterList) {
-        if (
-          findTeamFilter[key as keyof FindTeamFilter] !== null &&
-          findTeamFilter[key as keyof FindTeamFilter] !== item[key]
-        ) {
-          return false;
+        if (findTeamFilter[key as keyof FindTeamFilter] === '상관없음') {
+          return true;
+        } else {
+          if (
+            findTeamFilter[key as keyof FindTeamFilter] !== '' &&
+            findTeamFilter[key as keyof FindTeamFilter] !== item[key]
+          ) {
+            return false;
+          }
         }
       }
       return true;
     });
-
     setFilteredData(newData);
   }, [data, findTeamFilter]);
 
@@ -72,85 +96,43 @@ function FindingTeam(props: FindingTeamProps) {
     <>
       <Teampage>
         <TeamPageOption>
-          <SelectCategory
-            options={FilteringOptions.findingTeam.status}
-            defaultValue={FilteringOptions.findingTeam.status[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindTeamFilter((init: any) => ({
-                ...init,
-                status:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingTeam.status}
+            selected={status}
+            setSelected={setStatus}
+            style={{ width: '16rem' }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingTeam.area}
-            defaultValue={FilteringOptions.findingTeam.area[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindTeamFilter((init: any) => ({
-                ...init,
-                area:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingTeam.area}
+            selected={area}
+            setSelected={setArea}
+            style={{ width: '16rem' }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingTeam.skill}
-            defaultValue={FilteringOptions.findingTeam.skill[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindTeamFilter((init: any) => ({
-                ...init,
-                skill:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingTeam.skill}
+            selected={skill}
+            setSelected={setSkill}
+            style={{ width: '16rem' }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingTeam.position}
-            defaultValue={FilteringOptions.findingTeam.position[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindTeamFilter((init: any) => ({
-                ...init,
-                position:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingTeam.position}
+            selected={position}
+            setSelected={setPosition}
+            style={{ width: '16rem' }}
           />
-          <SelectCategory
-            options={FilteringOptions.findingTeam.gender}
-            defaultValue={FilteringOptions.findingTeam.gender[0]}
-            styles={SelectStyles}
-            onChange={(selectedOption: any) => {
-              setFindTeamFilter((init: any) => ({
-                ...init,
-                gender:
-                  selectedOption.value === 'option0'
-                    ? null
-                    : selectedOption.label,
-              }));
-            }}
+          <DropDown
+            list={FilteringOptions.findingTeam.gender}
+            selected={gender}
+            setSelected={setGender}
+            style={{ width: '16rem' }}
           />
           <button
             onClick={() => {
-              setFindTeamFilter({
-                status: null,
-                area: null,
-                skill: null,
-                position: null,
-                gender: null,
-              });
+              setStatus('');
+              setArea('');
+              setSkill('');
+              setPosition('');
+              setGender('');
             }}
           >
             초기화

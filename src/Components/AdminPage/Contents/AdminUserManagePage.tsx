@@ -1,33 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Select from 'react-select';
 import axios from 'axios';
-import { fileURLToPath } from 'url';
+import AdminModal from '../Layout/AdminModal';
+import DropDown from '../../Commons/DropDown';
 
-// type props = {
-//   showModal: boolean;
-//   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-//   modalData: any[];
-//   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
-// };
+interface UserData {
+  admin_id?: string;
+  user_id: string;
+  name: string;
+  nick_name: string;
+  email: string;
+  phone_number: string;
+  role: string;
+  gender: string;
+  createdAt: string;
+}
 
 function AdminUserManager() {
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [modalData, setModalData] = React.useState<any>([]);
-
-  // 검색조건을 선택하는 부분
-  const [searchOption, setSearchOption] = React.useState<string | null>(null);
+  const [modalData, setModalData] = React.useState<any>();
+  const [option, setOption] = React.useState('통합검색');
 
   // 검색어를 설정하는 부분
   const [inputValue, setInputValue] = React.useState<string>('');
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setInputValue(e.target.value);
   };
 
   // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<any[]>([]);
+  const [data, setData] = React.useState<UserData[]>([]);
   React.useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/admin/change`)
@@ -40,20 +42,30 @@ function AdminUserManager() {
       });
   }, []);
 
-  const [filteredData, setFilteredData] = React.useState<any[]>([]);
-  function filter(e: any) {
+  const [filteredData, setFilteredData] = React.useState<UserData[]>([]);
+  function filter(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const newData = data.filter((item) => {
-      if (searchOption === null) {
+      if (option === '통합검색') {
         if (
-          item['role'].includes(inputValue) ||
-          item['name'].includes(inputValue) ||
-          item['email'].includes(inputValue)
+          item.role.includes(inputValue) ||
+          item.name.includes(inputValue) ||
+          item.email.includes(inputValue)
         ) {
           return true;
         }
-      } else if (item[searchOption].includes(inputValue)) {
-        return true;
+      } else if (option === '닉네임') {
+        if (item.name.includes(inputValue)) {
+          return true;
+        }
+      } else if (option === 'e-mail') {
+        if (item.email.includes(inputValue)) {
+          return true;
+        }
+      } else if (option === '권한') {
+        if (item.role.includes(inputValue)) {
+          return true;
+        }
       }
       return false;
     });
@@ -63,28 +75,11 @@ function AdminUserManager() {
   return (
     <>
       <UserManageContainer>
-        <button
-          onClick={() => {
-            console.log(filteredData);
-          }}
-        >
-          ㅁㄴㅇㄹ
-        </button>
-        <SelectCategory
-          options={FilterlingOptions.status}
-          defaultValue={FilterlingOptions.status[0]}
-          styles={SelectStyles}
-          onChange={(option: any) => {
-            if (option.label === '닉네임') {
-              setSearchOption('userName');
-            } else if (option.label === 'e-mail') {
-              setSearchOption('userEmail');
-            } else if (option.label === '권한') {
-              setSearchOption('role');
-            } else {
-              setSearchOption(null);
-            }
-          }}
+        <DropDown
+          list={filterlingOptions.status}
+          selected={option}
+          setSelected={setOption}
+          style={{ width: '16rem' }}
         />
         <form onSubmit={filter}>
           <input
@@ -112,52 +107,36 @@ function AdminUserManager() {
             </tr>
           </thead>
           <tbody>
-            {filteredData.length > 0
-              ? filteredData.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>{idx + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.email}</td>
-                    <td>{item.role}</td>
-                    <td>
-                      <button
-                        onClick={() => {
-                          setShowModal(true);
-                          setModalData(item);
-                        }}
-                      >
-                        조회
-                      </button>
-                    </td>
-                    <td>
-                      <button>정보수정</button>
-                    </td>
-                  </tr>
-                ))
-              : data.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>{idx + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.email}</td>
-                    <td>{item.role}</td>
-                    <td>
-                      <button
-                        onClick={() => {
-                          setShowModal(true);
-                          setModalData(item);
-                        }}
-                      >
-                        조회
-                      </button>
-                    </td>
-                    <td>
-                      <button>정보수정</button>
-                    </td>
-                  </tr>
-                ))}
+            {(inputValue === '' && filteredData.length === 0
+              ? data
+              : filteredData
+            ).map((item, idx) => (
+              <tr key={idx}>
+                <td>{idx + 1}</td>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.role}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setShowModal(true);
+                      setModalData(item);
+                    }}
+                  >
+                    조회
+                  </button>
+                </td>
+                <td>
+                  <button>정보수정</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </UserManageContainerTable>
+      {showModal && (
+        <AdminModal setShowModal={setShowModal} modalData={modalData} />
+      )}
     </>
   );
 }
@@ -175,6 +154,7 @@ const UserManageContainerTable = styled.div`
   display: flex;
   justify-content: space-between;
   width: 70%;
+  font-size: 2rem;
   table {
     width: 100%;
   }
@@ -192,36 +172,8 @@ const UserManageContainerTable = styled.div`
   }
 `;
 
-// Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
-const SelectCategory = styled(Select)`
-  width: 16rem;
-  font-size: 2rem;
-`;
-// Select 라이브러리에서 사용할 세부 스타일 속성
-const SelectStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    border: '1px solid #ccc',
-    height: '5.5rem',
-    borderRadius: '4px',
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? '#38D411' : 'white',
-    color: state.isSelected ? 'white' : 'black',
-    ':hover': {
-      backgroundColor: state.isSelected ? '#38D411' : '#96DF84',
-    },
-  }),
-};
-
-const FilterlingOptions = {
-  status: [
-    { value: 'option0', label: '통합검색' },
-    { value: 'option1', label: '닉네임' },
-    { value: 'option2', label: 'e-mail' },
-    { value: 'option3', label: '권한' },
-  ],
+const filterlingOptions = {
+  status: ['통합검색', '닉네임', 'e-mail', '권한'],
 };
 
 const UserData = [
