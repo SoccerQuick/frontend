@@ -1,16 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import axios from 'axios';
+import { fileURLToPath } from 'url';
 
-type props = {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any[];
-  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
-};
+// type props = {
+//   showModal: boolean;
+//   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+//   modalData: any[];
+//   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+// };
 
-function AdminUserManager(props: props) {
+function AdminUserManager() {
+  const [showModal, setShowModal] = React.useState<boolean>(false);
+  const [modalData, setModalData] = React.useState<any>([]);
+
   // 검색조건을 선택하는 부분
   const [searchOption, setSearchOption] = React.useState<string | null>(null);
 
@@ -24,31 +29,26 @@ function AdminUserManager(props: props) {
   // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<any[]>([]);
   React.useEffect(() => {
-    fetchData();
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/admin/change`)
+      .then((res) => {
+        setData(res.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+        setData([]);
+      });
   }, []);
 
-  // DB에서 데이터를 가져오는 부분, 현재는 dummydata를 사용하고 있음.
-  const fetchData = () => {
-    // axios
-    //   .get('gomao.com')
-    //   .then((res) => {
-    //     // 가져온 데이터가 있다면 data에 저장한다.
-    //     setData(res.data);
-    //   })
-    //   .catch((error) => {
-    //     // 가져온 데이터가 없다면 dummyData를 사용한다.
-    setData(UserData);
-    // });
-  };
-  const [filteredData, setFilteredData] = React.useState<any[]>(UserData);
-  const filter = (e: any) => {
+  const [filteredData, setFilteredData] = React.useState<any[]>([]);
+  function filter(e: any) {
     e.preventDefault();
     const newData = data.filter((item) => {
       if (searchOption === null) {
         if (
           item['role'].includes(inputValue) ||
-          item['userName'].includes(inputValue) ||
-          item['userEmail'].includes(inputValue)
+          item['name'].includes(inputValue) ||
+          item['email'].includes(inputValue)
         ) {
           return true;
         }
@@ -57,13 +57,19 @@ function AdminUserManager(props: props) {
       }
       return false;
     });
-
     setFilteredData(newData);
-  };
+  }
 
   return (
     <>
       <UserManageContainer>
+        <button
+          onClick={() => {
+            console.log(filteredData);
+          }}
+        >
+          ㅁㄴㅇㄹ
+        </button>
         <SelectCategory
           options={FilterlingOptions.status}
           defaultValue={FilterlingOptions.status[0]}
@@ -107,16 +113,16 @@ function AdminUserManager(props: props) {
           </thead>
           <tbody>
             {filteredData.map((item, idx) => (
-              <tr key={item.userId}>
+              <tr key={idx}>
                 <td>{idx + 1}</td>
-                <td>{item.userName}</td>
-                <td>{item.userEmail}</td>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
                 <td>{item.role}</td>
                 <td>
                   <button
                     onClick={() => {
-                      props.setShowModal(true);
-                      props.setModalData(item);
+                      setShowModal(true);
+                      setModalData(item);
                     }}
                   >
                     조회
