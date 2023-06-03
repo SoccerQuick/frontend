@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import FilteringOptions from '../FilteringOptions';
+import FilteringOptions from '../../Commons/FilteringOptions';
 import axios from 'axios';
 import DropDown from '../../Commons/DropDown';
 
