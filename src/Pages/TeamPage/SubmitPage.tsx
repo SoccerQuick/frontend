@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import FilteringOptions from './FilteringOptions';
+import FilteringOptions from '../../Components/Commons/FilteringOptions';
 
 function SubmitPage() {
   return (
@@ -15,8 +15,8 @@ function SubmitPage() {
       <StyledContainer>
         <StyledBox>
           <SelectCategory
-            options={FilteringOptions.category}
-            defaultValue={FilteringOptions.category[0]}
+            options={FilteringOptions.submit.category}
+            defaultValue={FilteringOptions.submit.category[0]}
             styles={SelectStyles}
           />
           <StyledTitle>제목</StyledTitle>

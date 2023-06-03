@@ -21,22 +21,21 @@ function FindingGround(props: FindingGroundProps) {
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<any[]>([]);
   React.useEffect(() => {
-    fetchData();
+    const fetchData = () => {
+      // axios
+      //   .get('gomao.com')
+      //   .then((res) => {
+      //     // 가져온 데이터가 있다면 data에 저장한다.
+      //     setData(res.data);
+      //   })
+      //   .catch((error) => {
+      //     // 가져온 데이터가 없다면 dummyData를 사용한다.
+      setData(dummydata_filteredGround);
+      // });
+    };
   }, []);
 
   // DB에서 데이터를 가져오는 부분, 현재는 더미데이터를 불러오고 있음
-  const fetchData = () => {
-    // axios
-    //   .get('gomao.com')
-    //   .then((res) => {
-    //     // 가져온 데이터가 있다면 data에 저장한다.
-    //     setData(res.data);
-    //   })
-    //   .catch((error) => {
-    //     // 가져온 데이터가 없다면 dummyData를 사용한다.
-    setData(dummydata_filteredGround);
-    // });
-  };
 
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] = React.useState(

@@ -11,7 +11,7 @@ export default function Review() {
       <Header />
       <HeaderCategory />
       <StyledBodyContainer>
-        <StyledCarousel></StyledCarousel>
+        <StyledCarousel>abc</StyledCarousel>
       </StyledBodyContainer>
       <Footer />
     </>
@@ -22,6 +22,12 @@ const StyledBodyContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+
+  width: 98.5rem;
+  margin: 0 auto;
+  padding: 0 2rem;
 `;
 
-const StyledCarousel = styled.div``;
+const StyledCarousel = styled.div`
+  background-color: #f2f5f7;
+`;

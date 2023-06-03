@@ -32,14 +32,13 @@ export function MyPageInfo() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8800/user/aaa`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => result.userData)
+    axios
+      .get('http://localhost:8800/user/aaa', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => res.data.userData)
       .then((user) => {
         setFormData((prev) => ({
           ...prev,
@@ -51,7 +50,7 @@ export function MyPageInfo() {
         }));
       })
       .catch((err) => console.log(err));
-  }, [formData]);
+  }, []);
 
   return (
     <StyledInfoContainer>
