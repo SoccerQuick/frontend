@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
-import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
+import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import Stadiums from '../Components/GroundDetail/Stadiums';
+import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
+import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/ScrollToTarget';
 import ClipUrl from '../Components/ClipUrl';
-import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 
@@ -31,6 +32,8 @@ export interface groundDataType {
 const GroundDetail = () => {
   const [groundData, setGroundData] = useState<groundDataType>();
   const [reservationData, setReservationData] = useState<string[]>([]);
+  const [showImgModal, setShowImgModal] = useState(false);
+  const [ImgModalIndex, setImgModalIndex] = useState(0);
 
   useEffect(() => {
     setGroundData(GroundDummy);
@@ -49,18 +52,98 @@ const GroundDetail = () => {
   return (
     <>
       <Header />
-      <GroundDetailContainer>
-        <div className="slider">
-          {groundData && <GroundDetailCarousel groundImg={groundData.image} />}
-        </div>
-        <GroundDetailHeader>
-          <GroundDetailHeaderContent>
-            <p>{groundData && groundData.address.shortAddress}</p>
-            <h2>{groundData && groundData.title}</h2>
-            <HeaderAddress>
-              <div>{groundData && groundData.address.fullAddress}</div>
+      {groundData && (
+        <GroundDetailContainer>
+          <div className="slider">
+            {groundData && (
+              <GroundDetailCarousel groundImg={groundData.image} />
+            )}
+          </div>
+          <GroundDetailHeader>
+            <GroundDetailHeaderContent>
+              <p>{groundData && groundData.address.shortAddress}</p>
+              <h2>{groundData && groundData.title}</h2>
+              <HeaderAddress>
+                <div>{groundData && groundData.address.fullAddress}</div>
+                <p
+                  className="copy"
+                  onClick={() =>
+                    groundData &&
+                    ClipUrl(
+                      groundData.address.fullAddress,
+                      '주소가 복사되었습니다.'
+                    )
+                  }
+                >
+                  주소복사
+                </p>
+                <p onClick={() => ScrollToTarget('mapElement')}>지도보기</p>
+              </HeaderAddress>
+            </GroundDetailHeaderContent>
+            <GroundDetailHeaderBtn>
+              <button>
+                <a href={groundData && groundData.url}>
+                  <img src={homeIcon} alt="" />
+                  홈페이지 바로가기
+                </a>
+              </button>
+              <button>
+                <img src={starIcon} alt="" />찜
+              </button>
+            </GroundDetailHeaderBtn>
+          </GroundDetailHeader>
+          <Source>
+            이 구장 정보는 <span>{groundData && groundData.source}</span>에서
+            제공됩니다.
+          </Source>
+          <ContentsBox>
+            <ContentsTitle>
+              <h2>🥅 시설 목록</h2>
+            </ContentsTitle>
+            {groundData && (
+              <Stadiums
+                stadiumsData={groundData.stadiums}
+                setShowImgModal={setShowImgModal}
+                setImgModalIndex={setImgModalIndex}
+              />
+            )}
+          </ContentsBox>
+          <ContentsBox>
+            <ContentsTitle>
+              <h2>🏷 시설 특징</h2>
+              <p>
+                변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.
+              </p>
+            </ContentsTitle>
+            <ProvidedItems>
+              <p>제공 항목</p>
+              <ul>
+                {groundData &&
+                  groundData.provided.map((data) => <li key={data}>{data}</li>)}
+              </ul>
+            </ProvidedItems>
+            <ProvidedItems>
+              <p>비제공 항목</p>
+              <NonProvidedItems>
+                {groundData &&
+                  groundData.nonProvided.map((data) => (
+                    <li key={data}>{data}</li>
+                  ))}
+              </NonProvidedItems>
+            </ProvidedItems>
+          </ContentsBox>
+          <ContentsBox id="mapElement">
+            <ContentsTitle>
+              <h2>🗺 위치</h2>
+            </ContentsTitle>
+            <div>
+              {groundData && (
+                <OneMarkerMap address={groundData.address.fullAddress} />
+              )}
+            </div>
+            <GroundAddressDetail>
+              <p>{groundData && groundData.address.fullAddress}</p>
               <p
-                className="copy"
                 onClick={() =>
                   groundData &&
                   ClipUrl(
@@ -69,105 +152,42 @@ const GroundDetail = () => {
                   )
                 }
               >
-                주소복사
+                주소 복사
               </p>
-              <p onClick={() => ScrollToTarget('mapElement')}>지도보기</p>
-            </HeaderAddress>
-          </GroundDetailHeaderContent>
-          <GroundDetailHeaderBtn>
-            <button>
-              <a href={groundData && groundData.url}>
-                <img src={homeIcon} alt="" />
-                홈페이지 바로가기
-              </a>
-            </button>
-            <button>
-              <img src={starIcon} alt="" />찜
-            </button>
-          </GroundDetailHeaderBtn>
-        </GroundDetailHeader>
-        <Source>
-          이 구장 정보는 <span>{groundData && groundData.source}</span>에서
-          제공됩니다.
-        </Source>
-        <ContentsBox>
-          <ContentsTitle>
-            <h2>🥅 시설 목록</h2>
-          </ContentsTitle>
-          {groundData && <Stadiums stadiumsData={groundData.stadiums} />}
-        </ContentsBox>
-        <ContentsBox>
-          <ContentsTitle>
-            <h2>🏷 시설 특징</h2>
-            <p>
-              변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.
-            </p>
-          </ContentsTitle>
-          <ProvidedItems>
-            <p>제공 항목</p>
-            <ul>
-              {groundData &&
-                groundData.provided.map((data) => <li key={data}>{data}</li>)}
-            </ul>
-          </ProvidedItems>
-          <ProvidedItems>
-            <p>비제공 항목</p>
-            <NonProvidedItems>
-              {groundData &&
-                groundData.nonProvided.map((data) => (
-                  <li key={data}>{data}</li>
-                ))}
-            </NonProvidedItems>
-          </ProvidedItems>
-        </ContentsBox>
-        <ContentsBox id="mapElement">
-          <ContentsTitle>
-            <h2>🗺 위치</h2>
-          </ContentsTitle>
-          <div>
-            {groundData && (
-              <OneMarkerMap address={groundData.address.fullAddress} />
-            )}
-          </div>
-          <GroundAddressDetail>
-            <p>{groundData && groundData.address.fullAddress}</p>
-            <p
-              onClick={() =>
-                groundData &&
-                ClipUrl(
-                  groundData.address.fullAddress,
-                  '주소가 복사되었습니다.'
-                )
-              }
-            >
-              주소 복사
-            </p>
-          </GroundAddressDetail>
-        </ContentsBox>
-        <ContentsBox>
-          <ContentsTitle>
-            <h2>📝 예약 취소 및 환불 규정</h2>
-            <p>
-              변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.
-            </p>
-          </ContentsTitle>
-          <ReservationDetailContent>
-            <div>
-              {reservationData &&
-                reservationData.map((data) => (
-                  <>
-                    <h3 key={data}>{data}</h3>
-                    {groundData &&
-                      groundData.reservation[data].map((liData) => (
-                        <li key={liData}>{liData}</li>
-                      ))}
-                  </>
-                ))}
-            </div>
-          </ReservationDetailContent>
-        </ContentsBox>
-      </GroundDetailContainer>
+            </GroundAddressDetail>
+          </ContentsBox>
+          <ContentsBox>
+            <ContentsTitle>
+              <h2>📝 예약 취소 및 환불 규정</h2>
+              <p>
+                변경 가능성이 있으므로 정확한 정보는 홈페이지에서 확인해주세요.
+              </p>
+            </ContentsTitle>
+            <ReservationDetailContent>
+              <div>
+                {reservationData &&
+                  reservationData.map((data) => (
+                    <>
+                      <h3 key={data}>{data}</h3>
+                      {groundData &&
+                        groundData.reservation[data].map((liData) => (
+                          <li key={liData}>{liData}</li>
+                        ))}
+                    </>
+                  ))}
+              </div>
+            </ReservationDetailContent>
+          </ContentsBox>
+        </GroundDetailContainer>
+      )}
       <Footer />
+      {showImgModal && groundData && (
+        <GroundImageModal
+          stadiumsData={groundData.stadiums}
+          setShowImgModal={setShowImgModal}
+          ImgModalIndex={ImgModalIndex}
+        />
+      )}
     </>
   );
 };

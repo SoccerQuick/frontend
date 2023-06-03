@@ -8,11 +8,15 @@ import grassIcon from '../../styles/icon/grass.svg';
 
 interface StadiumsProps {
   stadiumsData: groundDataType['stadiums'];
+  setShowImgModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setImgModalIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Stadiums: React.FC<StadiumsProps> = ({ stadiumsData }) => {
-  const [openImgModal, setOpenImgModal] = useState(false);
-
+const Stadiums: React.FC<StadiumsProps> = ({
+  stadiumsData,
+  setShowImgModal,
+  setImgModalIndex,
+}) => {
   const splitStadiumDetail = (detail: string) => {
     return detail.split('•');
   };
@@ -24,7 +28,12 @@ const Stadiums: React.FC<StadiumsProps> = ({ stadiumsData }) => {
           <Stadium key={data.usage}>
             <StadiumImage>
               <GroundImage src={data.image[0]} alt="stadiumImg" />
-              <LargeIcon>
+              <LargeIcon
+                onClick={() => {
+                  setShowImgModal(true);
+                  setImgModalIndex(idx);
+                }}
+              >
                 <img src={largeIcon} alt="largeIcon" />
               </LargeIcon>
             </StadiumImage>
