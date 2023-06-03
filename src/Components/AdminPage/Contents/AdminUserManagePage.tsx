@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import axios from 'axios';
 import { fileURLToPath } from 'url';
+import AdminModal from '../Layout/AdminModal';
 
-// type props = {
-//   showModal: boolean;
-//   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-//   modalData: any[];
-//   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
-// };
+interface UserData {
+  admin_id: null | string;
+  user_id: string;
+  name: string;
+  nick_name: string;
+  email: string;
+  phone_number: string;
+  role: string;
+  gender: string;
+  createdAt: string;
+}
 
 function AdminUserManager() {
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -40,7 +46,20 @@ function AdminUserManager() {
       });
   }, []);
 
-  const [filteredData, setFilteredData] = React.useState<any[]>([]);
+  // 속성 정의를 위한 데이터 원본
+  //   {
+  //     "admin_id": null,
+  //     "user_id": "conflict",
+  //     "name": "충돌",
+  //     "nick_name": "conflict",
+  //     "email": "conflict@namver.com",
+  //     "phone_number": "01011921214",
+  //     "role": "user",
+  //     "gender": "남",
+  //     "createdAt": "2023-06-03T07:22:41.798Z"
+  // }
+
+  const [filteredData, setFilteredData] = React.useState<UserData[]>([]);
   function filter(e: any) {
     e.preventDefault();
     const newData = data.filter((item) => {
@@ -63,16 +82,9 @@ function AdminUserManager() {
   return (
     <>
       <UserManageContainer>
-        <button
-          onClick={() => {
-            console.log(filteredData);
-          }}
-        >
-          ㅁㄴㅇㄹ
-        </button>
         <SelectCategory
-          options={FilterlingOptions.status}
-          defaultValue={FilterlingOptions.status[0]}
+          options={filterlingOptions.status}
+          defaultValue={filterlingOptions.status[0]}
           styles={SelectStyles}
           onChange={(option: any) => {
             if (option.label === '닉네임') {
@@ -158,6 +170,9 @@ function AdminUserManager() {
           </tbody>
         </table>
       </UserManageContainerTable>
+      {showModal && (
+        <AdminModal setShowModal={setShowModal} modalData={modalData} />
+      )}
     </>
   );
 }
@@ -215,7 +230,7 @@ const SelectStyles = {
   }),
 };
 
-const FilterlingOptions = {
+const filterlingOptions = {
   status: [
     { value: 'option0', label: '통합검색' },
     { value: 'option1', label: '닉네임' },
