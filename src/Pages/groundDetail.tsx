@@ -7,8 +7,8 @@ import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarouse
 import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
-import ScrollToTarget from '../Components/ScrollToTarget';
-import ClipUrl from '../Components/ClipUrl';
+import ScrollToTarget from '../Components/scrollToTarget';
+// import ClipUrl from '../Components/ClipUrl';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 
@@ -49,6 +49,15 @@ const GroundDetail = () => {
     return detail.split('•');
   };
 
+  const clipUrl = () => {
+    if (groundData)
+      window.navigator.clipboard
+        .writeText(groundData.address.fullAddress)
+        .then(() => {
+          alert('주소가 복사되었습니다.');
+        });
+  };
+
   return (
     <>
       <Header />
@@ -65,16 +74,7 @@ const GroundDetail = () => {
               <h2>{groundData && groundData.title}</h2>
               <HeaderAddress>
                 <div>{groundData && groundData.address.fullAddress}</div>
-                <p
-                  className="copy"
-                  onClick={() =>
-                    groundData &&
-                    ClipUrl(
-                      groundData.address.fullAddress,
-                      '주소가 복사되었습니다.'
-                    )
-                  }
-                >
+                <p className="copy" onClick={() => clipUrl()}>
                   주소복사
                 </p>
                 <p onClick={() => ScrollToTarget('mapElement')}>지도보기</p>
@@ -143,17 +143,7 @@ const GroundDetail = () => {
             </div>
             <GroundAddressDetail>
               <p>{groundData && groundData.address.fullAddress}</p>
-              <p
-                onClick={() =>
-                  groundData &&
-                  ClipUrl(
-                    groundData.address.fullAddress,
-                    '주소가 복사되었습니다.'
-                  )
-                }
-              >
-                주소 복사
-              </p>
+              <p onClick={() => clipUrl()}>주소 복사</p>
             </GroundAddressDetail>
           </ContentsBox>
           <ContentsBox>
