@@ -26,14 +26,16 @@ function TeamPage() {
         <Teampage>
           <TeamPageHeader>
             <TeamPageOption>
-              <button
-                onClick={() => {
-                  setFindingTeam(true);
-                  setFindingMember(true);
-                }}
-              >
-                모두 보기
-              </button>
+              <Link to="/teampage">
+                <button
+                  onClick={() => {
+                    setFindingTeam(true);
+                    setFindingMember(true);
+                  }}
+                >
+                  모두 보기
+                </button>
+              </Link>
               <button
                 onClick={() => {
                   setFindingMember(true);
@@ -42,6 +44,7 @@ function TeamPage() {
               >
                 팀원 구해요
               </button>
+
               <button
                 onClick={() => {
                   setFindingMember(false);
@@ -51,7 +54,8 @@ function TeamPage() {
                 팀 구해요
               </button>
             </TeamPageOption>
-            <button
+            <Link
+              to="/teampage/submit"
               style={{
                 display: 'flex',
                 marginLeft: 'auto',
@@ -61,8 +65,8 @@ function TeamPage() {
                 marginRight: 7,
               }}
             >
-              글 작성하기
-            </button>
+              <button>글 작성하기</button>
+            </Link>
           </TeamPageHeader>
         </Teampage>
         <Routes>

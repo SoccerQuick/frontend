@@ -1,17 +1,11 @@
 import styled, { css } from 'styled-components';
 import { FormEvent } from 'react';
 
-// modal props type
-Modal.defaultProps = {
-  long: false,
-  register: false,
-};
-
 // Modal
 export function Modal(props: {
   children: React.ReactNode;
-  long: boolean;
-  register: boolean;
+  long?: boolean;
+  register?: boolean;
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -181,7 +175,7 @@ export function ModalTerms(props: {
 
 // styled-components
 // Modal
-const ModalBox = styled.div<{ long: boolean }>`
+const ModalBox = styled.div<{ long?: boolean }>`
   position: fixed;
   width: 480px;
   height: ${(props) => (props.long ? '750px' : '450px')};
