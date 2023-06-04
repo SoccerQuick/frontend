@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import FilteringOptions from '../../Commons/FilteringOptions';
-import DropDown from '../../Commons/DropDown';
+import FilteringOptions from '../../../Commons/FilteringOptions';
+import DropDown from '../../../Commons/DropDown';
 import axios from 'axios';
 
 type FindingTeamProps = {
@@ -186,13 +186,13 @@ function FindingTeam(props: FindingTeamProps) {
                       조회
                     </button>
                   </td>
-                  {item.status === '미완료' ? (
-                    <td>
+                  <td>
+                    {item.status === '미완료' ? (
                       <button>초대</button>
-                    </td>
-                  ) : (
-                    <td>{item.status}</td>
-                  )}
+                    ) : (
+                      item.status
+                    )}
+                  </td>
                 </StyledTr>
               ))}
             </tbody>
@@ -215,7 +215,7 @@ const TeamPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   // background-color: beige;
-  width: 70%;
+  width: 100%;
   table {
     width: 100%;
   }
@@ -236,28 +236,6 @@ const TeamPageOption = styled.div`
   display: flex;
   margin: 10px 10px;
 `;
-
-// Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
-const SelectCategory = styled(Select)`
-  width: 14rem;
-  font-size: 1.4rem;
-`;
-// Select 라이브러리에서 사용할 세부 스타일 속성
-const SelectStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? '#38D411' : 'white',
-    color: state.isSelected ? 'white' : 'black',
-    ':hover': {
-      backgroundColor: state.isSelected ? '#38D411' : '#96DF84',
-    },
-  }),
-};
 
 const StyledTr = styled.tr`
   height: 4rem;
