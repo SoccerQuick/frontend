@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import FindPage from './FindPage';
 import SubmitPage from './SubmitPage';
 import DetailPage from './DetailPage';
 import EditPage from './EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
 function TeamPage() {
-  // const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
+  const location = useLocation();
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -57,7 +57,8 @@ function TeamPage() {
             <Link
               to="/teampage/submit"
               style={{
-                display: 'flex',
+                display:
+                  location.pathname === '/teampage/submit' ? 'none' : 'flex',
                 marginLeft: 'auto',
                 height: 'fit-content',
                 alignItems: 'center',
@@ -68,23 +69,25 @@ function TeamPage() {
               <button>글 작성하기</button>
             </Link>
           </TeamPageHeader>
-        </Teampage>
-        <Routes>
-          <Route path="/submit" element={<SubmitPage />} />
-          <Route path="/detail" element={<DetailPage />} />
-          <Route path="/edit" element={<EditPage />} />
-          <Route
-            path="/"
-            element={
-              <FindPage
-                findingTeam={findingTeam}
-                findingMember={findingMember}
-                showModal={showModal}
-                setShowModal={setShowModal}
+          <TeamPageBody>
+            <Routes>
+              <Route path="/submit" element={<SubmitPage />} />
+              <Route path="/detail" element={<DetailPage />} />
+              <Route path="/edit" element={<EditPage />} />
+              <Route
+                path="/"
+                element={
+                  <FindPage
+                    findingTeam={findingTeam}
+                    findingMember={findingMember}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                  />
+                }
               />
-            }
-          />
-        </Routes>
+            </Routes>
+          </TeamPageBody>
+        </Teampage>
       </div>
       <Footer />
     </>
@@ -94,15 +97,21 @@ function TeamPage() {
 export default TeamPage;
 
 const Teampage = styled.div`
-  display: flex;
+  display: grid;
   justify-content: center;
 `;
 const TeamPageHeader = styled.div`
   display: flex;
-  width: 70%;
+  width: 120rem;
   background-color: yellowgreen;
 `;
+
 const TeamPageOption = styled.div`
   display: flex;
   margin: 10px 10px;
+`;
+
+const TeamPageBody = styled.div`
+  height: 80rem;
+  justify-content: center;
 `;

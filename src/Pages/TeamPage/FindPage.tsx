@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import FindingMember from '../../Components/TeamPage/Contents/FindingMember';
-import FindingTeam from '../../Components/TeamPage/Contents/FindingTeam';
+import FindingMember from '../../Components/TeamPage/Contents/FindPage/FindingMember';
+import FindingTeam from '../../Components/TeamPage/Contents/FindPage/FindingTeam';
 import TeamPageModal from '../../Components/TeamPage/Layout/TeamPageModal';
 
 type props = {
@@ -12,14 +12,13 @@ type props = {
 };
 
 function FindPage(props: props) {
-  // const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
   const findingTeam = props.findingTeam;
   const findingMember = props.findingMember;
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [modalData, setModalData] = React.useState<any>([]);
 
   return (
-    <>
+    <div style={{ width: '100%' }}>
       {showModal && (
         <TeamPageModal
           showModal={showModal}
@@ -48,7 +47,7 @@ function FindPage(props: props) {
           />
         )}
       </div>
-    </>
+    </div>
   );
 }
 
