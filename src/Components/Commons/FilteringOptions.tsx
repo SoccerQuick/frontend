@@ -26,11 +26,8 @@ const Filterling_Options = {
     gender: ['성별', '남', '여', '상관없음'],
   },
   submit: {
-    category: [
-      { value: 'option0', label: '카테고리' },
-      { value: 'option1', label: '팀원 구해요' },
-      { value: 'option2', label: '팀 구해요' },
-    ],
+    category: ['카테고리', '팀원 구해요', '팀 구해요'],
+    allowRandom: ['랜덤매칭', '허용', '비허용'],
   },
 };
 
