@@ -13,12 +13,13 @@ function SearchPage() {
     <>
       <Header />
       <HeaderCategory />
-      <div style={{ display: 'grid', justifyContent: 'center' }}>
+      <div style={{ justifyContent: 'center' }}>
         <div
           style={{
             height: '25rem',
-            width: '100%',
+            width: '98.4rem',
             backgroundColor: 'beige',
+            margin: 'auto',
           }}
         >
           지도 띄울 부분
@@ -26,7 +27,8 @@ function SearchPage() {
         <div
           style={{
             height: '100rem',
-            width: 'fit-content',
+            width: '98.4rem',
+            margin: 'auto',
           }}
         >
           <SearchData

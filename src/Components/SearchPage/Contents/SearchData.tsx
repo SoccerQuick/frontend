@@ -43,7 +43,7 @@ function FindingGround(props: FindingGroundProps) {
   );
 
   return (
-    <div style={{ width: '100%' }}>
+    <SearchContainer style={{ width: '100%' }}>
       <SearchFilter
         filterOption={filterOption}
         setFilterOption={setFilterOption}
@@ -52,26 +52,21 @@ function FindingGround(props: FindingGroundProps) {
         <SearchPageBody>
           <table>
             <thead>
-              <tr
-                style={{
-                  paddingBottom: '1rem',
-                  borderBottom: '1px solid #DDDDDD',
-                }}
-              >
-                <th>순번</th>
+              <StyledLabelTr>
                 <th>지역</th>
                 <th>경기장</th>
                 <th>상세조회</th>
-              </tr>
+              </StyledLabelTr>
             </thead>
             <tbody>
               {filteredData.map((item, idx) => (
                 <>
                   <StyledTr key={idx}>
-                    <td>{idx + 1}</td>
-                    <td>{item.address.shortAddress}</td>
-                    <td>
-                      <div>{item.title}</div>
+                    <StyledAddressTd>
+                      {item.address.shortAddress}
+                    </StyledAddressTd>
+                    <StyledMainTd>
+                      <p>{item.title}</p>
                       <StyledTableCell>
                         {item.provided.map((data, index) => (
                           <StyledTable key={index} data={data}>
@@ -79,17 +74,17 @@ function FindingGround(props: FindingGroundProps) {
                           </StyledTable>
                         ))}
                       </StyledTableCell>
-                    </td>
+                    </StyledMainTd>
 
                     <td>
-                      <button
+                      <StyledButton
                         onClick={() => {
                           setShowModal(true);
                           setModalData(data[idx]);
                         }}
                       >
                         조회
-                      </button>
+                      </StyledButton>
                     </td>
                   </StyledTr>
                 </>
@@ -98,21 +93,26 @@ function FindingGround(props: FindingGroundProps) {
           </table>
         </SearchPageBody>
       </Searchpage>
-    </div>
+    </SearchContainer>
   );
 }
 
 export default FindingGround;
 
+const SearchContainer = styled.div`
+  position: relative;
+`;
+
 const Searchpage = styled.div`
   display: flex;
   font-size: 1.7rem;
+  width: 98.4rem;
+  margin: auto;
 `;
 
 const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 3rem 3rem;
   width: 100%;
   table {
     width: 100%;
@@ -124,15 +124,34 @@ const SearchPageBody = styled.div`
   td {
     justify-content: center;
     align-items: center;
-    text-align: center;
+  }
+`;
+
+const StyledLabelTr = styled.tr`
+  height: 6rem;
+  padding-bottom: 1rem;
+  /* border-bottom: 1px solid #d5d5d5ae; */
+  background-color: #fafafa;
+  border-bottom: 1px solid #d5d5d5ae;
+  box-shadow: 0px 5px 5px -5px #cbc9c9d5;
+  th {
+    font-size: 1.8rem;
+    font-weight: 500;
+    :last-child {
+      padding-right: 2rem;
+    }
+    :nth-child(2) {
+      text-align: start;
+      padding-left: 4.5rem;
+    }
   }
 `;
 
 const StyledTableCell = styled.div`
   display: inline-block;
-  height: 2.7rem;
-  padding: 0.3rem 0.8rem;
-  margin: 1rem 1rem;
+  height: 2rem;
+  padding: 0;
+  margin: 1.2rem 1rem 0rem 0;
   border-radius: 0.4rem;
   font-size: 1.5rem;
   font-weight: 400;
@@ -143,14 +162,14 @@ const StyledTableCell = styled.div`
 const StyledTable = styled.div<{ data: string }>`
   display: inline;
   height: 4rem;
-  padding: 0.3rem 1rem;
+  padding: 0.2rem 1rem 0.3rem 1rem;
   margin-right: 1.2rem;
   border: 0.1rem solid #eeeeee;
   border-radius: 2rem;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   color: ${({ data }) => getColorBydata(data)};
-  background-color: #f3f1ff;
+  background-color: ${({ data }) => getBackgroundColorBydata(data)};
 `;
 
 const StyledTr = styled.tr`
@@ -161,19 +180,59 @@ const StyledTr = styled.tr`
   border-bottom: 0.1rem solid #dddddd;
 `;
 
+const StyledAddressTd = styled.td`
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-align: center;
+  padding-left: 4rem;
+`;
+
+const StyledMainTd = styled.td`
+  padding-left: 4rem;
+  p {
+    font-size: 1.9rem;
+  }
+`;
+
+const StyledButton = styled.button`
+  width: 10rem;
+  height: 3.8rem;
+  border-radius: 0.7rem;
+  background-color: var(--color--green);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 500;
+`;
+
 const getColorBydata = (data: string) => {
   if (data === '풋살화 대여') {
-    return '#7a6fce';
+    return '#531dab';
   } else if (data === '남녀 구분 화장실') {
-    return '#98212b';
+    return '#096dd9';
   } else if (data === '공 대여') {
-    return '#009e5c';
+    return '#d4380d';
   } else if (data === '조끼 대여') {
-    return 'green';
+    return '#08979c';
   } else if (data === '무료 주차') {
-    return 'skyblue';
+    return '#c41d7f';
   } else if (data === '샤워실') {
-    return 'blue';
+    return '#d46b08';
+  }
+};
+
+const getBackgroundColorBydata = (data: string) => {
+  if (data === '풋살화 대여') {
+    return '#f9f0ff';
+  } else if (data === '남녀 구분 화장실') {
+    return '#e6f7ff';
+  } else if (data === '공 대여') {
+    return '#fff2e8';
+  } else if (data === '조끼 대여') {
+    return '#e6fffb';
+  } else if (data === '무료 주차') {
+    return '#fff0f6';
+  } else if (data === '샤워실') {
+    return '#fff7e6';
   }
 };
 
