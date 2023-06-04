@@ -7,7 +7,7 @@ import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarouse
 import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
-import ScrollToTarget from '../Components/ScrollToTarget';
+import scrollToTarget from '../Components/scrollToTarget';
 // import ClipUrl from '../Components/ClipUrl';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
@@ -77,7 +77,7 @@ const GroundDetail = () => {
                 <p className="copy" onClick={() => clipUrl()}>
                   주소복사
                 </p>
-                <p onClick={() => ScrollToTarget('mapElement')}>지도보기</p>
+                <p onClick={() => scrollToTarget('mapElement')}>지도보기</p>
               </HeaderAddress>
             </GroundDetailHeaderContent>
             <GroundDetailHeaderBtn>
