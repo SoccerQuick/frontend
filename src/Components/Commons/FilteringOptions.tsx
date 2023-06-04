@@ -27,7 +27,6 @@ const Filterling_Options = {
   },
   submit: {
     category: ['카테고리', '팀원 구해요', '팀 구해요'],
-    allowRandom: ['랜덤매칭', '허용', '비허용'],
   },
 };
 
