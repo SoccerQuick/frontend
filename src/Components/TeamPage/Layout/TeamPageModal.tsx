@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import FindingTeamDetail from '../Contents/FindingTeamDetail';
-import FindingMemberDetail from '../Contents/FindingMemberDetail';
+import FindingTeamDetail from '../Contents/FindPage/FindingTeamDetail';
+import FindingMemberDetail from '../Contents/FindPage/FindingMemberDetail';
 
 type props = {
   showModal: boolean;

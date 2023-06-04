@@ -9,6 +9,7 @@ type Props = {
     width?: string;
     height?: string;
     backgroundColor?: string;
+    fontSize?: string;
   };
 };
 interface DropdownItemProps {
@@ -55,6 +56,7 @@ function DropDown(props: Props) {
         onClick={() => {
           setClick(!click);
         }}
+        style={props.style}
       >
         <div style={{ overflow: 'hidden', flex: 3 }}>
           {selected.length > 0 ? selected : list[0]}
@@ -112,7 +114,8 @@ const DropdownButton = styled.button`
   height: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: ${(props) =>
+    props.style?.fontSize ? props.style.fontSize : '13px'};
   cursor: pointer;
 `;
 
@@ -123,6 +126,8 @@ const DropdownMenu = styled.div`
   width: 100%;
   background-color: #fff;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  font-size: ${(props) =>
+    props.style?.fontSize ? props.style.fontSize : '13px'};
   z-index: 1;
 `;
 
