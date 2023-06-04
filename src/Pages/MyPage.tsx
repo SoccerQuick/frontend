@@ -23,7 +23,7 @@ export function MyPage() {
     nickname: '',
     email: '',
     phonenumber: '',
-    gender: '남',
+    gender: '',
   });
 
   useEffect(() => {
@@ -42,6 +42,7 @@ export function MyPage() {
           nickname: user.nick_name,
           email: user.email,
           phonenumber: user.phone_number,
+          gender: user.gender,
         }));
       })
       .catch((err) => console.log(err));
