@@ -237,28 +237,6 @@ const TeamPageOption = styled.div`
   margin: 10px 10px;
 `;
 
-// Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
-const SelectCategory = styled(Select)`
-  width: 14rem;
-  font-size: 1.4rem;
-`;
-// Select 라이브러리에서 사용할 세부 스타일 속성
-const SelectStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? '#38D411' : 'white',
-    color: state.isSelected ? 'white' : 'black',
-    ':hover': {
-      backgroundColor: state.isSelected ? '#38D411' : '#96DF84',
-    },
-  }),
-};
-
 const StyledTr = styled.tr`
   height: 4rem;
   margin: 1rem 1rem;
