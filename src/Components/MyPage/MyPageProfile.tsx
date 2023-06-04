@@ -1,6 +1,6 @@
 import react from 'react';
 import styled from 'styled-components';
-import { FormData } from './MyPageInfo';
+import { FormData } from '../../Pages/MyPage';
 
 function MyProfile(props: { formData: FormData }) {
   const { name, nickname, user_id, email, phonenumber } = props.formData;
