@@ -4,6 +4,10 @@ import { FormData } from '../../Pages/MyPage';
 
 function MyProfile(props: { formData: FormData }) {
   const { name, nickname, user_id, email, phonenumber } = props.formData;
+  const formedPhoneNumber = phonenumber.replace(
+    /(\d{3})(\d{3,4})(\d{4})/,
+    '$1-$2-$3'
+  );
   return (
     <StyledProfileContainer>
       <StyledProfileTop>
@@ -18,7 +22,7 @@ function MyProfile(props: { formData: FormData }) {
         <StyledText small>이메일</StyledText>
         <StyledText>{email}</StyledText>
         <StyledText small>휴대폰 번호</StyledText>
-        <StyledText>{phonenumber}</StyledText>
+        <StyledText>{formedPhoneNumber}</StyledText>
       </StyledProfileBottom>
     </StyledProfileContainer>
   );

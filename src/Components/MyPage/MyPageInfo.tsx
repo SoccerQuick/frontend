@@ -160,7 +160,7 @@ const StyledTitle = styled.div`
   font-size: 2.5rem;
   font-weight: bold;
   margin: 0 0 2rem 5rem;
-  width: 25%;
+  width: 8rem;
   border-bottom: 3px solid #e5e5e5;
 `;
 

@@ -26,6 +26,8 @@ export function MyPage() {
     gender: '',
   });
 
+  const [checkedBarItem, setCheckedBarItem] = useState(1);
+
   useEffect(() => {
     axios
       .get('http://localhost:8800/user/aaa', {
@@ -51,11 +53,29 @@ export function MyPage() {
   return (
     <>
       <Header />
-      <MyPageBar />
-      <MyPageContainer>
-        <MyProfile formData={formData} />
-        <MyPageInfo formData={formData} setFormData={setFormData} />
-      </MyPageContainer>
+      <MyPageBar
+        checkedBarItem={checkedBarItem}
+        setCheckedBarItem={setCheckedBarItem}
+      />
+      {checkedBarItem === 1 ? (
+        <MyPageContainer>
+          <MyProfile formData={formData} />
+          <MyPageInfo formData={formData} setFormData={setFormData} />
+        </MyPageContainer>
+      ) : (
+        ''
+      )}
+      {checkedBarItem === 2 ? (
+        <MyPageContainer>내글 검색 페이지</MyPageContainer>
+      ) : (
+        ''
+      )}
+      {checkedBarItem === 3 ? (
+        <MyPageContainer>즐겨찾는 구장 페이지</MyPageContainer>
+      ) : (
+        ''
+      )}
+
       <Footer />
     </>
   );
@@ -69,5 +89,5 @@ const MyPageContainer = styled.div`
   height: 50rem;
   padding: 0 2rem;
   margin: 2rem auto;
-  background-color: rgb(247 247 247);
+  background-color: rgb(247, 247, 247);
 `;
