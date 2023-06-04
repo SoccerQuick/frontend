@@ -19,7 +19,17 @@ interface UserData {
 
 function AdminUserManager() {
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [modalData, setModalData] = React.useState<any>();
+  const [modalData, setModalData] = React.useState<UserData>({
+    admin_id: '',
+    user_id: '',
+    name: '',
+    nick_name: '',
+    email: '',
+    phone_number: '',
+    role: '',
+    gender: '',
+    createdAt: '',
+  });
   const [option, setOption] = React.useState('통합검색');
 
   // 검색어를 설정하는 부분
@@ -97,26 +107,26 @@ function AdminUserManager() {
         <table>
           <caption>유저 관리</caption>
           <thead>
-            <tr>
-              <th>Number</th>
-              <th>닉네임</th>
-              <th>E-mail</th>
-              <th>권한</th>
-              <th>상세정보</th>
-              <th>정보수정</th>
-            </tr>
+            <StyledTr>
+              <th style={{ width: '5%' }}>순번</th>
+              <th style={{ width: '30%' }}>닉네임</th>
+              <th style={{ width: '30%' }}>E-mail</th>
+              <th style={{ width: '15%' }}>권한</th>
+              <th style={{ width: '10%' }}>상세정보</th>
+              <th style={{ width: '10%' }}>정보수정</th>
+            </StyledTr>
           </thead>
           <tbody>
             {(inputValue === '' && filteredData.length === 0
               ? data
               : filteredData
             ).map((item, idx) => (
-              <tr key={idx}>
-                <td>{idx + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.role}</td>
-                <td>
+              <StyledTr key={idx}>
+                <td style={{ width: '5%' }}>{idx + 1}</td>
+                <td style={{ width: '30%' }}>{item.name}</td>
+                <td style={{ width: '30%' }}>{item.email}</td>
+                <td style={{ width: '15%' }}>{item.role}</td>
+                <td style={{ width: '10%' }}>
                   <button
                     onClick={() => {
                       setShowModal(true);
@@ -126,10 +136,10 @@ function AdminUserManager() {
                     조회
                   </button>
                 </td>
-                <td>
+                <td style={{ width: '10%' }}>
                   <button>정보수정</button>
                 </td>
-              </tr>
+              </StyledTr>
             ))}
           </tbody>
         </table>
@@ -153,6 +163,7 @@ const UserManageContainerTable = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+  padding-left: 3rem;
   width: 70%;
   font-size: 2rem;
   table {
@@ -170,4 +181,12 @@ const UserManageContainerTable = styled.div`
     align-items: center;
     text-align: center;
   }
+`;
+
+const StyledTr = styled.tr`
+  height: 4rem;
+  margin: 1rem 1rem;
+  padding: 2rem 1rem;
+  font-size: 1.6rem;
+  border-bottom: 0.1rem solid #dddddd;
 `;
