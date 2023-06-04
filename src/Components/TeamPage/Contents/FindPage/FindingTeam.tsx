@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import FilteringOptions from '../../Commons/FilteringOptions';
-import DropDown from '../../Commons/DropDown';
+import FilteringOptions from '../../../Commons/FilteringOptions';
+import DropDown from '../../../Commons/DropDown';
 import axios from 'axios';
 
 type FindingTeamProps = {
@@ -186,13 +186,13 @@ function FindingTeam(props: FindingTeamProps) {
                       조회
                     </button>
                   </td>
-                  {item.status === '미완료' ? (
-                    <td>
+                  <td>
+                    {item.status === '미완료' ? (
                       <button>초대</button>
-                    </td>
-                  ) : (
-                    <td>{item.status}</td>
-                  )}
+                    ) : (
+                      item.status
+                    )}
+                  </td>
                 </StyledTr>
               ))}
             </tbody>
@@ -215,7 +215,7 @@ const TeamPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   // background-color: beige;
-  width: 70%;
+  width: 100%;
   table {
     width: 100%;
   }

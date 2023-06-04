@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import FilteringOptions from '../../Commons/FilteringOptions';
+import FilteringOptions from '../../../Commons/FilteringOptions';
 import axios from 'axios';
-import DropDown from '../../Commons/DropDown';
+import DropDown from '../../../Commons/DropDown';
 
 type FindingMemberProps = {
   showModal: boolean;
@@ -188,7 +188,7 @@ function FindingMember(props: FindingMemberProps) {
                     {item.status === '미완료' ? (
                       <button>신청</button>
                     ) : (
-                      <td
+                      <span
                         style={{
                           display: 'flex',
                           justifyContent: 'center',
@@ -197,7 +197,7 @@ function FindingMember(props: FindingMemberProps) {
                         }}
                       >
                         {item.status}
-                      </td>
+                      </span>
                     )}
                   </td>
                 </StyledTr>
@@ -221,7 +221,7 @@ const Teampage = styled.div`
 const TeamPageBody = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 100%;
   table {
     width: 100%;
   }
