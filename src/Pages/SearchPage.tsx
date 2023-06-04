@@ -1,13 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
 import SearchModal from '../Components/SearchPage/Layout/SearchModal';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
+import GroundComparison from '../Components/SearchPage/Contents/GroundComparison';
+
+export interface groundDataType {
+  title: string;
+  image: string[];
+  address: {
+    shortAddress: string;
+    fullAddress: string;
+  };
+  provided: string[];
+  nonProvided: string[];
+  reservation: {
+    [key: string]: string[];
+  };
+  url: string;
+  source: string;
+}
 
 function SearchPage() {
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [modalData, setModalData] = React.useState<any>([]);
+  const [showComparisonModal, setShowComparisonModal] = useState(false);
+  const [checkedArray, setCheckedArray] = useState<groundDataType[]>([]);
+
 
   return (
     <>
@@ -36,6 +56,8 @@ function SearchPage() {
             setShowModal={setShowModal}
             modalData={modalData}
             setModalData={setModalData}
+            setCheckedArray={setCheckedArray} 
+
           />
           {showModal && (
             <SearchModal
@@ -47,6 +69,7 @@ function SearchPage() {
           )}
         </div>
       </div>
+      <GroundComparison checkedArray={checkedArray} setCheckedArray={setCheckedArray} showComparisonModal={showComparisonModal} setShowComparisonModal={setShowComparisonModal} />
       <Footer />
     </>
   );
