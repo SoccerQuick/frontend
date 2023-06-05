@@ -5,8 +5,8 @@ import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import DropDown from '../../../Components/Commons/DropDown';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import SubmitFindingTeam from '../../../Components/TeamPage/Contents/PostPage/SubmitFindingTeam';
-import SubmitFindingMembers from '../../../Components/TeamPage/Contents/PostPage/SubmitFindingMembers';
+import SubmitFindingTeam from '../../../Components/TeamPage/Contents/PostPage/FindingTeam';
+import SubmitFindingMembers from '../../../Components/TeamPage/Contents/PostPage/FindingMembers';
 import axios from 'axios';
 
 function SubmitPage() {
