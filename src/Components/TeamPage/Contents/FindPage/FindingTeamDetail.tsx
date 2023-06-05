@@ -11,6 +11,11 @@ type findingTeamModalProps = {
   skill?: string;
   status: string;
   title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
 };
 
 function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
