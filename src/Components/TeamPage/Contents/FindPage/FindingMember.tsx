@@ -164,14 +164,14 @@ function FindingMember(props: FindingMemberProps) {
                   <td style={{ width: '10%' }}>{item.author}</td>
                   <td style={{ width: '5%' }}>{item.area}</td>
                   <td style={{ width: '15%' }}>
-                    {item.gk_need === item.gk.length
+                    {item.gk_need === item.gk
                       ? '모집완료'
-                      : `${item.gk.length} / ${item.gk_need} `}
+                      : `${item.gk} / ${item.gk_need} `}
                   </td>
                   <td style={{ width: '15%' }}>
-                    {item.player_need === item.player.length
+                    {item.player_need === item.player
                       ? '모집완료'
-                      : `${item.player.length} / ${item.player_need} `}
+                      : `${item.player} / ${item.player_need} `}
                   </td>
 
                   <td>
@@ -259,9 +259,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
     applicant: [
@@ -287,9 +287,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: [],
+    gk: 1,
     player_need: 4,
-    player: ['고마오', '고마워', '고마옹', '고맙당'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -302,9 +302,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['귀엽네'],
+    gk: 1,
     player_need: 4,
-    player: ['귀여움', '졸귀', '귀엽ㅎ'],
+    player: 3,
     allowRandom: '비허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -317,9 +317,9 @@ const dummydata_findingMember = [
     status: '완료',
     gender: '상관없음',
     gk_need: 1,
-    gk: ['올리버칸'],
+    gk: 1,
     player_need: 4,
-    player: ['호날두', '메시', '음바페', '네이마르'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -332,9 +332,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -347,9 +347,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -362,9 +362,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '상관없음',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
