@@ -1,11 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function FindingTeamDetail(props: any) {
+type findingTeamModalProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+};
+
+function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
   const { modalData } = props;
-  React.useEffect(() => {
-    console.log(modalData);
-  }, []);
+
   return (
     <>
       <StyledDiv>
