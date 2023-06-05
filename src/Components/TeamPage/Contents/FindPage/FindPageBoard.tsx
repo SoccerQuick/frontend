@@ -58,17 +58,21 @@ function Board(props: any) {
                 }}
               >
                 <th>순번</th>
+                <th>Title</th>
                 {tableList.map((item: any) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
-                <th>상세조회</th>
-                <th>초대하기</th>
+                <th>미리보기</th>
+                <th>함께하기</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item: any, idx: any) => (
                 <StyledTr key={item.num}>
                   <td style={{ width: '5%' }}>{idx + 1}</td>
+                  <td style={{ width: '35%' }}>
+                    <Link to={`./${item.num}`}>{item.title}</Link>
+                  </td>
                   {tableList.map((cell: any) => (
                     <td key={cell.body} style={cell.style}>
                       {item[cell.body as keyof typeof item] as React.ReactNode}
@@ -76,6 +80,7 @@ function Board(props: any) {
                   ))}
                   <td>
                     <button
+                      // 실제로 나중에는 objectId로 get요청을 보내서 데이터를 가져오게 해야 할 것이다.
                       onClick={() => {
                         setShowModal(true);
                         setModalData(data[item.num - 1]);
@@ -162,5 +167,6 @@ const StyledTr = styled.tr`
   margin: 1rem 1rem;
   padding: 2rem 1rem;
   font-size: 1.6rem;
+
   border-bottom: 0.1rem solid #dddddd;
 `;
