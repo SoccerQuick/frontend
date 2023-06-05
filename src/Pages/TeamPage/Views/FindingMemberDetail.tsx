@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 // 현재 미사용 페이지임.
 function DetailPage() {
+  const { id } = useParams();
   return (
     <>
       <div
@@ -12,7 +14,7 @@ function DetailPage() {
           height: '100rem',
         }}
       >
-        ㄱㅁㅇ
+        등록번호 {id} 페이지 내용 ㄱㅁㅇ
       </div>
     </>
   );

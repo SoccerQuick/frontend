@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import FindingTeamDetail from '../Contents/FindPage/FindingTeamDetail';
-import FindingMemberDetail from '../Contents/FindPage/FindingMemberDetail';
+import FindingTeamDetail from './FindingTeam';
+import FindingMemberDetail from './FindingMember';
 
 type modalDataProps = {
   area: string;
