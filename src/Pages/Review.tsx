@@ -157,12 +157,13 @@ const StyledBody = styled.div`
 
 const StyledCarousel = styled.div`
   background-color: white;
-  height: 35vh;
+  height: 50vh;
   overflow: hidden;
 `;
 
 const StyledImage = styled.div`
-  height: 30vh;
+  width: 100%;
+  height: 45vh;
 `;
 
 const StyledList = styled.div`
@@ -257,9 +258,12 @@ const StyledButtons = styled.div`
 
 const StyledWrite = styled.span`
   > button {
-    padding: 1rem 2rem;
+    padding: 2rem 3rem;
     border: 1px solid #ededed;
     border-radius: 3rem;
+    background-color: white;
+    box-shadow: 1px 1px #ededed;
+    box-shadow: 2px 2px #ededed;
     &:hover {
       opacity: 1;
       font-size: 2.2rem;
