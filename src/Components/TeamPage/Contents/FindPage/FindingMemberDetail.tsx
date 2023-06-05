@@ -45,7 +45,7 @@ function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
       </StyledDiv>
       <StyledSecondDiv>
         <div style={{ padding: '0rem 2rem', width: '20%' }}>랜덤매칭</div>
-        <div>
+        <div style={{ padding: '0rem 2rem', width: '30%' }}>
           <div
             style={{
               display: 'flex',
@@ -55,10 +55,8 @@ function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
             {modalData.allowRandom}
           </div>
         </div>
-      </StyledSecondDiv>
-      <StyledThirdDiv>
         <div style={{ padding: '0rem 2rem', width: '20%' }}>성별</div>
-        <div>
+        <div style={{ padding: '0rem 2rem', width: '30%' }}>
           <div
             style={{
               display: 'flex',
@@ -68,14 +66,7 @@ function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
             {modalData.gender}
           </div>
         </div>
-      </StyledThirdDiv>
-      <StyledBodyContainer>
-        <StyledBody>{modalData.body}</StyledBody>
-      </StyledBodyContainer>
-      <StyledButtonContainer>
-        <StyledButton>신청하기</StyledButton>
-        <StyledButton>조회하기</StyledButton>
-      </StyledButtonContainer>
+      </StyledSecondDiv>
     </>
   );
 }
@@ -161,6 +152,7 @@ const StyledButtonContainer = styled.div`
 const StyledButton = styled.button`
   z-index: 903;
   margin: 0rem 4rem;
+  padding: 0rem 2rem;
   height: 4rem;
   border-radius: 2rem;
 `;
