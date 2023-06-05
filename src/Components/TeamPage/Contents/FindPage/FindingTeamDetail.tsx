@@ -2,14 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 function FindingTeamDetail(props: any) {
-  const { modalData } = props;
-  React.useEffect(() => {
-    console.log(modalData);
-  }, []);
+  const modalData = props.modalData;
   return (
     <>
       <StyledDiv>
-        <div style={{ padding: '0rem 2rem', width: '30%' }}>작성자 정보</div>
+        <div style={{ padding: '0rem 2rem' }}>작성자 정보</div>
         <div>
           <div
             style={{
