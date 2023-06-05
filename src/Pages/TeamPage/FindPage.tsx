@@ -7,32 +7,22 @@ import TeamPageModal from '../../Components/TeamPage/Layout/TeamPageModal';
 type props = {
   findingTeam: boolean;
   findingMember: boolean;
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function FindPage(props: props) {
-  const findingTeam = props.findingTeam;
-  const findingMember = props.findingMember;
+  const { findingTeam, findingMember } = props;
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [modalData, setModalData] = React.useState<any>([]);
 
   return (
     <div style={{ width: '100%' }}>
       {showModal && (
-        <TeamPageModal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          modalData={modalData}
-          setModalData={setModalData}
-        />
+        <TeamPageModal setShowModal={setShowModal} modalData={modalData} />
       )}
       <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
         {findingMember && (
           <FindingMember
-            showModal={showModal}
             setShowModal={setShowModal}
-            modalData={modalData}
             setModalData={setModalData}
           />
         )}
@@ -40,9 +30,7 @@ function FindPage(props: props) {
       <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
         {findingTeam && (
           <FindingTeam
-            showModal={showModal}
             setShowModal={setShowModal}
-            modalData={modalData}
             setModalData={setModalData}
           />
         )}

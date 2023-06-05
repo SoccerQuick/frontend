@@ -12,7 +12,6 @@ function TeamPage() {
   const location = useLocation();
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
-  const [showModal, setShowModal] = React.useState<boolean>(false);
 
   return (
     <>
@@ -80,8 +79,6 @@ function TeamPage() {
                   <FindPage
                     findingTeam={findingTeam}
                     findingMember={findingMember}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
                   />
                 }
               />

@@ -8,7 +8,6 @@ import FindingTeam from '../Components/TeamPage/Contents/FindPage/FindingTeam';
 import TeamPageModal from '../Components/TeamPage/Layout/TeamPageModal';
 
 function TeamPage() {
-  // const [data, setData] = React.useState<any[]>([]); // axios 할 때 사용할 수 있으므로 남겨둔다.
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -68,19 +67,12 @@ function TeamPage() {
           </TeamPageHeader>
         </Teampage>
         {showModal && (
-          <TeamPageModal
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
+          <TeamPageModal setShowModal={setShowModal} modalData={modalData} />
         )}
         <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
           {findingMember && (
             <FindingMember
-              showModal={showModal}
               setShowModal={setShowModal}
-              modalData={modalData}
               setModalData={setModalData}
             />
           )}
@@ -88,9 +80,7 @@ function TeamPage() {
         <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
           {findingTeam && (
             <FindingTeam
-              showModal={showModal}
               setShowModal={setShowModal}
-              modalData={modalData}
               setModalData={setModalData}
             />
           )}

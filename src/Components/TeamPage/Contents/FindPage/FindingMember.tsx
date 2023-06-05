@@ -5,11 +5,26 @@ import FilteringOptions from '../../../Commons/FilteringOptions';
 import axios from 'axios';
 import DropDown from '../../../Commons/DropDown';
 
+type modalDataProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+};
+
 type FindingMemberProps = {
-  showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any[];
-  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+  setModalData: React.Dispatch<React.SetStateAction<modalDataProps[]>>;
 };
 type FindMemberFilter = {
   status: string | null;
@@ -24,8 +39,8 @@ function FindingMember(props: FindingMemberProps) {
   const [allowRandom, setAllowRandom] = React.useState('');
   const [gender, setGender] = React.useState('');
 
-  const setShowModal = props.setShowModal;
-  const setModalData = props.setModalData;
+  const { setShowModal, setModalData } = props;
+
   const [findMemberFilter, setFindMemberFilter] =
     React.useState<FindMemberFilter>({
       status: null,
@@ -35,13 +50,9 @@ function FindingMember(props: FindingMemberProps) {
     });
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<any[]>([]);
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+  const [data, setData] = React.useState<any[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
 
-  // API 연결 대비 초안 작성, 현재는 dummy data를 가져오고 있음.
-  const fetchData = () => {
+  React.useEffect(() => {
     // axios
     //   .get('gomao.com')
     //   .then((res) => {
@@ -52,7 +63,7 @@ function FindingMember(props: FindingMemberProps) {
     //     // 가져온 데이터가 없다면 dummyData를 사용한다.
     setData(dummydata_findingMember);
     // });
-  };
+  }, []);
 
   // 필터링 조건을 갱신하는 부분
   React.useEffect(() => {

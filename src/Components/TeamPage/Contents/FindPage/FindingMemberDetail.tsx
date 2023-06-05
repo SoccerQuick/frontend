@@ -1,7 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function FindingMemberDetail(props: any) {
+type findingMemberModalProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+};
+
+function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
   const modalData = props.modalData;
   return (
     <>
