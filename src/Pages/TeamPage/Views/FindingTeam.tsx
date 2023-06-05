@@ -138,7 +138,6 @@ function FindingTeam(props: FindingTeamProps) {
 
   // 표에 출력할 리스트를 정하는 부분
   const tableList = [
-    { title: '제목', body: 'title', style: { width: '30%' } },
     { title: '작성자', body: 'author', style: { width: '10%' } },
     { title: '지역', body: 'area', style: { width: '5%' } },
     { title: '포지션', body: 'position', style: { width: '15%' } },

@@ -133,7 +133,6 @@ function FindingMember(props: FindingMemberProps) {
 
   // 표에 출력할 리스트를 정하는 부분
   const tableList = [
-    { title: '제목', body: 'title', style: { width: '30%' } },
     { title: '작성자', body: 'author', style: { width: '10%' } },
     { title: '지역', body: 'area', style: { width: '10%' } },
     { title: '모집인원(GK)', body: 'gk_need', style: { width: '8%' } },
@@ -172,7 +171,9 @@ const dummydata_findingMember = [
     player_need: 4,
     player: 3,
     allowRandom: '허용',
-    body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
+    body: `하하하하하하하하하하하하하하하하 
+    1234 <br />
+    하하하하하하하하하하하하하하하하하하하하하하`,
     applicant: [
       {
         nickName: '고고마오',
