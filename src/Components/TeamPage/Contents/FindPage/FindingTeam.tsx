@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import FilteringOptions from '../../../Commons/FilteringOptions';
 import DropDown from '../../../Commons/DropDown';
 import axios from 'axios';
@@ -36,6 +36,7 @@ type FindTeamFilter = {
 };
 
 function FindingTeam(props: FindingTeamProps) {
+  const location = useLocation();
   const [status, setStatus] = React.useState('');
   const [area, setArea] = React.useState('');
   const [skill, setSkill] = React.useState('');
@@ -105,7 +106,7 @@ function FindingTeam(props: FindingTeamProps) {
   }, [data, findTeamFilter]);
 
   return (
-    <>
+    <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
       <Teampage>
         <TeamPageOption>
           <DropDown
@@ -150,6 +151,19 @@ function FindingTeam(props: FindingTeamProps) {
             초기화
           </button>
         </TeamPageOption>
+        <Link
+          to="/teampage/submit"
+          style={{
+            display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
+            marginLeft: 'auto',
+            height: 'fit-content',
+            alignItems: 'center',
+            marginTop: 10,
+            marginRight: 7,
+          }}
+        >
+          <button>글 작성하기</button>
+        </Link>
       </Teampage>
       <Teampage>
         <TeamPageBody>
@@ -211,7 +225,7 @@ function FindingTeam(props: FindingTeamProps) {
           </table>
         </TeamPageBody>
       </Teampage>
-    </>
+    </div>
   );
 }
 

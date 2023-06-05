@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import FilteringOptions from '../../../Commons/FilteringOptions';
 import axios from 'axios';
 import DropDown from '../../../Commons/DropDown';
@@ -20,6 +20,7 @@ type modalDataProps = {
   player_need?: number;
   player?: number;
   allowRandom?: string;
+  applicant?: string[];
 };
 
 type FindingMemberProps = {
@@ -34,6 +35,7 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
+  const location = useLocation();
   const [status, setStatus] = React.useState('');
   const [area, setArea] = React.useState('');
   const [allowRandom, setAllowRandom] = React.useState('');
@@ -103,7 +105,7 @@ function FindingMember(props: FindingMemberProps) {
   }, [data, findMemberFilter]);
 
   return (
-    <>
+    <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
       <Teampage>
         <TeamPageOption>
           <DropDown
@@ -141,6 +143,19 @@ function FindingMember(props: FindingMemberProps) {
             초기화
           </button>
         </TeamPageOption>
+        <Link
+          to="/teampage/submit"
+          style={{
+            display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
+            marginLeft: 'auto',
+            height: 'fit-content',
+            alignItems: 'center',
+            marginTop: 10,
+            marginRight: 7,
+          }}
+        >
+          <button>글 작성하기</button>
+        </Link>
       </Teampage>
       <Teampage>
         <TeamPageBody>
@@ -217,7 +232,7 @@ function FindingMember(props: FindingMemberProps) {
           </table>
         </TeamPageBody>
       </Teampage>
-    </>
+    </div>
   );
 }
 

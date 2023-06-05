@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import MainPage from './Pages/Main';
 import ReviewPage from './Pages/Review';
-import TeamPage from './Pages/TeamPage/MainPage';
+import TeamPage from './Pages/TeamPage/TeamPage';
 import SearchPage from './Pages/SearchPage';
 import Main from './Pages/mainlayout';
 import GroundDetail from './Pages/groundDetail';
