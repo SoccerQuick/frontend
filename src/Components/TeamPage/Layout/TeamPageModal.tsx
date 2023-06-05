@@ -3,16 +3,30 @@ import styled from 'styled-components';
 import FindingTeamDetail from '../Contents/FindPage/FindingTeamDetail';
 import FindingMemberDetail from '../Contents/FindPage/FindingMemberDetail';
 
+type modalDataProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+};
+
 type props = {
-  showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any;
-  setModalData: React.Dispatch<React.SetStateAction<any>>;
+  modalData: modalDataProps;
 };
 
 function DetailModal(props: props) {
-  const modalData = props.modalData;
-  const setShowModal = props.setShowModal;
+  const { modalData, setShowModal } = props;
   return (
     <>
       <Modal>

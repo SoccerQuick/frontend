@@ -1,15 +1,31 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import FilteringOptions from '../../../Commons/FilteringOptions';
 import axios from 'axios';
 import DropDown from '../../../Commons/DropDown';
 
+type modalDataProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+  applicant?: string[];
+};
+
 type FindingMemberProps = {
-  showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any[];
-  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+  setModalData: React.Dispatch<React.SetStateAction<modalDataProps[]>>;
 };
 type FindMemberFilter = {
   status: string | null;
@@ -19,13 +35,14 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
+  const location = useLocation();
   const [status, setStatus] = React.useState('');
   const [area, setArea] = React.useState('');
   const [allowRandom, setAllowRandom] = React.useState('');
   const [gender, setGender] = React.useState('');
 
-  const setShowModal = props.setShowModal;
-  const setModalData = props.setModalData;
+  const { setShowModal, setModalData } = props;
+
   const [findMemberFilter, setFindMemberFilter] =
     React.useState<FindMemberFilter>({
       status: null,
@@ -35,13 +52,9 @@ function FindingMember(props: FindingMemberProps) {
     });
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<any[]>([]);
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+  const [data, setData] = React.useState<any[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
 
-  // API 연결 대비 초안 작성, 현재는 dummy data를 가져오고 있음.
-  const fetchData = () => {
+  React.useEffect(() => {
     // axios
     //   .get('gomao.com')
     //   .then((res) => {
@@ -52,7 +65,7 @@ function FindingMember(props: FindingMemberProps) {
     //     // 가져온 데이터가 없다면 dummyData를 사용한다.
     setData(dummydata_findingMember);
     // });
-  };
+  }, []);
 
   // 필터링 조건을 갱신하는 부분
   React.useEffect(() => {
@@ -92,7 +105,7 @@ function FindingMember(props: FindingMemberProps) {
   }, [data, findMemberFilter]);
 
   return (
-    <>
+    <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
       <Teampage>
         <TeamPageOption>
           <DropDown
@@ -130,6 +143,19 @@ function FindingMember(props: FindingMemberProps) {
             초기화
           </button>
         </TeamPageOption>
+        <Link
+          to="/teampage/submit"
+          style={{
+            display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
+            marginLeft: 'auto',
+            height: 'fit-content',
+            alignItems: 'center',
+            marginTop: 10,
+            marginRight: 7,
+          }}
+        >
+          <button>글 작성하기</button>
+        </Link>
       </Teampage>
       <Teampage>
         <TeamPageBody>
@@ -164,14 +190,14 @@ function FindingMember(props: FindingMemberProps) {
                   <td style={{ width: '10%' }}>{item.author}</td>
                   <td style={{ width: '5%' }}>{item.area}</td>
                   <td style={{ width: '15%' }}>
-                    {item.gk_need === item.gk.length
+                    {item.gk_need === item.gk
                       ? '모집완료'
-                      : `${item.gk.length} / ${item.gk_need} `}
+                      : `${item.gk} / ${item.gk_need} `}
                   </td>
                   <td style={{ width: '15%' }}>
-                    {item.player_need === item.player.length
+                    {item.player_need === item.player
                       ? '모집완료'
-                      : `${item.player.length} / ${item.player_need} `}
+                      : `${item.player} / ${item.player_need} `}
                   </td>
 
                   <td>
@@ -206,7 +232,7 @@ function FindingMember(props: FindingMemberProps) {
           </table>
         </TeamPageBody>
       </Teampage>
-    </>
+    </div>
   );
 }
 
@@ -259,9 +285,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: '하하하하하하하하하하하하하하하하 하하하하하하하하하하하하하하하하하하하하하하',
     applicant: [
@@ -287,9 +313,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: [],
+    gk: 1,
     player_need: 4,
-    player: ['고마오', '고마워', '고마옹', '고맙당'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -302,9 +328,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['귀엽네'],
+    gk: 1,
     player_need: 4,
-    player: ['귀여움', '졸귀', '귀엽ㅎ'],
+    player: 3,
     allowRandom: '비허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -317,9 +343,9 @@ const dummydata_findingMember = [
     status: '완료',
     gender: '상관없음',
     gk_need: 1,
-    gk: ['올리버칸'],
+    gk: 1,
     player_need: 4,
-    player: ['호날두', '메시', '음바페', '네이마르'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -332,9 +358,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -347,9 +373,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '남',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
@@ -362,9 +388,9 @@ const dummydata_findingMember = [
     status: '미완료',
     gender: '상관없음',
     gk_need: 1,
-    gk: ['ㄱㅁㅇ'],
+    gk: 1,
     player_need: 4,
-    player: ['gogumao', 'cutehane', 'gomao'],
+    player: 3,
     allowRandom: '허용',
     body: 'ㄱㅁㅇ',
     applicant: [],
