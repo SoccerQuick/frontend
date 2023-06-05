@@ -7,9 +7,9 @@ import FindPage from './Views/SelectCategory';
 import FindingMember from './Views/FindingMember';
 import FindingTeam from './Views/FindingTeam';
 import TeamPageModal from '../../Components/TeamPage/Layout/TeamPageModal';
-import SubmitPage from './SubmitPage';
-import DetailPage from './DetailPage';
-import EditPage from './EditPage';
+import SubmitPage from './Posts/PostPage';
+import DetailPage from './Views/DetailPage';
+import EditPage from './Posts/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
 function TeamPage() {
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);

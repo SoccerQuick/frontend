@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// 현재 미사용 페이지임.
 function DetailPage() {
   return (
     <>
