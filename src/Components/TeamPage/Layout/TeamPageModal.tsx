@@ -21,10 +21,8 @@ type modalDataProps = {
 };
 
 type props = {
-  // showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: modalDataProps;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
 };
 
 function DetailModal(props: props) {
