@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
+import { groundDataType } from '../../../Pages/SearchPage';
 import axios from 'axios';
 
 type FindingGroundProps = {
@@ -9,11 +10,22 @@ type FindingGroundProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any[];
   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+  setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
 };
 
 function FindingGround(props: FindingGroundProps) {
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
+  const setCheckedArray = props.setCheckedArray;
+
+  const checkHandler = (e: React.ChangeEvent<HTMLInputElement>, value: groundDataType ) => {
+    if(e.target.checked) {
+      setCheckedArray((prev)=> [...prev, value]);
+    } else {
+      setCheckedArray(prev => prev.filter(item => item.title !== value.title));
+    }
+  }
+
 
   // Left Bar에서 설정한 필터링 옵션이 담기는 상태. get 요청 보낼 때 전달해주어야 함.
   const [filterOption, setFilterOption] = React.useState<string[]>([]);
@@ -53,6 +65,7 @@ function FindingGround(props: FindingGroundProps) {
           <table>
             <thead>
               <StyledLabelTr>
+                <th></th>
                 <th>지역</th>
                 <th>경기장</th>
                 <th>상세조회</th>
@@ -62,6 +75,9 @@ function FindingGround(props: FindingGroundProps) {
               {filteredData.map((item, idx) => (
                 <>
                   <StyledTr key={idx}>
+                    <input type="checkbox" id={item.title} 
+                    onChange={(e)=> checkHandler(e, item)}
+                    />
                     <StyledAddressTd>
                       {item.address.shortAddress}
                     </StyledAddressTd>
