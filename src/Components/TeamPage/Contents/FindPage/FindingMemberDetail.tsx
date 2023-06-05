@@ -1,12 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function FindingMemberDetail(props: any) {
+type findingMemberModalProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+};
+
+function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
   const modalData = props.modalData;
   return (
     <>
       <StyledDiv>
-        <div style={{ padding: '0rem 2rem' }}>모집인원</div>
+        <div style={{ padding: '0rem 2rem', width: '20%' }}>모집인원</div>
         <div>
           <div
             style={{
@@ -14,7 +31,7 @@ function FindingMemberDetail(props: any) {
               margin: '0.5rem 1rem',
             }}
           >
-            골키퍼 {modalData.gk_need} 명
+            골키퍼 {modalData.gk} / {modalData.gk_need} 명
           </div>
           <div
             style={{
@@ -22,35 +39,12 @@ function FindingMemberDetail(props: any) {
               margin: '0.5rem 1rem',
             }}
           >
-            필드플레이어 {modalData.player_need} 명
+            필드플레이어 {modalData.player} / {modalData.player_need} 명
           </div>
         </div>
       </StyledDiv>
       <StyledSecondDiv>
-        <div style={{ padding: '0rem 2rem' }}>현재인원</div>
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              margin: '0.5rem 1rem',
-            }}
-          >
-            골키퍼 : {modalData.gk.join(' ')} (잔여{' '}
-            {modalData.gk_need - modalData.gk.length}명)
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              margin: '0.5rem 1rem',
-            }}
-          >
-            필드플레이어 : {modalData.player.join(' ')} (잔여{' '}
-            {modalData.player_need - modalData.player.length}명)
-          </div>
-        </div>
-      </StyledSecondDiv>
-      <StyledThirdDiv>
-        <div style={{ padding: '0rem 2rem' }}>랜덤매칭</div>
+        <div style={{ padding: '0rem 2rem', width: '20%' }}>랜덤매칭</div>
         <div>
           <div
             style={{
@@ -59,6 +53,19 @@ function FindingMemberDetail(props: any) {
             }}
           >
             {modalData.allowRandom}
+          </div>
+        </div>
+      </StyledSecondDiv>
+      <StyledThirdDiv>
+        <div style={{ padding: '0rem 2rem', width: '20%' }}>성별</div>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              margin: '0.5rem 1rem',
+            }}
+          >
+            {modalData.gender}
           </div>
         </div>
       </StyledThirdDiv>

@@ -1,54 +1,71 @@
 import React from 'react';
 import styled from 'styled-components';
-import FindingMember from '../../Components/TeamPage/Contents/FindPage/FindingMember';
-import FindingTeam from '../../Components/TeamPage/Contents/FindPage/FindingTeam';
-import TeamPageModal from '../../Components/TeamPage/Layout/TeamPageModal';
+import { Link } from 'react-router-dom';
 
 type props = {
   findingTeam: boolean;
   findingMember: boolean;
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setFindingMember: React.Dispatch<React.SetStateAction<boolean>>;
+  setFindingTeam: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function FindPage(props: props) {
-  const findingTeam = props.findingTeam;
-  const findingMember = props.findingMember;
-  const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [modalData, setModalData] = React.useState<any>([]);
+  const { setFindingMember, setFindingTeam } = props;
 
   return (
     <div style={{ width: '100%' }}>
-      {showModal && (
-        <TeamPageModal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          modalData={modalData}
-          setModalData={setModalData}
-        />
-      )}
-      <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
-        {findingMember && (
-          <FindingMember
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
-      </div>
-      <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
-        {findingTeam && (
-          <FindingTeam
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
-      </div>
+      <StyledDiv>
+        <Link to="/teampage/team">
+          <StyledButton
+            onClick={() => {
+              setFindingMember(true);
+              setFindingTeam(false);
+            }}
+          >
+            <StyledImg
+              src="./Images/findingmember.png"
+              alt="팀원 구해요"
+              title="팀원 모집 사이트로 이동"
+            />
+            <div>팀원 구해요</div>
+          </StyledButton>
+        </Link>
+        <Link to="/teampage/player">
+          <StyledButton
+            onClick={() => {
+              setFindingMember(false);
+              setFindingTeam(true);
+            }}
+          >
+            <StyledImg
+              src="./Images/findingteam.png"
+              alt="팀 구해요"
+              title="팀 구직 사이트로 이동"
+            />
+            <div>팀 구해요</div>
+          </StyledButton>
+        </Link>
+      </StyledDiv>
     </div>
   );
 }
 
 export default FindPage;
+
+const StyledDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 8rem;
+`;
+
+const StyledButton = styled.button`
+  border-radius: 1px solid;
+  height: 30rem;
+  width: 40rem;
+`;
+
+const StyledImg = styled.img`
+  height: 30rem;
+  width: 40rem;
+`;

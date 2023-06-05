@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Filterling_Options = {
+const FILTERING_OPTIONS = {
   adminUserPage: {
     status: ['통합검색', '닉네임', 'e-mail', '권한'],
   },
@@ -30,4 +30,4 @@ const Filterling_Options = {
   },
 };
 
-export default Filterling_Options;
+export default FILTERING_OPTIONS;

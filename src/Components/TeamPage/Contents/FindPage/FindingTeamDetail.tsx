@@ -1,12 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function FindingTeamDetail(props: any) {
-  const modalData = props.modalData;
+type findingTeamModalProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+};
+
+function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
+  const { modalData } = props;
+
   return (
     <>
       <StyledDiv>
-        <div style={{ padding: '0rem 2rem' }}>작성자 정보</div>
+        <div style={{ padding: '0rem 2rem', width: '22%' }}>작성자 정보</div>
         <div>
           <div
             style={{
