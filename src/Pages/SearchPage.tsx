@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
@@ -28,6 +28,10 @@ function SearchPage() {
   const [showComparisonModal, setShowComparisonModal] = useState(false);
   const [checkedArray, setCheckedArray] = useState<groundDataType[]>([]);
 
+  useEffect(() => {
+    if (checkedArray.length > 0) setShowComparisonModal(true);
+    else setShowComparisonModal(false);
+  }, [checkedArray]);
 
   return (
     <>
@@ -56,8 +60,7 @@ function SearchPage() {
             setShowModal={setShowModal}
             modalData={modalData}
             setModalData={setModalData}
-            setCheckedArray={setCheckedArray} 
-
+            setCheckedArray={setCheckedArray}
           />
           {showModal && (
             <SearchModal
@@ -69,7 +72,14 @@ function SearchPage() {
           )}
         </div>
       </div>
-      <GroundComparison checkedArray={checkedArray} setCheckedArray={setCheckedArray} showComparisonModal={showComparisonModal} setShowComparisonModal={setShowComparisonModal} />
+      {showComparisonModal && (
+        <GroundComparison
+          checkedArray={checkedArray}
+          setCheckedArray={setCheckedArray}
+          showComparisonModal={showComparisonModal}
+          setShowComparisonModal={setShowComparisonModal}
+        />
+      )}
       <Footer />
     </>
   );
