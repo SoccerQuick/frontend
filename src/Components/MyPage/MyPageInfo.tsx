@@ -2,7 +2,7 @@ import react, { useState, FormEvent } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { FormData } from '../../Pages/MyPage';
-import MyPageInput from './MyPageInput';
+import { MyPageInput } from './MyPageInput';
 import { checkNewPassword } from './checkPassword';
 
 type MyPageInfoProps = {
@@ -143,12 +143,6 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
         <StyledTitle>비밀번호 변경</StyledTitle>
         <StyledInfoForm onSubmit={handleSubmit}>
           <MyPageInput
-            title="기존 비밀번호"
-            name="oldPassword"
-            value={passwordForm.oldPassword}
-            setPasswordForm={setPasswordForm}
-          />
-          <MyPageInput
             title="새 비밀번호"
             name="newPassword"
             value={passwordForm.newPassword}
@@ -170,7 +164,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
   );
 }
 
-const StyledInfoContainer = styled.div`
+export const StyledInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -181,7 +175,7 @@ const StyledInfoContainer = styled.div`
   }
 `;
 
-const StyledInfoBox = styled.div`
+export const StyledInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -193,7 +187,7 @@ const StyledInfoBox = styled.div`
   margin-top: 2.5rem;
 `;
 
-const StyledTitle = styled.div`
+export const StyledTitle = styled.div`
   align-self: flex-start;
   font-size: 2.5rem;
   font-weight: bold;

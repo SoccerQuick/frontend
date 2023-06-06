@@ -11,7 +11,7 @@ type MyPageInputProps = {
   setPasswordForm?: React.Dispatch<React.SetStateAction<PasswordForm>>;
 };
 
-function MyPageInput({
+export function MyPageInput({
   title,
   name,
   value,
@@ -87,11 +87,10 @@ function MyPageInput({
   );
 }
 
-export default MyPageInput;
-
-const StyledInputBox = styled.div`
+export const StyledInputBox = styled.div`
   display: flex;
   justify-content: stretch;
+  align-items: center;
   height: 100%;
   width: 50rem;
 
@@ -111,7 +110,7 @@ const StyledInputBox = styled.div`
   }
 `;
 
-const StyledInfoInput = styled.input`
+export const StyledInfoInput = styled.input`
   width: 30rem;
   height: 5.5rem;
   padding-left: 15px;
@@ -122,7 +121,7 @@ const StyledInfoInput = styled.input`
 }
 `;
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   width: 10rem;
   height: 5.5rem;
   font-size: 1rem;
