@@ -146,7 +146,7 @@ export default function Review() {
                 {
                   <button
                     className={`review-like-button ${
-                      clicked[index] ? 'heartBeat' : ''
+                      clicked[index] ? 'heart-beat' : ''
                     }`}
                     onClick={() => handleLikeButtonClick(index)}
                   >
@@ -158,7 +158,7 @@ export default function Review() {
             </StyledReviewList>
           ))}
         </StyledList>
-        <StyledButtons>
+        <StyledStickyButtons>
           <StyledWrite>
             <button
               onClick={() => {
@@ -171,7 +171,7 @@ export default function Review() {
           <StyledScrollToBottomButton>
             <button onClick={handleScrollToBottom}>⬇</button>
           </StyledScrollToBottomButton>
-        </StyledButtons>
+        </StyledStickyButtons>
       </StyledBody>
 
       <Footer />
@@ -277,7 +277,7 @@ const StyledReviewList = styled.div`
     background-color: #ffdcdc;
   }
 
-  .heartBeat {
+  .heart-beat {
     animation: heartBeat 0.5s linear;
   }
 
@@ -294,11 +294,14 @@ const StyledReviewList = styled.div`
   }
 
   .review-like-count {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     background-color: #ffdcdc;
   }
 `;
 
-const StyledButtons = styled.div`
+const StyledStickyButtons = styled.div`
   display: grid;
   grid-template-columns: 20fr 1fr;
   place-items: center;
