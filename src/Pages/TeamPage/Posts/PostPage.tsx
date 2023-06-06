@@ -38,6 +38,7 @@ function SubmitPage() {
         allowRandom: allowRandom,
         playerNeed: playerNeed,
         gkNeed: gkNeed,
+        body: content,
       };
     } else if (boardCategory === '팀 구해요') {
       data = {
@@ -46,6 +47,7 @@ function SubmitPage() {
         gender: gender,
         skill: skill,
         position: position,
+        body: content,
       };
     }
     // 현재 백엔드 API 요청이 만들어지지 않았음.
