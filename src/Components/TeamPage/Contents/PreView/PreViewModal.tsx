@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import FindingTeamDetail from './FindingTeam';
 import FindingMemberDetail from './FindingMember';
+import HtmlParser from '../../../../Components/Commons/HtmlParser';
 
 type modalDataProps = {
   area: string;
@@ -70,7 +71,8 @@ function DetailModal(props: props) {
             )}
           </DetailPage>
           <StyledBodyContainer>
-            <StyledBody>{modalData.body}</StyledBody>
+            <HtmlParser data={modalData.body} />
+            {/* <StyledBody>{modalData.body}</StyledBody> */}
           </StyledBodyContainer>
           <StyledButtonContainer>
             {modalData.status === '미완료' && <StyledButton>신청</StyledButton>}
