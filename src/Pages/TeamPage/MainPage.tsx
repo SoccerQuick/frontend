@@ -8,7 +8,7 @@ import FindingMember from './Views/FindingMember';
 import FindingTeam from './Views/FindingTeam';
 import FindingTeamDetail from './Views/FindingTeamDetail';
 import FindingMemberDetail from './Views/FindingMemberDetail';
-import PreView from '../../Components/TeamPage/Contents/PreView/PreViewModal';
+import PreView from '../../Components/TeamPage/PreView/PreViewModal';
 import SubmitPage from './Posts/PostPage';
 import EditPage from './Posts/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';

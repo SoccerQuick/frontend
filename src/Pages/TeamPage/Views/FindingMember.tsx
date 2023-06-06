@@ -1,7 +1,7 @@
 import React from 'react';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import axios from 'axios';
-import FindPageBoard from '../../../Components/TeamPage/Contents/FindPage/FindPageBoard';
+import FindPageBoard from '../../../Components/TeamPage/FindPage/FindPageBoard';
 
 type Applicant = {
   nickName: string;
