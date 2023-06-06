@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import DropDown from '../../../Commons/DropDown';
-import FilteringOptions from '../../../Commons/FilteringOptions';
+import DropDown from '../../Commons/DropDown';
+import FilteringOptions from '../../Commons/FilteringOptions';
 
 type Props = {
   allowRandom: string;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import FindingTeamDetail from './FindingTeam';
 import FindingMemberDetail from './FindingMember';
-import HtmlParser from '../../../../Components/Commons/HtmlParser';
+import HtmlParser from '../../../Components/Commons/HtmlParser';
 
 type modalDataProps = {
   area: string;
