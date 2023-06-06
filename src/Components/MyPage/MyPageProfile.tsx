@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { FormData } from '../../Pages/MyPage';
 
 function MyProfile(props: { formData: FormData }) {
-  const { name, nickname, user_id, email, phonenumber } = props.formData;
-  const formedPhoneNumber = phonenumber.replace(
+  const { name, nick_name, user_id, email, phone_number } = props.formData;
+  const formedPhoneNumber = phone_number.replace(
     /(\d{3})(\d{3,4})(\d{4})/,
     '$1-$2-$3'
   );
@@ -14,7 +14,7 @@ function MyProfile(props: { formData: FormData }) {
         <StyledImgWrapper>
           <StyledProfileImg src={'/logo192.png'} alt="profile" />
         </StyledImgWrapper>
-        <StyledText bold>{`${name} (${nickname})`}</StyledText>
+        <StyledText bold>{`${name} (${nick_name})`}</StyledText>
         <StyledText small>{user_id}</StyledText>
       </StyledProfileTop>
       <StyledProfileBottom>

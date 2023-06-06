@@ -5,24 +5,24 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import MyPageBar from '../Components/MyPage/MyPageBar';
 import MyProfile from '../Components/MyPage/MyPageProfile';
-import MyPageInfo from '../Components/MyPage/MyPageInfo';
+import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
 
 export type FormData = {
   user_id: string;
   name: string;
-  nickname: string;
+  nick_name: string;
   email: string;
-  phonenumber: string;
-  gender?: string;
+  phone_number: string;
+  gender: string;
 };
 
 export function MyPage() {
   const [formData, setFormData] = useState<FormData>({
     user_id: '',
     name: '',
-    nickname: '',
+    nick_name: '',
     email: '',
-    phonenumber: '',
+    phone_number: '',
     gender: '',
   });
 
@@ -41,9 +41,9 @@ export function MyPage() {
           ...prev,
           user_id: user.user_id,
           name: user.name,
-          nickname: user.nick_name,
+          nick_name: user.nick_name,
           email: user.email,
-          phonenumber: user.phone_number,
+          phone_number: user.phone_number,
           gender: user.gender,
         }));
       })
