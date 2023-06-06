@@ -1,16 +1,20 @@
 import react from 'react';
 import styled from 'styled-components';
-import { FormData } from './MyPageInfo';
+import { FormData } from '../../Pages/MyPage';
 
 function MyProfile(props: { formData: FormData }) {
-  const { name, nickname, user_id, email, phonenumber } = props.formData;
+  const { name, nick_name, user_id, email, phone_number } = props.formData;
+  const formedPhoneNumber = phone_number.replace(
+    /(\d{3})(\d{3,4})(\d{4})/,
+    '$1-$2-$3'
+  );
   return (
     <StyledProfileContainer>
       <StyledProfileTop>
         <StyledImgWrapper>
           <StyledProfileImg src={'/logo192.png'} alt="profile" />
         </StyledImgWrapper>
-        <StyledText bold>{`${name} (${nickname})`}</StyledText>
+        <StyledText bold>{`${name} (${nick_name})`}</StyledText>
         <StyledText small>{user_id}</StyledText>
       </StyledProfileTop>
       <StyledProfileBottom>
@@ -18,7 +22,7 @@ function MyProfile(props: { formData: FormData }) {
         <StyledText small>이메일</StyledText>
         <StyledText>{email}</StyledText>
         <StyledText small>휴대폰 번호</StyledText>
-        <StyledText>{phonenumber}</StyledText>
+        <StyledText>{formedPhoneNumber}</StyledText>
       </StyledProfileBottom>
     </StyledProfileContainer>
   );
@@ -31,8 +35,9 @@ const StyledProfileContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-self: start;
   width: 25rem;
-  height: 100%;
+  height: 64%;
 
   background: rgb(247 247 247);
   border-radius: 16px;
@@ -44,7 +49,7 @@ const StyledProfileTop = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: 47%;
   margin: 0.3rem;
   background-color: #fdfdfd;
   border-bottom: 1px solid rgb(247 247 247);
@@ -56,7 +61,7 @@ const StyledProfileBottom = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 40%;
+  height: 43%;
   background-color: #fdfdfd;
   border-radius: 0 0 16px 16px;
   & > div:nth-child(2) {

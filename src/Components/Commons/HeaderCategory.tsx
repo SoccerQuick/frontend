@@ -11,7 +11,7 @@ export default function HeaderCategory() {
   const location = useLocation();
 
   const isHome = location.pathname === '/';
-  const isMainPage = location.pathname === '/main';
+  const isGroundPage = location.pathname === '/ground';
   const isReviewPage = location.pathname === '/review';
   const isTeampage = location.pathname === '/teampage';
 
@@ -27,12 +27,12 @@ export default function HeaderCategory() {
       </StyledCategoryText>
 
       <StyledCategoryText
-        focused={isMainPage}
+        focused={isGroundPage}
         onClick={() => {
-          navigate('/main');
+          navigate('/ground');
         }}
       >
-        풋살 매치
+        경기장
       </StyledCategoryText>
 
       <StyledCategoryText
@@ -41,7 +41,7 @@ export default function HeaderCategory() {
           navigate('/review');
         }}
       >
-        풋살 후기
+        리뷰
       </StyledCategoryText>
 
       <StyledCategoryText
@@ -50,7 +50,7 @@ export default function HeaderCategory() {
           navigate('/teampage');
         }}
       >
-        팀원 모집
+        팀
       </StyledCategoryText>
     </StyledHeaderCategory>
   );
