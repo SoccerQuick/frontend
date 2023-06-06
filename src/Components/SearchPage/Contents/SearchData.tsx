@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
+import { groundDataType } from '../../../Pages/SearchPage';
+import checkIcon from '../../../styles/icon/check.svg';
+
 import axios from 'axios';
 
 type FindingGroundProps = {
@@ -9,11 +12,35 @@ type FindingGroundProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any[];
   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+  checkedArray: groundDataType[];
+  setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
 };
 
 function FindingGround(props: FindingGroundProps) {
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
+  const checkedArray = props.checkedArray;
+  const setCheckedArray = props.setCheckedArray;
+
+  const checkHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    value: groundDataType
+  ) => {
+    if (e.target.checked) {
+      if (checkedArray.length >= 5) {
+        setCheckedArray((prev) =>
+          prev.filter((item) => item.title !== value.title)
+        );
+        alert('구장 비교는 최대 5개까지 가능합니다.');
+      } else {
+        setCheckedArray((prev) => [...prev, value]);
+      }
+    } else {
+      setCheckedArray((prev) =>
+        prev.filter((item) => item.title !== value.title)
+      );
+    }
+  };
 
   // Left Bar에서 설정한 필터링 옵션이 담기는 상태. get 요청 보낼 때 전달해주어야 함.
   const [filterOption, setFilterOption] = React.useState<string[]>([]);
@@ -51,6 +78,7 @@ function FindingGround(props: FindingGroundProps) {
           <table>
             <thead>
               <StyledLabelTr>
+                <th></th>
                 <th>지역</th>
                 <th>경기장</th>
                 <th>상세조회</th>
@@ -60,6 +88,17 @@ function FindingGround(props: FindingGroundProps) {
               {filteredData.map((item, idx) => (
                 <>
                   <StyledTr key={idx}>
+                    <StyledCheckboxTd>
+                      <input
+                        type="checkbox"
+                        id={item.title}
+                        checked={checkedArray.some(
+                          (data) => data.title === item.title
+                        )}
+                        onChange={(e) => checkHandler(e, item)}
+                      />
+                      <label htmlFor={item.title}></label>
+                    </StyledCheckboxTd>
                     <StyledAddressTd>
                       {item.address.shortAddress}
                     </StyledAddressTd>
@@ -178,11 +217,33 @@ const StyledTr = styled.tr`
   border-bottom: 0.1rem solid #dddddd;
 `;
 
+const StyledCheckboxTd = styled.td`
+  padding-left: 3rem;
+  input {
+    display: none;
+
+    + label {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border: 0.15rem solid var(--color--darkgreen);
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    :checked + label {
+      background-image: url(${checkIcon});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+`;
+
 const StyledAddressTd = styled.td`
   font-size: 1.6rem;
   font-weight: 500;
   text-align: center;
-  padding-left: 4rem;
+  padding-left: 1rem;
 `;
 
 const StyledMainTd = styled.td`
@@ -268,6 +329,34 @@ const dummydata_filteredGround = [
       shortAddress: '경기 / 고양시',
       fullAddress: '경기도 고양시 일산서구 덕이로 310-2',
     },
+    stadiums: [
+      {
+        usage: '다목적 구장',
+        facility: '90x50m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_003.jpeg',
+        ],
+      },
+      {
+        usage: '축구장',
+        facility: '100x64m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_002.jpeg',
+        ],
+      },
+      {
+        usage: '풋살장 (다목적 구장)',
+        facility: '20x40m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A5.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A53.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A52.jpg',
+        ],
+      },
+    ],
+
     provided: ['풋살화 대여', '남녀 구분 화장실', '공 대여', '조끼 대여'],
     nonProvided: ['무료 주차', '샤워실'],
     reservation: {
@@ -292,7 +381,7 @@ const dummydata_filteredGround = [
     source: '(주)플랩',
   },
   {
-    title: 'ㄱㅁㅇ클럽',
+    title: '고마오클럽',
     image: [
       'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_half.jpg',
       'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_goal.jpg',
@@ -302,6 +391,34 @@ const dummydata_filteredGround = [
       shortAddress: '경기 / 수원시',
       fullAddress: '경기도 수원시 장안구 만석로29 712동 1604호',
     },
+    stadiums: [
+      {
+        usage: '다목적 구장',
+        facility: '90x50m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_003.jpeg',
+        ],
+      },
+      {
+        usage: '축구장',
+        facility: '100x64m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_002.jpeg',
+        ],
+      },
+      {
+        usage: '풋살장 (다목적 구장)',
+        facility: '20x40m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A5.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A53.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A52.jpg',
+        ],
+      },
+    ],
+
     provided: ['풋살화 대여', '남녀 구분 화장실', '공 대여', '조끼 대여'],
     nonProvided: ['무료 주차', '샤워실'],
     reservation: {
@@ -326,7 +443,7 @@ const dummydata_filteredGround = [
     source: '(주)플랩',
   },
   {
-    title: 'ㄱㅁㅇ클럽',
+    title: '감자클럽',
     image: [
       'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_half.jpg',
       'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_goal.jpg',
@@ -336,6 +453,34 @@ const dummydata_filteredGround = [
       shortAddress: '경기 / 수원시',
       fullAddress: '경기도 수원시 장안구 만석로29 712동 1604호',
     },
+    stadiums: [
+      {
+        usage: '다목적 구장',
+        facility: '90x50m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_003.jpeg',
+        ],
+      },
+      {
+        usage: '축구장',
+        facility: '100x64m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_002.jpeg',
+        ],
+      },
+      {
+        usage: '풋살장 (다목적 구장)',
+        facility: '20x40m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A5.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A53.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A52.jpg',
+        ],
+      },
+    ],
+
     provided: ['풋살화 대여', '공 대여'],
     nonProvided: ['무료 주차', '샤워실', '조끼 대여', '남녀 구분 화장실'],
     reservation: {
@@ -360,7 +505,7 @@ const dummydata_filteredGround = [
     source: '(주)플랩',
   },
   {
-    title: 'ㄱㅁㅇ클럽',
+    title: '고구마클럽',
     image: [
       'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_half.jpg',
       'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_goal.jpg',
@@ -370,6 +515,34 @@ const dummydata_filteredGround = [
       shortAddress: '경기 / 수원시',
       fullAddress: '경기도 수원시 장안구 만석로29 712동 1604호',
     },
+    stadiums: [
+      {
+        usage: '다목적 구장',
+        facility: '90x50m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_003.jpeg',
+        ],
+      },
+      {
+        usage: '축구장',
+        facility: '100x64m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_001.jpeg',
+          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_002.jpeg',
+        ],
+      },
+      {
+        usage: '풋살장 (다목적 구장)',
+        facility: '20x40m •실외 •인조잔디',
+        image: [
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A5.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A53.jpg',
+          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A52.jpg',
+        ],
+      },
+    ],
+
     provided: [
       '풋살화 대여',
       '공 대여',

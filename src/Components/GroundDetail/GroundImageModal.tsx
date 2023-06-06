@@ -77,7 +77,6 @@ const ImgModalContainer = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  /* text-align: end; */
   display: flex;
   justify-content: space-between;
   align-items: center;
