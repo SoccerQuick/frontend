@@ -26,13 +26,29 @@ type filteredData = {
   gender: string;
   body: string;
 };
+type modalDataProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+};
 
 type BoardProps = {
   dropdownList: DropdownList[];
   tableList: TableList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalData: React.Dispatch<React.SetStateAction<any>>;
+  setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
   data: any;
 };
@@ -50,7 +66,7 @@ function Board(props: BoardProps) {
   } = props;
 
   return (
-    <div>
+    <div style={{ width: '101rem' }}>
       <Teampage>
         <TeamPageOption>
           {dropdownList.map((list, idx) => (
@@ -81,7 +97,6 @@ function Board(props: BoardProps) {
                   <th key={item.title}>{item.title}</th>
                 ))}
                 <th>미리보기</th>
-                <th>함께하기</th>
               </tr>
             </thead>
             <tbody>
@@ -91,7 +106,7 @@ function Board(props: BoardProps) {
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.num}`}>{item.title}</Link>
                   </td>
-                  {tableList.map((cell: any) => (
+                  {tableList.map((cell: TableList) => (
                     <td key={cell.body} style={cell.style}>
                       {item[cell.body as keyof typeof item] as React.ReactNode}
                     </td>
@@ -106,22 +121,6 @@ function Board(props: BoardProps) {
                     >
                       조회
                     </button>
-                  </td>
-                  <td>
-                    {item.status === '미완료' ? (
-                      <button>신청</button>
-                    ) : (
-                      <span
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        {item.status}
-                      </span>
-                    )}
                   </td>
                 </StyledTr>
               ))}
