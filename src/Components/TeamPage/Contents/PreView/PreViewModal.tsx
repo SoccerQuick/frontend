@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import FindingTeamDetail from '../Contents/FindPage/FindingTeamDetail';
-import FindingMemberDetail from '../Contents/FindPage/FindingMemberDetail';
+import FindingTeamDetail from './FindingTeam';
+import FindingMemberDetail from './FindingMember';
 
 type modalDataProps = {
   area: string;
@@ -69,6 +69,14 @@ function DetailModal(props: props) {
               <FindingMemberDetail modalData={modalData} />
             )}
           </DetailPage>
+          <StyledBodyContainer>
+            <StyledBody>{modalData.body}</StyledBody>
+          </StyledBodyContainer>
+          <StyledButtonContainer>
+            {modalData.status === '미완료' && <StyledButton>신청</StyledButton>}
+            {modalData.status === '미완료' && <StyledButton>수정</StyledButton>}
+            <StyledButton>조회</StyledButton>
+          </StyledButtonContainer>
         </ModalPage>
       </Modal>
     </>
@@ -109,6 +117,7 @@ const DetailPage = styled.div`
   background-color: beige;
   width: 90%;
   font-size: 2.3rem;
+
   table {
     width: 100%;
   }
@@ -154,4 +163,45 @@ const StyledBlock = styled.div`
   border-radius: 2rem;
   margin: 0.7rem;
   padding: 0.4rem 1rem;
+`;
+
+const StyledBodyContainer = styled.div`
+  z-index: 902;
+  display: flex;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 0;
+  margin-top: 31rem;
+  width: 90%;
+  height: 40%;
+  border: 1px solid #dddddd;
+  border-radius: 1rem;
+`;
+
+const StyledBody = styled.div`
+  z-index: 902;
+  display: flex;
+  font-size: 1.8rem;
+  margin: 1rem 1rem;
+  padding: 1rem 1rem;
+`;
+
+const StyledButtonContainer = styled.div`
+  z-index: 902;
+  display: flex;
+  font-size: 1.8rem;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  margin-top: 64rem;
+  width: 90%;
+  border-radius: 1rem;
+`;
+
+const StyledButton = styled.button`
+  z-index: 903;
+  margin: 0rem 4rem;
+  height: 4rem;
+  padding: 0rem 2rem;
+  border-radius: 2rem;
 `;

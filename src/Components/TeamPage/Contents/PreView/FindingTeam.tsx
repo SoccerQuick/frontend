@@ -11,6 +11,11 @@ type findingTeamModalProps = {
   skill?: string;
   status: string;
   title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
 };
 
 function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
@@ -47,13 +52,6 @@ function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
           </div>
         </div>
       </StyledDiv>
-      <StyledBodyContainer>
-        <StyledBody>{modalData.body}</StyledBody>
-      </StyledBodyContainer>
-      <StyledButtonContainer>
-        <StyledButton>신청하기</StyledButton>
-        <StyledButton>조회하기</StyledButton>
-      </StyledButtonContainer>
     </>
   );
 }
@@ -111,5 +109,6 @@ const StyledButton = styled.button`
   z-index: 903;
   margin: 0rem 4rem;
   height: 4rem;
+  padding: 0rem 2rem;
   border-radius: 2rem;
 `;
