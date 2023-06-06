@@ -36,7 +36,7 @@ function TeamPage() {
           <TeamPageBody>
             <Routes>
               <Route path="/submit" element={<SubmitPage />} />
-              <Route path="/edit" element={<EditPage />} />
+              <Route path="/edit/:id" element={<EditPage />} />
               <Route
                 path="/player"
                 element={
