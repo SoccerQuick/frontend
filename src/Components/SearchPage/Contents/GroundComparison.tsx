@@ -8,31 +8,30 @@ import deleteIcon from '../../../styles/icon/delete.svg';
 interface GroundComparisonProps {
   checkedArray: groundDataType[];
   setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
-  showComparisonModal: boolean;
-  setShowComparisonModal: React.Dispatch<React.SetStateAction<boolean>>;
+  checkedInModal: string[];
+  setCheckedInModal: React.Dispatch<React.SetStateAction<string[]>>;
+  showComparisonData: boolean;
+  setShowComparisonData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GroundComparison: React.FC<GroundComparisonProps> = ({
   checkedArray,
   setCheckedArray,
-  showComparisonModal,
-  setShowComparisonModal,
+  checkedInModal,
+  setCheckedInModal,
+  showComparisonData,
+  setShowComparisonData,
 }) => {
   const [showModalContent, setShowModalContent] = useState(true);
-  const [modalChecked, setModalChecked] = useState<string[]>([]);
   const [isAllChecked, setIsAllChecked] = useState(false);
 
   const checkHandler = (checked: boolean, value: string) => {
     if (checked) {
-      setModalChecked((prev) => [...prev, value]);
+      setCheckedInModal((prev) => [...prev, value]);
     } else {
-      setModalChecked((prev) => prev.filter((item) => item !== value));
+      setCheckedInModal((prev) => prev.filter((item) => item !== value));
     }
   };
-
-  // const checkAllHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setIsAllChecked(!isAllChecked);
-  // };
 
   const deleteOneHandler = (value: string) => {
     checkHandler(false, value);
@@ -41,17 +40,25 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
 
   const deleteSelectedItemHandler = () => {
     const newCheckedArray = [...checkedArray].filter(
-      (item) => !modalChecked.includes(item.title)
+      (item) => !checkedInModal.includes(item.title)
     );
     setCheckedArray(newCheckedArray);
-    setModalChecked([]);
+    setCheckedInModal([]);
+  };
+
+  const comparisonBtnHandler = () => {
+    if (checkedInModal.length > 1) {
+      setShowComparisonData(true);
+    } else {
+      alert('비교할 구장을 2개 이상 선택해주세요.');
+    }
   };
 
   useEffect(() => {
     if (isAllChecked) {
-      setModalChecked(() => checkedArray.map((item) => item.title));
+      setCheckedInModal(() => checkedArray.map((item) => item.title));
     } else {
-      setModalChecked([]);
+      setCheckedInModal([]);
     }
   }, [isAllChecked]);
 
@@ -81,7 +88,7 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
                     <StyleCheckbox
                       type="checkbox"
                       id={item.title + idx}
-                      checked={modalChecked.includes(item.title)}
+                      checked={checkedInModal.includes(item.title)}
                       onChange={(e) =>
                         checkHandler(e.target.checked, item.title)
                       }
@@ -111,7 +118,9 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
                 <p>선택 삭제</p>
               </div>
             </StyledSideSelectBox>
-            <StyledComparisonBtn>상품 비교</StyledComparisonBtn>
+            <StyledComparisonBtn onClick={() => comparisonBtnHandler()}>
+              상품 비교
+            </StyledComparisonBtn>
           </StyledSideContainer>
         </StyledBody>
       )}
@@ -128,7 +137,7 @@ const StyledContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
   filter: drop-shadow(0 0 2px grey);
-  z-index: 9999;
+  z-index: 9998;
 `;
 
 const StyledHeader = styled.div`
@@ -148,7 +157,7 @@ const StyledHeader = styled.div`
 const StyledChevronButton = styled.img<{ shouldRotate: boolean }>`
   width: 2.7rem;
   cursor: pointer;
-  transform: ${({ shouldRotate }) => shouldRotate && 'rotateY(180deg)'};
+  transform: ${({ shouldRotate }) => !shouldRotate && 'rotate(180deg)'};
 `;
 
 const StyledBody = styled.div`
@@ -210,7 +219,7 @@ const StyleCheckbox = styled.input`
     display: inline-block;
     width: 2rem;
     height: 2rem;
-    border: 0.13rem solid var(--color--darkgreen);
+    border: 0.15rem solid var(--color--darkgreen);
     border-radius: 0.5rem;
     cursor: pointer;
   }

@@ -228,7 +228,7 @@ const StyledCheckboxTd = styled.td`
       display: inline-block;
       width: 2rem;
       height: 2rem;
-      border: 0.13rem solid var(--color--darkgreen);
+      border: 0.15rem solid var(--color--darkgreen);
       border-radius: 0.5rem;
       cursor: pointer;
     }

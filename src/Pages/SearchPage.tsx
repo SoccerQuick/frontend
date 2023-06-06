@@ -5,6 +5,7 @@ import SearchData from '../Components/SearchPage/Contents/SearchData';
 import SearchModal from '../Components/SearchPage/Layout/SearchModal';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
 import GroundComparison from '../Components/SearchPage/Contents/GroundComparison';
+import ComparisonData from '../Components/SearchPage/Contents/ComparisonData';
 
 export interface groundDataType {
   title: string;
@@ -13,6 +14,7 @@ export interface groundDataType {
     shortAddress: string;
     fullAddress: string;
   };
+  stadiums: { usage: string; facility: string; image: string[] }[];
   provided: string[];
   nonProvided: string[];
   reservation: {
@@ -27,6 +29,8 @@ function SearchPage() {
   const [modalData, setModalData] = React.useState<any>([]);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
   const [checkedArray, setCheckedArray] = useState<groundDataType[]>([]);
+  const [checkedInModal, setCheckedInModal] = useState<string[]>([]);
+  const [showComparisonData, setShowComparisonData] = useState(false);
 
   useEffect(() => {
     if (checkedArray.length > 0) setShowComparisonModal(true);
@@ -77,8 +81,17 @@ function SearchPage() {
         <GroundComparison
           checkedArray={checkedArray}
           setCheckedArray={setCheckedArray}
-          showComparisonModal={showComparisonModal}
-          setShowComparisonModal={setShowComparisonModal}
+          checkedInModal={checkedInModal}
+          setCheckedInModal={setCheckedInModal}
+          showComparisonData={showComparisonData}
+          setShowComparisonData={setShowComparisonData}
+        />
+      )}
+      {showComparisonData && (
+        <ComparisonData
+          checkedArray={checkedArray}
+          checkedInModal={checkedInModal}
+          setShowComparisonData={setShowComparisonData}
         />
       )}
       <Footer />
