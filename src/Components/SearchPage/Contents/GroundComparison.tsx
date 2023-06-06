@@ -119,7 +119,7 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
               </div>
             </StyledSideSelectBox>
             <StyledComparisonBtn onClick={() => comparisonBtnHandler()}>
-              상품 비교
+              구장 비교
             </StyledComparisonBtn>
           </StyledSideContainer>
         </StyledBody>
