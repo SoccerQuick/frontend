@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
-import HtmlParser from '../../Commons/HtmlParser';
+import HtmlParser from '../../../Components/Commons/HtmlParser';
 import axios from 'axios';
 
 type DetailList = {
@@ -38,6 +38,8 @@ function DetailPage(props: DetailListProps) {
   const { detailList, data } = props;
   const navigate = useNavigate();
 
+  const additionalData = { data };
+
   return (
     <>
       <StyledContainer style={{ marginTop: '3rem' }}>
@@ -71,6 +73,9 @@ function DetailPage(props: DetailListProps) {
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton>함께하기</StyledButton>
+          <Link to={`/teampage/edit/:id`} state={additionalData}>
+            <StyledButton>수정하기</StyledButton>
+          </Link>
           <StyledButton
             onClick={() => {
               navigate(-1);

@@ -58,18 +58,18 @@ export default function HeaderCategory() {
 
 const StyledHeaderCategory = styled.div`
   width: 98.4rem;
-  padding: 0 2rem;
+  padding: 3rem 2rem;
   height: 3rem;
-  margin: 1.4rem auto;
+  margin: 1rem auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
 
 const StyledCategoryText = styled.span<CategoryTextProps>`
-  padding-right: 1rem;
-  font-size: ${({ focused }) => (focused ? '1.8rem' : '1.5rem')};
-  color: ${({ focused }) => (focused ? 'black' : '#727f88')};
+  padding-right: 3rem;
+  font-size: ${({ focused }) => (focused ? '2.2rem' : '1.9rem')};
+  color: ${({ focused }) => (focused ? '#535353' : '#727f88')};
   font-weight: ${({ focused }) => (focused ? 'bold' : 'normal')};
   cursor: pointer;
 `;
