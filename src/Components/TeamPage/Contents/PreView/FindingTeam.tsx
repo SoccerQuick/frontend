@@ -11,6 +11,11 @@ type findingTeamModalProps = {
   skill?: string;
   status: string;
   title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
 };
 
 function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
@@ -47,13 +52,6 @@ function FindingTeamDetail(props: { modalData: findingTeamModalProps }) {
           </div>
         </div>
       </StyledDiv>
-      <StyledBodyContainer>
-        <StyledBody>{modalData.body}</StyledBody>
-      </StyledBodyContainer>
-      <StyledButtonContainer>
-        <StyledButton>신청하기</StyledButton>
-        <StyledButton>조회하기</StyledButton>
-      </StyledButtonContainer>
     </>
   );
 }
@@ -72,44 +70,4 @@ const StyledDiv = styled.div`
   height: 20%;
   border: 1px solid #dddddd;
   border-radius: 1rem;
-`;
-
-const StyledBodyContainer = styled.div`
-  z-index: 902;
-  display: flex;
-  font-size: 1.8rem;
-  position: absolute;
-  top: 0;
-  margin-top: 31rem;
-  width: 90%;
-  height: 30%;
-  border: 1px solid #dddddd;
-  border-radius: 1rem;
-`;
-
-const StyledBody = styled.div`
-  z-index: 902;
-  display: flex;
-  font-size: 1.8rem;
-  margin: 1rem 1rem;
-  padding: 1rem 1rem;
-`;
-
-const StyledButtonContainer = styled.div`
-  z-index: 902;
-  display: flex;
-  font-size: 1.8rem;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  margin-top: 64rem;
-  width: 90%;
-  border-radius: 1rem;
-`;
-
-const StyledButton = styled.button`
-  z-index: 903;
-  margin: 0rem 4rem;
-  height: 4rem;
-  border-radius: 2rem;
 `;

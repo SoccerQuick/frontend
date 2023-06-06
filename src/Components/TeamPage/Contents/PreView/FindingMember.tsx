@@ -45,7 +45,7 @@ function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
       </StyledDiv>
       <StyledSecondDiv>
         <div style={{ padding: '0rem 2rem', width: '20%' }}>랜덤매칭</div>
-        <div>
+        <div style={{ padding: '0rem 2rem', width: '30%' }}>
           <div
             style={{
               display: 'flex',
@@ -55,10 +55,8 @@ function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
             {modalData.allowRandom}
           </div>
         </div>
-      </StyledSecondDiv>
-      <StyledThirdDiv>
         <div style={{ padding: '0rem 2rem', width: '20%' }}>성별</div>
-        <div>
+        <div style={{ padding: '0rem 2rem', width: '30%' }}>
           <div
             style={{
               display: 'flex',
@@ -68,14 +66,7 @@ function FindingMemberDetail(props: { modalData: findingMemberModalProps }) {
             {modalData.gender}
           </div>
         </div>
-      </StyledThirdDiv>
-      <StyledBodyContainer>
-        <StyledBody>{modalData.body}</StyledBody>
-      </StyledBodyContainer>
-      <StyledButtonContainer>
-        <StyledButton>신청하기</StyledButton>
-        <StyledButton>조회하기</StyledButton>
-      </StyledButtonContainer>
+      </StyledSecondDiv>
     </>
   );
 }
@@ -108,59 +99,4 @@ const StyledSecondDiv = styled.div`
   height: 10%;
   border: 1px solid #dddddd;
   border-radius: 1rem;
-`;
-
-const StyledThirdDiv = styled.div`
-  z-index: 902;
-  display: flex;
-  align-items: center;
-  font-size: 1.8rem;
-  position: absolute;
-  top: 0;
-  margin-top: 31rem;
-  width: 90%;
-  height: 10%;
-  border: 1px solid #dddddd;
-  border-radius: 1rem;
-`;
-
-const StyledBodyContainer = styled.div`
-  z-index: 902;
-  display: flex;
-  font-size: 1.8rem;
-  position: absolute;
-  top: 0;
-  margin-top: 40rem;
-  width: 90%;
-  height: 30%;
-  border: 1px solid #dddddd;
-  border-radius: 1rem;
-`;
-
-const StyledBody = styled.div`
-  z-index: 902;
-  display: flex;
-  font-size: 1.8rem;
-  margin: 1rem 1rem;
-  padding: 1rem 1rem;
-`;
-
-const StyledButtonContainer = styled.div`
-  z-index: 902;
-  display: flex;
-  font-size: 1.8rem;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  margin-top: 64rem;
-  width: 90%;
-  /* border: 1px solid #dddddd; */
-  border-radius: 1rem;
-`;
-
-const StyledButton = styled.button`
-  z-index: 903;
-  margin: 0rem 4rem;
-  height: 4rem;
-  border-radius: 2rem;
 `;
