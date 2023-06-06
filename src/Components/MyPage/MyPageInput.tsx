@@ -40,6 +40,16 @@ export function MyPageInput({
     setInputValue(e.target.value);
   };
 
+  // 비밀번호 로직 수정 여부에 대한 고민.. (보류)
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setPasswordForm &&
+  //     setPasswordForm((prevFormData) => ({
+  //       ...prevFormData,
+  //       [name]: inputValue,
+  //     }));
+  // };
+
   const handleChangeButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsDisabled(false);

@@ -71,6 +71,11 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
         formMsg: '',
         passwordFormMsg: '',
       });
+      setPasswordForm((prev) => ({
+        ...prev,
+        newPassword: '',
+        newPasswordConfirm: '',
+      }));
     } catch (err) {
       const axiosError = err as AxiosError;
       if (axiosError.response) {
