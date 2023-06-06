@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
-import HtmlParser from '../../Commons/HtmlParser';
+import HtmlParser from '../../../Components/Commons/HtmlParser';
 import axios from 'axios';
 
 type DetailList = {
