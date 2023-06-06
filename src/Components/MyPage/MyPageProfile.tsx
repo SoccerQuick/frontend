@@ -35,8 +35,9 @@ const StyledProfileContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-self: start;
   width: 25rem;
-  height: 100%;
+  height: 61%;
 
   background: rgb(247 247 247);
   border-radius: 16px;
@@ -48,7 +49,7 @@ const StyledProfileTop = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: 47%;
   margin: 0.3rem;
   background-color: #fdfdfd;
   border-bottom: 1px solid rgb(247 247 247);
@@ -60,7 +61,7 @@ const StyledProfileBottom = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 40%;
+  height: 43%;
   background-color: #fdfdfd;
   border-radius: 0 0 16px 16px;
   & > div:nth-child(2) {

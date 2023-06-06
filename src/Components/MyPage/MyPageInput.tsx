@@ -1,17 +1,30 @@
 import react, { useEffect, useState } from 'react';
 import { FormData } from '../../Pages/MyPage';
 import styled from 'styled-components';
+import { PasswordForm } from './MyPageInfo';
 
 type MyPageInputProps = {
   title: string;
   name: string;
   value: string;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
+  setPasswordForm?: React.Dispatch<React.SetStateAction<PasswordForm>>;
 };
 
-function MyPageInput({ title, name, value, setFormData }: MyPageInputProps) {
+function MyPageInput({
+  title,
+  name,
+  value,
+  setFormData,
+  setPasswordForm,
+}: MyPageInputProps) {
   const [inputValue, setInputValue] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(() => {
+    if (setFormData) {
+      return true;
+    }
+    return false;
+  });
 
   useEffect(() => {
     setInputValue(value);
@@ -30,10 +43,23 @@ function MyPageInput({ title, name, value, setFormData }: MyPageInputProps) {
   const handleCompleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsDisabled(true);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: inputValue,
-    }));
+    setFormData &&
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: inputValue,
+      }));
+  };
+
+  const handlePasswordCompleteClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    setIsDisabled(true);
+    setPasswordForm &&
+      setPasswordForm((prevFormData) => ({
+        ...prevFormData,
+        [name]: inputValue,
+      }));
   };
 
   return (
@@ -49,7 +75,13 @@ function MyPageInput({ title, name, value, setFormData }: MyPageInputProps) {
       {isDisabled ? (
         <StyledButton onClick={handleChangeButton}>수정</StyledButton>
       ) : (
-        <StyledButton onClick={handleCompleteClick}>완료</StyledButton>
+        <StyledButton
+          onClick={
+            setFormData ? handleCompleteClick : handlePasswordCompleteClick
+          }
+        >
+          확인
+        </StyledButton>
       )}
     </StyledInputBox>
   );
@@ -68,7 +100,7 @@ const StyledInputBox = styled.div`
     align-items: center;
     justify-content: center;
     width: 10rem;
-    height: 100%;
+    height: 5rem;
     font-weight: bold;
     background-color: #f9f9f9;
     border-right: 1px solid #e5e5e5;
@@ -81,7 +113,7 @@ const StyledInputBox = styled.div`
 
 const StyledInfoInput = styled.input`
   width: 30rem;
-  height: 100%;
+  height: 5rem;
   padding-left: 15px;
   outline: none;
   border: none;

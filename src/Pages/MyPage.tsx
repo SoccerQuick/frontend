@@ -86,7 +86,7 @@ const MyPageContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
   width: 98.4rem;
-  height: 50rem;
+  height: 90rem;
   padding: 0 2rem;
   margin: 2rem auto;
   background-color: rgb(247, 247, 247);
