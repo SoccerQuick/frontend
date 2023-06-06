@@ -37,7 +37,7 @@ const StyledProfileContainer = styled.div`
   align-items: center;
   align-self: start;
   width: 25rem;
-  height: 61%;
+  height: 64%;
 
   background: rgb(247 247 247);
   border-radius: 16px;

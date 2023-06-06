@@ -100,7 +100,7 @@ const StyledInputBox = styled.div`
     align-items: center;
     justify-content: center;
     width: 10rem;
-    height: 5rem;
+    height: 5.5rem;
     font-weight: bold;
     background-color: #f9f9f9;
     border-right: 1px solid #e5e5e5;
@@ -113,7 +113,7 @@ const StyledInputBox = styled.div`
 
 const StyledInfoInput = styled.input`
   width: 30rem;
-  height: 5rem;
+  height: 5.5rem;
   padding-left: 15px;
   outline: none;
   border: none;
@@ -124,7 +124,7 @@ const StyledInfoInput = styled.input`
 
 const StyledButton = styled.button`
   width: 10rem;
-  height: 5rem;
+  height: 5.5rem;
   font-size: 1rem;
   background-color: #f9f9f9;
 `;
