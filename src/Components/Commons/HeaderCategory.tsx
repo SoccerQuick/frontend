@@ -11,7 +11,7 @@ export default function HeaderCategory() {
   const location = useLocation();
 
   const isHome = location.pathname === '/';
-  const isMainPage = location.pathname === '/main';
+  const isGroundPage = location.pathname === '/ground';
   const isReviewPage = location.pathname === '/review';
   const isTeampage = location.pathname === '/teampage';
 
@@ -27,12 +27,12 @@ export default function HeaderCategory() {
       </StyledCategoryText>
 
       <StyledCategoryText
-        focused={isMainPage}
+        focused={isGroundPage}
         onClick={() => {
-          navigate('/main');
+          navigate('/ground');
         }}
       >
-        풋살 매치
+        경기장
       </StyledCategoryText>
 
       <StyledCategoryText
@@ -41,7 +41,7 @@ export default function HeaderCategory() {
           navigate('/review');
         }}
       >
-        풋살 후기
+        리뷰
       </StyledCategoryText>
 
       <StyledCategoryText
@@ -50,7 +50,7 @@ export default function HeaderCategory() {
           navigate('/teampage');
         }}
       >
-        팀원 모집
+        팀
       </StyledCategoryText>
     </StyledHeaderCategory>
   );
@@ -58,18 +58,18 @@ export default function HeaderCategory() {
 
 const StyledHeaderCategory = styled.div`
   width: 98.4rem;
-  padding: 0 2rem;
+  padding: 3rem 2rem;
   height: 3rem;
-  margin: 1.4rem auto;
+  margin: 1rem auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
 
 const StyledCategoryText = styled.span<CategoryTextProps>`
-  padding-right: 1rem;
-  font-size: ${({ focused }) => (focused ? '1.8rem' : '1.5rem')};
-  color: ${({ focused }) => (focused ? 'black' : '#727f88')};
+  padding-right: 3rem;
+  font-size: ${({ focused }) => (focused ? '2.2rem' : '1.9rem')};
+  color: ${({ focused }) => (focused ? '#535353' : '#727f88')};
   font-weight: ${({ focused }) => (focused ? 'bold' : 'normal')};
   cursor: pointer;
 `;

@@ -86,45 +86,41 @@ function FindingGround(props: FindingGroundProps) {
             </thead>
             <tbody>
               {filteredData.map((item, idx) => (
-                <>
-                  <StyledTr key={idx}>
-                    <StyledCheckboxTd>
-                      <input
-                        type="checkbox"
-                        id={item.title}
-                        checked={checkedArray.some(
-                          (data) => data.title === item.title
-                        )}
-                        onChange={(e) => checkHandler(e, item)}
-                      />
-                      <label htmlFor={item.title}></label>
-                    </StyledCheckboxTd>
-                    <StyledAddressTd>
-                      {item.address.shortAddress}
-                    </StyledAddressTd>
-                    <StyledMainTd>
-                      <p>{item.title}</p>
-                      <StyledTableCell>
-                        {item.provided.map((data, index) => (
-                          <StyledTable key={index} data={data}>
-                            {data}
-                          </StyledTable>
-                        ))}
-                      </StyledTableCell>
-                    </StyledMainTd>
+                <StyledTr key={item.title + idx}>
+                  <StyledCheckboxTd>
+                    <input
+                      type="checkbox"
+                      id={item.title}
+                      checked={checkedArray.some(
+                        (data) => data.title === item.title
+                      )}
+                      onChange={(e) => checkHandler(e, item)}
+                    />
+                    <label htmlFor={item.title}></label>
+                  </StyledCheckboxTd>
+                  <StyledAddressTd>{item.address.shortAddress}</StyledAddressTd>
+                  <StyledMainTd>
+                    <p>{item.title}</p>
+                    <StyledTableCell>
+                      {item.provided.map((data, index) => (
+                        <StyledTable key={index} data={data}>
+                          {data}
+                        </StyledTable>
+                      ))}
+                    </StyledTableCell>
+                  </StyledMainTd>
 
-                    <td>
-                      <StyledButton
-                        onClick={() => {
-                          setShowModal(true);
-                          setModalData(data[idx]);
-                        }}
-                      >
-                        조회
-                      </StyledButton>
-                    </td>
-                  </StyledTr>
-                </>
+                  <td>
+                    <StyledButton
+                      onClick={() => {
+                        setShowModal(true);
+                        setModalData(data[idx]);
+                      }}
+                    >
+                      조회
+                    </StyledButton>
+                  </td>
+                </StyledTr>
               ))}
             </tbody>
           </table>
