@@ -101,22 +101,12 @@ function EditPage() {
 
   return (
     <>
-      <button
-        onClick={() => {
-          console.log(data.data);
-        }}
-      >
-        ㅇㅇㅇ
-      </button>
-      <div>
-        gk : {gkNeed} / player : {playerNeed}
-      </div>
       <StyledContainer style={{ marginTop: '3rem' }}>
         <StyledBox>
           <StyledDiv
             style={{ width: '20rem', height: '5rem', fontSize: '1.9rem' }}
           >
-            {category}
+            카테고리 : {category}
           </StyledDiv>
           <StyledTitle>활동지역</StyledTitle>
           <StyledInputText
