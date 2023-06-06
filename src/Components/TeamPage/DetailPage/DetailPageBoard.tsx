@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
-import parse from 'html-react-parser';
 import HtmlParser from '../../../Commons/HtmlParser';
 import axios from 'axios';
 
