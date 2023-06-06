@@ -54,7 +54,6 @@ type BoardProps = {
 };
 
 function Board(props: BoardProps) {
-  const location = useLocation();
   const {
     dropdownList,
     tableList,
@@ -128,19 +127,6 @@ function Board(props: BoardProps) {
           </table>
         </TeamPageBody>
       </Teampage>
-      <Link
-        to="/teampage/submit"
-        style={{
-          display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
-          marginLeft: 'auto',
-          height: 'fit-content',
-          alignItems: 'center',
-          marginTop: 10,
-          marginRight: 7,
-        }}
-      >
-        <button>글 작성하기</button>
-      </Link>
     </div>
   );
 }
