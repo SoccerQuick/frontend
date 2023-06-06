@@ -3,23 +3,41 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import DropDown from '../../../Commons/DropDown';
 
-// type TeamBoardProps  = {
-//     dropdownList :{
-//         option: string[],
-//         state: string,
-//         setState: React.Dispatch<React.SetStateAction<string>>
-//       },
-//       tableList: {
-//         title: string;
-//         body: string;
-//         style: { width: string };
-//       }
-//       handleReset:{(void) => void}
-// }
-// 컴포넌트 분리 작업하다 너무어지러워서 any를 남발하였음.
-// 하나하나 다 찾아서 반드시 명시하기 바람.
+type DropdownList = {
+  option: string[];
+  state: string;
+  setState: React.Dispatch<React.SetStateAction<string>>;
+};
 
-function Board(props: any) {
+type TableList = {
+  title: string;
+  body: string;
+  style: { width: string };
+};
+
+type filteredData = {
+  num: number;
+  title: string;
+  author: string;
+  area: string;
+  status: string;
+  position?: string;
+  skill?: string;
+  gender: string;
+  body: string;
+};
+
+type BoardProps = {
+  dropdownList: DropdownList[];
+  tableList: TableList[];
+  handleReset: () => void;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalData: React.Dispatch<React.SetStateAction<any>>;
+  filteredData: filteredData[];
+  data: any;
+};
+
+function Board(props: BoardProps) {
   const location = useLocation();
   const {
     dropdownList,
@@ -35,7 +53,7 @@ function Board(props: any) {
     <div>
       <Teampage>
         <TeamPageOption>
-          {dropdownList.map((list: any, idx: any) => (
+          {dropdownList.map((list, idx) => (
             <DropDown
               key={idx}
               list={list.option}
@@ -59,7 +77,7 @@ function Board(props: any) {
               >
                 <th>순번</th>
                 <th>Title</th>
-                {tableList.map((item: any) => (
+                {tableList.map((item) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
                 <th>미리보기</th>
@@ -67,7 +85,7 @@ function Board(props: any) {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((item: any, idx: any) => (
+              {filteredData.map((item, idx) => (
                 <StyledTr key={item.num}>
                   <td style={{ width: '5%' }}>{idx + 1}</td>
                   <td style={{ width: '35%' }}>

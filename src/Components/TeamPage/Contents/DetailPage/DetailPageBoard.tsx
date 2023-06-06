@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import parse from 'html-react-parser';
+import HtmlParser from '../../../Commons/HtmlParser';
 import axios from 'axios';
 
 type DetailList = {
@@ -38,10 +39,6 @@ function DetailPage(props: DetailListProps) {
   const { detailList, data } = props;
   const navigate = useNavigate();
 
-  // html-react-parser를 사용해서 HTML문법으로 작성된 문자열을 HTML로 파싱하는 부분
-  const htmlString = data.body;
-  const parsedBody = parse(htmlString);
-
   return (
     <>
       <StyledContainer style={{ marginTop: '3rem' }}>
@@ -68,8 +65,10 @@ function DetailPage(props: DetailListProps) {
         </StyledBox>
       </StyledContainer>
       <StyledContainer>
-        <StyledBox style={{ display: 'grid' }}>
-          <StyledBody>{parsedBody}</StyledBody>
+        <StyledBox
+          style={{ display: 'grid', border: '1px solid', borderRadius: '1rem' }}
+        >
+          <HtmlParser data={data.body} />
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton>함께하기</StyledButton>

@@ -52,7 +52,8 @@ function DetailPage() {
           height: '100rem',
         }}
       >
-        등록번호 {id} 팀원 모집 페이지 내용 ㄱㅁㅇ
+        등록번호 {id} 팀원 모집 페이지 내용 ㄱㅁㅇ : 지금은 더미데이터 사용.
+        API요청 받아와서 작업할 예정임.
         <DetailPageBoard detailList={detailList} data={dummydata} />
       </div>
     </>
@@ -60,41 +61,3 @@ function DetailPage() {
 }
 
 export default DetailPage;
-
-const Teampage = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-const TeamPageHeader = styled.div`
-  display: flex;
-  width: 70%;
-  background-color: yellowgreen;
-`;
-const TeamPageOption = styled.div`
-  display: flex;
-  margin: 10px 10px;
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-`;
-
-const ModalPage = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50rem;
-  height: 50rem;
-  background-color: rgba(255, 255, 255);
-  z-index: 999;
-`;

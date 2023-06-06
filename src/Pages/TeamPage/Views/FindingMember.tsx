@@ -1,7 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import axios from 'axios';
 import FindPageBoard from '../../../Components/TeamPage/Contents/FindPage/FindPageBoard';
+
+type Applicant = {
+  nickName: string;
+  position: string;
+  skill: string;
+  body: string;
+};
 
 type modalDataProps = {
   area: string;
@@ -18,12 +25,13 @@ type modalDataProps = {
   player_need?: number;
   player?: number;
   allowRandom?: string;
-  applicant?: string[];
+  applicant?: Applicant[];
+  [key: string]: string | number | undefined | Applicant[];
 };
 
 type FindingMemberProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalData: React.Dispatch<React.SetStateAction<modalDataProps[]>>;
+  setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
 };
 type FindMemberFilter = {
   status: string | null;

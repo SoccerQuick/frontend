@@ -3,6 +3,13 @@ import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import axios from 'axios';
 import FindPageBoard from '../../../Components/TeamPage/Contents/FindPage/FindPageBoard';
 
+type Applicant = {
+  nickName: string;
+  position: string;
+  skill: string;
+  body: string;
+};
+
 type modalDataProps = {
   area: string;
   author: string;
@@ -18,11 +25,12 @@ type modalDataProps = {
   player_need?: number;
   player?: number;
   allowRandom?: string;
+  [key: string]: string | number | undefined | Applicant[];
 };
 
 type FindingTeamProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalData: React.Dispatch<React.SetStateAction<modalDataProps[]>>;
+  setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
 };
 type FindTeamFilter = {
   status: string | null;
@@ -194,7 +202,7 @@ const dummydata_findingTeam = [
     position: '필드플레이어',
     skill: '프로',
     gender: '남',
-    body: "아이엠 Minu Lee? Isn't this enough?",
+    body: "아이엠 Minu Lee? Isn't this enough?<br />성경이 덤벼라 ㅇㅇ",
   },
   {
     num: 4,
