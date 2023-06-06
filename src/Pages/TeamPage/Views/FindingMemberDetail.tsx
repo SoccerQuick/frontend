@@ -30,7 +30,7 @@ function DetailPage() {
 
   const dummydata: DataType = {
     num: 1,
-    title: '팀구합니다',
+    title: '지리는 팀원구합니다',
     author: 'ㄱㅁㅇ',
     area: '서울',
     status: '미완료',
