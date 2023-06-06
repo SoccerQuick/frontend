@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import DetailPageBoard from '../../../Components/TeamPage/Contents/DetailPage/DetailPageBoard';
+import DetailPageBoard from '../../../Components/TeamPage/DetailPage/DetailPageBoard';
 
 // 현재 미사용 페이지임.
 function DetailPage() {

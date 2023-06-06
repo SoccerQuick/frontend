@@ -8,7 +8,7 @@ import FindingMember from './Views/FindingMember';
 import FindingTeam from './Views/FindingTeam';
 import FindingTeamDetail from './Views/FindingTeamDetail';
 import FindingMemberDetail from './Views/FindingMemberDetail';
-import PreView from '../../Components/TeamPage/Contents/PreView/PreViewModal';
+import PreView from '../../Components/TeamPage/PreView/PreViewModal';
 import SubmitPage from './Posts/PostPage';
 import EditPage from './Posts/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
@@ -47,7 +47,7 @@ function TeamPage() {
                   />
                 }
               />
-              <Route path="/player/:id" element={<FindingMemberDetail />} />
+              <Route path="/player/:id" element={<FindingTeamDetail />} />
               <Route
                 path="/team"
                 element={
@@ -57,7 +57,7 @@ function TeamPage() {
                   />
                 }
               />
-              <Route path="/team/:id" element={<FindingTeamDetail />} />
+              <Route path="/team/:id" element={<FindingMemberDetail />} />
               <Route
                 path="/"
                 element={
