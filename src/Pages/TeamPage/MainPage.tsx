@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import { Routes, Route } from 'react-router-dom';
-import FindPage from './FindPage';
-import FindingMember from '../../Components/TeamPage/Contents/FindPage/FindingMember';
-import FindingTeam from '../../Components/TeamPage/Contents/FindPage/FindingTeam';
-import TeamPageModal from '../../Components/TeamPage/Layout/TeamPageModal';
-import SubmitPage from './SubmitPage';
-import DetailPage from './DetailPage';
-import EditPage from './EditPage';
+import FindPage from './Views/SelectCategory';
+import FindingMember from './Views/FindingMember';
+import FindingTeam from './Views/FindingTeam';
+import FindingTeamDetail from './Views/FindingTeamDetail';
+import FindingMemberDetail from './Views/FindingMemberDetail';
+import PreView from '../../Components/TeamPage/Contents/PreView/PreViewModal';
+import SubmitPage from './Posts/PostPage';
+import EditPage from './Posts/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
 function TeamPage() {
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
@@ -30,16 +31,12 @@ function TeamPage() {
           <TeamPageHeader>헤더임</TeamPageHeader>
           <div>
             {showModal && (
-              <TeamPageModal
-                setShowModal={setShowModal}
-                modalData={modalData}
-              />
+              <PreView setShowModal={setShowModal} modalData={modalData} />
             )}
           </div>
           <TeamPageBody>
             <Routes>
               <Route path="/submit" element={<SubmitPage />} />
-              <Route path="/detail" element={<DetailPage />} />
               <Route path="/edit" element={<EditPage />} />
               <Route
                 path="/player"
@@ -50,6 +47,7 @@ function TeamPage() {
                   />
                 }
               />
+              <Route path="/player/:id" element={<FindingMemberDetail />} />
               <Route
                 path="/team"
                 element={
@@ -59,6 +57,7 @@ function TeamPage() {
                   />
                 }
               />
+              <Route path="/team/:id" element={<FindingTeamDetail />} />
               <Route
                 path="/"
                 element={
