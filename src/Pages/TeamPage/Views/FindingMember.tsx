@@ -1,7 +1,7 @@
 import React from 'react';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import FindPageBoard from '../../../Components/TeamPage/FindPage/FindPageBoard';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -43,6 +43,7 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
+  const location = useLocation();
   const { setShowModal, setModalData } = props;
   const [status, setStatus] = React.useState('');
   const [area, setArea] = React.useState('');
@@ -166,6 +167,16 @@ function FindingMember(props: FindingMemberProps) {
         filteredData={filteredData}
         data={data}
       />
+      <TeamPageFooter>
+        <Link
+          to="/teampage/submit"
+          style={{
+            display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
+          }}
+        >
+          <button>글 작성하기</button>
+        </Link>
+      </TeamPageFooter>
     </div>
   );
 }
@@ -315,4 +326,14 @@ const StyledBanner = styled.span`
       transform: translateX(-100%);
     }
   }
+`;
+
+const TeamPageFooter = styled.div`
+  display: flex;
+  background-color: skyblue;
+  justify-content: flex-end;
+  width: fit-content;
+  margin-top: 3rem;
+  margin-right: 3rem;
+  float: right;
 `;
