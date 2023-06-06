@@ -26,13 +26,29 @@ type filteredData = {
   gender: string;
   body: string;
 };
+type modalDataProps = {
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk_need?: number;
+  gk?: number;
+  player_need?: number;
+  player?: number;
+  allowRandom?: string;
+};
 
 type BoardProps = {
   dropdownList: DropdownList[];
   tableList: TableList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalData: React.Dispatch<React.SetStateAction<any>>;
+  setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
   data: any;
 };
@@ -91,7 +107,7 @@ function Board(props: BoardProps) {
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.num}`}>{item.title}</Link>
                   </td>
-                  {tableList.map((cell: any) => (
+                  {tableList.map((cell: TableList) => (
                     <td key={cell.body} style={cell.style}>
                       {item[cell.body as keyof typeof item] as React.ReactNode}
                     </td>
