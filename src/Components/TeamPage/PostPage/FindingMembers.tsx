@@ -30,15 +30,6 @@ function FindingMembers(props: Props) {
         selected={allowRandom}
         setSelected={setAllowRandom}
       />
-      <StyledTitle>Player 모집인원</StyledTitle>
-      <StyledInputNumber
-        type={'number'}
-        defaultValue={playerNeed}
-        min={0}
-        onChange={(e) => {
-          setPlayerNeed(parseInt(e.target.value));
-        }}
-      />
       <StyledTitle>GK 모집인원</StyledTitle>
       <StyledInputNumber
         type={'number'}
@@ -46,6 +37,15 @@ function FindingMembers(props: Props) {
         min={0}
         onChange={(e) => {
           setGkNeed(parseInt(e.target.value));
+        }}
+      />
+      <StyledTitle>Player 모집인원</StyledTitle>
+      <StyledInputNumber
+        type={'number'}
+        defaultValue={playerNeed}
+        min={0}
+        onChange={(e) => {
+          setPlayerNeed(parseInt(e.target.value));
         }}
       />
     </StyledBox>
