@@ -1,162 +1,221 @@
-import react, { useState, useEffect } from 'react';
-import axios from 'axios';
+import react, { useState, FormEvent } from 'react';
+import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
-import MyProfile from './MyPageProfile';
+import { FormData } from '../../Pages/MyPage';
+import MyPageInput from './MyPageInput';
+import { checkNewPassword } from './checkPassword';
 
-export type FormData = {
-  user_id: string;
-  name: string;
-  nickname: string;
-  email: string;
-  phonenumber: string;
-  gender?: string;
+type MyPageInfoProps = {
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 };
 
-export function MyPageInfo() {
-  const [formData, setFormData] = useState({
-    user_id: '',
-    name: '',
-    nickname: '',
-    email: '',
-    phonenumber: '',
-    gender: '남',
+export type ErrorMsg = {
+  formMsg: string;
+  passwordFormMsg: string;
+};
+
+export type PasswordForm = {
+  oldPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+};
+
+export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
+  const [passwordForm, setPasswordForm] = useState<PasswordForm>({
+    oldPassword: '12341234a',
+    newPassword: '',
+    newPasswordConfirm: '',
+  });
+  const [errorMsg, setErrorMsg] = useState<ErrorMsg>({
+    formMsg: '',
+    passwordFormMsg: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+    const { oldPassword, newPassword, newPasswordConfirm } = passwordForm;
+    if (newPassword.length > 0) {
+      const check = await checkNewPassword(
+        newPassword,
+        newPasswordConfirm,
+        setErrorMsg
+      );
+      if (!check) {
+        return;
+      }
+    }
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:8800/user/aaa', {
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.patch(
+        'http://localhost:8800/user',
+        {
+          user_id: formData.user_id,
+          name: formData.name,
+          password: newPassword ? newPassword : oldPassword,
+          nick_name: formData.nick_name,
+          email: formData.email,
+          phone_number: formData.phone_number,
+          gender: formData.gender,
         },
-      })
-      .then((res) => res.data.userData)
-      .then((user) => {
-        setFormData((prev) => ({
-          ...prev,
-          user_id: user.user_id,
-          name: user.name,
-          nickname: user.nick_name,
-          email: user.email,
-          phonenumber: user.phone_number,
-        }));
-      })
-      .catch((err) => console.log(err));
-  }, []);
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      alert('회원정보가 변경되었습니다.');
+      console.log(response.data);
+      setErrorMsg({
+        formMsg: '',
+        passwordFormMsg: '',
+      });
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      if (axiosError.response) {
+        const responseData = axiosError.response?.data as { message?: string };
+        console.log(responseData.message);
+        setErrorMsg({
+          formMsg: String(responseData.message),
+          passwordFormMsg: '',
+        });
+      } else {
+        setErrorMsg({
+          formMsg: '오류가 발생했습니다.',
+          passwordFormMsg: '',
+        });
+      }
+    }
+  };
 
   return (
     <StyledInfoContainer>
-      <MyProfile formData={formData} />
-      <StyledInfoForm>
-        <StyledInputBox>
-          {' '}
-          <label>아이디</label>
-          <StyledInfoInput
+      {' '}
+      <StyledInfoBox>
+        {' '}
+        <StyledTitle>내 정보</StyledTitle>
+        <StyledInfoForm onSubmit={handleSubmit}>
+          <MyPageInput
+            title="아이디"
+            name="user_id"
             value={formData.user_id}
-            placeholder="아이디"
-            onChange={handleChange}
+            setFormData={setFormData}
           />
-          <StyledChangeButton>수정</StyledChangeButton>
-        </StyledInputBox>
-        <StyledInputBox>
-          {' '}
-          <label>이름</label>
-          <StyledInfoInput
+          <MyPageInput
+            title="이름"
+            name="name"
             value={formData.name}
-            placeholder="이름"
-            onChange={handleChange}
+            setFormData={setFormData}
           />
-          <StyledChangeButton>수정</StyledChangeButton>
-        </StyledInputBox>
-        <StyledInputBox>
-          {' '}
-          <label>닉네임</label>
-          <StyledInfoInput
-            value={formData.nickname}
-            placeholder="닉네임"
-            onChange={handleChange}
+          <MyPageInput
+            title="닉네임"
+            name="nick_name"
+            value={formData.nick_name}
+            setFormData={setFormData}
           />
-          <StyledChangeButton>수정</StyledChangeButton>
-        </StyledInputBox>
-        <StyledInputBox>
-          {' '}
-          <label>이메일</label>
-          <StyledInfoInput
+          <MyPageInput
+            title="이메일"
+            name="email"
             value={formData.email}
-            placeholder="이메일"
-            onChange={handleChange}
+            setFormData={setFormData}
           />
-          <StyledChangeButton>수정</StyledChangeButton>
-        </StyledInputBox>
-        <StyledInputBox>
-          {' '}
-          <label>핸드폰 번호</label>
-          <StyledInfoInput
-            value={formData.phonenumber}
-            placeholder="핸드폰 번호"
-            onChange={handleChange}
+          <MyPageInput
+            title="전화번호"
+            name="phone_number"
+            value={formData.phone_number}
+            setFormData={setFormData}
           />
-          <StyledChangeButton>수정</StyledChangeButton>
-        </StyledInputBox>
-        <StyledInputBox>
-          {' '}
-          <label>성별</label>
-          <StyledInfoInput value={formData.gender} disabled />
-          <StyledChangeButton>완료</StyledChangeButton>
-        </StyledInputBox>
-      </StyledInfoForm>
+          <MyPageInput
+            title="성별"
+            name="gender"
+            value={formData.gender}
+            setFormData={setFormData}
+          />
+          <StyledSubmitButton>변경</StyledSubmitButton>
+        </StyledInfoForm>
+        <div style={{ color: 'red', marginTop: '1rem' }}>
+          {errorMsg.formMsg}
+        </div>
+      </StyledInfoBox>
+      <StyledInfoBox>
+        {' '}
+        <StyledTitle>비밀번호 변경</StyledTitle>
+        <StyledInfoForm onSubmit={handleSubmit}>
+          <MyPageInput
+            title="기존 비밀번호"
+            name="oldPassword"
+            value={passwordForm.oldPassword}
+            setPasswordForm={setPasswordForm}
+          />
+          <MyPageInput
+            title="새 비밀번호"
+            name="newPassword"
+            value={passwordForm.newPassword}
+            setPasswordForm={setPasswordForm}
+          />
+          <MyPageInput
+            title="새 비밀번호 확인"
+            name="newPasswordConfirm"
+            value={passwordForm.newPasswordConfirm}
+            setPasswordForm={setPasswordForm}
+          />
+          <StyledSubmitButton>변경</StyledSubmitButton>
+        </StyledInfoForm>
+        <div style={{ color: 'red', marginBottom: '1rem' }}>
+          {errorMsg.passwordFormMsg}
+        </div>
+      </StyledInfoBox>
     </StyledInfoContainer>
   );
 }
 
 const StyledInfoContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100%;
+
+  & > div:last-child {
+    height: 43rem;
+    margin-bottom: 2.5rem;
+  }
+`;
+
+const StyledInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 50rem;
-  background-color: rgb(247 247 247);
+  height: 100%;
+  width: 60rem;
+  background: rgb(253, 253, 253);
+  border-radius: 16px;
+  margin-top: 2.5rem;
+`;
+
+const StyledTitle = styled.div`
+  align-self: flex-start;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 2rem 0 2rem 5rem;
+  width: 50rem;
+  border-bottom: 3px solid #e5e5e5;
 `;
 
 const StyledInfoForm = styled.form`
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 60rem;
+  margin-top: 1rem;
+  height: 70%;
 `;
 
-const StyledInputBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 50rem;
-
-  & > label {
-    display: inline-block;
-    width: 10rem;
-    height: 4rem;
-    align-self: center;
-    justify-self: center;
-    background-color: #fff;
-    text-align: center;
-    border-bottom: 1px solid black;
-  }
-`;
-
-const StyledInfoInput = styled.input`
-  width: 30rem;
-  height: 4.5rem;
-`;
-
-const StyledChangeButton = styled.button`
-  width: 6rem;
-  height: 5rem;
-  background-color: #fff;
+const StyledSubmitButton = styled.button`
+  align-self: end;
+  width: 8rem;
+  margin: 1rem 1rem 0 0;
+  font-size: 1rem;
+  background-color: #09cf00;
+  color: #fff;
 `;
