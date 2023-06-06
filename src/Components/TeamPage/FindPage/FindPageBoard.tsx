@@ -66,7 +66,7 @@ function Board(props: BoardProps) {
   } = props;
 
   return (
-    <div>
+    <div style={{ width: '101rem' }}>
       <Teampage>
         <TeamPageOption>
           {dropdownList.map((list, idx) => (
