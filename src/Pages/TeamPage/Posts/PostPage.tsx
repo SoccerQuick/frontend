@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
-import FilteringOptions from '../../Components/Commons/FilteringOptions';
-import DropDown from '../../Components/Commons/DropDown';
+import FilteringOptions from '../../../Components/Commons/FilteringOptions';
+import DropDown from '../../../Components/Commons/DropDown';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import SubmitFindingTeam from '../../Components/TeamPage/Contents/SubmitPage/SubmitFindingTeam';
-import SubmitFindingMembers from '../../Components/TeamPage/Contents/SubmitPage/SubmitFindingMembers';
+import SubmitFindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
+import SubmitFindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
 import axios from 'axios';
 
 function SubmitPage() {
@@ -38,6 +38,7 @@ function SubmitPage() {
         allowRandom: allowRandom,
         playerNeed: playerNeed,
         gkNeed: gkNeed,
+        body: content,
       };
     } else if (boardCategory === '팀 구해요') {
       data = {
@@ -46,6 +47,7 @@ function SubmitPage() {
         gender: gender,
         skill: skill,
         position: position,
+        body: content,
       };
     }
     // 현재 백엔드 API 요청이 만들어지지 않았음.

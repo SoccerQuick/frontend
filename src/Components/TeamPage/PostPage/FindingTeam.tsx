@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import DropDown from '../../../Commons/DropDown';
-import FilteringOptions from '../../../Commons/FilteringOptions';
+import DropDown from '../../Commons/DropDown';
+import FilteringOptions from '../../Commons/FilteringOptions';
 
 type Props = {
   gender: string;
@@ -50,31 +50,4 @@ const StyledTitle = styled.div`
   align-items: center;
   margin: 0rem 2rem;
   font-size: 1.9rem;
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledInputText = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 9rem;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-`;
-
-const StyledInputNumber = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 6rem;
-  height: 4rem;
-  text-align: center;
-`;
-
-const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
 `;
