@@ -26,11 +26,11 @@ function EditPage() {
   const [position, setPosition] = React.useState(data.position);
   const [skill, setSkill] = React.useState(data.skill);
   const [gender, setGender] = React.useState(data.gender);
-
+  const [body, setBody] = React.useState(data.body);
   // quill 라이브러리를 세팅하는 부분
-  const [content, setContent] = React.useState('');
+
   const handleEditorChange: (value: string) => void = (value) => {
-    setContent(value);
+    setBody(value);
   };
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ function EditPage() {
         allowRandom: allowRandom,
         playerNeed: playerNeed,
         gkNeed: gkNeed,
-        body: content,
+        body: body,
       };
     } else if (category === '팀 구해요') {
       newData = {
@@ -54,7 +54,7 @@ function EditPage() {
         gender: gender,
         skill: skill,
         position: position,
-        body: content,
+        body: body,
       };
     }
     // 현재 백엔드 API 요청이 만들어지지 않았음.
