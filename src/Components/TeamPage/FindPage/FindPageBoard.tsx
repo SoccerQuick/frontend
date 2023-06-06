@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import DropDown from '../../../Commons/DropDown';
+import DropDown from '../../Commons/DropDown';
 
 type DropdownList = {
   option: string[];
