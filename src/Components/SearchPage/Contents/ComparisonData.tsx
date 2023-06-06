@@ -47,7 +47,7 @@ const ComparisonData: React.FC<ComparsionDataProps> = ({
                 <StyledGridItems checkedInModal={checkedInModal}>
                   {comparisonData &&
                     comparisonData.map((item) => (
-                      <StyledGridItem>
+                      <StyledGridItem key={item.title}>
                         <StyledGroundContent image>
                           <img src={item.image[0]} alt="" />
                         </StyledGroundContent>

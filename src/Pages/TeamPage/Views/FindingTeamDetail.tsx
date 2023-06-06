@@ -34,7 +34,7 @@ function DetailPage() {
     position: '필드플레이어',
     skill: '프로',
     gender: '남',
-    body: "아이엠 Minu Lee? Isn't this enough?",
+    body: '<h1>나는 이민우</h1><h4>축구를 잘하지</h4><p>권성경 덤벼라</p><p><strong>서울오면 풋살이다</strong></p>',
   };
 
   return (
