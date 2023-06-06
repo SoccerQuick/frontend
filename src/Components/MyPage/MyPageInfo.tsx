@@ -2,7 +2,7 @@ import react, { useState, FormEvent } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { FormData } from '../../Pages/MyPage';
-import MyPageInput from './MyPageInput';
+import { MyPageInput } from './MyPageInput';
 import { checkNewPassword } from './checkPassword';
 
 type MyPageInfoProps = {
@@ -71,6 +71,11 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
         formMsg: '',
         passwordFormMsg: '',
       });
+      setPasswordForm((prev) => ({
+        ...prev,
+        newPassword: '',
+        newPasswordConfirm: '',
+      }));
     } catch (err) {
       const axiosError = err as AxiosError;
       if (axiosError.response) {
@@ -100,13 +105,13 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
             title="아이디"
             name="user_id"
             value={formData.user_id}
-            setFormData={setFormData}
+            noButton
           />
           <MyPageInput
             title="이름"
             name="name"
             value={formData.name}
-            setFormData={setFormData}
+            noButton
           />
           <MyPageInput
             title="닉네임"
@@ -130,7 +135,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
             title="성별"
             name="gender"
             value={formData.gender}
-            setFormData={setFormData}
+            noButton
           />
           <StyledSubmitButton>변경</StyledSubmitButton>
         </StyledInfoForm>
@@ -141,13 +146,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
       <StyledInfoBox>
         {' '}
         <StyledTitle>비밀번호 변경</StyledTitle>
-        <StyledInfoForm onSubmit={handleSubmit}>
-          <MyPageInput
-            title="기존 비밀번호"
-            name="oldPassword"
-            value={passwordForm.oldPassword}
-            setPasswordForm={setPasswordForm}
-          />
+        <StyledInfoForm onSubmit={handleSubmit} style={{ height: '14rem' }}>
           <MyPageInput
             title="새 비밀번호"
             name="newPassword"
@@ -170,7 +169,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
   );
 }
 
-const StyledInfoContainer = styled.div`
+export const StyledInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -181,7 +180,7 @@ const StyledInfoContainer = styled.div`
   }
 `;
 
-const StyledInfoBox = styled.div`
+export const StyledInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -193,7 +192,7 @@ const StyledInfoBox = styled.div`
   margin-top: 2.5rem;
 `;
 
-const StyledTitle = styled.div`
+export const StyledTitle = styled.div`
   align-self: flex-start;
   font-size: 2.5rem;
   font-weight: bold;

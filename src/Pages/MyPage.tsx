@@ -6,6 +6,7 @@ import Header from '../Components/Header';
 import MyPageBar from '../Components/MyPage/MyPageBar';
 import MyProfile from '../Components/MyPage/MyPageProfile';
 import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
+import MyPageCheckPassword from '../Components/MyPage/MyPageCheckPassword';
 
 export type FormData = {
   user_id: string;
@@ -27,6 +28,7 @@ export function MyPage() {
   });
 
   const [checkedBarItem, setCheckedBarItem] = useState(1);
+  const [checkMyPassword, setCheckPassword] = useState(false);
 
   useEffect(() => {
     axios
@@ -59,8 +61,14 @@ export function MyPage() {
       />
       {checkedBarItem === 1 ? (
         <MyPageContainer>
-          <MyProfile formData={formData} />
-          <MyPageInfo formData={formData} setFormData={setFormData} />
+          {checkMyPassword ? (
+            <>
+              <MyProfile formData={formData} />
+              <MyPageInfo formData={formData} setFormData={setFormData} />
+            </>
+          ) : (
+            <MyPageCheckPassword setCheckPassword={setCheckPassword} />
+          )}
         </MyPageContainer>
       ) : (
         ''
@@ -86,7 +94,7 @@ const MyPageContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
   width: 98.4rem;
-  height: 90rem;
+  height: 80rem;
   padding: 0 2rem;
   margin: 2rem auto;
   background-color: rgb(247, 247, 247);
