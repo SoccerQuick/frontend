@@ -15,7 +15,7 @@ function FindPage(props: props) {
   const { setFindingMember, setFindingTeam } = props;
 
   return (
-    <div style={{ width: '100%' }}>
+    <StyledWrapper>
       <StyledDiv>
         <Link to="/teampage/team">
           <StyledButton
@@ -53,11 +53,17 @@ function FindPage(props: props) {
           </StyledButton>
         </Link>
       </StyledDiv>
-    </div>
+    </StyledWrapper>
   );
 }
 
 export default FindPage;
+
+const StyledWrapper = styled.div`
+  width: 98.4rem;
+  border-top: 0.2rem solid #c9c9c97c;
+  box-shadow: 0px -5px 5px -5px #c9c9c97c;
+`;
 
 const StyledDiv = styled.div`
   display: flex;
