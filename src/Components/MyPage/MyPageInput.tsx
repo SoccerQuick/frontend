@@ -7,19 +7,24 @@ type MyPageInputProps = {
   title: string;
   name: string;
   value: string;
+  noButton?: boolean;
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
   setPasswordForm?: React.Dispatch<React.SetStateAction<PasswordForm>>;
 };
 
-function MyPageInput({
+export function MyPageInput({
   title,
   name,
   value,
+  noButton,
   setFormData,
   setPasswordForm,
 }: MyPageInputProps) {
   const [inputValue, setInputValue] = useState('');
   const [isDisabled, setIsDisabled] = useState(() => {
+    if (noButton) {
+      return true;
+    }
     if (setFormData) {
       return true;
     }
@@ -34,6 +39,16 @@ function MyPageInput({
     e.preventDefault();
     setInputValue(e.target.value);
   };
+
+  // 비밀번호 로직 수정 여부에 대한 고민.. (보류)
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setPasswordForm &&
+  //     setPasswordForm((prevFormData) => ({
+  //       ...prevFormData,
+  //       [name]: inputValue,
+  //     }));
+  // };
 
   const handleChangeButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -72,28 +87,34 @@ function MyPageInput({
         onChange={handleChange}
         disabled={isDisabled}
       />
-      {isDisabled ? (
-        <StyledButton onClick={handleChangeButton}>수정</StyledButton>
+      {noButton ? (
+        ''
       ) : (
-        <StyledButton
-          onClick={
-            setFormData ? handleCompleteClick : handlePasswordCompleteClick
-          }
-        >
-          확인
-        </StyledButton>
+        <>
+          {isDisabled ? (
+            <StyledButton onClick={handleChangeButton}>수정</StyledButton>
+          ) : (
+            <StyledButton
+              onClick={
+                setFormData ? handleCompleteClick : handlePasswordCompleteClick
+              }
+            >
+              확인
+            </StyledButton>
+          )}
+        </>
       )}
     </StyledInputBox>
   );
 }
 
-export default MyPageInput;
-
-const StyledInputBox = styled.div`
+export const StyledInputBox = styled.div`
   display: flex;
   justify-content: stretch;
+  align-items: center;
   height: 100%;
   width: 50rem;
+  background-color: #f9f9f9;
 
   & > label {
     display: flex;
@@ -111,7 +132,7 @@ const StyledInputBox = styled.div`
   }
 `;
 
-const StyledInfoInput = styled.input`
+export const StyledInfoInput = styled.input`
   width: 30rem;
   height: 5.5rem;
   padding-left: 15px;
@@ -122,7 +143,7 @@ const StyledInfoInput = styled.input`
 }
 `;
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   width: 10rem;
   height: 5.5rem;
   font-size: 1rem;

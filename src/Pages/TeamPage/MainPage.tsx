@@ -28,7 +28,6 @@ function TeamPage() {
         }}
       >
         <Teampage>
-          <TeamPageHeader>헤더임</TeamPageHeader>
           <div>
             {showModal && (
               <PreView setShowModal={setShowModal} modalData={modalData} />
@@ -37,7 +36,7 @@ function TeamPage() {
           <TeamPageBody>
             <Routes>
               <Route path="/submit" element={<SubmitPage />} />
-              <Route path="/edit" element={<EditPage />} />
+              <Route path="/edit/:id" element={<EditPage />} />
               <Route
                 path="/player"
                 element={
@@ -83,15 +82,6 @@ export default TeamPage;
 const Teampage = styled.div`
   display: grid;
   justify-content: center;
-`;
-const TeamPageHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 120rem;
-  height: 4rem;
-  font-size: 2rem;
-  background-color: yellowgreen;
 `;
 
 const TeamPageBody = styled.div`

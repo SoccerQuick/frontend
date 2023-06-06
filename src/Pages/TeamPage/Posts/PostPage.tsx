@@ -127,6 +127,8 @@ function SubmitPage() {
         {boardCategory === '팀원 구해요' && (
           <SubmitFindingMembers
             allowRandom={allowRandom}
+            playerNeed={playerNeed}
+            gkNeed={gkNeed}
             setAllowRandom={setAllowRandom}
             setPlayerNeed={setPlayerNeed}
             setGkNeed={setGkNeed}

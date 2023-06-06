@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -58,6 +58,9 @@ const REVIEW_LIST_DUMMY_DATA = [
 ];
 
 export default function Review() {
+  const [reviewList, setReviewList] = useState(REVIEW_LIST_DUMMY_DATA);
+  const [clicked, setClicked] = useState(Array(reviewList.length).fill(false));
+
   let settings = {
     dots: true,
     infinite: true,
@@ -72,6 +75,22 @@ export default function Review() {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'smooth',
+    });
+  }
+
+  function handleLikeButtonClick(index: number) {
+    setReviewList((prevList) => {
+      const updatedList = [...prevList];
+      const updatedItem = { ...updatedList[index] };
+      if (clicked[index]) updatedItem.like -= 1;
+      else updatedItem.like += 1;
+      updatedList[index] = updatedItem;
+
+      const updatedClicked = [...clicked];
+      updatedClicked[index] = !clicked[index];
+      setClicked(updatedClicked);
+
+      return updatedList;
     });
   }
 
@@ -112,9 +131,9 @@ export default function Review() {
             <span>작성자</span>
             <span>지역</span>
             <span>구장</span>
-            <span>🧡</span>
+            <span>좋아요</span>
           </StyledReviewListHeader>
-          {REVIEW_LIST_DUMMY_DATA.map((item, index) => (
+          {reviewList.map((item, index) => (
             <StyledReviewList key={index}>
               <span className="review-user-icon">
                 {<img src={AVATARS[index]} alt="avatar1" />}
@@ -123,11 +142,23 @@ export default function Review() {
               <span className="review-author">{item.author}</span>
               <span className="review-area">{item.area}</span>
               <span className="review-stadium">{item.stadium}</span>
-              <span className="review-like">{item.like}</span>
+              <span className="review-like-count">
+                {
+                  <button
+                    className={`review-like-button ${
+                      clicked[index] ? 'heart-beat' : ''
+                    }`}
+                    onClick={() => handleLikeButtonClick(index)}
+                  >
+                    {clicked[index] ? '🧡' : '🤍'}
+                  </button>
+                }
+                {item.like}
+              </span>
             </StyledReviewList>
           ))}
         </StyledList>
-        <StyledButtons>
+        <StyledStickyButtons>
           <StyledWrite>
             <button
               onClick={() => {
@@ -140,7 +171,7 @@ export default function Review() {
           <StyledScrollToBottomButton>
             <button onClick={handleScrollToBottom}>⬇</button>
           </StyledScrollToBottomButton>
-        </StyledButtons>
+        </StyledStickyButtons>
       </StyledBody>
 
       <Footer />
@@ -157,13 +188,13 @@ const StyledBody = styled.div`
 
 const StyledCarousel = styled.div`
   background-color: white;
-  height: 50vh;
+  height: 35vh;
   overflow: hidden;
 `;
 
 const StyledImage = styled.div`
   width: 100%;
-  height: 45vh;
+  height: 30vh;
 `;
 
 const StyledList = styled.div`
@@ -242,12 +273,35 @@ const StyledReviewList = styled.div`
   .review-stadium {
     background-color: #eaffea;
   }
-  .review-like {
+  .review-like-button {
+    background-color: #ffdcdc;
+  }
+
+  .heart-beat {
+    animation: heartBeat 0.5s linear;
+  }
+
+  @keyframes heartBeat {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .review-like-count {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     background-color: #ffdcdc;
   }
 `;
 
-const StyledButtons = styled.div`
+const StyledStickyButtons = styled.div`
   display: grid;
   grid-template-columns: 20fr 1fr;
   place-items: center;
