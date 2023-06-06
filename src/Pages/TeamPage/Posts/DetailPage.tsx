@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
-import SubmitModal from '../../../Components/TeamPage/SubmitModal/SubmitModal';
+import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
+import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import axios from 'axios';
 
 type DetailList = {
@@ -93,7 +94,12 @@ function DetailPage(props: DetailListProps) {
             돌아가기
           </StyledButton>
         </StyledBox>
-        {showModal && <SubmitModal setShowModal={setShowModal} />}
+        {showModal &&
+          (data.allowRandom ? (
+            <SubmitForFindingMember setShowModal={setShowModal} />
+          ) : (
+            <SubmitForFindingTeam setShowModal={setShowModal} />
+          ))}
       </StyledContainer>
     </>
   );
