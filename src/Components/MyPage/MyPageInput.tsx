@@ -7,6 +7,7 @@ type MyPageInputProps = {
   title: string;
   name: string;
   value: string;
+  noButton?: boolean;
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
   setPasswordForm?: React.Dispatch<React.SetStateAction<PasswordForm>>;
 };
@@ -15,11 +16,15 @@ export function MyPageInput({
   title,
   name,
   value,
+  noButton,
   setFormData,
   setPasswordForm,
 }: MyPageInputProps) {
   const [inputValue, setInputValue] = useState('');
   const [isDisabled, setIsDisabled] = useState(() => {
+    if (noButton) {
+      return true;
+    }
     if (setFormData) {
       return true;
     }
@@ -72,16 +77,22 @@ export function MyPageInput({
         onChange={handleChange}
         disabled={isDisabled}
       />
-      {isDisabled ? (
-        <StyledButton onClick={handleChangeButton}>수정</StyledButton>
+      {noButton ? (
+        ''
       ) : (
-        <StyledButton
-          onClick={
-            setFormData ? handleCompleteClick : handlePasswordCompleteClick
-          }
-        >
-          확인
-        </StyledButton>
+        <>
+          {isDisabled ? (
+            <StyledButton onClick={handleChangeButton}>수정</StyledButton>
+          ) : (
+            <StyledButton
+              onClick={
+                setFormData ? handleCompleteClick : handlePasswordCompleteClick
+              }
+            >
+              확인
+            </StyledButton>
+          )}
+        </>
       )}
     </StyledInputBox>
   );
@@ -93,6 +104,7 @@ export const StyledInputBox = styled.div`
   align-items: center;
   height: 100%;
   width: 50rem;
+  background-color: #f9f9f9;
 
   & > label {
     display: flex;

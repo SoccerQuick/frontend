@@ -39,7 +39,7 @@ function MyPageCheckPassword({ setCheckPassword }: MyPageCheckPasswordProps) {
 
   return (
     <StyledInfoContainer>
-      <StyledInfoBox style={{ height: '25rem' }}>
+      <StyledInfoBox style={{ height: '22rem' }}>
         <StyledTitle style={{ marginTop: '3rem' }}>내 정보 확인</StyledTitle>
         <StyledInputBox style={{ marginBottom: '4rem' }}>
           <label>비밀번호 확인</label>

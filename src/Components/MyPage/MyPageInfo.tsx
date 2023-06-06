@@ -100,13 +100,13 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
             title="아이디"
             name="user_id"
             value={formData.user_id}
-            setFormData={setFormData}
+            noButton
           />
           <MyPageInput
             title="이름"
             name="name"
             value={formData.name}
-            setFormData={setFormData}
+            noButton
           />
           <MyPageInput
             title="닉네임"
@@ -130,7 +130,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
             title="성별"
             name="gender"
             value={formData.gender}
-            setFormData={setFormData}
+            noButton
           />
           <StyledSubmitButton>변경</StyledSubmitButton>
         </StyledInfoForm>
@@ -141,7 +141,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
       <StyledInfoBox>
         {' '}
         <StyledTitle>비밀번호 변경</StyledTitle>
-        <StyledInfoForm onSubmit={handleSubmit}>
+        <StyledInfoForm onSubmit={handleSubmit} style={{ height: '14rem' }}>
           <MyPageInput
             title="새 비밀번호"
             name="newPassword"
