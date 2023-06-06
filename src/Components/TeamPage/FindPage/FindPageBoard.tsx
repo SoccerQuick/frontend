@@ -97,7 +97,6 @@ function Board(props: BoardProps) {
                   <th key={item.title}>{item.title}</th>
                 ))}
                 <th>미리보기</th>
-                <th>함께하기</th>
               </tr>
             </thead>
             <tbody>
@@ -122,22 +121,6 @@ function Board(props: BoardProps) {
                     >
                       조회
                     </button>
-                  </td>
-                  <td>
-                    {item.status === '미완료' ? (
-                      <button>신청</button>
-                    ) : (
-                      <span
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        {item.status}
-                      </span>
-                    )}
                   </td>
                 </StyledTr>
               ))}
