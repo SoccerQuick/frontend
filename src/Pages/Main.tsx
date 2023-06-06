@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
 import Footer from '../Components/Footer';
-import Footy from '../styles/icon/footy.png';
 import Avatar1 from '../styles/icon/avatar1.png';
 import Avatar2 from '../styles/icon/avatar2.png';
 import Avatar3 from '../styles/icon/avatar3.png';
@@ -16,7 +15,7 @@ export default function Main() {
       <HeaderCategory />
       <StyledMainContainer>
         <StyledImageContainer>
-          <StyledImage src={Footy} alt="메인이미지" />
+          <StyledImage src="Images/footy.png" alt="메인이미지" />
           <StyledImageContents>
             <StyledImageText>
               <p className="big-text">Play Football</p>

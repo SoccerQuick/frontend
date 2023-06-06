@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Filterling_Options = {
+const FILTERING_OPTIONS = {
   adminUserPage: {
     status: ['통합검색', '닉네임', 'e-mail', '권한'],
   },
@@ -26,12 +26,8 @@ const Filterling_Options = {
     gender: ['성별', '남', '여', '상관없음'],
   },
   submit: {
-    category: [
-      { value: 'option0', label: '카테고리' },
-      { value: 'option1', label: '팀원 구해요' },
-      { value: 'option2', label: '팀 구해요' },
-    ],
+    category: ['카테고리', '팀원 구해요', '팀 구해요'],
   },
 };
 
-export default Filterling_Options;
+export default FILTERING_OPTIONS;
