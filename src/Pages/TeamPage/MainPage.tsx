@@ -47,7 +47,7 @@ function TeamPage() {
                   />
                 }
               />
-              <Route path="/player/:id" element={<FindingMemberDetail />} />
+              <Route path="/player/:id" element={<FindingTeamDetail />} />
               <Route
                 path="/team"
                 element={
@@ -57,7 +57,7 @@ function TeamPage() {
                   />
                 }
               />
-              <Route path="/team/:id" element={<FindingTeamDetail />} />
+              <Route path="/team/:id" element={<FindingMemberDetail />} />
               <Route
                 path="/"
                 element={
