@@ -5,13 +5,22 @@ import FilteringOptions from '../../Commons/FilteringOptions';
 
 type Props = {
   allowRandom: string;
+  gkNeed: number;
+  playerNeed: number;
   setAllowRandom: React.Dispatch<React.SetStateAction<string>>;
   setPlayerNeed: React.Dispatch<React.SetStateAction<number>>;
   setGkNeed: React.Dispatch<React.SetStateAction<number>>;
 };
 
 function FindingMembers(props: Props) {
-  const { allowRandom, setAllowRandom, setGkNeed, setPlayerNeed } = props;
+  const {
+    allowRandom,
+    setAllowRandom,
+    gkNeed,
+    setGkNeed,
+    playerNeed,
+    setPlayerNeed,
+  } = props;
 
   return (
     <StyledBox>
@@ -24,6 +33,7 @@ function FindingMembers(props: Props) {
       <StyledTitle>Player 모집인원</StyledTitle>
       <StyledInputNumber
         type={'number'}
+        defaultValue={playerNeed}
         min={0}
         onChange={(e) => {
           setPlayerNeed(parseInt(e.target.value));
@@ -32,6 +42,7 @@ function FindingMembers(props: Props) {
       <StyledTitle>GK 모집인원</StyledTitle>
       <StyledInputNumber
         type={'number'}
+        defaultValue={gkNeed}
         min={0}
         onChange={(e) => {
           setGkNeed(parseInt(e.target.value));
