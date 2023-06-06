@@ -60,6 +60,7 @@ function SearchPage() {
             setShowModal={setShowModal}
             modalData={modalData}
             setModalData={setModalData}
+            checkedArray={checkedArray}
             setCheckedArray={setCheckedArray}
           />
           {showModal && (

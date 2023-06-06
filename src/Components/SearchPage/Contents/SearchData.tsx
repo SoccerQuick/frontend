@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
 import { groundDataType } from '../../../Pages/SearchPage';
+import checkIcon from '../../../styles/icon/check.svg';
+
 import axios from 'axios';
 
 type FindingGroundProps = {
@@ -10,22 +12,35 @@ type FindingGroundProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalData: any[];
   setModalData: React.Dispatch<React.SetStateAction<any[]>>;
+  checkedArray: groundDataType[];
   setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
 };
 
 function FindingGround(props: FindingGroundProps) {
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
+  const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
 
-  const checkHandler = (e: React.ChangeEvent<HTMLInputElement>, value: groundDataType ) => {
-    if(e.target.checked) {
-      setCheckedArray((prev)=> [...prev, value]);
+  const checkHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    value: groundDataType
+  ) => {
+    if (e.target.checked) {
+      if (checkedArray.length >= 5) {
+        setCheckedArray((prev) =>
+          prev.filter((item) => item.title !== value.title)
+        );
+        alert('구장 비교는 최대 5개까지 가능합니다.');
+      } else {
+        setCheckedArray((prev) => [...prev, value]);
+      }
     } else {
-      setCheckedArray(prev => prev.filter(item => item.title !== value.title));
+      setCheckedArray((prev) =>
+        prev.filter((item) => item.title !== value.title)
+      );
     }
-  }
-
+  };
 
   // Left Bar에서 설정한 필터링 옵션이 담기는 상태. get 요청 보낼 때 전달해주어야 함.
   const [filterOption, setFilterOption] = React.useState<string[]>([]);
@@ -75,9 +90,17 @@ function FindingGround(props: FindingGroundProps) {
               {filteredData.map((item, idx) => (
                 <>
                   <StyledTr key={idx}>
-                    <input type="checkbox" id={item.title} 
-                    onChange={(e)=> checkHandler(e, item)}
-                    />
+                    <StyledCheckboxTd>
+                      <input
+                        type="checkbox"
+                        id={item.title}
+                        checked={checkedArray.some(
+                          (data) => data.title === item.title
+                        )}
+                        onChange={(e) => checkHandler(e, item)}
+                      />
+                      <label htmlFor={item.title}></label>
+                    </StyledCheckboxTd>
                     <StyledAddressTd>
                       {item.address.shortAddress}
                     </StyledAddressTd>
@@ -196,11 +219,33 @@ const StyledTr = styled.tr`
   border-bottom: 0.1rem solid #dddddd;
 `;
 
+const StyledCheckboxTd = styled.td`
+  padding-left: 3rem;
+  input {
+    display: none;
+
+    + label {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border: 0.13rem solid var(--color--darkgreen);
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    :checked + label {
+      background-image: url(${checkIcon});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+`;
+
 const StyledAddressTd = styled.td`
   font-size: 1.6rem;
   font-weight: 500;
   text-align: center;
-  padding-left: 4rem;
+  padding-left: 1rem;
 `;
 
 const StyledMainTd = styled.td`

@@ -30,14 +30,9 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
     }
   };
 
-  const checkAllHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsAllChecked(!isAllChecked);
-    if (e.target.checked) {
-      setModalChecked(() => checkedArray.map((item) => item.title));
-    } else {
-      setModalChecked([]);
-    }
-  };
+  // const checkAllHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIsAllChecked(!isAllChecked);
+  // };
 
   const deleteOneHandler = (value: string) => {
     checkHandler(false, value);
@@ -51,6 +46,14 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
     setCheckedArray(newCheckedArray);
     setModalChecked([]);
   };
+
+  useEffect(() => {
+    if (isAllChecked) {
+      setModalChecked(() => checkedArray.map((item) => item.title));
+    } else {
+      setModalChecked([]);
+    }
+  }, [isAllChecked]);
 
   return (
     <StyledContainer>
@@ -68,7 +71,7 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
           <StyledItemsUl>
             {checkedArray &&
               checkedArray.map((item, idx) => (
-                <StyledItemsLi>
+                <StyledItemsLi key={item.title + idx}>
                   <img src={item.image[0]} alt="" />
                   <StyledItemTitle>
                     <p>{item.address.shortAddress}</p>
@@ -98,7 +101,7 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
                   type="checkbox"
                   id="selectAll"
                   checked={isAllChecked}
-                  onChange={(e) => checkAllHandler(e)}
+                  onChange={() => setIsAllChecked(!isAllChecked)}
                 />
                 <label htmlFor="selectAll"></label>
                 <p onClick={() => setIsAllChecked(!isAllChecked)}>전체 선택</p>
