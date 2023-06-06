@@ -68,8 +68,8 @@ const StyledHeaderCategory = styled.div`
 
 const StyledCategoryText = styled.span<CategoryTextProps>`
   padding-right: 3rem;
-  font-size: ${({ focused }) => (focused ? '2.0rem' : '1.9rem')};
-  color: ${({ focused }) => (focused ? 'black' : '#727f88')};
+  font-size: ${({ focused }) => (focused ? '2.2rem' : '1.9rem')};
+  color: ${({ focused }) => (focused ? '#535353' : '#727f88')};
   font-weight: ${({ focused }) => (focused ? 'bold' : 'normal')};
   cursor: pointer;
 `;
