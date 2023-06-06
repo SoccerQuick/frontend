@@ -11,7 +11,7 @@ import {
   ModalTerms,
 } from '../Commons/AuthComponents';
 
-const postSignupUrl = `${process.env.PUBLIC_URL}/auth/signup`; // signup api url
+const postSignupUrl = `http://localhost:8800/auth/signup`; // signup api url
 const postIdCheckUrl = 'http://localhost:8800/auth/id'; // id-check api url
 
 // Signup type
@@ -97,6 +97,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
       })
       .catch((error) => {
         setResponseMsg(error.response.data.message);
+        console.log(error);
       });
   }, [formData]);
 
