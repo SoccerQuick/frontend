@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import FindPage from './Views/SelectCategory';
 import FindingMember from './Views/FindingMember';
 import FindingTeam from './Views/FindingTeam';
