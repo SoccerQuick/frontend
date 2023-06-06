@@ -1,29 +1,33 @@
 import react, { useState } from 'react';
 import styled from 'styled-components';
 
-function MyPageBar() {
-  const [checkedItem, setCheckedItem] = useState(1);
+type MyPageBarProps = {
+  checkedBarItem: number;
+  setCheckedBarItem: React.Dispatch<React.SetStateAction<number>>;
+};
+
+function MyPageBar({ checkedBarItem, setCheckedBarItem }: MyPageBarProps) {
   const handleClickBarItem = (newItem: number) => {
-    setCheckedItem(newItem);
+    setCheckedBarItem(newItem);
   };
 
   return (
     <StyledBar>
       <StyledBarItemContainer>
         <StyledBarItem
-          selected={checkedItem === 1}
+          selected={checkedBarItem === 1}
           onClick={() => handleClickBarItem(1)}
         >
           정보 수정
         </StyledBarItem>
         <StyledBarItem
-          selected={checkedItem === 2}
+          selected={checkedBarItem === 2}
           onClick={() => handleClickBarItem(2)}
         >
           내 글 검색
         </StyledBarItem>
         <StyledBarItem
-          selected={checkedItem === 3}
+          selected={checkedBarItem === 3}
           onClick={() => handleClickBarItem(3)}
         >
           즐겨찾는 경기장
