@@ -145,7 +145,7 @@ function FindingMember(props: FindingMemberProps) {
     { title: '지역', body: 'area', style: { width: '10%' } },
     { title: '모집인원(GK)', body: 'gk_need', style: { width: '8%' } },
     { title: '모집인원(Player)', body: 'player_need', style: { width: '8%' } },
-    { title: '성별제한', body: 'gender', style: { width: '6%' } },
+    { title: '성별제한', body: 'gender', style: { width: '8%' } },
   ];
 
   return (
