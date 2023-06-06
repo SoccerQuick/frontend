@@ -10,7 +10,8 @@ import { MyPageMenu } from './Commons/MyPageMenu';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
-  const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
+  const [myPageMenu, setMyPageMenu] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const navigate = useNavigate();
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -40,15 +41,25 @@ const Header = () => {
             />
           </HeaderSearchBar>
         </div>
-        <HeaderMypage onMouseEnter={handleMyPageMenu}>
-          <img src={MypageIcon} alt="my" />
-          {myPageMenu && (
-            <MyPageMenu
-              handleMyPageMenu={handleMyPageMenu}
-              handleLoginModal={handleLoginModal}
-            />
+        <HeaderMyPage>
+          {isLogin ? (
+            <HeaderLoginButton onClick={handleLoginModal}>
+              <img src={MypageIcon} alt="my" />
+              <div>로그인</div>
+            </HeaderLoginButton>
+          ) : (
+            <HeaderMyPageButton onClick={handleMyPageMenu}>
+              <img src={MypageIcon} alt="my" />
+              {myPageMenu && (
+                <MyPageMenu
+                  handleMyPageMenu={handleMyPageMenu}
+                  handleLoginModal={handleLoginModal}
+                />
+              )}
+            </HeaderMyPageButton>
           )}
-        </HeaderMypage>
+        </HeaderMyPage>
+
         <div>
           <img src={MoreIcon} alt="more" />
         </div>
@@ -110,7 +121,26 @@ const HeaderSearchBar = styled.div`
   }
 `;
 
-const HeaderMypage = styled.div`
+const HeaderMyPage = styled.div``;
+
+const HeaderLoginButton = styled.div`
+  display: flex;
   position: relative;
+  width: 8rem;
+  padding: 0.5rem;
   margin: 0.3rem 2rem 0 2rem;
+  border-radius: 2.5rem;
+  border: 1px solid #e5e5e5;
+  & > div {
+    margin-top: 0.1rem;
+  }
+`;
+
+const HeaderMyPageButton = styled.div`
+  display: flex;
+  position: relative;
+  padding: 0.5rem;
+  margin: 0.3rem 2rem 0 2rem;
+  border-radius: 2.5rem;
+  border: 1px solid #e5e5e5;
 `;
