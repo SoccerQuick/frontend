@@ -3,30 +3,41 @@ import styled from 'styled-components';
 import DropDown from '../../Commons/DropDown';
 import FILTERING_OPTIONS from '../../Commons/FilteringOptions';
 import { setPriority } from 'os';
+import axios from 'axios';
 
 type props = {
+  groupId: string | undefined;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function DetailModal(props: props) {
-  const { setShowModal } = props;
+  const { groupId, setShowModal } = props;
   const [author, setAuthor] = React.useState('');
   const [position, setPosition] = React.useState('');
   const [skill, setSkill] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [memo, setMemo] = React.useState('');
 
+  const config = {
+    withCredentials: true,
+  };
+
   function SubmitButton() {
-    // 이곳에 axios 요청을 달아야 할 것임.
     const data = {
-      author: author,
       position: position,
-      skill: skill,
-      gender: gender,
-      memo: memo,
+      level: skill,
+      contents: memo,
     };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/group/${groupId}`, data, config)
+      .then((res) => {
+        console.log('신청 성공 : ', res.data);
+      })
+      .catch((e) => {
+        console.error('신청 실패 : ', e);
+      });
+
     console.log(data);
-    return data;
   }
 
   return (

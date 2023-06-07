@@ -13,6 +13,7 @@ type DetailList = {
 };
 
 type DataType = {
+  group_id?: string;
   num: number;
   title: string;
   author: string;
@@ -24,7 +25,6 @@ type DataType = {
   gk?: number;
   player_need?: number;
   player?: number;
-
   gender: string;
   contents: string;
   [key: string]: string | number | undefined;
@@ -95,8 +95,11 @@ function DetailPage(props: DetailListProps) {
           </StyledButton>
         </StyledBox>
         {showModal &&
-          (data.random_matched ? (
-            <SubmitForFindingMember setShowModal={setShowModal} />
+          (data.leader_name ? (
+            <SubmitForFindingMember
+              setShowModal={setShowModal}
+              groupId={data.group_id}
+            />
           ) : (
             <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
