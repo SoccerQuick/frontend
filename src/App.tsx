@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './Components/AuthModal/AuthRedux/store';
+import store from './store/store';
 import './App.css';
 import MainPage from './Pages/Main';
 import ReviewPage from './Pages/ReviewPages/ReviewPage';

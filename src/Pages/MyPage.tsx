@@ -7,7 +7,7 @@ import MyPageBar from '../Components/MyPage/MyPageBar';
 import MyProfile from '../Components/MyPage/MyPageProfile';
 import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
 import MyPageCheckPassword from '../Components/MyPage/MyPageCheckPassword';
-import { userSelector } from '../Components/AuthModal/AuthRedux/selectors/authSelectors';
+import { userSelector } from '../store/selectors/authSelectors';
 import { useSelector } from 'react-redux';
 
 export type FormData = {

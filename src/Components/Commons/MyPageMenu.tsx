@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { AUTH_ACTIONS } from '../AuthModal/AuthRedux/reducers/authSlice';
+import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { userSelector } from '../AuthModal/AuthRedux/selectors/authSelectors';
+import { userSelector } from '../../store/selectors/authSelectors';
 
 type MyPageBarProps = {
   handleMyPageMenu: (event: React.MouseEvent<HTMLDivElement>) => void;

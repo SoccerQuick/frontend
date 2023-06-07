@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchIcon from '../styles/icon/search.svg';
 import MypageIcon from '../styles/icon/mypage.svg';
 import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
-import HeaderSearch from './Search/FieldSearch';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from './AuthModal/AuthRedux/selectors/authSelectors';
+import { isLogInSelector } from '../store/selectors/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
