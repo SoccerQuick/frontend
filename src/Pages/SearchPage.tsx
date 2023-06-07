@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
@@ -6,6 +7,8 @@ import SearchModal from '../Components/SearchPage/Layout/SearchModal';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
 import GroundComparison from '../Components/SearchPage/Contents/GroundComparison';
 import ComparisonData from '../Components/SearchPage/Contents/ComparisonData';
+import FeildSearchInput from '../Components/Search/FieldSearch';
+import FieldMap from '../Components/SearchPage/Contents/FieldMap';
 
 export interface groundDataType {
   title: string;
@@ -31,27 +34,29 @@ function SearchPage() {
   const [checkedArray, setCheckedArray] = useState<groundDataType[]>([]);
   const [checkedInModal, setCheckedInModal] = useState<string[]>([]);
   const [showComparisonData, setShowComparisonData] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const location = useLocation();
+  const searchValue = location.state?.searchValue || '서울';
+
+  useEffect(() => {
+    setSearchKeyword(searchValue);
+  }, [searchValue]);
 
   useEffect(() => {
     if (checkedArray.length > 0) setShowComparisonModal(true);
     else setShowComparisonModal(false);
   }, [checkedArray]);
 
+  console.log(searchKeyword);
+
   return (
     <>
       <Header />
       <HeaderCategory />
       <div style={{ justifyContent: 'center' }}>
-        <div
-          style={{
-            height: '25rem',
-            width: '98.4rem',
-            backgroundColor: 'beige',
-            margin: 'auto',
-          }}
-        >
-          지도 띄울 부분
-        </div>
+        {searchKeyword && <FieldMap searchKeyword={searchKeyword} />}
+
         <div
           style={{
             height: '100rem',
@@ -59,6 +64,14 @@ function SearchPage() {
             margin: 'auto',
           }}
         >
+          <div>
+            <FeildSearchInput
+              // searchInputValue={searchInputValue}
+              // setSearchInputValue={setSearchInputValue}
+              searchKeyword={searchKeyword}
+              setSearchKeyword={setSearchKeyword}
+            />
+          </div>
           <SearchData
             showModal={showModal}
             setShowModal={setShowModal}
