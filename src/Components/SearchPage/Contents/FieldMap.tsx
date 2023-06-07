@@ -1,24 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import FieldDummy from './fieldDummy';
 
 const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
   const { naver } = window;
-  const mapElement = useRef(null);
+  const mapElement = useRef<HTMLElement | null | any>(null);
+  var map: naver.maps.Map;
   const [AddressX, setAddressX] = useState<number>(0);
   const [AddressY, setAddressY] = useState<number>(0);
+  const createMarkerList: naver.maps.Marker[] = [];
 
+  //검색 키워드에 맞는 위경도 저장
   useEffect(() => {
     if (searchKeyword) {
       naver.maps.Service.geocode(
         { query: searchKeyword },
         function (status, res) {
-          console.log(res);
-          console.log(res.v2.addresses[0].x);
-          const resAddress = res.v2.addresses[0];
-          const x = Number(resAddress.x);
-          const y = Number(resAddress.y);
-          setAddressX(x);
-          setAddressY(y);
+          if (res.v2.addresses.length === 0) {
+            if (!searchKeyword) {
+              return alert('검색어를 입력해주세요.');
+            } else {
+              return alert('검색어를 다시 입력해주세요.');
+            }
+          } else {
+            const resAddress = res.v2.addresses[0];
+            const x = Number(resAddress.x);
+            const y = Number(resAddress.y);
+            setAddressX(x);
+            setAddressY(y);
+          }
         }
       );
     }
@@ -28,9 +38,9 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     if (!mapElement.current || !naver) return;
 
     // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new naver.maps.LatLng(AddressY, AddressX);
+    const center = new naver.maps.LatLng(AddressY, AddressX);
     const mapOptions: naver.maps.MapOptions = {
-      center: location,
+      center: center,
       zoom: 17,
       zoomControl: true,
       zoomControlOptions: {
@@ -40,12 +50,78 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
       mapDataControl: false,
       scaleControl: false,
     };
-    const map = new naver.maps.Map(mapElement.current, mapOptions);
-    new naver.maps.Marker({
-      position: location,
-      map,
-    });
+
+    map = new naver.maps.Map(mapElement.current, mapOptions);
+    console.log('지도 생성');
+
+    addMarkers();
   }, [AddressX, AddressY]);
+
+  const addMarkers = () => {
+    // let mapBounds = mapElement.current.getBounds();
+    console.log('마커찍기 전1');
+    for (let i = 0; i < FieldDummy.length; i++) {
+      if (createMarkerList.length > 100) {
+        break;
+      }
+
+      let markerObj = FieldDummy[i];
+      //   let position = new naver.maps.LatLng(markerObj.lat, markerObj.lng);
+      //   if (mapBounds.hasLatLng(position)) {
+      const { id, title, lat, lng } = markerObj;
+      addMarker(id, title, lat, lng);
+
+      //   }
+    }
+  };
+
+  const addMarker = (id: number, name: string, lat: number, lng: number) => {
+    try {
+      console.log(lat, lng);
+      let newMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(lng, lat),
+        map,
+        title: name,
+        clickable: true,
+      });
+      newMarker.setTitle(name);
+      createMarkerList.push(newMarker);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    const idleHandler = () => {
+      clearMarkers();
+      addMarkers();
+    };
+
+    const zoomChangeHandler = () => {
+      if (mapElement.current.getZoom() <= 7) {
+        clearMarkers();
+      }
+    };
+
+    //컴포넌트 마운트 될 때 이벤트 등록
+    naver.maps.Event.addListener(mapElement, 'idle', idleHandler);
+    naver.maps.Event.addListener(mapElement, 'zoom_change', zoomChangeHandler);
+
+    //클린업 함수로 언마운트 될 때 이벤트 해제
+    return () => {
+      naver.maps.Event.addListener(mapElement, 'idle', idleHandler);
+      naver.maps.Event.addListener(
+        mapElement,
+        'zoom_change',
+        zoomChangeHandler
+      );
+    };
+  }, []);
+
+  const clearMarkers = () => {
+    createMarkerList.forEach((marker) => {
+      marker.setMap(null);
+    });
+    createMarkerList.length = 0;
+  };
 
   return <StyledMap id="map" ref={mapElement}></StyledMap>;
 };
@@ -54,6 +130,6 @@ export default FieldMap;
 
 const StyledMap = styled.div`
   width: 98.4rem;
-  height: 40rem;
+  height: 47rem;
   margin: 0 auto;
 `;
