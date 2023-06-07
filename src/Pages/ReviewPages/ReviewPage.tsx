@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import HeaderCategory from '../Components/Commons/HeaderCategory';
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
-import Avatar1 from '../styles/icon/avatar1.png';
-import Avatar2 from '../styles/icon/avatar2.png';
-import Avatar3 from '../styles/icon/avatar3.png';
-import Avatar4 from '../styles/icon/avatar4.png';
+import HeaderCategory from '../../Components/Commons/HeaderCategory';
+import Header from '../../Components/Header';
+import Footer from '../../Components/Footer';
+import WriteReviewPage from './WriteReviewPage';
+import Avatar1 from '../../styles/icon/avatar1.png';
+import Avatar2 from '../../styles/icon/avatar2.png';
+import Avatar3 from '../../styles/icon/avatar3.png';
+import Avatar4 from '../../styles/icon/avatar4.png';
 
 const AVATARS = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar3];
 
@@ -57,9 +59,10 @@ const REVIEW_LIST_DUMMY_DATA = [
   },
 ];
 
-export default function Review() {
+export default function ReviewPage() {
   const [reviewList, setReviewList] = useState(REVIEW_LIST_DUMMY_DATA);
   const [clicked, setClicked] = useState(Array(reviewList.length).fill(false));
+  const navigate = useNavigate();
 
   let settings = {
     dots: true,
@@ -98,82 +101,89 @@ export default function Review() {
     <>
       <Header />
       <HeaderCategory />
-      <StyledBody>
-        <StyledCarousel>
-          <StyledImage>
-            <Slider {...settings}>
-              <StyledImage>
-                <img src="Images/reviewMainImg.png" alt="reviewMainImg" />
-              </StyledImage>
-              <StyledImage>
-                <img src="Images/footy.png" alt="footy" />
-              </StyledImage>
-              <StyledImage>
-                <img src="Images/reviewImg3.jpg" alt="reviewImg3" />
-              </StyledImage>
-              <StyledImage>
-                <img src="Images/reviewImg4.jpg" alt="reviewImg4" />
-              </StyledImage>
-            </Slider>
-          </StyledImage>
-        </StyledCarousel>
-        <StyledList>
-          <StyledFilter>
-            <StyledFilterText>지역</StyledFilterText>
-            <StyledFilterText>구장</StyledFilterText>
-          </StyledFilter>
-          <StyledListTitle>
-            <p>🥅 풋살 후기 리스트</p>
-          </StyledListTitle>
-          <StyledReviewListHeader>
-            <span></span>
-            <span></span>
-            <span>작성자</span>
-            <span>지역</span>
-            <span>구장</span>
-            <span>좋아요</span>
-          </StyledReviewListHeader>
-          {reviewList.map((item, index) => (
-            <StyledReviewList key={index}>
-              <span className="review-user-icon">
-                {<img src={AVATARS[index]} alt="avatar1" />}
-              </span>
-              <span className="review-title">{item.reviewTitle}</span>
-              <span className="review-author">{item.author}</span>
-              <span className="review-area">{item.area}</span>
-              <span className="review-stadium">{item.stadium}</span>
-              <span className="review-like-count">
-                {
+      <Routes>
+        <Route path="/write" element={<WriteReviewPage />} />
+        <Route
+          path="/"
+          element={
+            <StyledBody>
+              <StyledCarousel>
+                <StyledImage>
+                  <Slider {...settings}>
+                    <StyledImage>
+                      <img src="Images/reviewMainImg.png" alt="reviewMainImg" />
+                    </StyledImage>
+                    <StyledImage>
+                      <img src="Images/footy.png" alt="footy" />
+                    </StyledImage>
+                    <StyledImage>
+                      <img src="Images/reviewImg3.jpg" alt="reviewImg3" />
+                    </StyledImage>
+                    <StyledImage>
+                      <img src="Images/reviewImg4.jpg" alt="reviewImg4" />
+                    </StyledImage>
+                  </Slider>
+                </StyledImage>
+              </StyledCarousel>
+              <StyledList>
+                <StyledFilter>
+                  <StyledFilterText>지역</StyledFilterText>
+                  <StyledFilterText>구장</StyledFilterText>
+                </StyledFilter>
+                <StyledListTitle>
+                  <p>🥅 풋살 후기 리스트</p>
+                </StyledListTitle>
+                <StyledReviewListHeader>
+                  <span></span>
+                  <span></span>
+                  <span>작성자</span>
+                  <span>지역</span>
+                  <span>구장</span>
+                  <span>좋아요</span>
+                </StyledReviewListHeader>
+                {reviewList.map((item, index) => (
+                  <StyledReviewList key={index}>
+                    <span className="review-user-icon">
+                      {<img src={AVATARS[index]} alt="avatar1" />}
+                    </span>
+                    <span className="review-title">{item.reviewTitle}</span>
+                    <span className="review-author">{item.author}</span>
+                    <span className="review-area">{item.area}</span>
+                    <span className="review-stadium">{item.stadium}</span>
+                    <span className="review-like-count">
+                      {
+                        <button
+                          className={`review-like-button ${
+                            clicked[index] ? 'heart-beat' : ''
+                          }`}
+                          onClick={() => handleLikeButtonClick(index)}
+                        >
+                          {clicked[index] ? '🧡' : '🤍'}
+                        </button>
+                      }
+                      {item.like}
+                    </span>
+                  </StyledReviewList>
+                ))}
+              </StyledList>
+              <StyledStickyButtons>
+                <StyledWrite>
                   <button
-                    className={`review-like-button ${
-                      clicked[index] ? 'heart-beat' : ''
-                    }`}
-                    onClick={() => handleLikeButtonClick(index)}
+                    onClick={() => {
+                      navigate('/review/write');
+                    }}
                   >
-                    {clicked[index] ? '🧡' : '🤍'}
+                    글쓰기
                   </button>
-                }
-                {item.like}
-              </span>
-            </StyledReviewList>
-          ))}
-        </StyledList>
-        <StyledStickyButtons>
-          <StyledWrite>
-            <button
-              onClick={() => {
-                alert('ㅎㅇ');
-              }}
-            >
-              글쓰기
-            </button>
-          </StyledWrite>
-          <StyledScrollToBottomButton>
-            <button onClick={handleScrollToBottom}>⬇</button>
-          </StyledScrollToBottomButton>
-        </StyledStickyButtons>
-      </StyledBody>
-
+                </StyledWrite>
+                <StyledScrollToBottomButton>
+                  <button onClick={handleScrollToBottom}>⬇</button>
+                </StyledScrollToBottomButton>
+              </StyledStickyButtons>
+            </StyledBody>
+          }
+        />
+      </Routes>
       <Footer />
     </>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import MainPage from './Pages/Main';
-import ReviewPage from './Pages/Review';
+import ReviewPage from './Pages/ReviewPages/ReviewPage';
 import TeamPage from './Pages/TeamPage/MainPage';
 import SearchPage from './Pages/SearchPage';
 import GroundDetail from './Pages/groundDetail';
@@ -18,7 +18,7 @@ function App() {
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/teampage/*" element={<TeamPage />} />
-        <Route path="/review" element={<ReviewPage />} />
+        <Route path="/review/*" element={<ReviewPage />} />
         <Route path="/groundDetail" element={<GroundDetail />} />
       </Routes>
     </BrowserRouter>
