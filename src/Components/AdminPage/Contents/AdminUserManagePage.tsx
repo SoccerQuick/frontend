@@ -38,19 +38,16 @@ function AdminUserManager() {
     setInputValue(e.target.value);
   };
 
+  const header = {
+    withCredentials: true,
+  };
   // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<UserData[]>([]);
   React.useEffect(() => {
-    const cookies = document.cookie;
-    console.log(cookies);
-
-    const token = localStorage.getItem('userToken');
+    // const cookies = document.cookie;
+    // console.log(cookies);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/admin`, {
-        headers: {
-          withCredentials: true,
-        },
-      })
+      .get(`${process.env.REACT_APP_API_URL}/admin`, header)
       .then((res) => {
         setData(res.data.data);
       })
