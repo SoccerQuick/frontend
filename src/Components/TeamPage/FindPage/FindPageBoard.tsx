@@ -105,7 +105,7 @@ function Board(props: BoardProps) {
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.num}`}>{item.title}</Link>
                   </td>
-                  {tableList.map((cell: TableList) => (
+                  {tableList.map((cell) => (
                     <td key={cell.body} style={cell.style}>
                       {item[cell.body as keyof typeof item] as React.ReactNode}
                     </td>
