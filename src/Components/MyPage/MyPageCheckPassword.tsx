@@ -30,8 +30,11 @@ function MyPageCheckPassword({
       user_id: user?.user_id,
       password: password,
     };
+    const header = {
+      withCredentials: true,
+    };
     axios
-      .post(`http://localhost:8800/auth/password`, data)
+      .post(`http://localhost:8800/auth/password`, data, header)
       .then((res) => res.request)
       .then((result) => {
         if (result.status === 200) {
