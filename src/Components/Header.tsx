@@ -7,12 +7,17 @@ import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
+import { useSelector } from 'react-redux';
+import {
+  userSelector,
+  isLogInSelector,
+} from './AuthModal/AuthRedux/selectors/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
   const [myPageMenu, setMyPageMenu] = useState<boolean>(true);
-  const [isLogin, setIsLogin] = useState<boolean>(false);
   const navigate = useNavigate();
+  const isLogin = useSelector(userSelector);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setAuthModal((prev) => !prev);
@@ -43,20 +48,15 @@ const Header = () => {
         </div>
         <HeaderMyPage>
           {isLogin ? (
+            <HeaderMyPageButton onClick={handleMyPageMenu}>
+              <img src={MypageIcon} alt="my" />
+              {myPageMenu && <MyPageMenu handleMyPageMenu={handleMyPageMenu} />}
+            </HeaderMyPageButton>
+          ) : (
             <HeaderLoginButton onClick={handleLoginModal}>
               <img src={MypageIcon} alt="my" />
               <div>로그인</div>
             </HeaderLoginButton>
-          ) : (
-            <HeaderMyPageButton onClick={handleMyPageMenu}>
-              <img src={MypageIcon} alt="my" />
-              {myPageMenu && (
-                <MyPageMenu
-                  handleMyPageMenu={handleMyPageMenu}
-                  handleLoginModal={handleLoginModal}
-                />
-              )}
-            </HeaderMyPageButton>
           )}
         </HeaderMyPage>
 

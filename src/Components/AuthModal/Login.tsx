@@ -1,4 +1,7 @@
 import { useState, FormEvent } from 'react';
+import { AUTH_ACTIONS } from './AuthRedux/reducers/authSlice';
+import { useDispatch } from 'react-redux';
+
 import {
   Modal,
   ModalForm,
@@ -29,6 +32,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     password: '',
   });
   const [loginError, setLoginError] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -59,7 +63,22 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     axios
       .post(postLoginUrl, data)
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
+        return res.data.userData;
+      })
+      .then((userData) => {
+        const user = {
+          user_id: userData.user_id,
+          name: userData.name,
+          nickname: userData.nick_name,
+        };
+        const token = 'your-auth-token';
+        dispatch(
+          AUTH_ACTIONS.login({
+            user,
+            token,
+          })
+        );
         setLoginError('');
         setAuthModal(false);
       })
