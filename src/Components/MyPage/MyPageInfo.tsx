@@ -52,7 +52,7 @@ export function MyPageInfo({
 
     try {
       const response = await axios.patch(
-        'http://localhost:8800/user',
+        `${process.env.REACT_APP_API_URL}/user`,
         {
           user_id: formData.user_id,
           name: formData.name,
