@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
-import HtmlParser from '../../Commons/HtmlParser';
+import HtmlParser from '../../../Components/Commons/HtmlParser';
+import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
+import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import axios from 'axios';
 
 type DetailList = {
@@ -37,6 +39,9 @@ function DetailPage(props: DetailListProps) {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const { detailList, data } = props;
   const navigate = useNavigate();
+  const [showModal, setShowModal] = React.useState(false);
+
+  const additionalData = { data };
 
   return (
     <>
@@ -70,7 +75,17 @@ function DetailPage(props: DetailListProps) {
           <HtmlParser data={data.body} />
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
-          <StyledButton>함께하기</StyledButton>
+          <StyledButton
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            함께하기
+          </StyledButton>
+
+          <Link to={`/teampage/edit/:id`} state={additionalData}>
+            <StyledButton>수정하기</StyledButton>
+          </Link>
           <StyledButton
             onClick={() => {
               navigate(-1);
@@ -79,6 +94,12 @@ function DetailPage(props: DetailListProps) {
             돌아가기
           </StyledButton>
         </StyledBox>
+        {showModal &&
+          (data.allowRandom ? (
+            <SubmitForFindingMember setShowModal={setShowModal} />
+          ) : (
+            <SubmitForFindingTeam setShowModal={setShowModal} />
+          ))}
       </StyledContainer>
     </>
   );

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
 import Footer from '../Components/Footer';
+import MainSearch from '../Components/Search/MainSearch';
 import Avatar1 from '../styles/icon/avatar1.png';
 import Avatar2 from '../styles/icon/avatar2.png';
 import Avatar3 from '../styles/icon/avatar3.png';
@@ -21,16 +22,7 @@ export default function Main() {
               <p className="big-text">Play Football</p>
               <p className="small-text">언제나 당신이 원하는 곳에서!</p>
             </StyledImageText>
-            <StyledInputContainer>
-              <p className="input-header-text">가까운 매치를 찾아보세요.</p>
-              <div className="input-container">
-                <input
-                  placeholder="🔍︎ 어디에서 공 차끄야?"
-                  className="input-text"
-                />
-                <button className="find-match-button">매치 찾기</button>
-              </div>
-            </StyledInputContainer>
+            <MainSearch />
           </StyledImageContents>
         </StyledImageContainer>
         <StyledListContainer>
@@ -177,49 +169,6 @@ const StyledImageText = styled.h1`
     font-size: 1.8rem;
     font-weight: lighter;
     margin-bottom: 2rem;
-  }
-`;
-
-const StyledInputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  background-color: #e3eee1;
-  border-radius: 1rem;
-  opacity: 0.8;
-  padding: 2rem;
-  height: 15vh;
-  width: 50rem;
-
-  overflow: hidden;
-
-  .input-header-text {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-
-  .input-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .input-text {
-    padding: 1rem;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 1rem;
-    background-color: white;
-    width: 80%;
-  }
-
-  .find-match-button {
-    padding: 1rem;
-    font-size: 1.2rem;
-    border-radius: 1rem;
-    background-color: #00980f;
   }
 `;
 

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from './Components/AuthModal/AuthRedux/store';
 import './App.css';
 import MainPage from './Pages/Main';
-import ReviewPage from './Pages/Review';
+import ReviewPage from './Pages/ReviewPages/ReviewPage';
 import TeamPage from './Pages/TeamPage/MainPage';
 import SearchPage from './Pages/SearchPage';
 import GroundDetail from './Pages/groundDetail';

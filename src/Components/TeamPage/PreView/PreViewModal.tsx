@@ -74,11 +74,6 @@ function DetailModal(props: props) {
             <HtmlParser data={modalData.body} />
             {/* <StyledBody>{modalData.body}</StyledBody> */}
           </StyledBodyContainer>
-          <StyledButtonContainer>
-            {modalData.status === '미완료' && <StyledButton>신청</StyledButton>}
-            {modalData.status === '미완료' && <StyledButton>수정</StyledButton>}
-            <StyledButton>조회</StyledButton>
-          </StyledButtonContainer>
         </ModalPage>
       </Modal>
     </>
