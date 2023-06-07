@@ -1,34 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
-import DropDown from '../../Commons/DropDown';
-import FilteringOptions from '../../Commons/FilteringOptions';
+import axios from 'axios';
 
 type Props = {
-  allowRandom: string;
+  // allowRandom: string;
+  gk: number;
   gkNeed: number;
+  player: number;
   playerNeed: number;
-  setAllowRandom: React.Dispatch<React.SetStateAction<string>>;
+  // setAllowRandom: React.Dispatch<React.SetStateAction<string>>;
+  setPlayer: React.Dispatch<React.SetStateAction<number>>;
+  setGk: React.Dispatch<React.SetStateAction<number>>;
   setPlayerNeed: React.Dispatch<React.SetStateAction<number>>;
   setGkNeed: React.Dispatch<React.SetStateAction<number>>;
 };
 
+// props를 주고받는 경로 : Pages/TeamPage/Posts/EditPage,PostPage
 function FindingMembers(props: Props) {
   const {
-    allowRandom,
-    setAllowRandom,
+    gk,
+    setGk,
     gkNeed,
     setGkNeed,
+    player,
+    setPlayer,
     playerNeed,
     setPlayerNeed,
   } = props;
 
   return (
     <StyledBox>
-      <StyledTitle>랜덤허용</StyledTitle>
-      <DropDown
-        list={FilteringOptions.findingMember.allowRandom}
-        selected={allowRandom}
-        setSelected={setAllowRandom}
+      <StyledTitle>GK 현재인원</StyledTitle>
+      <StyledInputNumber
+        type={'number'}
+        defaultValue={gk}
+        min={0}
+        onChange={(e) => {
+          setGk(parseInt(e.target.value));
+        }}
       />
       <StyledTitle>GK 모집인원</StyledTitle>
       <StyledInputNumber
@@ -37,6 +46,15 @@ function FindingMembers(props: Props) {
         min={0}
         onChange={(e) => {
           setGkNeed(parseInt(e.target.value));
+        }}
+      />
+      <StyledTitle>Player 현재인원</StyledTitle>
+      <StyledInputNumber
+        type={'number'}
+        defaultValue={player}
+        min={0}
+        onChange={(e) => {
+          setPlayer(parseInt(e.target.value));
         }}
       />
       <StyledTitle>Player 모집인원</StyledTitle>
