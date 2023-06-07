@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { AUTH_ACTIONS } from '../AuthModal/AuthRedux/reducers/authSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSelector } from '../AuthModal/AuthRedux/selectors/authSelectors';
 
 type MyPageBarProps = {
   handleMyPageMenu: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -10,6 +11,7 @@ type MyPageBarProps = {
 export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(userSelector);
   const handleLoginOutClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     // eslint-disable-next-line no-restricted-globals
@@ -29,8 +31,8 @@ export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
           <StyledProfileImg src={'/logo192.png'} alt="profile" />
         </StyledImgWrapper>
         <StyledProfileInfo>
-          <div>길동이님</div>
-          <div>aaa</div>
+          <div>{user ? `${user.nickname}님` : '미로그인'}</div>
+          <div>{user ? `${user.user_id}` : ''}</div>
         </StyledProfileInfo>
       </StyledMenuProfile>{' '}
       <StyledMenuItem

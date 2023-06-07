@@ -7,6 +7,8 @@ import MyPageBar from '../Components/MyPage/MyPageBar';
 import MyProfile from '../Components/MyPage/MyPageProfile';
 import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
 import MyPageCheckPassword from '../Components/MyPage/MyPageCheckPassword';
+import { userSelector } from '../Components/AuthModal/AuthRedux/selectors/authSelectors';
+import { useSelector } from 'react-redux';
 
 export type FormData = {
   user_id: string;
@@ -29,10 +31,18 @@ export function MyPage() {
 
   const [checkedBarItem, setCheckedBarItem] = useState(1);
   const [checkMyPassword, setCheckPassword] = useState(false);
+  const [password, setPassword] = useState('');
+  const user = useSelector(userSelector);
 
   useEffect(() => {
+    setTimeout(() => {
+      getUserData();
+    }, 1000);
+  }, []);
+
+  const getUserData = () => {
     axios
-      .get('http://localhost:8800/user/aaa', {
+      .get(`http://localhost:8800/user/${user?.user_id}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -51,7 +61,7 @@ export function MyPage() {
         }));
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   return (
     <>
@@ -65,10 +75,18 @@ export function MyPage() {
           {checkMyPassword ? (
             <>
               <MyProfile formData={formData} />
-              <MyPageInfo formData={formData} setFormData={setFormData} />
+              <MyPageInfo
+                oldPassword={password}
+                formData={formData}
+                setFormData={setFormData}
+              />
             </>
           ) : (
-            <MyPageCheckPassword setCheckPassword={setCheckPassword} />
+            <MyPageCheckPassword
+              password={password}
+              setPassword={setPassword}
+              setCheckPassword={setCheckPassword}
+            />
           )}
         </MyPageContainer>
       ) : (

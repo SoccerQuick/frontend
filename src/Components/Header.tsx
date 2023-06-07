@@ -8,16 +8,13 @@ import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
 import { useSelector } from 'react-redux';
-import {
-  userSelector,
-  isLogInSelector,
-} from './AuthModal/AuthRedux/selectors/authSelectors';
+import { isLogInSelector } from './AuthModal/AuthRedux/selectors/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
   const [myPageMenu, setMyPageMenu] = useState<boolean>(true);
   const navigate = useNavigate();
-  const isLogin = useSelector(userSelector);
+  const isLogin = useSelector(isLogInSelector);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setAuthModal((prev) => !prev);
