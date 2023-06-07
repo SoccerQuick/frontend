@@ -16,7 +16,7 @@ type DataType = {
   num: number;
   title: string;
   author: string;
-  area: string;
+  location: string;
   status: string;
   position?: string;
   skill?: string;
@@ -24,9 +24,9 @@ type DataType = {
   gk?: number;
   player_need?: number;
   player?: number;
-  allowRandom?: string;
+
   gender: string;
-  body: string;
+  contents: string;
   [key: string]: string | number | undefined;
 };
 
@@ -72,7 +72,7 @@ function DetailPage(props: DetailListProps) {
         <StyledBox
           style={{ display: 'grid', border: '1px solid', borderRadius: '1rem' }}
         >
-          <HtmlParser data={data.body} />
+          <HtmlParser data={data.contents} />
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
@@ -80,7 +80,7 @@ function DetailPage(props: DetailListProps) {
               setShowModal(true);
             }}
           >
-            함께하기
+            {data.leader_name ? '함께하기' : '댓글 달기'}
           </StyledButton>
 
           <Link to={`/teampage/edit/:id`} state={additionalData}>
@@ -95,7 +95,7 @@ function DetailPage(props: DetailListProps) {
           </StyledButton>
         </StyledBox>
         {showModal &&
-          (data.allowRandom ? (
+          (data.random_matched ? (
             <SubmitForFindingMember setShowModal={setShowModal} />
           ) : (
             <SubmitForFindingTeam setShowModal={setShowModal} />
@@ -172,7 +172,7 @@ const StyledButton = styled.button`
   margin: 6rem 3rem 0rem 3rem;
 `;
 
-const StyledBody = styled.div`
+const Styledcontents = styled.div`
   padding: 2rem 2rem;
   width: 100rem;
   height: 45rem;
