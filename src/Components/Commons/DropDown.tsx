@@ -21,7 +21,6 @@ function DropDown(props: Props) {
   const [click, setClick] = React.useState(false); // 드롭다운 on/off 여부를 판단하는 상태
   const selected = props.selected;
   const setSelected = props.setSelected;
-  //   const [selected, setSelected] = React.useState(''); // 선택된 값을 판단하는 상태
 
   // 드롭다운 영역 밖을 클릭하면 드롭다운이 닫히도록 하는 부분 //
   const dropdownRef = React.useRef<HTMLDivElement>(null);

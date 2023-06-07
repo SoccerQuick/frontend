@@ -13,8 +13,9 @@ function SubmitPage() {
   const [boardCategory, setBoardCategory] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [area, setArea] = React.useState('');
-  const [allowRandom, setAllowRandom] = React.useState('랜덤매칭');
+  const [player, setPlayer] = React.useState(0);
   const [playerNeed, setPlayerNeed] = React.useState(0);
+  const [gk, setGk] = React.useState(0);
   const [gkNeed, setGkNeed] = React.useState(0);
   const [position, setPosition] = React.useState('포지션');
   const [skill, setSkill] = React.useState('실력수준');
@@ -28,18 +29,39 @@ function SubmitPage() {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const navigate = useNavigate();
 
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+
   // 새 글을 작성하는 axios 명령
   const handlePostRequest = () => {
     let data;
     if (boardCategory === '팀원 구해요') {
       data = {
         category: boardCategory,
+        leader_id: '6480bae19854c0d4bc9b4cde', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
+        leader_name: '고마오', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
         title: title,
-        allowRandom: allowRandom,
-        playerNeed: playerNeed,
-        gkNeed: gkNeed,
-        body: content,
+        location: area,
+        play_date: '아무때나',
+        // allowRandom: allowRandom,
+        player_current_count: player,
+        player_count: playerNeed,
+        gk_current_count: gk,
+        gk_count: gkNeed,
+        contents: content,
       };
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/group`, data, config)
+        .then((res) => {
+          console.log('POST 요청 성공 : ', res.data);
+        })
+        .catch((e) => {
+          console.error('POST 요청 실패 : ', e);
+        });
     } else if (boardCategory === '팀 구해요') {
       data = {
         category: boardCategory,
@@ -47,19 +69,10 @@ function SubmitPage() {
         gender: gender,
         skill: skill,
         position: position,
-        body: content,
+        contents: content,
       };
+      console.log('자기어필 페이지는 아직 미구현');
     }
-    // 현재 백엔드 API 요청이 만들어지지 않았음.
-
-    // axios
-    //   .post(`${process.env.REACT_APP_API_URL}/teampage`, data)
-    //   .then((res) => {
-    //     console.log('POST 요청 성공 : ', res.data);
-    //   })
-    //   .catch((e) => {
-    //     console.error('POST 요청 실패 : ', e);
-    //   });
 
     // 정상 출력되는지 테스트용 콘솔
     console.log(data);
@@ -70,7 +83,7 @@ function SubmitPage() {
     if (boardCategory === '카테고리') {
       throw new Error('카테고리를 선택해주세요');
     } else if (boardCategory === '팀원 구해요') {
-      if (allowRandom === '랜덤매칭' || playerNeed <= 0 || gkNeed <= 0) {
+      if (playerNeed <= 0 || gkNeed <= 0) {
         throw new Error('입력값을 확인해주세요');
       }
     } else if (boardCategory === '팀 구해요') {
@@ -126,11 +139,15 @@ function SubmitPage() {
       <StyledContainer>
         {boardCategory === '팀원 구해요' && (
           <SubmitFindingMembers
-            allowRandom={allowRandom}
+            // allowRandom={allowRandom}
+            player={player}
+            setPlayer={setPlayer}
+            gk={gk}
+            setGk={setGk}
+            // setAllowRandom={setAllowRandom}
             playerNeed={playerNeed}
-            gkNeed={gkNeed}
-            setAllowRandom={setAllowRandom}
             setPlayerNeed={setPlayerNeed}
+            gkNeed={gkNeed}
             setGkNeed={setGkNeed}
           />
         )}
