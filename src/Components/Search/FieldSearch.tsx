@@ -18,13 +18,13 @@ const FeildSearch: React.FC<FeildSearchProps> = ({
   };
 
   const pressEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.code === 'Enter') {
+    if (event.code === 'Enter' && searchValue.length > 0) {
       setSearchKeyword(searchValue);
     }
   };
 
   const clickBtnHandler = () => {
-    setSearchKeyword(searchValue);
+    if (searchValue.length > 0) setSearchKeyword(searchValue);
   };
 
   return (

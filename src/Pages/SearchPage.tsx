@@ -37,7 +37,7 @@ function SearchPage() {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const location = useLocation();
-  const searchValue = location.state?.searchValue || '';
+  const searchValue = location.state?.searchValue || '서울';
 
   useEffect(() => {
     setSearchKeyword(searchValue);
@@ -48,12 +48,14 @@ function SearchPage() {
     else setShowComparisonModal(false);
   }, [checkedArray]);
 
+  console.log(searchKeyword);
+
   return (
     <>
       <Header />
       <HeaderCategory />
       <div style={{ justifyContent: 'center' }}>
-        <FieldMap />
+        {searchKeyword && <FieldMap searchKeyword={searchKeyword} />}
 
         <div
           style={{
