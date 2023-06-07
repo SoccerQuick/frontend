@@ -12,12 +12,12 @@ const MainSearch = () => {
 
   const pressEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter') {
-      navigate('/ground', { state: searchValue });
+      navigate('/ground', { state: { searchValue } });
     }
   };
 
-  const handleClick = () => {
-    navigate('/ground', { state: searchValue });
+  const clickBtnHandler = () => {
+    navigate('/ground', { state: { searchValue } });
   };
 
   return (
@@ -32,7 +32,7 @@ const MainSearch = () => {
           onChange={(e) => searchHandler(e)}
           onKeyDown={(e) => pressEnterHandler(e)}
         />
-        <button className="find-match-button" onClick={() => handleClick()}>
+        <button className="find-match-button" onClick={() => clickBtnHandler()}>
           매치 찾기
         </button>
       </div>

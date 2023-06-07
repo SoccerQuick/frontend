@@ -6,7 +6,7 @@ import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
-import HeaderSearch from './Search/HeaderSearch';
+import HeaderSearch from './Search/FieldSearch';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
@@ -30,9 +30,6 @@ const Header = () => {
         </div>
       </LogoMain>
       <HeaderMenu>
-        <div>
-          <HeaderSearch />
-        </div>
         <HeaderMypage onMouseEnter={handleMyPageMenu}>
           <img src={MypageIcon} alt="my" />
           {myPageMenu && (
