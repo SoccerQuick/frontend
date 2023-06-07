@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import DetailPageBoard from '../../../Components/TeamPage/DetailPage/DetailPageBoard';
+import DetailPageBoard from '../Posts/DetailPage';
 
 // 현재 미사용 페이지임.
 function DetailPage() {
@@ -30,7 +30,7 @@ function DetailPage() {
 
   const dummydata: DataType = {
     num: 1,
-    title: '팀구합니다',
+    title: '지리는 팀원구합니다',
     author: 'ㄱㅁㅇ',
     area: '서울',
     status: '미완료',

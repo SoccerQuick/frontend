@@ -1,7 +1,9 @@
 import React from 'react';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
-import axios from 'axios';
 import FindPageBoard from '../../../Components/TeamPage/FindPage/FindPageBoard';
+import { Link, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
 
 type Applicant = {
   nickName: string;
@@ -41,6 +43,7 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
+  const location = useLocation();
   const { setShowModal, setModalData } = props;
   const [status, setStatus] = React.useState('');
   const [area, setArea] = React.useState('');
@@ -145,11 +148,16 @@ function FindingMember(props: FindingMemberProps) {
     { title: '지역', body: 'area', style: { width: '10%' } },
     { title: '모집인원(GK)', body: 'gk_need', style: { width: '8%' } },
     { title: '모집인원(Player)', body: 'player_need', style: { width: '8%' } },
-    { title: '성별제한', body: 'gender', style: { width: '6%' } },
+    { title: '성별제한', body: 'gender', style: { width: '8%' } },
   ];
 
   return (
     <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
+      <TeamPageHeader>
+        <StyledBanner>
+          팀원 모집 게시판입니다! 싸커퀵에서 훌륭한 동료를 구해보세요~
+        </StyledBanner>
+      </TeamPageHeader>
       <FindPageBoard
         dropdownList={dropdownList}
         tableList={tableList}
@@ -159,6 +167,16 @@ function FindingMember(props: FindingMemberProps) {
         filteredData={filteredData}
         data={data}
       />
+      <TeamPageFooter>
+        <Link
+          to="/teampage/submit"
+          style={{
+            display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
+          }}
+        >
+          <button>글 작성하기</button>
+        </Link>
+      </TeamPageFooter>
     </div>
   );
 }
@@ -288,3 +306,34 @@ const dummydata_findingMember = [
     applicant: [],
   },
 ];
+
+// 팀페이지 헤더 (애니메이션 구현)
+const TeamPageHeader = styled.div`
+  font-size: 2rem;
+  border: 1px solid;
+  overflow: hidden;
+`;
+
+const StyledBanner = styled.span`
+  display: inline-block;
+
+  animation: slide-left 8s linear infinite;
+  @keyframes slide-left {
+    0% {
+      transform: translateX(200%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+`;
+
+const TeamPageFooter = styled.div`
+  display: flex;
+  background-color: skyblue;
+  justify-content: flex-end;
+  width: fit-content;
+  margin-top: 3rem;
+  margin-right: 3rem;
+  float: right;
+`;
