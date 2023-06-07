@@ -1,11 +1,17 @@
 import React, { useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import SearchIcon from '../../styles/icon/search.svg';
 
-const HeaderSearch = () => {
+interface FeildSearchProps {
+  searchKeyword: string;
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const FeildSearch: React.FC<FeildSearchProps> = ({
+  searchKeyword,
+  setSearchKeyword,
+}) => {
   const [searchValue, setSearchValue] = useState('');
-  const navigate = useNavigate();
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.currentTarget.value);
@@ -13,13 +19,16 @@ const HeaderSearch = () => {
 
   const pressEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter') {
-      navigate('/ground', { state: searchValue });
+      setSearchKeyword(searchValue);
     }
   };
 
+  const clickBtnHandler = () => {
+    setSearchKeyword(searchValue);
+  };
+
   return (
-    <HeaderSearchBar>
-      <img src={SearchIcon} alt="search" />
+    <FeildSearchBar>
       <input
         type="search"
         placeholder="지역으로 풋살장 찾기"
@@ -28,27 +37,30 @@ const HeaderSearch = () => {
         onChange={(e) => searchHandler(e)}
         onKeyDown={(e) => pressEnterHandler(e)}
       />
-    </HeaderSearchBar>
+      <img src={SearchIcon} alt="search" onClick={() => clickBtnHandler()} />
+    </FeildSearchBar>
   );
 };
 
-export default HeaderSearch;
+export default FeildSearch;
 
-const HeaderSearchBar = styled.div`
+const FeildSearchBar = styled.div`
   width: 35rem;
-  height: 4rem;
-  background-color: #f7f7f7;
-  margin: 0;
+  height: 5rem;
+  background-color: white;
+  margin: 1.5rem;
   padding: 0.8rem;
   display: inline-block;
   border-radius: 0.6rem;
+  filter: drop-shadow(0 0 0.2rem grey);
+
   input {
     color: #3e5463;
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     border: none;
     background: none;
     width: 85%;
-    padding: 0 0 0 1rem;
-    line-height: 2.5rem;
+    padding: 0.2rem 0 0 1rem;
+    line-height: 2.8rem;
   }
 `;
