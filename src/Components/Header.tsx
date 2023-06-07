@@ -11,7 +11,7 @@ import { isLogInSelector } from '../store/selectors/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
-  const [myPageMenu, setMyPageMenu] = useState<boolean>(true);
+  const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
   const navigate = useNavigate();
   const isLogin = useSelector(isLogInSelector);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -41,12 +41,12 @@ export function MyPage() {
   }, []);
 
   const getUserData = () => {
+    const header = {
+      withCredentials: true,
+    };
+
     axios
-      .get(`http://localhost:8800/user/${user?.user_id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(`http://localhost:8800/user/`, header)
       .then((res) => res.data.userData)
       .then((user) => {
         console.log(user);
