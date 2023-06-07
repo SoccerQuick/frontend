@@ -11,9 +11,9 @@ export default function HeaderCategory() {
   const location = useLocation();
 
   const isHome = location.pathname === '/';
-  const isGroundPage = location.pathname === '/ground';
-  const isReviewPage = location.pathname === '/review';
-  const isTeampage = location.pathname === '/teampage';
+  const isGroundPage = location.pathname.includes('/ground');
+  const isReviewPage = location.pathname.includes('/review');
+  const isTeampage = location.pathname.includes('/teampage');
 
   return (
     <StyledHeaderCategory>

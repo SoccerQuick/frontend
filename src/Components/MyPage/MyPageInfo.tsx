@@ -8,6 +8,7 @@ import { checkNewPassword } from './checkPassword';
 type MyPageInfoProps = {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  oldPassword: string;
 };
 
 export type ErrorMsg = {
@@ -16,14 +17,16 @@ export type ErrorMsg = {
 };
 
 export type PasswordForm = {
-  oldPassword: string;
   newPassword: string;
   newPasswordConfirm: string;
 };
 
-export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
+export function MyPageInfo({
+  formData,
+  setFormData,
+  oldPassword,
+}: MyPageInfoProps) {
   const [passwordForm, setPasswordForm] = useState<PasswordForm>({
-    oldPassword: '12341234a',
     newPassword: '',
     newPasswordConfirm: '',
   });
@@ -34,9 +37,10 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { oldPassword, newPassword, newPasswordConfirm } = passwordForm;
+    const { newPassword, newPasswordConfirm } = passwordForm;
     if (newPassword.length > 0) {
       const check = await checkNewPassword(
+        oldPassword,
         newPassword,
         newPasswordConfirm,
         setErrorMsg
@@ -48,7 +52,7 @@ export function MyPageInfo({ formData, setFormData }: MyPageInfoProps) {
 
     try {
       const response = await axios.patch(
-        'http://localhost:8800/user',
+        `${process.env.REACT_APP_API_URL}/user`,
         {
           user_id: formData.user_id,
           name: formData.name,

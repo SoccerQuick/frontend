@@ -1,4 +1,7 @@
 import { useState, FormEvent } from 'react';
+import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
+import { useDispatch } from 'react-redux';
+
 import {
   Modal,
   ModalForm,
@@ -8,7 +11,7 @@ import {
 import axios from 'axios';
 import styled from 'styled-components';
 
-const postLoginUrl = 'http://localhost:8800/auth/login';
+const postLoginUrl = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 // User type
 type UserProps = {
@@ -29,6 +32,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     password: '',
   });
   const [loginError, setLoginError] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -57,9 +61,24 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
 
   const checkUsers = (data: { user_id: string; password: string }) => {
     axios
-      .post(postLoginUrl, data)
+      .post(postLoginUrl, data, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.headers['set-cookie']);
+        return res.data.userData;
+      })
+      .then((userData) => {
+        const user = {
+          user_id: userData.user_id,
+          name: userData.name,
+          nickname: userData.nick_name,
+        };
+        const token = 'your-auth-token';
+        dispatch(
+          AUTH_ACTIONS.login({
+            user,
+            token,
+          })
+        );
         setLoginError('');
         setAuthModal(false);
       })

@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import FindPage from './Views/SelectCategory';
-import FindingMember from './Views/FindingMember';
-import FindingTeam from './Views/FindingTeam';
-import FindingTeamDetail from './Views/FindingTeamDetail';
-import FindingMemberDetail from './Views/FindingMemberDetail';
+import FindingMember from './Views/FindingMember/FindingMember';
+import FindingTeam from './Views/FindingTeam/FindingTeam';
+import FindingTeamDetail from './Views/FindingTeam/FindingTeamDetail';
+import FindingMemberDetail from './Views/FindingMember/FindingMemberDetail';
 import PreView from '../../Components/TeamPage/PreView/PreViewModal';
 import SubmitPage from './Posts/PostPage';
 import EditPage from './Posts/EditPage';
@@ -16,7 +16,7 @@ function TeamPage() {
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [modalData, setModalData] = React.useState<any>([]);
+  // const [modalData, setModalData] = React.useState<any>([]);
 
   return (
     <>
@@ -28,11 +28,11 @@ function TeamPage() {
         }}
       >
         <Teampage>
-          <div>
+          {/* <div>
             {showModal && (
               <PreView setShowModal={setShowModal} modalData={modalData} />
             )}
-          </div>
+          </div> */}
           <TeamPageBody>
             <Routes>
               <Route path="/submit" element={<SubmitPage />} />
@@ -42,7 +42,7 @@ function TeamPage() {
                 element={
                   <FindingTeam
                     setShowModal={setShowModal}
-                    setModalData={setModalData}
+                    // setModalData={setModalData}
                   />
                 }
               />
@@ -52,7 +52,7 @@ function TeamPage() {
                 element={
                   <FindingMember
                     setShowModal={setShowModal}
-                    setModalData={setModalData}
+                    // setModalData={setModalData}
                   />
                 }
               />

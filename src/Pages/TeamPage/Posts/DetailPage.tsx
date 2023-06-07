@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
+import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
+import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import axios from 'axios';
 
 type DetailList = {
@@ -11,10 +13,11 @@ type DetailList = {
 };
 
 type DataType = {
+  group_id?: string;
   num: number;
   title: string;
   author: string;
-  area: string;
+  location: string;
   status: string;
   position?: string;
   skill?: string;
@@ -22,9 +25,8 @@ type DataType = {
   gk?: number;
   player_need?: number;
   player?: number;
-  allowRandom?: string;
   gender: string;
-  body: string;
+  contents: string;
   [key: string]: string | number | undefined;
 };
 
@@ -37,6 +39,7 @@ function DetailPage(props: DetailListProps) {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const { detailList, data } = props;
   const navigate = useNavigate();
+  const [showModal, setShowModal] = React.useState(false);
 
   const additionalData = { data };
 
@@ -69,10 +72,17 @@ function DetailPage(props: DetailListProps) {
         <StyledBox
           style={{ display: 'grid', border: '1px solid', borderRadius: '1rem' }}
         >
-          <HtmlParser data={data.body} />
+          <HtmlParser data={data.contents} />
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
-          <StyledButton>함께하기</StyledButton>
+          <StyledButton
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            {data.leader_name ? '함께하기' : '댓글 달기'}
+          </StyledButton>
+
           <Link to={`/teampage/edit/:id`} state={additionalData}>
             <StyledButton>수정하기</StyledButton>
           </Link>
@@ -84,6 +94,15 @@ function DetailPage(props: DetailListProps) {
             돌아가기
           </StyledButton>
         </StyledBox>
+        {showModal &&
+          (data.leader_name ? (
+            <SubmitForFindingMember
+              setShowModal={setShowModal}
+              groupId={data.group_id}
+            />
+          ) : (
+            <SubmitForFindingTeam setShowModal={setShowModal} />
+          ))}
       </StyledContainer>
     </>
   );
@@ -156,7 +175,7 @@ const StyledButton = styled.button`
   margin: 6rem 3rem 0rem 3rem;
 `;
 
-const StyledBody = styled.div`
+const Styledcontents = styled.div`
   padding: 2rem 2rem;
   width: 100rem;
   height: 45rem;

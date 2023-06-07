@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchIcon from '../styles/icon/search.svg';
 import MypageIcon from '../styles/icon/mypage.svg';
 import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
+import { useSelector } from 'react-redux';
+import { isLogInSelector } from '../store/selectors/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
   const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
   const navigate = useNavigate();
+  const isLogin = useSelector(isLogInSelector);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setAuthModal((prev) => !prev);
@@ -30,25 +32,20 @@ const Header = () => {
         </div>
       </LogoMain>
       <HeaderMenu>
-        <div>
-          <HeaderSearchBar>
-            <img src={SearchIcon} alt="search" />
-            <input
-              type="search"
-              placeholder="지역으로 풋살장 찾기"
-              maxLength={100}
-            />
-          </HeaderSearchBar>
-        </div>
-        <HeaderMypage onMouseEnter={handleMyPageMenu}>
-          <img src={MypageIcon} alt="my" />
-          {myPageMenu && (
-            <MyPageMenu
-              handleMyPageMenu={handleMyPageMenu}
-              handleLoginModal={handleLoginModal}
-            />
+        <HeaderMyPage>
+          {isLogin ? (
+            <HeaderMyPageButton onClick={handleMyPageMenu}>
+              <img src={MypageIcon} alt="my" />
+              {myPageMenu && <MyPageMenu handleMyPageMenu={handleMyPageMenu} />}
+            </HeaderMyPageButton>
+          ) : (
+            <HeaderLoginButton onClick={handleLoginModal}>
+              <img src={MypageIcon} alt="my" />
+              <div>로그인</div>
+            </HeaderLoginButton>
           )}
-        </HeaderMypage>
+        </HeaderMyPage>
+
         <div>
           <img src={MoreIcon} alt="more" />
         </div>
@@ -91,26 +88,26 @@ const HeaderMenu = styled.div`
   }
 `;
 
-const HeaderSearchBar = styled.div`
-  width: 35rem;
-  height: 4rem;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: 0.8rem;
-  display: inline-block;
-  border-radius: 0.6rem;
-  input {
-    color: #3e5463;
-    font-size: 1.4rem;
-    border: none;
-    background: none;
-    width: 85%;
-    padding: 0 0 0 1rem;
-    line-height: 2.5rem;
+const HeaderMyPage = styled.div``;
+
+const HeaderLoginButton = styled.div`
+  display: flex;
+  position: relative;
+  width: 8rem;
+  padding: 0.5rem;
+  margin: 0.3rem 2rem 0 2rem;
+  border-radius: 2.5rem;
+  border: 1px solid #e5e5e5;
+  & > div {
+    margin-top: 0.1rem;
   }
 `;
 
-const HeaderMypage = styled.div`
+const HeaderMyPageButton = styled.div`
+  display: flex;
   position: relative;
+  padding: 0.5rem;
   margin: 0.3rem 2rem 0 2rem;
+  border-radius: 2.5rem;
+  border: 1px solid #e5e5e5;
 `;
