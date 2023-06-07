@@ -3,7 +3,7 @@ import { StyledInfoContainer, StyledInfoBox, StyledTitle } from './MyPageInfo';
 import { StyledInputBox, StyledInfoInput, StyledButton } from './MyPageInput';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../AuthModal/AuthRedux/selectors/authSelectors';
+import { userSelector } from '../../store/selectors/authSelectors';
 
 type MyPageCheckPasswordProps = {
   setCheckPassword: React.Dispatch<React.SetStateAction<boolean>>;

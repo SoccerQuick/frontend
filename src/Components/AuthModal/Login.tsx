@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { AUTH_ACTIONS } from './AuthRedux/reducers/authSlice';
+import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
 import {
