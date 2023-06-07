@@ -42,7 +42,9 @@ function AdminUserManager() {
   const [data, setData] = React.useState<UserData[]>([]);
   React.useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/admin/change`)
+      .get(`${process.env.REACT_APP_API_URL}/admin/change`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setData(res.data.data);
       })

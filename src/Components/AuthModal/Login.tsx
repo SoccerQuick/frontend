@@ -61,9 +61,9 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
 
   const checkUsers = (data: { user_id: string; password: string }) => {
     axios
-      .post(postLoginUrl, data)
+      .post(postLoginUrl, data, { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        console.log(res.headers['set-cookie']);
         return res.data.userData;
       })
       .then((userData) => {
