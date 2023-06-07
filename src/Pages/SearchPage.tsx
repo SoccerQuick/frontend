@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
@@ -53,7 +54,13 @@ function SearchPage() {
   return (
     <>
       <Header />
-      <HeaderCategory />
+      <HeaderNavContainer>
+        <HeaderCategory />
+        <FeildSearchInput
+          searchKeyword={searchKeyword}
+          setSearchKeyword={setSearchKeyword}
+        />
+      </HeaderNavContainer>
       <div style={{ justifyContent: 'center' }}>
         {searchKeyword && <FieldMap searchKeyword={searchKeyword} />}
 
@@ -64,14 +71,6 @@ function SearchPage() {
             margin: 'auto',
           }}
         >
-          <div>
-            <FeildSearchInput
-              // searchInputValue={searchInputValue}
-              // setSearchInputValue={setSearchInputValue}
-              searchKeyword={searchKeyword}
-              setSearchKeyword={setSearchKeyword}
-            />
-          </div>
           <SearchData
             showModal={showModal}
             setShowModal={setShowModal}
@@ -113,3 +112,8 @@ function SearchPage() {
 }
 
 export default SearchPage;
+
+const HeaderNavContainer = styled.div`
+  position: relative;
+  height: 8rem;
+`;
