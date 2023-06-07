@@ -13,69 +13,81 @@ function EditPage() {
   const { data } = additionalData;
 
   let category: string;
-  if (data.allowRandom) {
+  if (data.leader_name) {
     category = '팀원 구해요';
   } else {
     category = '팀 구해요';
   }
   const [title, setTitle] = React.useState(data.title);
-  const [area, setArea] = React.useState(data.area);
-  const [allowRandom, setAllowRandom] = React.useState(data.allowRandom);
-  const [playerNeed, setPlayerNeed] = React.useState(data.player_need);
-  const [gkNeed, setGkNeed] = React.useState(data.gk_need);
+  const [area, setArea] = React.useState(data.location);
+  const [player, setPlayer] = React.useState(data.player_current_count);
+  const [playerNeed, setPlayerNeed] = React.useState(data.player_count);
+  const [gk, setGk] = React.useState(data.gk_current_count);
+  const [gkNeed, setGkNeed] = React.useState(data.gk_count);
   const [position, setPosition] = React.useState(data.position);
   const [skill, setSkill] = React.useState(data.skill);
   const [gender, setGender] = React.useState(data.gender);
-  const [body, setBody] = React.useState(data.body);
-  // quill 라이브러리를 세팅하는 부분
+  const [body, setBody] = React.useState(data.contents);
 
+  // quill 라이브러리를 세팅하는 부분
   const handleEditorChange: (value: string) => void = (value) => {
     setBody(value);
   };
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const navigate = useNavigate();
 
+  // API요청 설정
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+
   // 새 글을 작성하는 axios 명령
   const handlePostRequest = () => {
-    let newData;
+    let data;
     if (category === '팀원 구해요') {
-      newData = {
-        category: category,
+      data = {
+        leader_id: '6480bae19854c0d4bc9b4cde', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
+        leader_name: '고마오', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
         title: title,
-        allowRandom: allowRandom,
-        playerNeed: playerNeed,
-        gkNeed: gkNeed,
-        body: body,
+        location: area,
+        play_date: '아무때나',
+        // allowRandom: allowRandom,
+        player_current_count: player,
+        player_count: playerNeed,
+        gk_current_count: gk,
+        gk_count: gkNeed,
+        contents: body,
       };
+      // axios
+      //   .post(`${process.env.REACT_APP_API_URL}/group`, data, config)
+      //   .then((res) => {
+      //     console.log('POST 요청 성공 : ', res.data);
+      //   })
+      //   .catch((e) => {
+      //     console.error('POST 요청 실패 : ', e);
+      //   });
     } else if (category === '팀 구해요') {
-      newData = {
-        category: category,
+      data = {
         title: title,
         gender: gender,
         skill: skill,
         position: position,
-        body: body,
+        contents: body,
       };
+      console.log('자기어필 페이지는 아직 미구현');
     }
-    // 현재 백엔드 API 요청이 만들어지지 않았음.
-
-    // axios
-    //   .post(`${process.env.REACT_APP_API_URL}/teampage`, data)
-    //   .then((res) => {
-    //     console.log('POST 요청 성공 : ', res.data);
-    //   })
-    //   .catch((e) => {
-    //     console.error('POST 요청 실패 : ', e);
-    //   });
 
     // 정상 출력되는지 테스트용 콘솔
-    console.log(newData);
+    console.log(data);
   };
 
   // 입력값을 검사하는 validator - 오류를 조금 더 상세하게 출력하는 것이 효과가 있을까?
   function submitValidator() {
     if (category === '팀원 구해요') {
-      if (allowRandom === '랜덤매칭' || playerNeed <= 0 || gkNeed <= 0) {
+      if (playerNeed <= 0 || gkNeed <= 0) {
         throw new Error('입력값을 확인해주세요');
       }
     } else if (category === '팀 구해요') {
@@ -131,11 +143,15 @@ function EditPage() {
       <StyledContainer>
         {category === '팀원 구해요' && (
           <FindingMembers
-            allowRandom={allowRandom}
+            // allowRandom={allowRandom}
+            player={player}
+            setPlayer={setPlayer}
+            gk={gk}
+            setGk={setGk}
+            // setAllowRandom={setAllowRandom}
             playerNeed={playerNeed}
-            gkNeed={gkNeed}
-            setAllowRandom={setAllowRandom}
             setPlayerNeed={setPlayerNeed}
+            gkNeed={gkNeed}
             setGkNeed={setGkNeed}
           />
         )}
@@ -153,7 +169,7 @@ function EditPage() {
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>
           <ReactQuill
-            value={data.body}
+            value={body}
             onChange={handleEditorChange}
             modules={quillModules}
             style={{ width: '100rem', height: '45rem' }}

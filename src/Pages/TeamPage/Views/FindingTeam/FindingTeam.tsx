@@ -1,6 +1,6 @@
 import React from 'react';
-import FilteringOptions from '../../../Components/Commons/FilteringOptions';
-import FindPageBoard from '../../../Components/TeamPage/FindPage/FindPageBoard';
+import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
+import FindPageBoard from '../../../../Components/TeamPage/FindPage/FindPageBoard';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -13,8 +13,9 @@ type Applicant = {
 };
 
 type modalDataProps = {
-  area: string;
-  author: string;
+  group_id: string;
+  location: string;
+  leader_name: string;
   body: string;
   gender: string;
   num: number; // 수정 필요함(어떻게 들어올 지 모름)
@@ -32,27 +33,30 @@ type modalDataProps = {
 
 type FindingTeamProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
+  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
 };
 type FindTeamFilter = {
   status: string | null;
-  area: string | null;
+  location: string | null;
   skill: string | null;
   position: string | null;
   gender: string | null;
 };
 
 function FindingTeam(props: FindingTeamProps) {
-  const location = useLocation();
-  const { setShowModal, setModalData } = props;
+  const loc = useLocation();
+  const {
+    setShowModal,
+    // setModalData
+  } = props;
   const [status, setStatus] = React.useState('');
-  const [area, setArea] = React.useState('');
+  const [location, setlocation] = React.useState('');
   const [skill, setSkill] = React.useState('');
   const [position, setPosition] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [findTeamFilter, setFindTeamFilter] = React.useState<FindTeamFilter>({
     status: null,
-    area: null,
+    location: null,
     skill: null,
     position: null,
     gender: null,
@@ -60,7 +64,7 @@ function FindingTeam(props: FindingTeamProps) {
 
   function handleReset() {
     setStatus('');
-    setArea('');
+    setlocation('');
     setSkill('');
     setPosition('');
     setGender('');
@@ -71,14 +75,16 @@ function FindingTeam(props: FindingTeamProps) {
 
   React.useEffect(() => {
     // axios
-    //   .get('gomao.com')
+    //   .get(`${process.env.REACT_APP_API_URL}/group`)
     //   .then((res) => {
     //     // 가져온 데이터가 있다면 data에 저장한다.
-    //     setData(res.data);
+    //     console.log('데이터 받아옴 ㅎㅎ');
+    //     setData(res.data.data);
     //   })
     //   .catch((error) => {
     //     // 가져온 데이터가 없다면 dummyData를 사용한다.
     setData(dummydata_findingTeam);
+    //   console.log(`${process.env.REACT_APP_API_URL}`);
     // });
   }, []);
 
@@ -86,13 +92,13 @@ function FindingTeam(props: FindingTeamProps) {
   React.useEffect(() => {
     const filter = {
       status: status === '모집상태' ? '' : status,
-      area: area === '활동지역' ? '' : area,
+      location: location === '활동지역' ? '' : location,
       skill: skill === '실력수준' ? '' : skill,
       position: position === '포지션' ? '' : position,
       gender: gender === '성별' ? '' : gender,
     };
     setFindTeamFilter(filter);
-  }, [status, area, skill, position, gender]);
+  }, [status, location, skill, position, gender]);
 
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] = React.useState(dummydata_findingTeam);
@@ -126,9 +132,9 @@ function FindingTeam(props: FindingTeamProps) {
       setState: setStatus,
     },
     {
-      option: FilteringOptions.findingTeam.area,
-      state: area,
-      setState: setArea,
+      option: FilteringOptions.findingTeam.location,
+      state: location,
+      setState: setlocation,
     },
     {
       option: FilteringOptions.findingTeam.skill,
@@ -140,17 +146,12 @@ function FindingTeam(props: FindingTeamProps) {
       state: position,
       setState: setPosition,
     },
-    {
-      option: FilteringOptions.findingTeam.gender,
-      state: gender,
-      setState: setGender,
-    },
   ];
 
   // 표에 출력할 리스트를 정하는 부분
   const tableList = [
-    { title: '작성자', body: 'author', style: { width: '10%' } },
-    { title: '지역', body: 'area', style: { width: '5%' } },
+    { title: '작성자', body: 'leader_name', style: { width: '10%' } },
+    { title: '지역', body: 'location', style: { width: '5%' } },
     { title: '포지션', body: 'position', style: { width: '15%' } },
     { title: '실력', body: 'skill', style: { width: '10%' } },
     { title: '성별', body: 'gender', style: { width: '5%' } },
@@ -160,7 +161,7 @@ function FindingTeam(props: FindingTeamProps) {
     <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
       <TeamPageHeader>
         <StyledBanner>
-          팀 구직 게시판입니다. 자신을 어필하고 팀 제안을 받아보세요!
+          개인 홍보 게시판입니다. 자신을 어필하고 팀 제안을 받아보세요!
         </StyledBanner>
       </TeamPageHeader>
       <FindPageBoard
@@ -168,7 +169,7 @@ function FindingTeam(props: FindingTeamProps) {
         tableList={tableList}
         handleReset={handleReset}
         setShowModal={setShowModal}
-        setModalData={setModalData}
+        // setModalData={setModalData}
         filteredData={filteredData}
         data={data}
       />
@@ -176,7 +177,7 @@ function FindingTeam(props: FindingTeamProps) {
         <Link
           to="/teampage/submit"
           style={{
-            display: location.pathname === '/teampage/submit' ? 'none' : 'flex',
+            display: loc.pathname === '/teampage/submit' ? 'none' : 'flex',
           }}
         >
           <button>글 작성하기</button>
@@ -190,10 +191,11 @@ export default FindingTeam;
 
 const dummydata_findingTeam = [
   {
+    group_id: '123',
     num: 1,
     title: '중수 필더 팀 구합니다',
-    author: '그리즈만',
-    area: '영국',
+    leader_name: '그리즈만',
+    location: '영국',
     status: '미완료',
     position: '필드플레이어',
     skill: '프로',
@@ -203,8 +205,8 @@ const dummydata_findingTeam = [
   {
     num: 2,
     title: '거의그냥 거미손 팀구함ㅎ',
-    author: '마누엘 노이어',
-    area: '독일',
+    leader_name: '마누엘 노이어',
+    location: '독일',
     status: '완료',
     position: '골키퍼',
     skill: '프로',
@@ -214,8 +216,8 @@ const dummydata_findingTeam = [
   {
     num: 3,
     title: '나 이민우. 우승팀 들어간다. 불러라.',
-    author: '이민우',
-    area: '부산',
+    leader_name: '이민우',
+    location: '부산',
     status: '미완료',
     position: '필드플레이어',
     skill: '프로',
@@ -225,8 +227,8 @@ const dummydata_findingTeam = [
   {
     num: 4,
     title: '축구고수 권성경 팀구함',
-    author: '권성경',
-    area: '경기',
+    leader_name: '권성경',
+    location: '경기',
     status: '미완료',
     position: '상관없음',
     skill: '프로',

@@ -11,16 +11,12 @@ type props = {
 function DetailModal(props: props) {
   const { setShowModal } = props;
   const [author, setAuthor] = React.useState('');
-  const [area, setArea] = React.useState('');
-  const [post, setPost] = React.useState('');
   const [memo, setMemo] = React.useState('');
 
   function SubmitButton() {
     // 이곳에 axios 요청을 달아야 할 것임.
     const data = {
       author: author,
-      area: area,
-      post: post,
       memo: memo,
     };
     console.log(data);
@@ -59,28 +55,8 @@ function DetailModal(props: props) {
               </div>
             </StyledHeader>
             <StyledSubTitle>
-              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <StyledBlock>
-                  <DropDown
-                    list={FILTERING_OPTIONS.findingTeam.area}
-                    selected={area}
-                    setSelected={setArea}
-                  />
-                </StyledBlock>
-                <StyledBlock>
-                  <StyledSpan style={{ width: '11rem', paddingRight: '1rem' }}>
-                    모집글 주소 :
-                  </StyledSpan>
-                  <StyledInput
-                    style={{ width: '29.7rem' }}
-                    onChange={(e) => {
-                      setPost(e.target.value);
-                    }}
-                  />
-                </StyledBlock>
-              </div>
               <StyledBlock>
-                <StyledSpan>메모</StyledSpan>
+                <StyledSpan>내용</StyledSpan>
                 <StyledInput
                   style={{ width: '53rem' }}
                   onChange={(e) => {
@@ -91,7 +67,7 @@ function DetailModal(props: props) {
             </StyledSubTitle>
           </DetailPage>
           <StyledButtonContainer>
-            <StyledButton onClick={SubmitButton}>제출</StyledButton>
+            <StyledButton onClick={SubmitButton}>댓글 작성</StyledButton>
             <StyledButton
               onClick={() => {
                 setShowModal(false);
@@ -127,7 +103,7 @@ const ModalPage = styled.div`
   justify-content: center;
   align-items: center;
   width: 70rem;
-  height: 35rem;
+  height: 23rem;
   background-color: rgba(255, 255, 255);
   z-index: 501;
 `;
@@ -174,7 +150,7 @@ const StyledSubTitle = styled.div`
   font-size: 1.8rem;
   position: absolute;
   top: 0;
-  margin-top: 11.5rem;
+  margin-top: 9.5rem;
 `;
 
 const StyledBlock = styled.div`
@@ -208,7 +184,7 @@ const StyledButtonContainer = styled.div`
   position: absolute;
   top: 0;
   margin-left: 44rem;
-  margin-top: 28rem;
+  margin-top: 17rem;
   width: 90%;
   border-radius: 1rem;
 `;
