@@ -1,14 +1,11 @@
-import authSlice, { AuthState } from './reducers/authSlice';
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistedReducer } from './reducers';
 
-export type RootState = {
-  auth: AuthState;
-};
+// store
+const store = configureStore({ reducer: persistedReducer });
 
-const rootReducer = combineReducers<RootState>({
-  auth: authSlice,
-});
+//persistor
+const persistor = persistStore(store);
 
-const store = configureStore({ reducer: rootReducer });
-
-export default store;
+export { store, persistor };

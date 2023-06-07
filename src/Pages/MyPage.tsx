@@ -37,7 +37,7 @@ export function MyPage() {
   useEffect(() => {
     setTimeout(() => {
       getUserData();
-    }, 1000);
+    }, 5000);
   }, []);
 
   const getUserData = () => {
