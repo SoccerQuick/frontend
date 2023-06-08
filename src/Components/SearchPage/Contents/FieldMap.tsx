@@ -3,16 +3,17 @@ import styled from 'styled-components';
 import CustomMapMarker from './CustomMapMarker';
 import ResetMapBtn from './ResetMapBtn';
 import FieldDummy from './fieldDummy';
+import { listeners } from 'process';
 
 const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
   const { naver } = window;
   const mapElement = useRef<HTMLElement | null | any>(null);
-  var map: naver.maps.Map;
+  let map: naver.maps.Map;
   const [AddressX, setAddressX] = useState<number>(0);
   const [AddressY, setAddressY] = useState<number>(0);
   const createMarkerList: naver.maps.Marker[] = [];
 
-  //검색 키워드에 맞는 위경도 저장
+  //검색 키워드에 따라 해당 위치의 위경도 상태 저장!!
   useEffect(() => {
     if (searchKeyword) {
       naver.maps.Service.geocode(
@@ -36,10 +37,10 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     }
   }, [searchKeyword]);
 
+  //중심이 될 위경도 값 바탕으로 맵 생성하고 마커 생성 함수 호출 !!
   useEffect(() => {
     if (!mapElement.current || !naver) return;
 
-    // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
     const center = new naver.maps.LatLng(AddressY, AddressX);
     const mapOptions: naver.maps.MapOptions = {
       center: center,
@@ -52,28 +53,28 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
       mapDataControl: false,
       scaleControl: false,
     };
-
     map = new naver.maps.Map(mapElement.current, mapOptions);
-
     addMarkers();
   }, [AddressX, AddressY]);
 
+  //구장 데이터 배열 순회하면서 마커 생성 진행!
   const addMarkers = () => {
-    // let mapBounds = mapElement.current.getBounds();
+    // let mapBounds = map.getBounds();
     for (let i = 0; i < FieldDummy.length; i++) {
       if (createMarkerList.length > 100) {
         break;
       }
 
       let markerObj = FieldDummy[i];
-      //   let position = new naver.maps.LatLng(markerObj.lat, markerObj.lng);
-      //   if (mapBounds.hasLatLng(position)) {
+      // let position = new naver.maps.LatLng(markerObj.lat, markerObj.lng);
+      // if (mapBounds.hasPoint(position)) {
       const { id, title, lat, lng } = markerObj;
       addMarker(id, title, lat, lng);
-      //   }
+      // }
     }
   };
 
+  //마커 생성 하고 createMarkerList에 추가!!
   const addMarker = (id: number, name: string, lat: number, lng: number) => {
     try {
       let newMarker = new naver.maps.Marker({
@@ -93,37 +94,41 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
   };
 
   useEffect(() => {
-    const idleHandler = () => {
-      clearMarkers();
-      addMarkers();
-    };
-
-    const zoomChangeHandler = () => {
-      if (mapElement.current.getZoom() <= 7) {
-        clearMarkers();
-      }
-    };
-
-    //컴포넌트 마운트 될 때 이벤트 등록
-    naver.maps.Event.addListener(mapElement, 'idle', idleHandler);
-    naver.maps.Event.addListener(mapElement, 'zoom_change', zoomChangeHandler);
-
-    //클린업 함수로 언마운트 될 때 이벤트 해제
+    const MoveEventListner = naver.maps.Event.addListener(
+      map,
+      'idle',
+      idleHandler
+    );
     return () => {
-      naver.maps.Event.addListener(mapElement, 'idle', idleHandler);
-      naver.maps.Event.addListener(
-        mapElement,
-        'zoom_change',
-        zoomChangeHandler
-      );
+      naver.maps.Event.removeListener(MoveEventListner);
     };
   }, []);
 
-  const clearMarkers = () => {
-    createMarkerList.forEach((marker) => {
-      marker.setMap(null);
-    });
-    createMarkerList.length = 0;
+  const idleHandler = () => {
+    updateMarkers(map, createMarkerList);
+  };
+
+  const updateMarkers = (map: naver.maps.Map, markers: naver.maps.Marker[]) => {
+    let mapBounds = map.getBounds();
+    let marker: naver.maps.Marker, position;
+    for (var i = 0; i < markers.length; i++) {
+      marker = markers[i];
+      position = marker.getPosition();
+      if (mapBounds.hasPoint(position)) {
+        showMarker(map, marker);
+      } else {
+        hideMarker(marker);
+      }
+    }
+  };
+
+  const showMarker = (map: naver.maps.Map, marker: naver.maps.Marker) => {
+    if (marker.getMap()) return;
+    marker.setMap(map);
+  };
+  const hideMarker = (marker: naver.maps.Marker) => {
+    if (!marker.getMap()) return;
+    marker.setMap(null);
   };
 
   return (
