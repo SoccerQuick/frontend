@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 type Applicant = {
-  nickName: string;
+  id: string;
   position: string;
-  skill: string;
-  body: string;
+  level: string;
+  contents: string;
 };
 
 type modalDataProps = {
@@ -28,6 +28,7 @@ type modalDataProps = {
   player_need?: number;
   player?: number;
   allowRandom?: string;
+  applicant?: Applicant[];
   [key: string]: string | number | undefined | Applicant[];
 };
 
@@ -36,11 +37,11 @@ type FindingTeamProps = {
   // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
 };
 type FindTeamFilter = {
-  status: string | null;
-  location: string | null;
-  skill: string | null;
-  position: string | null;
-  gender: string | null;
+  status: string;
+  location: string;
+  skill: string;
+  position: string;
+  gender: string;
 };
 
 function FindingTeam(props: FindingTeamProps) {
@@ -55,11 +56,11 @@ function FindingTeam(props: FindingTeamProps) {
   const [position, setPosition] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [findTeamFilter, setFindTeamFilter] = React.useState<FindTeamFilter>({
-    status: null,
-    location: null,
-    skill: null,
-    position: null,
-    gender: null,
+    status: '',
+    location: '',
+    skill: '',
+    position: '',
+    gender: '',
   });
 
   function handleReset() {
@@ -112,8 +113,22 @@ function FindingTeam(props: FindingTeamProps) {
           return true;
         } else {
           if (
+            typeof item[key] === 'string' &&
+            typeof findTeamFilter[key as keyof FindTeamFilter] === 'string' &&
+            (item[key] as string).includes(
+              findTeamFilter[key as keyof FindTeamFilter] as string
+            )
+          ) {
+            continue;
+          } else if (
+            typeof item[key] === 'number' &&
+            typeof findTeamFilter[key as keyof FindTeamFilter] === 'number' &&
+            item[key] === findTeamFilter[key as keyof FindTeamFilter]
+          ) {
+            continue;
+          } else if (
             findTeamFilter[key as keyof FindTeamFilter] !== '' &&
-            findTeamFilter[key as keyof FindTeamFilter] !== item[key]
+            item[key] !== findTeamFilter[key as keyof FindTeamFilter]
           ) {
             return false;
           }
@@ -171,7 +186,7 @@ function FindingTeam(props: FindingTeamProps) {
         setShowModal={setShowModal}
         // setModalData={setModalData}
         filteredData={filteredData}
-        data={data}
+        // data={data}
       />
       <TeamPageFooter>
         <Link
