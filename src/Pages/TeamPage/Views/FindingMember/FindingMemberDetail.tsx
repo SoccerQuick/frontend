@@ -29,7 +29,7 @@ function DetailPage() {
     { title: '모집인원(GK)', value: 'gk_count' },
     { title: '현재인원(Player)', value: 'player_current_count' },
     { title: '모집인원(Player)', value: 'player_count' },
-    { title: '성별', value: 'gender' },
+    // { title: '성별', value: 'gender' },
   ];
 
   return (

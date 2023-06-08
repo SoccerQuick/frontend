@@ -6,16 +6,17 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 type Applicant = {
-  nickName: string;
+  id: string;
   position: string;
-  skill: string;
-  body: string;
+  level: string;
+  contents: string;
 };
 
-type modalDataProps = {
-  group_id: string;
+type DataProps = {
+  group_id?: string;
   location: string;
-  leader_name: string;
+  // leader_name?: string;
+  author: string;
   body: string;
   gender: string;
   num: number; // 수정 필요함(어떻게 들어올 지 모름)
@@ -34,7 +35,7 @@ type modalDataProps = {
 
 type FindingMemberProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
+  // setModalData: React.Dispatch<React.SetStateAction<DataProps>>;
 };
 type FindMemberFilter = {
   status: string | null;
@@ -62,18 +63,24 @@ function FindingMember(props: FindingMemberProps) {
   }
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<any[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
+  const [data, setData] = React.useState<DataProps[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
 
   React.useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/group`)
       .then((res) => {
         // 가져온 데이터가 있다면 data에 저장한다.
-        setData(res.data.data);
+        const formattedData = res.data.data.map((item: any) => {
+          return {
+            ...item,
+            author: item.leader_name,
+          };
+        });
+        setData(formattedData);
       })
       .catch((error) => {
         // 가져온 데이터가 없다면 dummyData를 사용한다.
-        setData(dummydata_findingMember);
+        setData([]);
       });
   }, []);
 
@@ -98,8 +105,24 @@ function FindingMember(props: FindingMemberProps) {
           return true;
         } else {
           if (
+            typeof item[key] === 'string' &&
+            typeof findMemberFilter[key as keyof FindMemberFilter] ===
+              'string' &&
+            (item[key] as string).includes(
+              findMemberFilter[key as keyof FindMemberFilter] as string
+            )
+          ) {
+            continue;
+          } else if (
+            typeof item[key] === 'number' &&
+            typeof findMemberFilter[key as keyof FindMemberFilter] ===
+              'number' &&
+            item[key] === findMemberFilter[key as keyof FindMemberFilter]
+          ) {
+            continue;
+          } else if (
             findMemberFilter[key as keyof FindMemberFilter] !== '' &&
-            findMemberFilter[key as keyof FindMemberFilter] !== item[key]
+            item[key] !== findMemberFilter[key as keyof FindMemberFilter]
           ) {
             return false;
           }
@@ -107,7 +130,7 @@ function FindingMember(props: FindingMemberProps) {
       }
       return true;
     });
-    setFilteredData(newData);
+    setFilteredData(newData.reverse()); // 최신 게시글이 위로 가게 정렬함
   }, [data, findMemberFilter]);
 
   // 드롭다운 리스트를 정하는 부분
@@ -126,7 +149,7 @@ function FindingMember(props: FindingMemberProps) {
 
   // 표에 출력할 리스트를 정하는 부분
   const tableList = [
-    { title: '작성자', body: 'leader_name', style: { width: '10%' } },
+    { title: '작성자', body: 'author', style: { width: '10%' } },
     { title: '지역', body: 'location', style: { width: '10%' } },
     { title: '현재인원(GK)', body: 'gk_current_count', style: { width: '8%' } },
     { title: '모집인원(GK)', body: 'gk_count', style: { width: '8%' } },
@@ -153,7 +176,7 @@ function FindingMember(props: FindingMemberProps) {
         setShowModal={setShowModal}
         // setModalData={setModalData}
         filteredData={filteredData}
-        data={data}
+        // data={data}
       />
       <TeamPageFooter>
         <Link
@@ -170,130 +193,6 @@ function FindingMember(props: FindingMemberProps) {
 }
 
 export default FindingMember;
-
-// 더미 데이터
-const dummydata_findingMember = [
-  {
-    num: 1,
-    title: '팀구합니다',
-    leader_name: 'ㄱㅁㅇ',
-    location: '서울',
-    status: '미완료',
-    gender: '남',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '허용',
-    body: `하하하하하하하하하하하하하하하하 
-    1234 <br />
-    하하하하하하하하하하하하하하하하하하하하하하`,
-    applicant: [
-      {
-        nickName: '고고마오',
-        position: 'gk',
-        skill: '세미프로',
-        body: '저 자신있습니다',
-      },
-      {
-        nickName: '고구마',
-        position: 'player',
-        skill: '세미프로',
-        body: '캐리해드림ㅎㅎ',
-      },
-    ],
-  },
-  {
-    num: 2,
-    title: '랏키퍼구합니다',
-    leader_name: 'ㄱㅁㅇ2',
-    location: '서울',
-    status: '미완료',
-    gender: '남',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '허용',
-    body: 'ㄱㅁㅇ',
-    applicant: [],
-  },
-  {
-    num: 3,
-    title: '랏필드구합니다',
-    leader_name: 'ㄱㅁㅇ3',
-    location: '서울',
-    status: '미완료',
-    gender: '남',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '비허용',
-    body: 'ㄱㅁㅇ',
-    applicant: [],
-  },
-  {
-    num: 4,
-    title: '다구했어요ㅎㅎ',
-    leader_name: 'ㄱㅁㅇ4',
-    location: '서울',
-    status: '완료',
-    gender: '상관없음',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '허용',
-    body: 'ㄱㅁㅇ',
-    applicant: [],
-  },
-  {
-    num: 5,
-    title: '팀구합니다',
-    leader_name: 'ㄱㅁㅇ',
-    location: '서울',
-    status: '미완료',
-    gender: '남',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '허용',
-    body: 'ㄱㅁㅇ',
-    applicant: [],
-  },
-  {
-    num: 6,
-    title: '팀구합니다',
-    leader_name: 'ㄱㅁㅇ',
-    location: '서울',
-    status: '미완료',
-    gender: '남',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '허용',
-    body: 'ㄱㅁㅇ',
-    applicant: [],
-  },
-  {
-    num: 7,
-    title: '팀구합니다',
-    leader_name: 'ㄱㅁㅇ',
-    location: '서울',
-    status: '미완료',
-    gender: '상관없음',
-    gk_count: 1,
-    gk: 1,
-    player_count: 4,
-    player: 3,
-    random_matched: '허용',
-    body: 'ㄱㅁㅇ',
-    applicant: [],
-  },
-];
 
 // 팀페이지 헤더 (애니메이션 구현)
 const TeamPageHeader = styled.div`
