@@ -96,11 +96,13 @@ function DropDown(props: Props) {
 export default DropDown;
 
 const DropdownWrapper = styled.div`
+  z-index: 999;
   position: relative;
   display: inline-block;
 `;
 
 const DropdownButton = styled.button`
+  z-index: 999;
   background-color: #fff;
   display: flex;
   flex: 1;
@@ -127,11 +129,12 @@ const DropdownMenu = styled.div`
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   font-size: ${(props) =>
     props.style?.fontSize ? props.style.fontSize : '13px'};
-  z-index: 1;
+  z-index: 999;
 `;
 
 const DropdownItem = styled.button<DropdownItemProps>`
   display: block;
+  z-index: 999;
   padding: 9px 7px;
   text-decoration: none;
   width: 100%;

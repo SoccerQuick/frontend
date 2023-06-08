@@ -6,16 +6,21 @@ function Parser(props: any) {
   const { data } = props;
   // html-react-parser를 사용해서 HTML문법으로 작성된 문자열을 HTML로 파싱하는 부분
   const htmlString = data;
-  const parsedBody = parse(htmlString);
+  const parsedBody = parse(htmlString, { trim: false });
   return <StyledBody>{parsedBody}</StyledBody>;
 }
+
+// function Parser(props: any) {
+//   const { data } = props;
+//   const htmlString = data;
+//   return <StyledBody dangerouslySetInnerHTML={{ __html: htmlString }} />;
+// }
 
 export default Parser;
 
 const StyledBody = styled.div`
   padding: 2rem 2rem;
   width: 100rem;
-  /* height: 45rem; */
-  /* background-color: beige; */
+  white-space: pre-wrap;
   font-size: 2rem;
 `;
