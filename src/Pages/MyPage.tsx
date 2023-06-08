@@ -29,16 +29,22 @@ export function MyPage() {
 
   const [checkedBarItem, setCheckedBarItem] = useState(1);
   const [checkMyPassword, setCheckPassword] = useState(false);
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
+    setTimeout(() => {
+      getUserData();
+    }, 1000);
+  }, []);
+
+  const getUserData = () => {
     axios
-      .get('http://localhost:8800/user/aaa', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get(`${process.env.REACT_APP_API_URL}/user/`, {
+        withCredentials: true,
       })
       .then((res) => res.data.userData)
       .then((user) => {
+        console.log(user);
         setFormData((prev) => ({
           ...prev,
           user_id: user.user_id,
@@ -50,7 +56,7 @@ export function MyPage() {
         }));
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   return (
     <>
@@ -64,10 +70,18 @@ export function MyPage() {
           {checkMyPassword ? (
             <>
               <MyProfile formData={formData} />
-              <MyPageInfo formData={formData} setFormData={setFormData} />
+              <MyPageInfo
+                oldPassword={password}
+                formData={formData}
+                setFormData={setFormData}
+              />
             </>
           ) : (
-            <MyPageCheckPassword setCheckPassword={setCheckPassword} />
+            <MyPageCheckPassword
+              password={password}
+              setPassword={setPassword}
+              setCheckPassword={setCheckPassword}
+            />
           )}
         </MyPageContainer>
       ) : (

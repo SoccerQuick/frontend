@@ -1,16 +1,23 @@
 import react, { useState } from 'react';
 import { StyledInfoContainer, StyledInfoBox, StyledTitle } from './MyPageInfo';
 import { StyledInputBox, StyledInfoInput, StyledButton } from './MyPageInput';
-import styled from 'styled-components';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../store/selectors/authSelectors';
 
 type MyPageCheckPasswordProps = {
   setCheckPassword: React.Dispatch<React.SetStateAction<boolean>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function MyPageCheckPassword({ setCheckPassword }: MyPageCheckPasswordProps) {
-  const [password, setPassword] = useState('');
+function MyPageCheckPassword({
+  setCheckPassword,
+  password,
+  setPassword,
+}: MyPageCheckPasswordProps) {
   const [errorMsg, setErrorMsg] = useState('');
+  const user = useSelector(userSelector);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -20,11 +27,14 @@ function MyPageCheckPassword({ setCheckPassword }: MyPageCheckPasswordProps) {
   const handlePasswordCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = {
-      user_id: 'aaa',
+      user_id: user?.user_id,
       password: password,
     };
+
     axios
-      .post(`http://localhost:8800/auth/password`, data)
+      .post(`${process.env.REACT_APP_API_URL}/auth/password`, data, {
+        withCredentials: true,
+      })
       .then((res) => res.request)
       .then((result) => {
         if (result.status === 200) {
@@ -33,7 +43,11 @@ function MyPageCheckPassword({ setCheckPassword }: MyPageCheckPasswordProps) {
         }
       })
       .catch((err) => {
-        setErrorMsg(err.response.data.message);
+        if (user) {
+          setErrorMsg(err.response.data.message);
+        } else {
+          setErrorMsg('로그인을 먼저 진행해주세요.');
+        }
       });
   };
 
@@ -45,6 +59,7 @@ function MyPageCheckPassword({ setCheckPassword }: MyPageCheckPasswordProps) {
           <label>비밀번호 확인</label>
           <StyledInfoInput
             name="password"
+            type="password"
             value={password}
             onChange={handleChange}
           />

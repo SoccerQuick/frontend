@@ -15,20 +15,34 @@ type TableList = {
   style: { width: string };
 };
 
+type Applicant = {
+  id: string;
+  position: string;
+  level: string;
+  contents: string;
+};
+
 type filteredData = {
+  applicant?: Applicant[];
+  group_id?: string;
   num: number;
   title: string;
-  author: string;
-  area: string;
+  leader_name?: string;
+  author?: string;
+  location: string;
   status: string;
   position?: string;
   skill?: string;
   gender: string;
   body: string;
 };
+
 type modalDataProps = {
-  area: string;
-  author: string;
+  applicant?: Applicant[];
+  group_id?: string;
+  location: string;
+  leader_name?: string;
+  author?: string;
   body: string;
   gender: string;
   num: number; // 수정 필요함(어떻게 들어올 지 모름)
@@ -48,9 +62,9 @@ type BoardProps = {
   tableList: TableList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
+  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
-  data: any;
+  // data: any;
 };
 
 function Board(props: BoardProps) {
@@ -59,9 +73,9 @@ function Board(props: BoardProps) {
     tableList,
     handleReset,
     setShowModal,
-    setModalData,
+    // setModalData,
     filteredData,
-    data,
+    // data,
   } = props;
 
   return (
@@ -95,32 +109,41 @@ function Board(props: BoardProps) {
                 {tableList.map((item) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
-                <th>미리보기</th>
+
+                {/* <th>미리보기</th> */}
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item, idx) => (
-                <StyledTr key={item.num}>
+                <StyledTr key={item.group_id}>
                   <td style={{ width: '5%' }}>{idx + 1}</td>
                   <td style={{ width: '35%' }}>
-                    <Link to={`./${item.num}`}>{item.title}</Link>
+                    <Link to={`./${item.group_id}`} state={{ data: item }}>
+                      {item.title}
+                    </Link>{' '}
+                    <span style={{ marginLeft: '0.5rem', color: 'red' }}>
+                      {item.applicant &&
+                        item.applicant.length > 0 &&
+                        `[${item.applicant?.length}]`}
+                    </span>
                   </td>
-                  {tableList.map((cell: TableList) => (
+                  {tableList.map((cell) => (
                     <td key={cell.body} style={cell.style}>
                       {item[cell.body as keyof typeof item] as React.ReactNode}
                     </td>
                   ))}
-                  <td>
+
+                  {/* <td>
                     <button
                       // 실제로 나중에는 objectId로 get요청을 보내서 데이터를 가져오게 해야 할 것이다.
                       onClick={() => {
                         setShowModal(true);
-                        setModalData(data[item.num - 1]);
+                        // setModalData(data[item.num - 1]);
                       }}
                     >
                       조회
                     </button>
-                  </td>
+                  </td> */}
                 </StyledTr>
               ))}
             </tbody>

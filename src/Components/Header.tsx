@@ -6,12 +6,14 @@ import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
 import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
-import HeaderSearch from './Search/FieldSearch';
+import { useSelector } from 'react-redux';
+import { isLogInSelector } from '../store/selectors/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
   const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
   const navigate = useNavigate();
+  const isLogin = useSelector(isLogInSelector);
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setAuthModal((prev) => !prev);
@@ -30,15 +32,20 @@ const Header = () => {
         </div>
       </LogoMain>
       <HeaderMenu>
-        <HeaderMypage onMouseEnter={handleMyPageMenu}>
-          <img src={MypageIcon} alt="my" />
-          {myPageMenu && (
-            <MyPageMenu
-              handleMyPageMenu={handleMyPageMenu}
-              handleLoginModal={handleLoginModal}
-            />
+        <HeaderMyPage>
+          {isLogin ? (
+            <HeaderMyPageButton onClick={handleMyPageMenu}>
+              <img src={MypageIcon} alt="my" />
+              {myPageMenu && <MyPageMenu handleMyPageMenu={handleMyPageMenu} />}
+            </HeaderMyPageButton>
+          ) : (
+            <HeaderLoginButton onClick={handleLoginModal}>
+              <img src={MypageIcon} alt="my" />
+              <div>로그인</div>
+            </HeaderLoginButton>
           )}
-        </HeaderMypage>
+        </HeaderMyPage>
+
         <div>
           <img src={MoreIcon} alt="more" />
         </div>
@@ -81,7 +88,26 @@ const HeaderMenu = styled.div`
   }
 `;
 
-const HeaderMypage = styled.div`
+const HeaderMyPage = styled.div``;
+
+const HeaderLoginButton = styled.div`
+  display: flex;
   position: relative;
+  width: 8rem;
+  padding: 0.5rem;
   margin: 0.3rem 2rem 0 2rem;
+  border-radius: 2.5rem;
+  border: 1px solid #e5e5e5;
+  & > div {
+    margin-top: 0.1rem;
+  }
+`;
+
+const HeaderMyPageButton = styled.div`
+  display: flex;
+  position: relative;
+  padding: 0.5rem;
+  margin: 0.3rem 2rem 0 2rem;
+  border-radius: 2.5rem;
+  border: 1px solid #e5e5e5;
 `;

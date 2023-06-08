@@ -5,18 +5,28 @@ import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
 import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
+import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import axios from 'axios';
 
 type DetailList = {
   title: string;
   value: string;
 };
+type Applicant = {
+  id: string;
+  position: string;
+  level: string;
+  contents: string;
+  _id?: string;
+};
 
 type DataType = {
+  applicant?: Applicant[];
+  group_id?: string;
   num: number;
   title: string;
   author: string;
-  area: string;
+  location: string;
   status: string;
   position?: string;
   skill?: string;
@@ -24,15 +34,14 @@ type DataType = {
   gk?: number;
   player_need?: number;
   player?: number;
-  allowRandom?: string;
   gender: string;
-  body: string;
-  [key: string]: string | number | undefined;
+  contents: string;
+  [key: string]: string | number | undefined | Applicant[];
 };
 
 type DetailListProps = {
   detailList: DetailList[];
-  data: DataType;
+  data: any;
 };
 
 function DetailPage(props: DetailListProps) {
@@ -62,7 +71,6 @@ function DetailPage(props: DetailListProps) {
           {detailList.map((item: DetailList) => (
             <StyledDiv key={item.title}>
               <StyledTitle>{item.title}</StyledTitle>
-              {/* 현재 data로 되어있으나, 앞으로 param로 get요청 보내서 가져온 데이터를 써야한다 */}
               <StyledDivText>{data[item.value]}</StyledDivText>
             </StyledDiv>
           ))}
@@ -72,15 +80,34 @@ function DetailPage(props: DetailListProps) {
         <StyledBox
           style={{ display: 'grid', border: '1px solid', borderRadius: '1rem' }}
         >
-          <HtmlParser data={data.body} />
+          <HtmlParser data={data.contents} />
         </StyledBox>
+        {/* 댓글창 / 신청자목록을 불러오는 부분 */}
+        <StyledBox>
+          <StyledDiv
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              flexWrap: 'wrap',
+            }}
+          >
+            {data.applicant?.length > 0 && (
+              <TeamPageComments data={data.applicant} />
+            )}
+          </StyledDiv>
+        </StyledBox>
+      </StyledContainer>
+      <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
             onClick={() => {
               setShowModal(true);
             }}
           >
-            함께하기
+            {data.leader_name ? '함께하기' : '댓글 달기'}
           </StyledButton>
 
           <Link to={`/teampage/edit/:id`} state={additionalData}>
@@ -95,8 +122,11 @@ function DetailPage(props: DetailListProps) {
           </StyledButton>
         </StyledBox>
         {showModal &&
-          (data.allowRandom ? (
-            <SubmitForFindingMember setShowModal={setShowModal} />
+          (data.leader_name ? (
+            <SubmitForFindingMember
+              setShowModal={setShowModal}
+              groupId={data.group_id}
+            />
           ) : (
             <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
@@ -172,10 +202,17 @@ const StyledButton = styled.button`
   margin: 6rem 3rem 0rem 3rem;
 `;
 
-const StyledBody = styled.div`
+const Styledcontents = styled.div`
   padding: 2rem 2rem;
   width: 100rem;
   height: 45rem;
   background-color: beige;
   font-size: 3rem;
+`;
+
+const StyledComment = styled.div`
+  /* display: grid; */
+  margin: 0.4rem 0.4rem;
+  align-items: center;
+  font-size: 2rem;
 `;

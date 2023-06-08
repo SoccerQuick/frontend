@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
@@ -10,6 +11,7 @@ import Avatar3 from '../styles/icon/avatar3.png';
 import Avatar4 from '../styles/icon/avatar4.png';
 
 export default function Main() {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -27,12 +29,33 @@ export default function Main() {
         </StyledImageContainer>
         <StyledListContainer>
           <StyledFieldList>
-            <h1 className="field-list-header-text">🥅 경기장 리스트</h1>
+            <StyledListTitleContainer>
+              <h1 className="field-list-header-text">🥅 경기장 리스트</h1>
+              <span
+                className="viewAll"
+                onClick={() => {
+                  navigate('/ground');
+                }}
+              >
+                전체보기
+                <img src="/Images/viewAll.png" alt="viewAll" />
+              </span>
+            </StyledListTitleContainer>
             <div className="field-list">
               <div className="field-list-text">
                 <span className="field-list-text-title">🏙️ in 서울</span>
                 <span className="field-list-text-content">
                   서울에서 진행되는 매치 모아보기
+                </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      alert('서울에서 진행되는 매치로 고고씽');
+                    }}
+                  />
                 </span>
               </div>
               <div className="field-list-text">
@@ -40,11 +63,31 @@ export default function Main() {
                 <span className="field-list-text-content">
                   부산에서 진행되는 매치 모아보기
                 </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      alert('부산에서 진행되는 매치로 고고씽');
+                    }}
+                  />
+                </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">🏭 in 울산</span>
                 <span className="field-list-text-content">
                   울산에서 진행되는 매치 모아보기
+                </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      alert('울산에서 진행되는 매치로 고고씽');
+                    }}
+                  />
                 </span>
               </div>
               <div className="field-list-text">
@@ -52,11 +95,31 @@ export default function Main() {
                 <span className="field-list-text-content">
                   제주에서 진행되는 매치 모아보기
                 </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      alert('제주에서 진행되는 매치로 고고씽');
+                    }}
+                  />
+                </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">🎋 in 담양</span>
                 <span className="field-list-text-content">
                   담양에서 진행되는 매치 모아보기
+                </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      alert('담양에서 진행되는 매치로 고고씽');
+                    }}
+                  />
                 </span>
               </div>
               <div className="field-list-text">
@@ -64,11 +127,32 @@ export default function Main() {
                 <span className="field-list-text-content">
                   나주에서 진행되는 매치 모아보기
                 </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      alert('나주에서 진행되는 매치로 고고씽');
+                    }}
+                  />
+                </span>
               </div>
             </div>
           </StyledFieldList>
           <StyledReviewList>
-            <h1 className="review-list-header-text">👀 싸커퀵 풋살 후기</h1>
+            <StyledListTitleContainer>
+              <h1 className="review-list-header-text">👀 싸커퀵 풋살 후기</h1>
+              <span
+                className="viewAll"
+                onClick={() => {
+                  navigate('/review');
+                }}
+              >
+                전체보기
+                <img src="/Images/viewAll.png" alt="viewAll" />
+              </span>
+            </StyledListTitleContainer>
             <div>
               <p className="review-list-subheader-text">
                 구장 후기가 궁금해! 플랫폼 후기도 궁금해!
@@ -180,6 +264,21 @@ const StyledListContainer = styled.div`
   margin: 1.4rem auto;
 `;
 
+const StyledListTitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .viewAll {
+    color: var(--color--green);
+    cursor: pointer;
+    > img {
+      margin-left: 1rem;
+    }
+  }
+`;
+
 const StyledFieldList = styled.div`
   .field-list-header-text {
     text-decoration: underline;
@@ -208,6 +307,10 @@ const StyledFieldList = styled.div`
 
   .field-list-text-content {
     font-size: 1.5rem;
+  }
+
+  .move-to-list-page {
+    cursor: pointer;
   }
 `;
 
