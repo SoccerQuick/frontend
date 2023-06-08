@@ -32,9 +32,11 @@ function DetailModal(props: props) {
       .post(`${process.env.REACT_APP_API_URL}/group/${groupId}`, data, config)
       .then((res) => {
         console.log('신청 성공 : ', res.data);
+        alert('가입 신청에 성공하였습니다.');
       })
       .catch((e) => {
         console.error('신청 실패 : ', e);
+        alert(`가입 신청에 실패했습니다. ${e}.`);
       });
 
     console.log(data);
