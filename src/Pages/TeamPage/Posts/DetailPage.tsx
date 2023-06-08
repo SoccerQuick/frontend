@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
@@ -12,45 +12,109 @@ type DetailList = {
   title: string;
   value: string;
 };
+
 type Applicant = {
   id: string;
   position: string;
   level: string;
   contents: string;
-  _id?: string;
 };
 
-type DataType = {
-  applicant?: Applicant[];
+type DataProps = {
   group_id?: string;
-  num: number;
-  title: string;
-  author: string;
   location: string;
-  status: string;
+  // leader_name?: string;
+  author: string;
+  body: string;
+  gender: string;
   position?: string;
   skill?: string;
-  gk_need?: number;
-  gk?: number;
-  player_need?: number;
-  player?: number;
-  gender: string;
-  contents: string;
+  status: string;
+  title: string;
+  gk_count?: number;
+  gk_current_count?: number;
+  player_count?: number;
+  player_current_count?: number;
+  random_matched?: string;
+  applicant?: Applicant[];
   [key: string]: string | number | undefined | Applicant[];
+};
+
+const initialData = {
+  group_id: '',
+  location: '',
+  leader_name: '',
+  author: '',
+  contents: '',
+  gender: '',
+  num: '',
+  position: '',
+  skill: '',
+  status: '',
+  title: '',
+  gk_count: 0,
+  gk_current_count: 0,
+  player_count: 0,
+  player_current_count: 0,
+  random_matched: '',
+  applicant: [],
 };
 
 type DetailListProps = {
   detailList: DetailList[];
-  data: any;
 };
 
 function DetailPage(props: DetailListProps) {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
-  const { detailList, data } = props;
+  const {
+    detailList,
+    // data
+  } = props;
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(false);
 
-  const additionalData = { data };
+  // 최초 렌더링 시 데이터를 받아와서 저장하는 부분
+  const location = useLocation();
+  const url = location.pathname.split('/').pop();
+  const [data, setData] = React.useState<any>(initialData); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
+  React.useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/group/${url}`)
+      .then((res) => {
+        const formattedData = {
+          ...res.data.data,
+          author: res.data.data.leader_name,
+        };
+        setData(formattedData);
+      })
+      .catch((error) => {
+        setData({});
+        console.log('데이터를 못 가져왔어요..');
+      });
+  }, []);
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+  // 삭제 요청을 보내는 버튼
+  const deletePostHandler = () => {
+    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+    if (confirmed) {
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/group/${url}`, config)
+        .then((res) => {
+          alert('게시글이 삭제되었습니다.');
+          console.log('삭제 성공');
+          navigate('/teampage/team');
+        })
+        .catch((error) => {
+          console.log('삭제 실패');
+        });
+    }
+  };
 
   return (
     <>
@@ -82,7 +146,6 @@ function DetailPage(props: DetailListProps) {
         >
           <HtmlParser data={data.contents} />
         </StyledBox>
-        {/* 댓글창 / 신청자목록을 불러오는 부분 */}
         <StyledBox>
           <StyledDiv
             style={{
@@ -100,6 +163,24 @@ function DetailPage(props: DetailListProps) {
           </StyledDiv>
         </StyledBox>
       </StyledContainer>
+      <div
+        style={{
+          display: 'flex',
+          backgroundColor: 'beige',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: 'skyblue',
+          }}
+        >
+          <Link to={`/teampage/edit/${url}`}>
+            <StyledMiniButton>수정</StyledMiniButton>
+          </Link>
+          <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
+        </div>
+      </div>
       <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
@@ -110,9 +191,6 @@ function DetailPage(props: DetailListProps) {
             {data.leader_name ? '함께하기' : '댓글 달기'}
           </StyledButton>
 
-          <Link to={`/teampage/edit/:id`} state={additionalData}>
-            <StyledButton>수정하기</StyledButton>
-          </Link>
           <StyledButton
             onClick={() => {
               navigate(-1);
@@ -200,6 +278,11 @@ const StyledDivText = styled.div`
 
 const StyledButton = styled.button`
   margin: 6rem 3rem 0rem 3rem;
+`;
+
+const StyledMiniButton = styled.button`
+  font-size: 1.3rem;
+  margin: 2rem 1rem 1rem 2rem;
 `;
 
 const Styledcontents = styled.div`
