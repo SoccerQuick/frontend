@@ -7,6 +7,7 @@ import MyPageBar from '../Components/MyPage/MyPageBar';
 import MyProfile from '../Components/MyPage/MyPageInfo/MyPageProfile';
 import { MyPageInfo } from '../Components/MyPage/MyPageInfo/MyPageInfo';
 import MyPageCheckPassword from '../Components/MyPage/MyPageInfo/MyPageCheckPassword';
+import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavoriteGroundList';
 
 export type FormData = {
   user_id: string;
@@ -93,7 +94,9 @@ export function MyPage() {
         ''
       )}
       {checkedBarItem === 3 ? (
-        <MyPageContainer>즐겨찾는 구장 페이지</MyPageContainer>
+        <SearchContainer>
+          <MyFavoriteGroundList />
+        </SearchContainer>
       ) : (
         ''
       )}
@@ -111,5 +114,17 @@ const MyPageContainer = styled.div`
   height: 80rem;
   padding: 0 2rem;
   margin: 2rem auto;
-  background-color: rgb(247, 247, 247);
+  background-color: rgb(247 247 247);
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: start;
+  width: 98.4rem;
+  height: 80rem;
+  padding: 0 2rem;
+  margin: 2rem auto;
+  position: relative;
+  background-color: #fff;
 `;

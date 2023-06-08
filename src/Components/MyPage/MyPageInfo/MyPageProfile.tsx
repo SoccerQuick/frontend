@@ -39,7 +39,6 @@ const StyledProfileContainer = styled.div`
   width: 25rem;
   height: 64%;
 
-  background: rgb(247 247 247);
   border-radius: 16px;
 `;
 
