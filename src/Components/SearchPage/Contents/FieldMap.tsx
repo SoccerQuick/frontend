@@ -54,7 +54,6 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     };
 
     map = new naver.maps.Map(mapElement.current, mapOptions);
-    console.log('지도 생성');
 
     addMarkers();
   }, [AddressX, AddressY]);
@@ -71,14 +70,12 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
       //   if (mapBounds.hasLatLng(position)) {
       const { id, title, lat, lng } = markerObj;
       addMarker(id, title, lat, lng);
-
       //   }
     }
   };
 
   const addMarker = (id: number, name: string, lat: number, lng: number) => {
     try {
-      console.log(lat, lng);
       let newMarker = new naver.maps.Marker({
         position: new naver.maps.LatLng(lng, lat),
         map,
