@@ -3,11 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import axios from 'axios';
 
 export default function WriteReviewPage() {
   const [title, setTitle] = useState('');
   const [value, setValue] = useState('');
   const navigate = useNavigate();
+
+  function handleSubmit() {
+    axios.post('url', { value, title }).then((res) => {
+      if (res.status === 200) {
+        alert('작성 완료');
+        return navigate(-1);
+      }
+      return alert('다시 작성해주세요.');
+    });
+  }
 
   return (
     <div style={{ height: '65vh' }}>
@@ -29,7 +40,9 @@ export default function WriteReviewPage() {
           }}
         />
         <StyledButtonsContainer>
-          <button className="write-button">작성하기</button>
+          <button className="write-button" onClick={handleSubmit}>
+            작성하기
+          </button>
           <button className="go-back-button" onClick={() => navigate(-1)}>
             뒤로가기
           </button>
