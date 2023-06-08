@@ -1,6 +1,6 @@
 import react from 'react';
 import styled from 'styled-components';
-import { FormData } from '../../Pages/MyPage';
+import { FormData } from '../../../Pages/MyPage';
 
 function MyProfile(props: { formData: FormData }) {
   const { name, nick_name, user_id, email, phone_number } = props.formData;
@@ -39,7 +39,6 @@ const StyledProfileContainer = styled.div`
   width: 25rem;
   height: 64%;
 
-  background: rgb(247 247 247);
   border-radius: 16px;
 `;
 
