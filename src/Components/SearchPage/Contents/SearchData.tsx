@@ -16,6 +16,7 @@ type FindingGroundProps = {
   setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
 };
 
+// SoccerQuick/Frontend/src/Pages/SearchPage.tsx 75번째 줄에서 연결됨
 function FindingGround(props: FindingGroundProps) {
   const setShowModal = props.setShowModal;
   const setModalData = props.setModalData;
