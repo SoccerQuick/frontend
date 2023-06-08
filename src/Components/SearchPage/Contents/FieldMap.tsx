@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import CustomMapMarker from './CustomMapMarker';
+import ResetMapBtn from './ResetMapBtn';
 import FieldDummy from './fieldDummy';
 
 const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
@@ -129,14 +130,18 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
   };
 
   return (
-    <div>
+    <StyledMapContainer>
       <StyledMap id="map" ref={mapElement}></StyledMap>;
-      {/* <CustomMapMarker title="고양 싸커스토리 축구클럽 운정점" /> */}
-    </div>
+      <ResetMapBtn />
+    </StyledMapContainer>
   );
 };
 
 export default FieldMap;
+
+const StyledMapContainer = styled.div`
+  position: relative;
+`;
 
 const StyledMap = styled.div`
   width: 98.4rem;
