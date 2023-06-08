@@ -17,6 +17,7 @@ type Applicant = {
   position: string;
   level: string;
   contents: string;
+  _id?: string;
 };
 
 type DataType = {
