@@ -22,7 +22,6 @@ function DetailPage() {
           height: '100rem',
         }}
       >
-        <div>"Pages/TeamPage/Views/FindingMember/FindingMemberDetail.tsx"</div>
         <DetailPageBoard detailList={detailList} />
       </div>
     </>

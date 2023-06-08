@@ -128,7 +128,7 @@ const ModalPage = styled.div`
   justify-content: center;
   align-items: center;
   width: 70rem;
-  height: 35rem;
+  height: 26rem;
   background-color: rgba(255, 255, 255);
   z-index: 501;
 `;
@@ -164,7 +164,7 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   position: absolute;
   top: 0;
-  margin-top: 4rem;
+  margin-top: 2rem;
   padding-bottom: 1rem;
   width: 90%;
   border-bottom: 1px solid #dddddd;
@@ -175,13 +175,14 @@ const StyledSubTitle = styled.div`
   font-size: 1.8rem;
   position: absolute;
   top: 0;
-  margin-top: 13.5rem;
+  margin-top: 12.5rem;
 `;
 
 const StyledBlock = styled.div`
   z-index: 500;
   display: block;
   /* background-color: skyblue; */
+  align-items: center;
   /* border: 1px solid #dddddd; */
   border-radius: 2rem;
   margin: 0.7rem;
@@ -191,13 +192,16 @@ const StyledBlock = styled.div`
 const StyledInput = styled.input`
   z-index: 901;
   width: 8rem;
+  padding: 0.5rem 1.3rem;
 `;
 
 const StyledSpan = styled.span`
   z-index: 10;
-  display: inline-block;
+  display: inline-flex;
   text-align: center;
-  margin-top: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.6rem;
   width: 6rem;
 `;
 
@@ -209,7 +213,7 @@ const StyledButtonContainer = styled.div`
   position: absolute;
   top: 0;
   margin-left: 44rem;
-  margin-top: 28rem;
+  margin-top: 20rem;
   width: 90%;
   border-radius: 1rem;
 `;
