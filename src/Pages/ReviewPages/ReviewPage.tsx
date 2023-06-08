@@ -13,6 +13,7 @@ import Avatar1 from '../../styles/icon/avatar1.png';
 import Avatar2 from '../../styles/icon/avatar2.png';
 import Avatar3 from '../../styles/icon/avatar3.png';
 import Avatar4 from '../../styles/icon/avatar4.png';
+import Magnifier from '../../styles/icon/magnifier.png';
 
 const AVATARS = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar3];
 
@@ -61,6 +62,10 @@ const REVIEW_LIST_DUMMY_DATA = [
 
 export default function ReviewPage() {
   const [reviewList, setReviewList] = useState(REVIEW_LIST_DUMMY_DATA);
+  const [filteredReviewList, setFilteredReviewList] = useState(
+    REVIEW_LIST_DUMMY_DATA
+  );
+  const [searchInput, setSearchInput] = useState('');
   const [clicked, setClicked] = useState(Array(reviewList.length).fill(false));
   const navigate = useNavigate();
 
@@ -73,6 +78,14 @@ export default function ReviewPage() {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+
+  function handleSearch(input: string) {
+    setSearchInput(input);
+    const foundReviewList = reviewList.filter((v) =>
+      v.reviewTitle.includes(input)
+    );
+    setFilteredReviewList(foundReviewList);
+  }
 
   function handleScrollToTop() {
     window.scrollTo({
@@ -126,12 +139,25 @@ export default function ReviewPage() {
                 </StyledImage>
               </StyledCarousel>
               <StyledList>
-                <StyledFilter>
-                  <StyledFilterText>지역</StyledFilterText>
-                  <StyledFilterText>구장</StyledFilterText>
-                </StyledFilter>
+                <StyledReviewHeader>
+                  <div className="filter">
+                    <span>지역</span>
+                    <span>구장</span>
+                  </div>
+                  <div className="search">
+                    <img src={Magnifier} alt="magnifier" />
+                    <input
+                      className="search-input"
+                      value={searchInput}
+                      onChange={(e) => {
+                        handleSearch(e.target.value);
+                      }}
+                      placeholder="검색어를 입력해주세요."
+                    />
+                  </div>
+                </StyledReviewHeader>
                 <StyledListTitle>
-                  <p>🥅 풋살 후기 리스트</p>
+                  <p>🥅 리뷰 리스트</p>
                 </StyledListTitle>
                 <StyledReviewListHeader>
                   <span></span>
@@ -141,30 +167,55 @@ export default function ReviewPage() {
                   <span>구장</span>
                   <span>좋아요</span>
                 </StyledReviewListHeader>
-                {reviewList.map((item, index) => (
-                  <StyledReviewList key={index}>
-                    <span className="review-user-icon">
-                      {<img src={AVATARS[index]} alt="avatar1" />}
-                    </span>
-                    <span className="review-title">{item.reviewTitle}</span>
-                    <span className="review-author">{item.author}</span>
-                    <span className="review-area">{item.area}</span>
-                    <span className="review-stadium">{item.stadium}</span>
-                    <span className="review-like-count">
-                      {
-                        <button
-                          className={`review-like-button ${
-                            clicked[index] ? 'heart-beat' : ''
-                          }`}
-                          onClick={() => handleLikeButtonClick(index)}
-                        >
-                          {clicked[index] ? '🧡' : '🤍'}
-                        </button>
-                      }
-                      {item.like}
-                    </span>
-                  </StyledReviewList>
-                ))}
+                {searchInput.length === 0
+                  ? reviewList.map((item, index) => (
+                      <StyledReviewList key={index}>
+                        <span className="review-user-icon">
+                          {<img src={AVATARS[index]} alt="avatar1" />}
+                        </span>
+                        <span className="review-title">{item.reviewTitle}</span>
+                        <span className="review-author">{item.author}</span>
+                        <span className="review-area">{item.area}</span>
+                        <span className="review-stadium">{item.stadium}</span>
+                        <span className="review-like-count">
+                          {
+                            <button
+                              className={`review-like-button ${
+                                clicked[index] ? 'heart-beat' : ''
+                              }`}
+                              onClick={() => handleLikeButtonClick(index)}
+                            >
+                              {clicked[index] ? '🧡' : '🤍'}
+                            </button>
+                          }
+                          {item.like}
+                        </span>
+                      </StyledReviewList>
+                    ))
+                  : filteredReviewList.map((item, index) => (
+                      <StyledReviewList key={index}>
+                        <span className="review-user-icon">
+                          {<img src={AVATARS[index]} alt="avatar1" />}
+                        </span>
+                        <span className="review-title">{item.reviewTitle}</span>
+                        <span className="review-author">{item.author}</span>
+                        <span className="review-area">{item.area}</span>
+                        <span className="review-stadium">{item.stadium}</span>
+                        <span className="review-like-count">
+                          {
+                            <button
+                              className={`review-like-button ${
+                                clicked[index] ? 'heart-beat' : ''
+                              }`}
+                              onClick={() => handleLikeButtonClick(index)}
+                            >
+                              {clicked[index] ? '🧡' : '🤍'}
+                            </button>
+                          }
+                          {item.like}
+                        </span>
+                      </StyledReviewList>
+                    ))}
               </StyledList>
               <StyledStickyButtons>
                 <StyledWrite>
@@ -207,25 +258,40 @@ const StyledImage = styled.div`
   height: 30vh;
 `;
 
-const StyledList = styled.div`
-  background-color: white;
-`;
+const StyledList = styled.div``;
 
-const StyledFilter = styled.div`
+const StyledReviewHeader = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin: 2rem 0;
-`;
 
-const StyledFilterText = styled.span`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #a8a8a8;
-  padding: 1rem 2.5rem;
-  margin: 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 2rem;
-  box-shadow: 2px 2px #e0e0e0;
+  .filter > span {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #a8a8a8;
+    padding: 1rem 2.5rem;
+    margin: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 2rem;
+    box-shadow: 2px 2px #e0e0e0;
+  }
+
+  .search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .search-input {
+    font-size: 1.65rem;
+    padding: 1rem;
+    margin-left: 1rem;
+    border: 1px solid #bebebe;
+    border-radius: 5rem;
+    box-shadow: 2px 2px #cccccc;
+  }
 `;
 
 const StyledListTitle = styled.div`
