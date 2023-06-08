@@ -6,16 +6,17 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 type Applicant = {
-  nickName: string;
+  id: string;
   position: string;
-  skill: string;
-  body: string;
+  level: string;
+  contents: string;
 };
 
-type modalDataProps = {
-  group_id: string;
+type DataProps = {
+  group_id?: string;
   location: string;
-  leader_name: string;
+  leader_name?: string;
+  author?: string;
   body: string;
   gender: string;
   num: number; // 수정 필요함(어떻게 들어올 지 모름)
@@ -34,7 +35,7 @@ type modalDataProps = {
 
 type FindingMemberProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
+  // setModalData: React.Dispatch<React.SetStateAction<DataProps>>;
 };
 type FindMemberFilter = {
   status: string | null;
@@ -62,7 +63,7 @@ function FindingMember(props: FindingMemberProps) {
   }
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<any[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
+  const [data, setData] = React.useState<DataProps[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
 
   React.useEffect(() => {
     axios
@@ -98,8 +99,24 @@ function FindingMember(props: FindingMemberProps) {
           return true;
         } else {
           if (
+            typeof item[key] === 'string' &&
+            typeof findMemberFilter[key as keyof FindMemberFilter] ===
+              'string' &&
+            (item[key] as string).includes(
+              findMemberFilter[key as keyof FindMemberFilter] as string
+            )
+          ) {
+            continue;
+          } else if (
+            typeof item[key] === 'number' &&
+            typeof findMemberFilter[key as keyof FindMemberFilter] ===
+              'number' &&
+            item[key] === findMemberFilter[key as keyof FindMemberFilter]
+          ) {
+            continue;
+          } else if (
             findMemberFilter[key as keyof FindMemberFilter] !== '' &&
-            findMemberFilter[key as keyof FindMemberFilter] !== item[key]
+            item[key] !== findMemberFilter[key as keyof FindMemberFilter]
           ) {
             return false;
           }
@@ -153,7 +170,7 @@ function FindingMember(props: FindingMemberProps) {
         setShowModal={setShowModal}
         // setModalData={setModalData}
         filteredData={filteredData}
-        data={data}
+        // data={data}
       />
       <TeamPageFooter>
         <Link
@@ -190,16 +207,16 @@ const dummydata_findingMember = [
     하하하하하하하하하하하하하하하하하하하하하하`,
     applicant: [
       {
-        nickName: '고고마오',
+        id: '고고마오',
         position: 'gk',
-        skill: '세미프로',
-        body: '저 자신있습니다',
+        level: '세미프로',
+        contents: '저 자신있습니다',
       },
       {
-        nickName: '고구마',
-        position: 'player',
-        skill: '세미프로',
-        body: '캐리해드림ㅎㅎ',
+        id: '고고마오',
+        position: 'gk',
+        level: '세미프로',
+        contents: '저 자신있습니다',
       },
     ],
   },

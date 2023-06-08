@@ -15,7 +15,15 @@ type TableList = {
   style: { width: string };
 };
 
+type Applicant = {
+  id: string;
+  position: string;
+  level: string;
+  contents: string;
+};
+
 type filteredData = {
+  applicant?: Applicant[];
   group_id?: string;
   num: number;
   title: string;
@@ -28,8 +36,10 @@ type filteredData = {
   gender: string;
   body: string;
 };
+
 type modalDataProps = {
-  group_id: string;
+  applicant?: Applicant[];
+  group_id?: string;
   location: string;
   leader_name?: string;
   author?: string;
@@ -54,7 +64,7 @@ type BoardProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
-  data: any;
+  // data: any;
 };
 
 function Board(props: BoardProps) {
@@ -65,7 +75,7 @@ function Board(props: BoardProps) {
     setShowModal,
     // setModalData,
     filteredData,
-    data,
+    // data,
   } = props;
 
   return (
@@ -99,7 +109,8 @@ function Board(props: BoardProps) {
                 {tableList.map((item) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
-                <th>미리보기</th>
+
+                {/* <th>미리보기</th> */}
               </tr>
             </thead>
             <tbody>
@@ -109,14 +120,20 @@ function Board(props: BoardProps) {
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.group_id}`} state={{ data: item }}>
                       {item.title}
-                    </Link>
+                    </Link>{' '}
+                    <span style={{ marginLeft: '0.5rem', color: 'red' }}>
+                      {item.applicant &&
+                        item.applicant.length > 0 &&
+                        `[${item.applicant?.length}]`}
+                    </span>
                   </td>
                   {tableList.map((cell) => (
                     <td key={cell.body} style={cell.style}>
                       {item[cell.body as keyof typeof item] as React.ReactNode}
                     </td>
                   ))}
-                  <td>
+
+                  {/* <td>
                     <button
                       // 실제로 나중에는 objectId로 get요청을 보내서 데이터를 가져오게 해야 할 것이다.
                       onClick={() => {
@@ -126,7 +143,7 @@ function Board(props: BoardProps) {
                     >
                       조회
                     </button>
-                  </td>
+                  </td> */}
                 </StyledTr>
               ))}
             </tbody>
