@@ -74,9 +74,9 @@ export default function ReviewPage() {
     autoplaySpeed: 3000,
   };
 
-  function handleScrollToBottom() {
+  function handleScrollToTop() {
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: 0,
       behavior: 'smooth',
     });
   }
@@ -177,7 +177,7 @@ export default function ReviewPage() {
                   </button>
                 </StyledWrite>
                 <StyledScrollToBottomButton>
-                  <button onClick={handleScrollToBottom}>⬇</button>
+                  <button onClick={handleScrollToTop}>⬆</button>
                 </StyledScrollToBottomButton>
               </StyledStickyButtons>
             </StyledBody>
