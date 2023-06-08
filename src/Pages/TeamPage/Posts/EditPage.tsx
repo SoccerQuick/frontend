@@ -82,6 +82,8 @@ function EditPage() {
         )
         .then((res) => {
           console.log('수정 요청 성공 : ', res.data);
+          alert('글 수정이 완료되었습니다.');
+          navigate(`/teampage/team/${url}`);
         })
         .catch((e) => {
           console.error('글 수정 실패 : ', e);
@@ -119,7 +121,7 @@ function EditPage() {
   const quillModules = {
     toolbar: {
       container: [
-        [{ header: [1, 2, 3, 4, false] }],
+        // [{ header: [1, 2, 3, 4, false] }],
         ['bold', 'italic', 'underline', 'strike'],
         // ['link'],
         [{ list: 'ordered' }, { list: 'bullet' }],

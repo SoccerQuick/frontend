@@ -42,8 +42,8 @@ function SubmitPage() {
     if (boardCategory === '팀원 구해요') {
       data = {
         category: boardCategory,
-        leader_id: '6480bae19854c0d4bc9b4cde', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
-        leader_name: '고마오', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
+        // leader_id: '6480bae19854c0d4bc9b4cde', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
+        // leader_name: '고마오', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
         title: title,
         location: area,
         play_date: '아무때나',
@@ -110,8 +110,21 @@ function SubmitPage() {
 
   return (
     <>
-      <StyledContainer style={{ marginTop: '3rem' }}>
-        <StyledBox>
+      <StyledContainer
+        style={{
+          marginTop: '3rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <StyledBox
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <DropDown
             list={FilteringOptions.submit.category}
             selected={boardCategory}
@@ -131,8 +144,8 @@ function SubmitPage() {
               setTitle(e.target.value);
             }}
           />
-          <StyledTitle style={{ marginLeft: '4rem' }}>작성자</StyledTitle>
-          <StyledDiv style={{ border: '1px solid #eee' }}>ㄱㅁㅇ</StyledDiv>
+          {/* <StyledTitle style={{ marginLeft: '4rem' }}>작성자</StyledTitle>
+          <StyledDiv style={{ border: '1px solid #eee' }}></StyledDiv> */}
         </StyledBox>
         {/* 여기에 작성한 후에 Teampage에 컴포넌트로 분리하고 사용. Select의 조건에 따라 불러올 예정 */}
       </StyledContainer>
