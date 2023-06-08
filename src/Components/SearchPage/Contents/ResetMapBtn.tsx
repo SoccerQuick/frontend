@@ -24,7 +24,8 @@ const StyledButton = styled.div`
   background-color: var(--color--darkgreen);
   z-index: 10;
   bottom: 4rem;
-  left: 40%;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const StyledButtonIcon = styled.div`
