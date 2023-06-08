@@ -11,8 +11,15 @@ type DetailList = {
   title: string;
   value: string;
 };
+type Applicant = {
+  id: string;
+  position: string;
+  level: string;
+  contents: string;
+};
 
 type DataType = {
+  applicant?: Applicant[];
   group_id?: string;
   num: number;
   title: string;
@@ -27,12 +34,12 @@ type DataType = {
   player?: number;
   gender: string;
   contents: string;
-  [key: string]: string | number | undefined;
+  [key: string]: string | number | undefined | Applicant[];
 };
 
 type DetailListProps = {
   detailList: DetailList[];
-  data: DataType;
+  data: any;
 };
 
 function DetailPage(props: DetailListProps) {
@@ -62,7 +69,6 @@ function DetailPage(props: DetailListProps) {
           {detailList.map((item: DetailList) => (
             <StyledDiv key={item.title}>
               <StyledTitle>{item.title}</StyledTitle>
-              {/* 현재 data로 되어있으나, 앞으로 param로 get요청 보내서 가져온 데이터를 써야한다 */}
               <StyledDivText>{data[item.value]}</StyledDivText>
             </StyledDiv>
           ))}
@@ -74,6 +80,29 @@ function DetailPage(props: DetailListProps) {
         >
           <HtmlParser data={data.contents} />
         </StyledBox>
+        {/* 댓글창 / 신청자목록을 불러오는 부분 */}
+        <StyledBox>
+          <StyledDiv
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              flexWrap: 'wrap',
+            }}
+          >
+            {data.applicant &&
+              data.applicant.map((applicant: Applicant, index: number) => (
+                <StyledComment key={index}>
+                  {index + 1} | {applicant.id} | {applicant.position} |{' '}
+                  {applicant.level}
+                </StyledComment>
+              ))}
+          </StyledDiv>
+        </StyledBox>
+      </StyledContainer>
+      <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
             onClick={() => {
@@ -181,4 +210,11 @@ const Styledcontents = styled.div`
   height: 45rem;
   background-color: beige;
   font-size: 3rem;
+`;
+
+const StyledComment = styled.div`
+  /* display: grid; */
+  margin: 0.4rem 0.4rem;
+  align-items: center;
+  font-size: 2rem;
 `;
