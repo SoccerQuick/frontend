@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import styled from 'styled-components';
 
-const postLoginUrl = 'http://localhost:8800/auth/login';
+const postLoginUrl = `${process.env.REACT_APP_API_URL}auth/login`;
 
 // User type
 type UserProps = {
@@ -63,7 +63,6 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     axios
       .post(postLoginUrl, data, { withCredentials: true })
       .then((res) => {
-        console.log(res.headers['set-cookie']);
         return res.data.userData;
       })
       .then((userData) => {

@@ -34,7 +34,7 @@ function MyPageCheckPassword({
       withCredentials: true,
     };
     axios
-      .post(`http://localhost:8800/auth/password`, data, header)
+      .post(`${process.env.REACT_APP_API_URL}auth/password`, data, header)
       .then((res) => res.request)
       .then((result) => {
         if (result.status === 200) {
@@ -59,6 +59,7 @@ function MyPageCheckPassword({
           <label>비밀번호 확인</label>
           <StyledInfoInput
             name="password"
+            type="password"
             value={password}
             onChange={handleChange}
           />

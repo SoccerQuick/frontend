@@ -11,8 +11,8 @@ import {
   ModalTerms,
 } from '../Commons/AuthComponents';
 
-const postSignupUrl = `http://localhost:8800/auth/signup`; // signup api url
-const postIdCheckUrl = 'http://localhost:8800/auth/id'; // id-check api url
+const postSignupUrl = `${process.env.REACT_APP_API_URL}auth/signup`; // signup api url
+const postIdCheckUrl = `${process.env.REACT_APP_API_URL}auth/id`; // id-check api url
 
 // Signup type
 type SignupProps = {

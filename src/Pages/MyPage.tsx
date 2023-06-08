@@ -7,8 +7,6 @@ import MyPageBar from '../Components/MyPage/MyPageBar';
 import MyProfile from '../Components/MyPage/MyPageProfile';
 import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
 import MyPageCheckPassword from '../Components/MyPage/MyPageCheckPassword';
-import { userSelector } from '../store/selectors/authSelectors';
-import { useSelector } from 'react-redux';
 
 export type FormData = {
   user_id: string;
@@ -32,21 +30,18 @@ export function MyPage() {
   const [checkedBarItem, setCheckedBarItem] = useState(1);
   const [checkMyPassword, setCheckPassword] = useState(false);
   const [password, setPassword] = useState('');
-  const user = useSelector(userSelector);
 
   useEffect(() => {
     setTimeout(() => {
       getUserData();
-    }, 5000);
+    }, 1000);
   }, []);
 
   const getUserData = () => {
-    const header = {
-      withCredentials: true,
-    };
-
     axios
-      .get(`http://localhost:8800/user/`, header)
+      .get(`${process.env.REACT_APP_API_URL}user/`, {
+        withCredentials: true,
+      })
       .then((res) => res.data.userData)
       .then((user) => {
         console.log(user);

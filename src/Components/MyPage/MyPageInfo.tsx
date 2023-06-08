@@ -52,7 +52,7 @@ export function MyPageInfo({
 
     try {
       const response = await axios.patch(
-        'http://localhost:8800/user',
+        `${process.env.REACT_APP_API_URL}user`,
         {
           user_id: formData.user_id,
           name: formData.name,
@@ -63,9 +63,7 @@ export function MyPageInfo({
           gender: formData.gender,
         },
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          withCredentials: true,
         }
       );
 
@@ -154,12 +152,14 @@ export function MyPageInfo({
           <MyPageInput
             title="새 비밀번호"
             name="newPassword"
+            type="password"
             value={passwordForm.newPassword}
             setPasswordForm={setPasswordForm}
           />
           <MyPageInput
             title="새 비밀번호 확인"
             name="newPasswordConfirm"
+            type="password"
             value={passwordForm.newPasswordConfirm}
             setPasswordForm={setPasswordForm}
           />
