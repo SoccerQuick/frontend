@@ -187,7 +187,7 @@ function DetailPage(props: DetailListProps) {
               setShowModal(true);
             }}
           >
-            {data.leader_name ? '함께하기' : '댓글 달기'}
+            {data.leader_name ? '👪함께하기' : '✏️댓글 달기'}
           </StyledButton>
 
           <StyledButton
@@ -195,7 +195,7 @@ function DetailPage(props: DetailListProps) {
               navigate(`/teampage/team`);
             }}
           >
-            돌아가기
+            ↩️돌아가기
           </StyledButton>
         </StyledBox>
         {showModal &&
@@ -253,10 +253,22 @@ const StyledDivText = styled.div`
 `;
 
 const StyledButton = styled.button`
+  background-color: white;
   margin: 6rem 3rem 2rem 3rem;
+  &:hover {
+    color: gray;
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
 `;
 
 const StyledMiniButton = styled.button`
-  font-size: 1.3rem;
-  margin: 1rem 1rem 0rem 2rem;
+  font-size: 1.7rem;
+  margin: 1rem 1rem 0rem 0.4rem;
+  background-color: white;
+  &:hover {
+    color: gray;
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
 `;

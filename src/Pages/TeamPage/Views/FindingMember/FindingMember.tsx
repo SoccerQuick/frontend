@@ -163,7 +163,6 @@ function FindingMember(props: FindingMemberProps) {
 
   return (
     <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
-      <div>"Pages/TeamPage/Views/FindingMember/FindingMember.tsx"</div>
       <TeamPageHeader>
         <StyledBanner>
           팀원 모집 게시판입니다! 싸커퀵에서 훌륭한 동료를 구해보세요~
@@ -197,7 +196,7 @@ export default FindingMember;
 // 팀페이지 헤더 (애니메이션 구현)
 const TeamPageHeader = styled.div`
   font-size: 2rem;
-  border: 1px solid;
+  border: 1px solid #eee;
   overflow: hidden;
 `;
 
