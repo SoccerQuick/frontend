@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import MyPageBar from '../Components/MyPage/MyPageBar';
-import MyProfile from '../Components/MyPage/MyPageProfile';
-import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
-import MyPageCheckPassword from '../Components/MyPage/MyPageCheckPassword';
+import MyProfile from '../Components/MyPage/MyPageInfo/MyPageProfile';
+import { MyPageInfo } from '../Components/MyPage/MyPageInfo/MyPageInfo';
+import MyPageCheckPassword from '../Components/MyPage/MyPageInfo/MyPageCheckPassword';
 
 export type FormData = {
   user_id: string;
