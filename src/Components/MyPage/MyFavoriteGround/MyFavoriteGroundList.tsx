@@ -87,7 +87,7 @@ const Searchpage = styled.div`
   display: flex;
   font-size: 1.7rem;
   width: 98.4rem;
-  margin-top: 5rem;
+  margin-top: 2rem;
 `;
 
 const SearchPageBody = styled.div`

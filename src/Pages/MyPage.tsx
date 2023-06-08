@@ -8,6 +8,7 @@ import MyProfile from '../Components/MyPage/MyPageInfo/MyPageProfile';
 import { MyPageInfo } from '../Components/MyPage/MyPageInfo/MyPageInfo';
 import MyPageCheckPassword from '../Components/MyPage/MyPageInfo/MyPageCheckPassword';
 import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavoriteGroundList';
+import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost';
 
 export type FormData = {
   user_id: string;
@@ -67,7 +68,7 @@ export function MyPage() {
         setCheckedBarItem={setCheckedBarItem}
       />
       {checkedBarItem === 1 ? (
-        <MyPageContainer>
+        <MyPageInfoContainer>
           {checkMyPassword ? (
             <>
               <MyProfile formData={formData} />
@@ -84,19 +85,21 @@ export function MyPage() {
               setCheckPassword={setCheckPassword}
             />
           )}
-        </MyPageContainer>
+        </MyPageInfoContainer>
       ) : (
         ''
       )}
       {checkedBarItem === 2 ? (
-        <MyPageContainer>내글 검색 페이지</MyPageContainer>
+        <MyPageContainer>
+          <SearchMyTeamPost />
+        </MyPageContainer>
       ) : (
         ''
       )}
       {checkedBarItem === 3 ? (
-        <SearchContainer>
+        <MyPageContainer>
           <MyFavoriteGroundList />
-        </SearchContainer>
+        </MyPageContainer>
       ) : (
         ''
       )}
@@ -106,7 +109,7 @@ export function MyPage() {
   );
 }
 
-const MyPageContainer = styled.div`
+const MyPageInfoContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -117,7 +120,7 @@ const MyPageContainer = styled.div`
   background-color: rgb(247 247 247);
 `;
 
-const SearchContainer = styled.div`
+const MyPageContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: start;
