@@ -5,8 +5,8 @@ import Header from '../../Components/Header';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import FindPage from './Views/SelectCategory';
 import FindingMember from './Views/FindingMember/FindingMember';
-// import FindingTeam from './Views/FindingTeam/FindingTeam';
-// import FindingTeamDetail from './Views/FindingTeam/FindingTeamDetail';
+import FindingTeam from './Views/FindingTeam/FindingTeam';
+import FindingTeamDetail from './Views/FindingTeam/FindingTeamDetail';
 import FindingMemberDetail from './Views/FindingMember/FindingMemberDetail';
 import PreView from '../../Components/TeamPage/PreView/PreViewModal';
 import SubmitPage from './Posts/PostPage';
@@ -37,7 +37,7 @@ function TeamPage() {
             <Routes>
               <Route path="/submit" element={<SubmitPage />} />
               <Route path="/edit/:id" element={<EditPage />} />
-              {/* <Route
+              <Route
                 path="/player"
                 element={
                   <FindingTeam
@@ -46,7 +46,7 @@ function TeamPage() {
                   />
                 }
               />
-              <Route path="/player/:id" element={<FindingTeamDetail />} /> */}
+              <Route path="/player/:id" element={<FindingTeamDetail />} />
               <Route
                 path="/team"
                 element={
