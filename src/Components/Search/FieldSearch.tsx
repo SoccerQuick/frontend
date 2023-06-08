@@ -45,6 +45,9 @@ const FeildSearch: React.FC<FeildSearchProps> = ({
 export default FeildSearch;
 
 const FeildSearchBar = styled.div`
+  position: absolute;
+  right: 0;
+  top: -1.3rem;
   width: 35rem;
   height: 5rem;
   background-color: white;

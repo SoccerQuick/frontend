@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import MyPageBar from '../Components/MyPage/MyPageBar';
-import MyProfile from '../Components/MyPage/MyPageProfile';
-import { MyPageInfo } from '../Components/MyPage/MyPageInfo';
-import MyPageCheckPassword from '../Components/MyPage/MyPageCheckPassword';
+import MyProfile from '../Components/MyPage/MyPageInfo/MyPageProfile';
+import { MyPageInfo } from '../Components/MyPage/MyPageInfo/MyPageInfo';
+import MyPageCheckPassword from '../Components/MyPage/MyPageInfo/MyPageCheckPassword';
+import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavoriteGroundList';
+import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost';
 
 export type FormData = {
   user_id: string;
@@ -66,7 +68,7 @@ export function MyPage() {
         setCheckedBarItem={setCheckedBarItem}
       />
       {checkedBarItem === 1 ? (
-        <MyPageContainer>
+        <MyPageInfoContainer>
           {checkMyPassword ? (
             <>
               <MyProfile formData={formData} />
@@ -83,17 +85,21 @@ export function MyPage() {
               setCheckPassword={setCheckPassword}
             />
           )}
-        </MyPageContainer>
+        </MyPageInfoContainer>
       ) : (
         ''
       )}
       {checkedBarItem === 2 ? (
-        <MyPageContainer>내글 검색 페이지</MyPageContainer>
+        <MyPageContainer>
+          <SearchMyTeamPost />
+        </MyPageContainer>
       ) : (
         ''
       )}
       {checkedBarItem === 3 ? (
-        <MyPageContainer>즐겨찾는 구장 페이지</MyPageContainer>
+        <MyPageContainer>
+          <MyFavoriteGroundList />
+        </MyPageContainer>
       ) : (
         ''
       )}
@@ -103,7 +109,7 @@ export function MyPage() {
   );
 }
 
-const MyPageContainer = styled.div`
+const MyPageInfoContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -111,5 +117,17 @@ const MyPageContainer = styled.div`
   height: 80rem;
   padding: 0 2rem;
   margin: 2rem auto;
-  background-color: rgb(247, 247, 247);
+  background-color: rgb(247 247 247);
+`;
+
+const MyPageContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: start;
+  width: 98.4rem;
+  height: 80rem;
+  padding: 0 2rem;
+  margin: 2rem auto;
+  position: relative;
+  background-color: #fff;
 `;

@@ -5,7 +5,7 @@ import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import DropDown from '../../../Components/Commons/DropDown';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import SubmitFindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
+// import SubmitFindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
 import SubmitFindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
 import axios from 'axios';
 
@@ -47,7 +47,6 @@ function SubmitPage() {
         title: title,
         location: area,
         play_date: '아무때나',
-        // allowRandom: allowRandom,
         player_current_count: player,
         player_count: playerNeed,
         gk_current_count: gk,
@@ -58,6 +57,8 @@ function SubmitPage() {
         .post(`${process.env.REACT_APP_API_URL}/group`, data, config)
         .then((res) => {
           console.log('POST 요청 성공 : ', res.data);
+          alert('팀원 모집글이 등록되었습니다.');
+          navigate('/teampage/team');
         })
         .catch((e) => {
           console.error('POST 요청 실패 : ', e);
@@ -151,7 +152,7 @@ function SubmitPage() {
             setGkNeed={setGkNeed}
           />
         )}
-        {boardCategory === '팀 구해요' && (
+        {/* {boardCategory === '팀 구해요' && (
           <SubmitFindingTeam
             gender={gender}
             skill={skill}
@@ -160,7 +161,7 @@ function SubmitPage() {
             setSkill={setSkill}
             setPosition={setPosition}
           />
-        )}
+        )} */}
       </StyledContainer>
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>

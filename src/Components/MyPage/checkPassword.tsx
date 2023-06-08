@@ -1,4 +1,4 @@
-import { ErrorMsg } from './MyPageInfo';
+import { ErrorMsg } from './MyPageInfo/MyPageInfo';
 
 export async function checkNewPassword(
   oldPassword: String,
