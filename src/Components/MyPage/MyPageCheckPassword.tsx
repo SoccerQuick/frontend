@@ -34,7 +34,7 @@ function MyPageCheckPassword({
       withCredentials: true,
     };
     axios
-      .post(`${process.env.REACT_APP_API_URL}auth/password`, data, header)
+      .post(`${process.env.REACT_APP_API_URL}/auth/password`, data, header)
       .then((res) => res.request)
       .then((result) => {
         if (result.status === 200) {

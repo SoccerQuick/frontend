@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import styled from 'styled-components';
 
-const postLoginUrl = `${process.env.REACT_APP_API_URL}auth/login`;
+const postLoginUrl = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 // User type
 type UserProps = {

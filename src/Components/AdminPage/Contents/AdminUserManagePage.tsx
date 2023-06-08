@@ -38,13 +38,17 @@ function AdminUserManager() {
     setInputValue(e.target.value);
   };
 
+  // 헤더 및 쿠키 설정 부분
+  const config = {
+    withCredentials: true,
+  };
   // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<UserData[]>([]);
   React.useEffect(() => {
+    // const cookies = document.cookie;
+    // console.log(cookies);
     axios
-      .get(`http://localhost:8800/admin/`, {
-        withCredentials: true,
-      })
+      .get(`${process.env.REACT_APP_API_URL}/admin`, config)
       .then((res) => {
         setData(res.data.data);
       })
