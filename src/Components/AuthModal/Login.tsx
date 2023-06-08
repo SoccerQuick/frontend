@@ -63,7 +63,6 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     axios
       .post(postLoginUrl, data, { withCredentials: true })
       .then((res) => {
-        console.log(res.headers['set-cookie']);
         return res.data.userData;
       })
       .then((userData) => {
