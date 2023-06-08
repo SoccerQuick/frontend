@@ -32,9 +32,11 @@ function DetailModal(props: props) {
       .post(`${process.env.REACT_APP_API_URL}/group/${groupId}`, data, config)
       .then((res) => {
         console.log('신청 성공 : ', res.data);
+        alert('가입 신청에 성공하였습니다.');
       })
       .catch((e) => {
         console.error('신청 실패 : ', e);
+        alert(`가입 신청에 실패했습니다. ${e}.`);
       });
 
     console.log(data);
@@ -58,20 +60,6 @@ function DetailModal(props: props) {
           </button>
           <DetailPage>
             <StyledHeader>
-              <div
-                style={{
-                  fontSize: '2rem',
-                }}
-              >
-                <StyledSpan>작성자</StyledSpan>
-                <StyledInput
-                  onChange={(e) => {
-                    setAuthor(e.target.value);
-                  }}
-                />
-              </div>
-            </StyledHeader>
-            <StyledSubTitle>
               <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <StyledBlock>
                   <DropDown
@@ -87,14 +75,9 @@ function DetailModal(props: props) {
                     setSelected={setSkill}
                   />
                 </StyledBlock>
-                <StyledBlock>
-                  <DropDown
-                    list={FILTERING_OPTIONS.findingTeam.gender}
-                    selected={gender}
-                    setSelected={setGender}
-                  />
-                </StyledBlock>
               </div>
+            </StyledHeader>
+            <StyledSubTitle>
               <StyledBlock>
                 <StyledSpan>메모</StyledSpan>
                 <StyledInput
@@ -190,7 +173,7 @@ const StyledSubTitle = styled.div`
   font-size: 1.8rem;
   position: absolute;
   top: 0;
-  margin-top: 11.5rem;
+  margin-top: 13.5rem;
 `;
 
 const StyledBlock = styled.div`

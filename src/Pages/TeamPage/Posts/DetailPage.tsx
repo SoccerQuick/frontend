@@ -94,7 +94,9 @@ function DetailPage(props: DetailListProps) {
               flexWrap: 'wrap',
             }}
           >
-            {data.applicant && <TeamPageComments data={data.applicant} />}
+            {data.applicant?.length > 0 && (
+              <TeamPageComments data={data.applicant} />
+            )}
           </StyledDiv>
         </StyledBox>
       </StyledContainer>

@@ -3,19 +3,18 @@ import styled from 'styled-components';
 
 type Applicant = {
   _id?: string;
-  id: string;
-  name: string;
-  gender: string;
-  position: string;
-  level: string;
-  contents: string;
+  id?: string;
+  name?: string;
+  gender?: string;
+  position?: string;
+  level?: string;
+  contents?: string;
 };
 
 function Comment(props: any) {
   const { data } = props;
   return (
     <>
-      <div>테스팅 {data[0].gender}</div>
       <CommentBox>
         <table>
           <thead>
