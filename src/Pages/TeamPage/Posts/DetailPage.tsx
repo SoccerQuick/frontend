@@ -175,7 +175,7 @@ function DetailPage(props: DetailListProps) {
             backgroundColor: 'skyblue',
           }}
         >
-          <Link to={`/teampage/edit/${url}`}>
+          <Link to={`/teampage/edit/${url}`} state={data}>
             <StyledMiniButton>수정</StyledMiniButton>
           </Link>
           <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
