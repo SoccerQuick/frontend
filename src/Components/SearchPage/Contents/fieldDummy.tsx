@@ -4,7 +4,7 @@ const FieldDummy = [
     ground_id: 24,
     source: '플랩풋볼',
     message: '존재하지 않는 구장 정보입니다.',
-    title: '의정부 김병지FC 풋살파크',
+    title: '서울 노원 R 실내 풋살장',
     address: {
       area: '경기 / 의정부시',
       fullAddress: '경기 의정부시 산단로76번길 116',
@@ -40,7 +40,7 @@ const FieldDummy = [
     ground_id: 24,
     source: '플랩풋볼',
     message: '존재하지 않는 구장 정보입니다.',
-    title: '의정부 김병지FC 풋살파크',
+    title: '김포 손승준 축구클럽 풋살장',
     address: {
       area: '경기 / 의정부시',
       fullAddress: '경기 의정부시 산단로76번길 116',
@@ -76,7 +76,7 @@ const FieldDummy = [
     ground_id: 24,
     source: '플랩풋볼',
     message: '존재하지 않는 구장 정보입니다.',
-    title: '의정부 김병지FC 풋살파크',
+    title: '대구 상인 풋살장 (롯데백화점 상인점)',
     address: {
       area: '경기 / 의정부시',
       fullAddress: '경기 의정부시 산단로76번길 116',
@@ -112,7 +112,7 @@ const FieldDummy = [
     ground_id: 24,
     source: '플랩풋볼',
     message: '존재하지 않는 구장 정보입니다.',
-    title: '의정부 김병지FC 풋살파크',
+    title: '대구 에프에이필드 율하점',
     address: {
       area: '경기 / 의정부시',
       fullAddress: '경기 의정부시 산단로76번길 116',

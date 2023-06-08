@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import CustomMapMarker from './CustomMapMarker';
 import FieldDummy from './fieldDummy';
 
 const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
@@ -41,7 +42,7 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     const center = new naver.maps.LatLng(AddressY, AddressX);
     const mapOptions: naver.maps.MapOptions = {
       center: center,
-      zoom: 17,
+      zoom: 14,
       zoomControl: true,
       zoomControlOptions: {
         style: naver.maps.ZoomControlStyle.SMALL,
@@ -59,7 +60,6 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
 
   const addMarkers = () => {
     // let mapBounds = mapElement.current.getBounds();
-    console.log('마커찍기 전1');
     for (let i = 0; i < FieldDummy.length; i++) {
       if (createMarkerList.length > 100) {
         break;
@@ -83,6 +83,11 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
         map,
         title: name,
         clickable: true,
+        icon: {
+          content: CustomMapMarker({ title: name }),
+          size: new naver.maps.Size(38, 58),
+          anchor: new naver.maps.Point(19, 58),
+        },
       });
       newMarker.setTitle(name);
       createMarkerList.push(newMarker);
@@ -123,7 +128,12 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     createMarkerList.length = 0;
   };
 
-  return <StyledMap id="map" ref={mapElement}></StyledMap>;
+  return (
+    <div>
+      <StyledMap id="map" ref={mapElement}></StyledMap>;
+      {/* <CustomMapMarker title="고양 싸커스토리 축구클럽 운정점" /> */}
+    </div>
+  );
 };
 
 export default FieldMap;
