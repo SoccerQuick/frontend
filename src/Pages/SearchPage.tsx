@@ -116,4 +116,6 @@ export default SearchPage;
 const HeaderNavContainer = styled.div`
   position: relative;
   height: 8rem;
+  width: 98.4rem;
+  margin: 0 auto;
 `;
