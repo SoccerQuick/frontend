@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
 import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
+import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import axios from 'axios';
 
 type DetailList = {
@@ -92,13 +93,7 @@ function DetailPage(props: DetailListProps) {
               flexWrap: 'wrap',
             }}
           >
-            {data.applicant &&
-              data.applicant.map((applicant: Applicant, index: number) => (
-                <StyledComment key={index}>
-                  {index + 1} | {applicant.id} | {applicant.position} |{' '}
-                  {applicant.level}
-                </StyledComment>
-              ))}
+            {data.applicant && <TeamPageComments data={data.applicant} />}
           </StyledDiv>
         </StyledBox>
       </StyledContainer>
