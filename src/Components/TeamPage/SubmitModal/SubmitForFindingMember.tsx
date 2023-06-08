@@ -33,6 +33,8 @@ function DetailModal(props: props) {
       .then((res) => {
         console.log('신청 성공 : ', res.data);
         alert('가입 신청에 성공하였습니다.');
+        setShowModal(false);
+        window.location.reload();
       })
       .catch((e) => {
         console.error('신청 실패 : ', e);
@@ -169,7 +171,7 @@ const StyledHeader = styled.div`
 `;
 
 const StyledSubTitle = styled.div`
-  z-index: 901;
+  z-index: 500;
   font-size: 1.8rem;
   position: absolute;
   top: 0;
@@ -177,7 +179,7 @@ const StyledSubTitle = styled.div`
 `;
 
 const StyledBlock = styled.div`
-  z-index: 901;
+  z-index: 500;
   display: block;
   /* background-color: skyblue; */
   /* border: 1px solid #dddddd; */
@@ -192,7 +194,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledSpan = styled.span`
-  z-index: 901;
+  z-index: 10;
   display: inline-block;
   text-align: center;
   margin-top: 0.4rem;
@@ -213,7 +215,7 @@ const StyledButtonContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  z-index: 900;
+  z-index: 899;
   margin: 0rem 1.5rem;
   height: 4rem;
   padding: 0rem 2rem;

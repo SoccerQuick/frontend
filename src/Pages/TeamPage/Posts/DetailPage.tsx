@@ -88,7 +88,7 @@ function DetailPage(props: DetailListProps) {
         setData(formattedData);
       })
       .catch((error) => {
-        setData({});
+        setData(initialData);
         console.log('데이터를 못 가져왔어요..');
       });
   }, []);
@@ -146,7 +146,24 @@ function DetailPage(props: DetailListProps) {
         >
           <HtmlParser data={data.contents} />
         </StyledBox>
-        <StyledBox>
+      </StyledContainer>
+      <div
+        style={{
+          display: 'flex',
+          height: '3rem',
+          // backgroundColor: 'beige',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <div>
+          <Link to={`/teampage/edit/${url}`} state={data}>
+            <StyledMiniButton>수정</StyledMiniButton>
+          </Link>
+          <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
+        </div>
+      </div>
+      <StyledContainer>
+        <StyledBox style={{ width: '100rem' }}>
           <StyledDiv
             style={{
               width: '100%',
@@ -163,24 +180,6 @@ function DetailPage(props: DetailListProps) {
           </StyledDiv>
         </StyledBox>
       </StyledContainer>
-      <div
-        style={{
-          display: 'flex',
-          backgroundColor: 'beige',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: 'skyblue',
-          }}
-        >
-          <Link to={`/teampage/edit/${url}`} state={data}>
-            <StyledMiniButton>수정</StyledMiniButton>
-          </Link>
-          <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
-        </div>
-      </div>
       <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
@@ -193,7 +192,7 @@ function DetailPage(props: DetailListProps) {
 
           <StyledButton
             onClick={() => {
-              navigate(-1);
+              navigate(`/teampage/team`);
             }}
           >
             돌아가기
@@ -221,9 +220,6 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 1rem;
-  /* background-color: beige; */
-  /* width: 100rem; */
-  /* background-color: beige; */
 `;
 
 const StyledBox = styled.div`
@@ -238,7 +234,6 @@ const StyledTitle = styled.div`
   margin: 0rem 2rem;
   font-size: 1.9rem;
   padding: 1rem 1rem;
-  /* border: 1px solid #eee; */
 `;
 
 const StyledDiv = styled.div`
@@ -247,20 +242,9 @@ const StyledDiv = styled.div`
   font-size: 2rem;
 `;
 
-// const StyledInputText = styled.input`
-//   display: flex;
-//   padding-left: 1rem;
-//   width: 9rem;
-//   height: 4rem;
-//   text-align: center;
-//   align-items: center;
-// `;
-
 const StyledDivText = styled.div`
   display: flex;
   padding-left: 1rem;
-  /* background-color: skyblue; */
-  /* width: 9rem; */
   width: fit-content;
   height: 4rem;
   text-align: center;
@@ -268,34 +252,11 @@ const StyledDivText = styled.div`
   font-size: 2rem;
 `;
 
-// const StyledInputNumber = styled.input`
-//   display: flex;
-//   padding-left: 1rem;
-//   width: 6rem;
-//   height: 4rem;
-//   text-align: center;
-// `;
-
 const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
+  margin: 6rem 3rem 2rem 3rem;
 `;
 
 const StyledMiniButton = styled.button`
   font-size: 1.3rem;
-  margin: 2rem 1rem 1rem 2rem;
-`;
-
-const Styledcontents = styled.div`
-  padding: 2rem 2rem;
-  width: 100rem;
-  height: 45rem;
-  background-color: beige;
-  font-size: 3rem;
-`;
-
-const StyledComment = styled.div`
-  /* display: grid; */
-  margin: 0.4rem 0.4rem;
-  align-items: center;
-  font-size: 2rem;
+  margin: 1rem 1rem 0rem 2rem;
 `;
