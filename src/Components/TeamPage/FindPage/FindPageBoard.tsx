@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import DropDown from '../../Commons/DropDown';
 
@@ -67,12 +67,13 @@ type BoardProps = {
   // data: any;
 };
 
+// SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 166줄에서 넘어옴
 function Board(props: BoardProps) {
   const {
     dropdownList,
     tableList,
     handleReset,
-    setShowModal,
+    // setShowModal,
     // setModalData,
     filteredData,
     // data,
@@ -116,10 +117,10 @@ function Board(props: BoardProps) {
             <tbody>
               {filteredData.map((item, idx) => (
                 <StyledTr key={item.group_id}>
-                  <td style={{ width: '5%' }}>{idx + 1}</td>
+                  <td style={{ width: '5%' }}>{filteredData.length - idx}</td>
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.group_id}`} state={{ data: item }}>
-                      {item.title}
+                      <StyledTitle>{item.title}</StyledTitle>
                     </Link>{' '}
                     <span style={{ marginLeft: '0.5rem', color: 'red' }}>
                       {item.applicant &&
@@ -195,4 +196,12 @@ const StyledTr = styled.tr`
   font-size: 1.6rem;
 
   border-bottom: 0.1rem solid #dddddd;
+`;
+
+const StyledTitle = styled.td`
+  &:hover {
+    transform: scale(1.1);
+    color: #8b8b8b;
+    text-decoration: underline;
+  }
 `;
