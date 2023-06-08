@@ -124,7 +124,7 @@ function FindingMember(props: FindingMemberProps) {
       }
       return true;
     });
-    setFilteredData(newData);
+    setFilteredData(newData.reverse()); // 최신 게시글이 위로 가게 정렬함
   }, [data, findMemberFilter]);
 
   // 드롭다운 리스트를 정하는 부분

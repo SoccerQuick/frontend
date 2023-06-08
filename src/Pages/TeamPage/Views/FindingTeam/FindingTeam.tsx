@@ -136,7 +136,7 @@ function FindingTeam(props: FindingTeamProps) {
       }
       return true;
     });
-    setFilteredData(newData);
+    setFilteredData(newData.reverse()); // 최신 게시글이 상단으로 올라가도록 정렬
   }, [data, findTeamFilter]);
 
   // 드롭다운 리스트를 정하는 부분
