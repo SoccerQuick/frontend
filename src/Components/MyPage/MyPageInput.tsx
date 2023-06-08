@@ -6,6 +6,7 @@ import { PasswordForm } from './MyPageInfo';
 type MyPageInputProps = {
   title: string;
   name: string;
+  type?: string;
   value: string;
   noButton?: boolean;
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
@@ -15,6 +16,7 @@ type MyPageInputProps = {
 export function MyPageInput({
   title,
   name,
+  type,
   value,
   noButton,
   setFormData,
@@ -83,6 +85,7 @@ export function MyPageInput({
       <label>{title}</label>
       <StyledInfoInput
         name={name}
+        type={type}
         value={inputValue}
         onChange={handleChange}
         disabled={isDisabled}

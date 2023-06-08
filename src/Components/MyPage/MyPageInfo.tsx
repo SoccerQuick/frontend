@@ -63,9 +63,7 @@ export function MyPageInfo({
           gender: formData.gender,
         },
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          withCredentials: true,
         }
       );
 
@@ -154,12 +152,14 @@ export function MyPageInfo({
           <MyPageInput
             title="새 비밀번호"
             name="newPassword"
+            type="password"
             value={passwordForm.newPassword}
             setPasswordForm={setPasswordForm}
           />
           <MyPageInput
             title="새 비밀번호 확인"
             name="newPasswordConfirm"
+            type="password"
             value={passwordForm.newPasswordConfirm}
             setPasswordForm={setPasswordForm}
           />
