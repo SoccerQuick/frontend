@@ -115,14 +115,6 @@ export default function ReviewDetailPage() {
             삭제하기
           </button>
         </StyledButtonsContainer>
-        {/* <StyledCommentContainer>
-          <div className="comment">
-            <span className="user-icon">
-              <img src={Avatar1} alt="avatar" />
-            </span>
-            <span className="comment-content"></span>
-          </div>
-        </StyledCommentContainer> */}
       </StyledBody>
     </StyledContainer>
   );
@@ -189,23 +181,3 @@ const StyledButtonsContainer = styled.div`
     margin-right: 2rem;
   }
 `;
-
-// const StyledCommentContainer = styled.div`
-//   background-color: beige;
-
-//   .comment {
-//     background-color: cyan;
-//   }
-
-//   .user-icon {
-//     background-color: wheat;
-//   }
-
-//   .comment-content {
-//     background-color: yellowgreen;
-//   }
-
-//   .comment-input {
-//     background-color: floralwhite;
-//   }
-// `;
