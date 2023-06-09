@@ -9,7 +9,7 @@ import {
   userSelector,
 } from '../../../store/selectors/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
-import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
+// import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import axios from 'axios';
 
@@ -18,31 +18,31 @@ type DetailList = {
   value: string;
 };
 
-type Applicant = {
-  id: string;
-  position: string;
-  level: string;
-  contents: string;
-};
+// type Applicant = {
+//   id: string;
+//   position: string;
+//   level: string;
+//   contents: string;
+// };
 
-type DataProps = {
-  group_id?: string;
-  location: string;
-  author: string;
-  body: string;
-  gender: string;
-  position?: string;
-  skill?: string;
-  status: string;
-  title: string;
-  gk_count?: number;
-  gk_current_count?: number;
-  player_count?: number;
-  player_current_count?: number;
-  random_matched?: string;
-  applicant?: Applicant[];
-  [key: string]: string | number | undefined | Applicant[];
-};
+// type DataProps = {
+//   group_id?: string;
+//   location: string;
+//   author: string;
+//   body: string;
+//   gender: string;
+//   position?: string;
+//   skill?: string;
+//   status: string;
+//   title: string;
+//   gk_count?: number;
+//   gk_current_count?: number;
+//   player_count?: number;
+//   player_current_count?: number;
+//   random_matched?: string;
+//   applicant?: Applicant[];
+//   [key: string]: string | number | undefined | Applicant[];
+// };
 
 const initialData = {
   group_id: '',
@@ -62,6 +62,7 @@ const initialData = {
   player_current_count: 0,
   random_matched: '',
   applicant: [],
+  accept: [],
 };
 
 type DetailListProps = {
@@ -151,13 +152,6 @@ function DetailPage(props: DetailListProps) {
           <HtmlParser data={data.contents} />
         </StyledBox>
       </StyledContainer>
-      <button
-        onClick={() => {
-          console.log(userData);
-        }}
-      >
-        버튼
-      </button>
       <div
         style={{
           display: 'flex',
@@ -165,17 +159,23 @@ function DetailPage(props: DetailListProps) {
           justifyContent: 'flex-end',
         }}
       >
-        {userData?.nickname === data.author ||
-          (userData?.role && (
-            <div>
-              <Link to={`/teampage/edit/${url}`} state={data}>
-                <StyledMiniButton>수정</StyledMiniButton>
-              </Link>
-              <StyledMiniButton onClick={deletePostHandler}>
-                삭제
-              </StyledMiniButton>
-            </div>
-          ))}
+        {userData?.name === data.author && (
+          <Link to={`/teampage/edit/${url}`} state={data}>
+            <StyledMiniButton>수정</StyledMiniButton>
+          </Link>
+        )}
+        {(userData?.name === data.author || userData?.role !== 'user') && (
+          <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
+        )}
+        {(userData?.name === data.author || userData?.role !== 'user') && (
+          <StyledMiniButton
+            onClick={() => {
+              console.log(data.accept);
+            }}
+          >
+            조회
+          </StyledMiniButton>
+        )}
       </div>
       <StyledContainer>
         <StyledBox style={{ width: '100rem' }}>
@@ -222,7 +222,8 @@ function DetailPage(props: DetailListProps) {
               groupId={data.group_id}
             />
           ) : (
-            <SubmitForFindingTeam setShowModal={setShowModal} />
+            ''
+            // <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
       </StyledContainer>
     </>
