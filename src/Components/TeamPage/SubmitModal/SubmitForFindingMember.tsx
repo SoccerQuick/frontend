@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import DropDown from '../../Commons/DropDown';
 import FILTERING_OPTIONS from '../../Commons/FilteringOptions';
-import { setPriority } from 'os';
 import axios from 'axios';
 
 type props = {
@@ -12,10 +11,8 @@ type props = {
 
 function DetailModal(props: props) {
   const { groupId, setShowModal } = props;
-  const [author, setAuthor] = React.useState('');
-  const [position, setPosition] = React.useState('');
-  const [skill, setSkill] = React.useState('');
-  const [gender, setGender] = React.useState('');
+  const [position, setPosition] = React.useState('포지션');
+  const [skill, setSkill] = React.useState('실력수준');
   const [memo, setMemo] = React.useState('');
 
   const config = {
@@ -23,25 +20,37 @@ function DetailModal(props: props) {
   };
 
   function SubmitButton() {
-    const data = {
-      position: position,
-      level: skill,
-      contents: memo,
-    };
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/group/${groupId}`, data, config)
-      .then((res) => {
-        console.log('신청 성공 : ', res.data);
-        alert('가입 신청에 성공하였습니다.');
-        setShowModal(false);
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.error('신청 실패 : ', e);
-        alert(`가입 신청에 실패했습니다. ${e}.`);
-      });
-
-    console.log(data);
+    const validator = [];
+    if (position === '포지션' || '') {
+      validator.push('포지션');
+    }
+    if (skill === '실력수준' || '') {
+      validator.push('실력수준');
+    }
+    if (memo === '') {
+      validator.push('메모');
+    }
+    if (validator.length > 0) {
+      alert(`[${validator.join(', ')}] 가 잘 입력되었는지 확인해주세요.`);
+    } else {
+      const data = {
+        position: position,
+        level: skill,
+        contents: memo,
+      };
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/group/${groupId}`, data, config)
+        .then((res) => {
+          console.log('신청 성공 : ', res.data);
+          alert('가입 신청에 성공하였습니다.');
+          setShowModal(false);
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('신청 실패 : ', e);
+          alert(`가입 신청에 실패했습니다. ${e}.`);
+        });
+    }
   }
 
   return (

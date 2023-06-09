@@ -1,36 +1,69 @@
-import react, { useState } from 'react';
+import react, { useState, useEffect } from 'react';
+import { ReviewPost } from './SearchMyReviewPost';
 import styled from 'styled-components';
+import { GroupPost } from './SearchMyTeamPost';
 
-function MyPostTable() {
-  const [reviewList, setReviewList] = useState(REVIEW_LIST_DUMMY_DATA);
-  const filteredItems = reviewList.filter((item) => item.author === '김승섭');
+type MyPostTableProps = {
+  title?: string;
+  properties?: string[];
+  reviewData?: Array<ReviewPost>;
+  groupData?: Array<GroupPost>;
+};
+
+function MyPostTable({
+  title,
+  properties,
+  reviewData,
+  groupData,
+}: MyPostTableProps) {
+  const customizeDate = (date: string) => {
+    return new Date(date).toLocaleDateString('ko-KR');
+  };
   return (
     <TableContainer>
+      <StyledTitleDiv>{title}</StyledTitleDiv>
       <table>
         <thead>
           <StyledTitleTr key={title}>
-            {' '}
-            {properties.map((property) => (
-              <th>{property}</th>
-            ))}
+            {''}
+            {properties && properties.map((property) => <th>{property}</th>)}
             <th></th>
           </StyledTitleTr>
         </thead>
         <tbody>
-          {filteredItems.map((item, idx) => {
-            return (
-              <StyledItemTr key={`review-${idx}`}>
-                <td>{idx + 1}</td>
-                <td>{item.reviewTitle}</td>
-                <td>{item.author}</td>
-                <td>{item.createdDate}</td>
-                <td>{item.like}</td>
-                <td>
-                  <button>조회</button>
-                </td>
-              </StyledItemTr>
-            );
-          })}
+          {reviewData &&
+            reviewData.map((item, idx) => {
+              return (
+                <StyledItemTr key={`review-${idx}`}>
+                  <td>{item.name}</td>
+                  <StyledCommentTd>{item.comment}</StyledCommentTd>
+                  <td>{'서울 구장'}</td>
+
+                  <td>{item.rating}</td>
+                  <td>{customizeDate(item.createdAt)}</td>
+                  <td>
+                    <button>조회</button>
+                  </td>
+                </StyledItemTr>
+              );
+            })}
+          {groupData &&
+            groupData.map((item, idx) => {
+              return (
+                <StyledItemTr key={`review-${idx}`}>
+                  <td>{item.leader_name}</td>
+                  <StyledCommentTd>{item.title}</StyledCommentTd>
+                  <td>{item.location}</td>
+                  <td>{item.status}</td>
+                  <td>{`${item.gk_current_count}/${item.gk_count}`}</td>
+                  <td>{`${item.player_current_count}/${item.player_count}`}</td>
+                  <td>{customizeDate(item.createdAt)}</td>
+                  <td>
+                    <button>조회</button>
+                  </td>
+                </StyledItemTr>
+              );
+            })}
         </tbody>
       </table>
     </TableContainer>
@@ -41,12 +74,20 @@ export default MyPostTable;
 
 const TableContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
 
   & > table {
-    width: 80%;
+    width: 100%;
   }
+`;
+
+const StyledTitleDiv = styled.div`
+  width: 80%;
+  font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
 const StyledTitleTr = styled.tr`
@@ -68,7 +109,7 @@ const StyledTitleTr = styled.tr`
   }
 
   & > th:first-child {
-    flex: 1;
+    flex: 2;
     text-align: start;
   }
 `;
@@ -92,57 +133,16 @@ const StyledItemTr = styled.tr`
   }
 
   & > td:first-child {
-    flex: 1;
+    flex: 2;
     text-align: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 
-const title = '이름';
-const properties = ['no', '리뷰제목', '작성자', '작성일자', '좋아요'];
-const REVIEW_LIST_DUMMY_DATA = [
-  {
-    userIcon: '최도원',
-    reviewTitle: '이번 매치 OOO 매니저님 너무 친절하셨어요! 또 뵙고 싶네요~',
-    author: '최도원',
-    area: '수원',
-    createdDate: '2023-06-08',
-    stadium: '수원 HM파크',
-    like: 7,
-  },
-  {
-    userIcon: '안동현',
-    reviewTitle: '오우 쉣! 여기 너무 별로야!',
-    author: '안동현',
-    area: '서울',
-    createdDate: '2023-06-08',
-    stadium: '수원 HM파크',
-    like: 77,
-  },
-  {
-    userIcon: '최도원',
-    reviewTitle: '매니저님 체고~ 나도 체고~',
-    author: '김승섭',
-    area: '수원',
-    createdDate: '2023-06-08',
-    stadium: '수원 HM파크',
-    like: 20,
-  },
-  {
-    userIcon: '최도원',
-    reviewTitle: '안양 왕감자, 권성경이올시다',
-    author: '권성경',
-    area: '안양',
-    createdDate: '2023-06-08',
-    stadium: '수원 HM파크',
-    like: 20,
-  },
-  {
-    userIcon: '최도원',
-    reviewTitle: '경기도 광주 OO매니저님 체고~',
-    author: '신성민',
-    area: '서울',
-    createdDate: '2023-06-08',
-    stadium: '수원 HM파크',
-    like: 777,
-  },
-];
+const StyledCommentTd = styled.td`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
