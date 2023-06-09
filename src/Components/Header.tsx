@@ -34,7 +34,7 @@ const Header = () => {
       myPageMenuRef.current &&
       !myPageMenuRef.current.contains(e.target as Node)
     ) {
-      setMyPageMenu((prev) => !prev);
+      setMyPageMenu(false);
     }
   };
 
