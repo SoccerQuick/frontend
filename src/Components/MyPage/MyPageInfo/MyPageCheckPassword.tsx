@@ -38,7 +38,6 @@ function MyPageCheckPassword({
       .then((res) => res.request)
       .then((result) => {
         if (result.status === 200) {
-          console.log(result);
           setCheckPassword(true);
         }
       })

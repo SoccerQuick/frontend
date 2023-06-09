@@ -31,6 +31,7 @@ function EditPage() {
   const location = useLocation();
   const url = location.pathname.split('/').pop();
   const data = location.state;
+
   let category: string;
   if (data.author) {
     category = '팀원 구해요';
@@ -57,9 +58,6 @@ function EditPage() {
 
   // 새 글을 작성하는 axios 명령
   const config = {
-    // headers: {
-    //   'Content-Type': 'application/json',
-    // },
     withCredentials: true,
   };
   const handlePatchRequest = () => {

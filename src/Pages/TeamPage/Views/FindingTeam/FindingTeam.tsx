@@ -1,6 +1,6 @@
 import React from 'react';
 import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
-import FindPageBoard from '../../../../Components/TeamPage/FindPage/FindPageBoard';
+import FindPageBoard from './FindingTeamPageBoard';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';

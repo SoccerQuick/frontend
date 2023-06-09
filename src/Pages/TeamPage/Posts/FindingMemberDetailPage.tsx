@@ -3,8 +3,13 @@ import styled from 'styled-components';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
+import { useSelector } from 'react-redux';
+import {
+  isLogInSelector,
+  userSelector,
+} from '../../../store/selectors/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
-import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
+// import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import axios from 'axios';
 
@@ -13,32 +18,31 @@ type DetailList = {
   value: string;
 };
 
-type Applicant = {
-  id: string;
-  position: string;
-  level: string;
-  contents: string;
-};
+// type Applicant = {
+//   id: string;
+//   position: string;
+//   level: string;
+//   contents: string;
+// };
 
-type DataProps = {
-  group_id?: string;
-  location: string;
-  // leader_name?: string;
-  author: string;
-  body: string;
-  gender: string;
-  position?: string;
-  skill?: string;
-  status: string;
-  title: string;
-  gk_count?: number;
-  gk_current_count?: number;
-  player_count?: number;
-  player_current_count?: number;
-  random_matched?: string;
-  applicant?: Applicant[];
-  [key: string]: string | number | undefined | Applicant[];
-};
+// type DataProps = {
+//   group_id?: string;
+//   location: string;
+//   author: string;
+//   body: string;
+//   gender: string;
+//   position?: string;
+//   skill?: string;
+//   status: string;
+//   title: string;
+//   gk_count?: number;
+//   gk_current_count?: number;
+//   player_count?: number;
+//   player_current_count?: number;
+//   random_matched?: string;
+//   applicant?: Applicant[];
+//   [key: string]: string | number | undefined | Applicant[];
+// };
 
 const initialData = {
   group_id: '',
@@ -58,6 +62,7 @@ const initialData = {
   player_current_count: 0,
   random_matched: '',
   applicant: [],
+  accept: [],
 };
 
 type DetailListProps = {
@@ -65,11 +70,11 @@ type DetailListProps = {
 };
 
 function DetailPage(props: DetailListProps) {
+  // 글 작성자인지 확인하기 위한 데이터
+  const userData = useSelector(userSelector);
+  const isLogin = useSelector(isLogInSelector);
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
-  const {
-    detailList,
-    // data
-  } = props;
+  const { detailList } = props;
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(false);
 
@@ -151,16 +156,26 @@ function DetailPage(props: DetailListProps) {
         style={{
           display: 'flex',
           height: '3rem',
-          // backgroundColor: 'beige',
           justifyContent: 'flex-end',
         }}
       >
-        <div>
+        {userData?.name === data.author && (
           <Link to={`/teampage/edit/${url}`} state={data}>
             <StyledMiniButton>수정</StyledMiniButton>
           </Link>
+        )}
+        {(userData?.name === data.author || userData?.role !== 'user') && (
           <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
-        </div>
+        )}
+        {(userData?.name === data.author || userData?.role !== 'user') && (
+          <StyledMiniButton
+            onClick={() => {
+              console.log(data.accept);
+            }}
+          >
+            조회
+          </StyledMiniButton>
+        )}
       </div>
       <StyledContainer>
         <StyledBox style={{ width: '100rem' }}>
@@ -174,22 +189,24 @@ function DetailPage(props: DetailListProps) {
               flexWrap: 'wrap',
             }}
           >
+            {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
             {data.applicant?.length > 0 && (
-              <TeamPageComments data={data.applicant} />
+              <TeamPageComments data={data.applicant} user={data.author} />
             )}
           </StyledDiv>
         </StyledBox>
       </StyledContainer>
       <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
-          <StyledButton
-            onClick={() => {
-              setShowModal(true);
-            }}
-          >
-            {data.leader_name ? '👪함께하기' : '✏️댓글 달기'}
-          </StyledButton>
-
+          {isLogin && userData?.nickname !== data.author && (
+            <StyledButton
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              👪함께하기
+            </StyledButton>
+          )}
           <StyledButton
             onClick={() => {
               navigate(`/teampage/team`);
@@ -205,7 +222,8 @@ function DetailPage(props: DetailListProps) {
               groupId={data.group_id}
             />
           ) : (
-            <SubmitForFindingTeam setShowModal={setShowModal} />
+            ''
+            // <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
       </StyledContainer>
     </>

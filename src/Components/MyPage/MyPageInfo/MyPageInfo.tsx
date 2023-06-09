@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { FormData } from '../../../Pages/MyPage';
 import { MyPageInput } from './MyPageInput';
 import { checkNewPassword } from '../checkPassword';
+import { useNavigate } from 'react-router-dom';
+import { AUTH_ACTIONS } from '../../../store/reducers/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSelector } from '../../../store/selectors/authSelectors';
 
 type MyPageInfoProps = {
   formData: FormData;
@@ -34,6 +38,9 @@ export function MyPageInfo({
     formMsg: '',
     passwordFormMsg: '',
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(userSelector);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,6 +57,17 @@ export function MyPageInfo({
       }
     }
 
+    // eslint-disable-next-line no-restricted-globals
+    const result = confirm('정보를 수정 하시겠습니까?');
+    if (result) {
+      handleMyInfoChangeConfirm(newPassword, oldPassword);
+    }
+  };
+
+  const handleMyInfoChangeConfirm = async (
+    newPassword: String,
+    oldPassword: String
+  ) => {
     try {
       const response = await axios.patch(
         `${process.env.REACT_APP_API_URL}/user`,
@@ -66,9 +84,7 @@ export function MyPageInfo({
           withCredentials: true,
         }
       );
-
-      alert('회원정보가 변경되었습니다.');
-      console.log(response.data);
+      alert(response.data.message);
       setErrorMsg({
         formMsg: '',
         passwordFormMsg: '',
@@ -94,6 +110,31 @@ export function MyPageInfo({
         });
       }
     }
+  };
+
+  const handleWithDrawalClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // eslint-disable-next-line no-restricted-globals
+    const result = confirm('정말 탈퇴 하시겠습니까?');
+    if (result) {
+      handleAlertWithDrawalConfirm(oldPassword);
+    }
+  };
+
+  const handleAlertWithDrawalConfirm = (oldPassword: String) => {
+    dispatch(AUTH_ACTIONS.logout());
+    const headers = { withCredentials: true };
+    const data = { password: oldPassword };
+
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/user`, {
+        headers: headers,
+        data: data,
+      })
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+    alert('탈퇴 되었습니다. 그동안 이용해주셔서 감사합니다.');
+    navigate('/', { replace: true });
   };
 
   return (
@@ -139,7 +180,19 @@ export function MyPageInfo({
             value={formData.gender}
             noButton
           />
-          <StyledSubmitButton>변경</StyledSubmitButton>
+          <div>
+            {' '}
+            <StyledSubmitButton>변경</StyledSubmitButton>
+            <StyledSubmitButton
+              style={{
+                color: '#fff',
+                backgroundColor: '#ec5d5e',
+              }}
+              onClick={handleWithDrawalClick}
+            >
+              회원 탈퇴
+            </StyledSubmitButton>
+          </div>
         </StyledInfoForm>
         <div style={{ color: 'red', marginTop: '1rem' }}>
           {errorMsg.formMsg}
@@ -212,6 +265,10 @@ const StyledInfoForm = styled.form`
   flex-direction: column;
   margin-top: 1rem;
   height: 70%;
+
+  & > div:last-child {
+    align-self: end;
+  }
 `;
 
 const StyledSubmitButton = styled.button`
@@ -221,4 +278,5 @@ const StyledSubmitButton = styled.button`
   font-size: 1rem;
   background-color: #09cf00;
   color: #fff;
+  border-radius: 0.5rem;
 `;

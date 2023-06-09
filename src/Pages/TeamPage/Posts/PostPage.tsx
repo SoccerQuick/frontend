@@ -1,16 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import DropDown from '../../../Components/Commons/DropDown';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-// import SubmitFindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
 import SubmitFindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
 import axios from 'axios';
 
 function SubmitPage() {
-  const [boardCategory, setBoardCategory] = React.useState('');
+  const [boardCategory, setBoardCategory] = React.useState('카테고리');
   const [title, setTitle] = React.useState('');
   const [area, setArea] = React.useState('');
   const [player, setPlayer] = React.useState(0);
@@ -42,8 +41,6 @@ function SubmitPage() {
     if (boardCategory === '팀원 구해요') {
       data = {
         category: boardCategory,
-        // leader_id: '6480bae19854c0d4bc9b4cde', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
-        // leader_name: '고마오', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
         title: title,
         location: area,
         play_date: '아무때나',
@@ -82,17 +79,27 @@ function SubmitPage() {
   // 입력값을 검사하는 validator - 오류를 조금 더 상세하게 출력하는 것이 효과가 있을까?
   function submitValidator() {
     if (boardCategory === '카테고리') {
-      throw new Error('카테고리를 선택해주세요');
+      return '카테고리를 선택해주세요';
     } else if (boardCategory === '팀원 구해요') {
+      const validator = [];
       if (playerNeed <= 0 || gkNeed <= 0) {
-        throw new Error('입력값을 확인해주세요');
+        validator.push('모집인원');
       }
-    } else if (boardCategory === '팀 구해요') {
-      if (position === '포지션' || skill === '실력수준' || gender === '성별') {
-        throw new Error('입력값을 확인해주세요');
+      if (area === '') {
+        validator.push('활동지역');
+      }
+      if (title === '') {
+        validator.push('제목');
+      }
+      if (content === '') {
+        validator.push('본문');
+      }
+      if (validator.length === 0) {
+        return '통과';
+      } else {
+        return `[${validator.join(', ')}] 값을 확인해 주세요.`;
       }
     }
-    return '통과';
   }
 
   // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
@@ -144,37 +151,22 @@ function SubmitPage() {
               setTitle(e.target.value);
             }}
           />
-          {/* <StyledTitle style={{ marginLeft: '4rem' }}>작성자</StyledTitle>
-          <StyledDiv style={{ border: '1px solid #eee' }}></StyledDiv> */}
         </StyledBox>
-        {/* 여기에 작성한 후에 Teampage에 컴포넌트로 분리하고 사용. Select의 조건에 따라 불러올 예정 */}
       </StyledContainer>
-      {/* 선택된 카테고리에 따라 노출시킬 버튼 목록이 다르다. */}
+
       <StyledContainer>
         {boardCategory === '팀원 구해요' && (
           <SubmitFindingMembers
-            // allowRandom={allowRandom}
             player={player}
             setPlayer={setPlayer}
             gk={gk}
             setGk={setGk}
-            // setAllowRandom={setAllowRandom}
             playerNeed={playerNeed}
             setPlayerNeed={setPlayerNeed}
             gkNeed={gkNeed}
             setGkNeed={setGkNeed}
           />
         )}
-        {/* {boardCategory === '팀 구해요' && (
-          <SubmitFindingTeam
-            gender={gender}
-            skill={skill}
-            position={position}
-            setGender={setGender}
-            setSkill={setSkill}
-            setPosition={setPosition}
-          />
-        )} */}
       </StyledContainer>
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>
@@ -188,13 +180,11 @@ function SubmitPage() {
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
             onClick={() => {
-              try {
-                const validationResult = submitValidator();
-                if (validationResult === '통과') {
-                  handlePostRequest();
-                }
-              } catch (error) {
-                alert(error);
+              const validationResult = submitValidator();
+              if (validationResult === '통과') {
+                handlePostRequest();
+              } else {
+                alert(validationResult);
               }
             }}
           >
@@ -221,9 +211,6 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 1rem;
-  /* background-color: beige; */
-  /* width: 100rem; */
-  /* background-color: beige; */
 `;
 
 const StyledBox = styled.div`
