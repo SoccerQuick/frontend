@@ -9,7 +9,7 @@ import {
   userSelector,
 } from '../../../store/selectors/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
-import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
+// import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import axios from 'axios';
 
@@ -222,7 +222,8 @@ function DetailPage(props: DetailListProps) {
               groupId={data.group_id}
             />
           ) : (
-            <SubmitForFindingTeam setShowModal={setShowModal} />
+            ''
+            // <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
       </StyledContainer>
     </>
