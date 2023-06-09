@@ -15,13 +15,7 @@ function DetailPage() {
 
   return (
     <>
-      <div
-        style={{
-          display: 'grid',
-          gridAutoRows: 'min-content',
-          height: '100rem',
-        }}
-      >
+      <div>
         <DetailPageBoard detailList={detailList} />
       </div>
     </>

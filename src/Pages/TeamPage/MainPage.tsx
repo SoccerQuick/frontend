@@ -22,56 +22,43 @@ function TeamPage() {
     <>
       <Header />
       <HeaderCategory />
-      <div
-        style={{
-          height: '100rem',
-        }}
-      >
-        <Teampage>
-          {/* <div>
-            {showModal && (
-              <PreView setShowModal={setShowModal} modalData={modalData} />
-            )}
-          </div> */}
-          <TeamPageBody>
-            <Routes>
-              <Route path="/submit" element={<SubmitPage />} />
-              <Route path="/edit/:id" element={<EditPage />} />
-              <Route
-                path="/player"
-                element={
-                  <FindingTeam
-                    setShowModal={setShowModal}
-                    // setModalData={setModalData}
-                  />
-                }
+      <TeamPageBody>
+        <Routes>
+          <Route path="/submit" element={<SubmitPage />} />
+          <Route path="/edit/:id" element={<EditPage />} />
+          <Route
+            path="/player"
+            element={
+              <FindingTeam
+                setShowModal={setShowModal}
+                // setModalData={setModalData}
               />
-              <Route path="/player/:id" element={<FindingTeamDetail />} />
-              <Route
-                path="/team"
-                element={
-                  <FindingMember
-                    setShowModal={setShowModal}
-                    // setModalData={setModalData}
-                  />
-                }
+            }
+          />
+          <Route path="/player/:id" element={<FindingTeamDetail />} />
+          <Route
+            path="/team"
+            element={
+              <FindingMember
+                setShowModal={setShowModal}
+                // setModalData={setModalData}
               />
-              <Route path="/team/:id" element={<FindingMemberDetail />} />
-              <Route
-                path="/"
-                element={
-                  <FindPage
-                    findingTeam={findingTeam}
-                    findingMember={findingMember}
-                    setFindingTeam={setFindingTeam}
-                    setFindingMember={setFindingMember}
-                  />
-                }
+            }
+          />
+          <Route path="/team/:id" element={<FindingMemberDetail />} />
+          <Route
+            path="/"
+            element={
+              <FindPage
+                findingTeam={findingTeam}
+                findingMember={findingMember}
+                setFindingTeam={setFindingTeam}
+                setFindingMember={setFindingMember}
               />
-            </Routes>
-          </TeamPageBody>
-        </Teampage>
-      </div>
+            }
+          />
+        </Routes>
+      </TeamPageBody>
       <Footer />
     </>
   );
@@ -85,6 +72,7 @@ const Teampage = styled.div`
 `;
 
 const TeamPageBody = styled.div`
-  height: 80rem;
-  justify-content: center;
+  width: 98.5rem;
+  min-height: 55rem;
+  margin: 0 auto 15rem auto;
 `;

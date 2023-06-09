@@ -10,6 +10,10 @@ import {
 } from '../../../store/selectors/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
+import chevronIcon from '../../../styles/icon/chevron_green.svg';
+import ballIcon from '../../../styles/icon/soccerball.svg';
+import playerIcon from '../../../styles/icon/player.svg';
+import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
 
 type DetailList = {
@@ -91,6 +95,7 @@ function DetailPage(props: DetailListProps) {
         };
 
         setData(formattedData);
+        console.log(formattedData);
       })
       .catch((error) => {
         setData(initialData);
@@ -122,99 +127,135 @@ function DetailPage(props: DetailListProps) {
   };
 
   return (
-    <>
-      <StyledContainer style={{ marginTop: '3rem' }}>
-        <StyledBox
-          style={{
-            width: '100rem',
-          }}
-        >
-          <StyledTitle>제 목</StyledTitle>
-          <StyledDivText style={{ textAlign: 'left', width: '47rem' }}>
-            {data.title}
-          </StyledDivText>
-          <StyledTitle style={{ marginLeft: '30rem' }}>작성자</StyledTitle>
-          <StyledDiv style={{ width: '9rem' }}>{data.author}</StyledDiv>
-        </StyledBox>
-        <StyledBox style={{ justifyContent: 'space-around', width: '100rem' }}>
-          {detailList.map((item: DetailList) => (
-            <StyledDiv key={item.title}>
-              <StyledTitle>{item.title}</StyledTitle>
-              <StyledDivText>{data[item.value]}</StyledDivText>
-            </StyledDiv>
-          ))}
-        </StyledBox>
-      </StyledContainer>
-      <StyledContainer>
-        <StyledBox
-          style={{ display: 'grid', border: '1px solid', borderRadius: '1rem' }}
-        >
+    <StyledWrap>
+      <StyledHeader status={data.status}>
+        <StyledBoardName>
+          <img src={chevronIcon} alt="chevronIcon" /> 팀원 모집・신청
+        </StyledBoardName>
+
+        <h1>
+          <span>[{data.status}] </span>
+          {data.title}
+        </h1>
+        <StyledAuthorDiv>
+          <StyledImgDiv>
+            <img src={ballIcon} alt="BallIcon" />
+          </StyledImgDiv>
+          <p>{data.author}</p>
+        </StyledAuthorDiv>
+      </StyledHeader>
+      <StyledDetailDiv>
+        <h3>모집 정보</h3>
+        <StyledDetailLocationLi>
+          <StyledDetailLabel>활동 지역</StyledDetailLabel>
+          <p>{data.location}</p>
+        </StyledDetailLocationLi>
+        <div>
+          <StyledDetailLabel>모집 현황</StyledDetailLabel>
+          <StyledPositionContainer>
+            <StyledPosition>
+              <StyledPositionIcon>
+                <img src={playerIcon} alt="playerIcon" />
+              </StyledPositionIcon>
+              <StyledPositionName>
+                <div>필드플레이어</div>
+                <div>
+                  {data.player_count - data.player_current_count > 0
+                    ? `${
+                        data.player_count - data.player_current_count
+                      }자리 남았어요!`
+                    : '마감되었어요.'}
+                </div>
+              </StyledPositionName>
+              <StyledPositionDetail>
+                <p>
+                  현재<span>{data.player_current_count}</span>명
+                </p>
+              </StyledPositionDetail>
+              <StyledPositionDetail>
+                <p>
+                  총<span> {data.player_count}</span>명 모집 예정
+                </p>
+              </StyledPositionDetail>
+            </StyledPosition>
+            <StyledPosition>
+              <StyledPositionIcon color="green">
+                <img src={playerIcon} alt="playerIcon" />
+              </StyledPositionIcon>
+              <StyledPositionName>
+                <div>골키퍼</div>
+                <div>
+                  {data.gk_count - data.gk_current_count > 0
+                    ? `${data.gk_count - data.gk_current_count}자리 남았어요!`
+                    : '마감되었어요.'}
+                </div>
+              </StyledPositionName>
+              <StyledPositionDetail color="green">
+                <p>
+                  현재<span>{data.gk_current_count}</span>명
+                </p>
+              </StyledPositionDetail>
+              <StyledPositionDetail color="green">
+                <p>
+                  총<span> {data.gk_count}</span>명 모집 예정
+                </p>
+              </StyledPositionDetail>
+            </StyledPosition>
+          </StyledPositionContainer>
+        </div>
+      </StyledDetailDiv>
+      <StyledBody>
+        <h3>상세 내용</h3>
+        <div>
           <HtmlParser data={data.contents} />
-        </StyledBox>
-      </StyledContainer>
-      <div
-        style={{
-          display: 'flex',
-          height: '3rem',
-          justifyContent: 'flex-end',
-        }}
-      >
+        </div>
+      </StyledBody>
+      <StyledAuthorButtonContainer>
         {userData?.name === data.author && (
           <Link to={`/teampage/edit/${url}`} state={data}>
-            <StyledMiniButton>수정</StyledMiniButton>
+            <button>수정</button>
           </Link>
         )}
         {(userData?.name === data.author || userData?.role !== 'user') && (
-          <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
+          <button onClick={deletePostHandler}>삭제</button>
         )}
         {(userData?.name === data.author || userData?.role !== 'user') && (
-          <StyledMiniButton
+          <button
             onClick={() => {
               console.log(data.accept);
             }}
           >
             조회
-          </StyledMiniButton>
+          </button>
         )}
-      </div>
-      <StyledContainer>
-        <StyledBox style={{ width: '100rem' }}>
-          <StyledDiv
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'flex-start',
-              flexWrap: 'wrap',
-            }}
-          >
-            {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
-            {data.applicant?.length > 0 && (
-              <TeamPageComments data={data.applicant} user={data.author} />
-            )}
-          </StyledDiv>
-        </StyledBox>
-      </StyledContainer>
-      <StyledContainer>
-        <StyledBox style={{ justifyContent: 'center' }}>
-          {isLogin && userData?.nickname !== data.author && (
-            <StyledButton
-              onClick={() => {
-                setShowModal(true);
-              }}
-            >
-              👪함께하기
-            </StyledButton>
+      </StyledAuthorButtonContainer>
+      <div>
+        <StyledCommentsDiv>
+          {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
+          {data.applicant?.length > 0 && (
+            <TeamPageComments data={data.applicant} user={data.author} />
           )}
-          <StyledButton
+        </StyledCommentsDiv>
+      </div>
+      <div>
+        <StyledFooter>
+          <button
             onClick={() => {
               navigate(`/teampage/team`);
             }}
           >
-            ↩️돌아가기
-          </StyledButton>
-        </StyledBox>
+            목록으로
+          </button>
+          {isLogin && userData?.nickname !== data.author && (
+            <button
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              함께하기
+            </button>
+          )}
+        </StyledFooter>
         {showModal &&
           (data.leader_name ? (
             <SubmitForFindingMember
@@ -225,68 +266,186 @@ function DetailPage(props: DetailListProps) {
             ''
             // <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
-      </StyledContainer>
-    </>
+      </div>
+    </StyledWrap>
   );
 }
 
 export default DetailPage;
 
-const StyledContainer = styled.div`
-  display: grid;
-  grid-gap: 10px 0px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
+const StyledWrap = styled.div`
+  width: 98.4rem;
+  margin: 3rem auto;
+  border: 0.2rem solid lightgray;
+  border-radius: 2rem;
+  padding: 2.5rem;
 `;
 
-const StyledBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 10rem;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-  padding: 1rem 1rem;
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledDivText = styled.div`
-  display: flex;
-  padding-left: 1rem;
-  width: fit-content;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledButton = styled.button`
-  background-color: white;
-  margin: 6rem 3rem 2rem 3rem;
-  &:hover {
-    color: gray;
-    text-decoration: underline;
-    transform: scale(1.1);
+const StyledHeader = styled.div<{ status: string }>`
+  border-bottom: 0.2rem solid lightgray;
+  h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+    span {
+      color: ${({ status }) =>
+        status === '모집중' ? 'var(--color--green)' : 'gray'};
+    }
   }
 `;
 
-const StyledMiniButton = styled.button`
+const StyledBoardName = styled.div`
+  color: #71c171;
   font-size: 1.7rem;
-  margin: 1rem 1rem 0rem 0.4rem;
-  background-color: white;
-  &:hover {
+  font-weight: 600;
+  padding: 0.3rem 0;
+  img {
+    width: 0.8rem;
+    vertical-align: middle;
+    padding: 0 0 0.3rem 0;
+    margin-right: 0.3rem;
+  }
+`;
+
+const StyledAuthorDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 2rem;
+  p {
+    font-size: 1.8rem;
+    padding-left: 1rem;
+  }
+`;
+
+const StyledImgDiv = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100%;
+  border: 0.2rem solid lightgray;
+`;
+
+const StyledDetailDiv = styled.div`
+  font-size: 2rem;
+
+  padding: 1rem 0;
+  h3 {
+    font-size: 2.2rem;
+  }
+`;
+
+const StyledDetailLabel = styled.div`
+  color: gray;
+  padding-right: 2rem;
+`;
+
+const StyledDetailLocationLi = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 1.3rem;
+`;
+
+const StyledPositionContainer = styled.div`
+  padding-top: 1rem;
+`;
+
+const StyledPosition = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  filter: drop-shadow(0 0 0.2rem #a2a2a2);
+  border-radius: 2rem;
+  background: white;
+  margin: 1.5rem 0;
+  div:nth-child(2) {
+    width: 40%;
+  }
+`;
+
+const StyledPositionIcon = styled.div<{ color?: string }>`
+  width: 8rem;
+  height: 8rem;
+  background: ${({ color }) =>
+    color === 'green' ? 'var(--color--green)' : 'orange'};
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  img {
+    width: 5.6rem;
+    margin: 0.4rem 0 0 0.7rem;
+  }
+`;
+
+const StyledPositionName = styled.div`
+  font-size: 2rem;
+  font-weight: 500;
+  color: #5e5c5c;
+  div:last-child {
+    font-size: 1.6rem;
+    color: #ff5500;
+    font-weight: 500;
+  }
+`;
+
+const StyledPositionDetail = styled.div<{ color?: string }>`
+  p {
+    font-size: 1.8rem;
+    span {
+      font-size: 3rem;
+      font-weight: 500;
+      color: ${({ color }) => (color === 'green' ? '#00ac00' : 'orange')};
+      vertical-align: sub;
+      padding: 0 0.4rem;
+    }
+  }
+  padding-right: 5rem;
+`;
+
+const StyledBody = styled.div`
+  min-height: 20rem;
+  padding: 2rem 0;
+  h3 {
+    font-size: 2.2rem;
+  }
+`;
+
+const StyledAuthorButtonContainer = styled.div`
+  margin: 2rem auto;
+  display: flex;
+  height: 3rem;
+  justify-content: flex-end;
+  button {
     color: gray;
-    text-decoration: underline;
-    transform: scale(1.1);
+    background-color: white;
+  }
+  button:not(:first-child):before {
+    content: '|';
+    padding-right: 1.5rem;
+    color: lightgray;
+  }
+`;
+
+const StyledCommentsDiv = styled.div`
+  width: 100%;
+`;
+
+const StyledFooter = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 3rem;
+  button {
+    width: 11rem;
+    height: 4.5rem;
+    border-radius: 0.7rem;
+    background-color: var(--color--green);
+    color: white;
+    font-size: 1.7rem;
+    font-weight: 600;
+
+    :first-child {
+      margin-right: 1rem;
+      background-color: white;
+      color: #787878;
+      filter: drop-shadow(0 0 0.2rem grey);
+    }
   }
 `;
