@@ -9,6 +9,7 @@ import { MyPageInfo } from '../Components/MyPage/MyPageInfo/MyPageInfo';
 import MyPageCheckPassword from '../Components/MyPage/MyPageInfo/MyPageCheckPassword';
 import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavoriteGroundList';
 import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost';
+import SearchMyReviewPost from '../Components/MyPage/SearchMyPost/SearchMyReviewPost';
 
 export type FormData = {
   user_id: string;
@@ -92,6 +93,7 @@ export function MyPage() {
       {checkedBarItem === 2 ? (
         <MyPageContainer>
           <SearchMyTeamPost />
+          <SearchMyReviewPost />
         </MyPageContainer>
       ) : (
         ''
@@ -122,12 +124,17 @@ const MyPageInfoContainer = styled.div`
 
 const MyPageContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  align-items: start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: space-evenly;
   width: 98.4rem;
   height: 80rem;
   padding: 0 2rem;
   margin: 2rem auto;
   position: relative;
   background-color: #fff;
+
+  & > div {
+    margin: 5rem 0;
+  }
 `;
