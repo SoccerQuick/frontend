@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -24,21 +24,42 @@ function Comment(props: any) {
     withCredentials: true,
   };
 
-  const acceptMember = () => {
+  // 멤버를 승인하는 핸들러
+  const acceptMember = (id: string) => {
+    const body = {
+      user_id: id,
+    };
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/group/${url}/accept`, config)
+      .patch(
+        `${process.env.REACT_APP_API_URL}/group/${url}/accept`,
+        body,
+        config
+      )
       .then((res) => {
         console.log('멤버 수락 완료!: ', res.data);
+        alert('멤버 수락 완료!');
+        window.location.reload();
       })
       .catch((e) => {
         console.error('뭔가 오류발생함 ㅎㅎㅜㅜ : ', e);
       });
   };
-  const rejectMember = () => {
+
+  // 멤버를 거절하는 핸들러
+  const rejectMember = (id: string) => {
+    const body = {
+      user_id: id,
+    };
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/group/${url}/reject`, config)
+      .patch(
+        `${process.env.REACT_APP_API_URL}/group/${url}/reject`,
+        body,
+        config
+      )
       .then((res) => {
         console.log('멤버 거절 완료!: ', res.data);
+        alert('멤버 거절 완료!');
+        window.location.reload();
       })
       .catch((e) => {
         console.error('뭔가 오류발생함 ㅎㅎㅜㅜ : ', e);
@@ -57,7 +78,6 @@ function Comment(props: any) {
               <th style={{ width: '13%' }}>포지션</th>
               <th style={{ width: '10%' }}>실력</th>
               <th style={{ width: '30%' }}>신청멘트</th>
-              {/* <th style={{ width: '12%' }}>수락/거절용 id</th> */}
               <th style={{ width: '10%' }}></th>
               <th style={{ width: '10%' }}></th>
             </StyledTr>
@@ -79,12 +99,15 @@ function Comment(props: any) {
                   </StyledSkillSpan>
                 </td>
                 <td>{applicant.contents}</td>
-                {/* <td>{applicant._id?.slice(0, 4)}</td> */}
                 <td>
-                  <StyledButton onClick={acceptMember}>✔️수락</StyledButton>
+                  <StyledButton onClick={() => acceptMember(applicant.id)}>
+                    ✔️수락
+                  </StyledButton>
                 </td>
                 <td>
-                  <StyledButton onClick={rejectMember}>❌거절</StyledButton>
+                  <StyledButton onClick={() => rejectMember(applicant.id)}>
+                    ❌거절
+                  </StyledButton>
                 </td>
               </StyledTr>
             ))}
