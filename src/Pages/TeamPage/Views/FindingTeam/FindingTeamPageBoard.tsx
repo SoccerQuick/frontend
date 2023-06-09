@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import DropDown from '../../Commons/DropDown';
+import DropDown from '../../../../Components/Commons/DropDown';
 
 type DropdownList = {
   option: string[];
@@ -100,8 +100,6 @@ function Board(props: BoardProps) {
                 {tableList.map((item) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
-
-                {/* <th>미리보기</th> */}
               </tr>
             </thead>
             <tbody>
