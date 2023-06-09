@@ -61,21 +61,12 @@ type BoardProps = {
   dropdownList: DropdownList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
-  // data: any;
 };
 
 // SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 166줄에서 넘어옴
 function FindinMemberPageBoard(props: BoardProps) {
-  const {
-    dropdownList,
-    handleReset,
-    // setShowModal,
-    // setModalData,
-    filteredData,
-    // data,
-  } = props;
+  const { dropdownList, handleReset, filteredData } = props;
 
   const checkPosition = (
     gk_current_count: number,
