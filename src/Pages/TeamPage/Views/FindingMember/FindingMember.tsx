@@ -2,6 +2,8 @@ import React from 'react';
 import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
 import FindPageBoard from '../../../../Components/TeamPage/FindPage/FindPageBoard';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isLogInSelector } from '../../../../store/selectors/authSelectors';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -15,11 +17,10 @@ type Applicant = {
 type DataProps = {
   group_id?: string;
   location: string;
-  // leader_name?: string;
   author: string;
   body: string;
   gender: string;
-  num: number; // 수정 필요함(어떻게 들어올 지 모름)
+  num: number;
   position?: string;
   skill?: string;
   status: string;
@@ -35,7 +36,6 @@ type DataProps = {
 
 type FindingMemberProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<DataProps>>;
 };
 type FindMemberFilter = {
   status: string | null;
@@ -43,11 +43,10 @@ type FindMemberFilter = {
 };
 
 function FindingMember(props: FindingMemberProps) {
+  const isLogin = useSelector(isLogInSelector);
+
   const loc = useLocation();
-  const {
-    setShowModal,
-    // setModalData
-  } = props;
+  const { setShowModal } = props;
   const [status, setStatus] = React.useState('');
   const [location, setLocation] = React.useState('');
 
@@ -63,13 +62,12 @@ function FindingMember(props: FindingMemberProps) {
   }
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<DataProps[]>([]); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
+  const [data, setData] = React.useState<DataProps[]>([]);
 
   React.useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/group`)
       .then((res) => {
-        // 가져온 데이터가 있다면 data에 저장한다.
         const formattedData = res.data.data.map((item: any) => {
           return {
             ...item,
@@ -79,7 +77,6 @@ function FindingMember(props: FindingMemberProps) {
         setData(formattedData);
       })
       .catch((error) => {
-        // 가져온 데이터가 없다면 dummyData를 사용한다.
         setData([]);
       });
   }, []);
@@ -173,19 +170,19 @@ function FindingMember(props: FindingMemberProps) {
         tableList={tableList}
         handleReset={handleReset}
         setShowModal={setShowModal}
-        // setModalData={setModalData}
         filteredData={filteredData}
-        // data={data}
       />
       <TeamPageFooter>
-        <Link
-          to="/teampage/submit"
-          style={{
-            display: loc.pathname === '/teampage/submit' ? 'none' : 'flex',
-          }}
-        >
-          <button>글 작성하기</button>
-        </Link>
+        {isLogin && (
+          <Link
+            to="/teampage/submit"
+            style={{
+              display: loc.pathname === '/teampage/submit' ? 'none' : 'flex',
+            }}
+          >
+            <button>글 작성하기</button>
+          </Link>
+        )}
       </TeamPageFooter>
     </div>
   );

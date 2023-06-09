@@ -62,22 +62,12 @@ type BoardProps = {
   tableList: TableList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
-  // data: any;
 };
 
 // SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 166줄에서 넘어옴
 function Board(props: BoardProps) {
-  const {
-    dropdownList,
-    tableList,
-    handleReset,
-    // setShowModal,
-    // setModalData,
-    filteredData,
-    // data,
-  } = props;
+  const { dropdownList, tableList, handleReset, filteredData } = props;
 
   return (
     <div style={{ width: '101rem' }}>
