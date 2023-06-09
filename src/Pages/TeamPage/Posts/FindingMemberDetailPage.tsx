@@ -11,7 +11,8 @@ import {
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
 // import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
-import BallIcon from '../../../styles/icon/soccerball.svg';
+import chevronIcon from '../../../styles/icon/chevron_green.svg';
+import ballIcon from '../../../styles/icon/soccerball.svg';
 import axios from 'axios';
 
 type DetailList = {
@@ -87,6 +88,7 @@ function DetailPage(props: DetailListProps) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/groups/${url}`)
       .then((res) => {
+        console.log(res);
         const formattedData = {
           ...res.data.data,
           author: res.data.data.leader_name,
@@ -121,12 +123,14 @@ function DetailPage(props: DetailListProps) {
         });
     }
   };
-  console.log(detailList);
+  console.log(data);
 
   return (
     <StyledWrap>
       <StyledHeader status={data.status}>
-        <StyledBoardName>팀원 모집・신청</StyledBoardName>
+        <StyledBoardName>
+          <img src={chevronIcon} alt="chevronIcon" /> 팀원 모집・신청
+        </StyledBoardName>
 
         <h1>
           <span>[{data.status}] </span>
@@ -134,7 +138,7 @@ function DetailPage(props: DetailListProps) {
         </h1>
         <StyledAuthorDiv>
           <StyledImgDiv>
-            <img src={BallIcon} alt="BallIcon" />
+            <img src={ballIcon} alt="BallIcon" />
           </StyledImgDiv>
           <p>{data.author}</p>
         </StyledAuthorDiv>
@@ -164,12 +168,6 @@ function DetailPage(props: DetailListProps) {
             </div>
           </StyledDetailLi>
         </div>
-        {/* {detailList.map((item: DetailList) => (
-          <StyledDetailLi key={item.title}>
-            <div>{item.title}</div>
-            <div>{data[item.value]}</div>
-          </StyledDetailLi>
-        ))} */}
       </StyledDetailDiv>
 
       <StyledBody>
@@ -197,23 +195,12 @@ function DetailPage(props: DetailListProps) {
         )}
       </StyledAuthorButtonContainer>
       <div>
-        <div style={{ width: '100rem' }}>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'flex-start',
-              flexWrap: 'wrap',
-            }}
-          >
-            {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
-            {data.applicant?.length > 0 && (
-              <TeamPageComments data={data.applicant} user={data.author} />
-            )}
-          </div>
-        </div>
+        <StyledCommentsDiv>
+          {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
+          {data.applicant?.length > 0 && (
+            <TeamPageComments data={data.applicant} user={data.author} />
+          )}
+        </StyledCommentsDiv>
       </div>
       <div>
         <StyledFooter>
@@ -222,7 +209,7 @@ function DetailPage(props: DetailListProps) {
               navigate(`/teampage/team`);
             }}
           >
-            돌아가기
+            목록으로
           </button>
           {isLogin && userData?.nickname !== data.author && (
             <button
@@ -253,7 +240,7 @@ export default DetailPage;
 
 const StyledWrap = styled.div`
   width: 98.4rem;
-  margin: auto;
+  margin: 3rem auto;
   border: 0.2rem solid lightgray;
   border-radius: 2rem;
   padding: 2rem;
@@ -275,6 +262,12 @@ const StyledBoardName = styled.div`
   color: #71c171;
   font-size: 1.7rem;
   font-weight: 600;
+  img {
+    width: 0.8rem;
+    vertical-align: middle;
+    padding: 0 0 0.3rem 0;
+    margin-right: 0.3rem;
+  }
 `;
 
 const StyledAuthorDiv = styled.div`
@@ -333,8 +326,7 @@ const StyledDetailPosition = styled.div`
 `;
 
 const StyledBody = styled.div`
-  border-top: 0.1rem solid lightgray;
-  min-height: 30rem;
+  min-height: 20rem;
 `;
 
 const StyledAuthorButtonContainer = styled.div`
@@ -353,6 +345,10 @@ const StyledAuthorButtonContainer = styled.div`
   }
 `;
 
+const StyledCommentsDiv = styled.div`
+  width: 100%;
+`;
+
 const StyledFooter = styled.div`
   display: flex;
   justify-content: center;
@@ -365,7 +361,6 @@ const StyledFooter = styled.div`
     color: white;
     font-size: 1.7rem;
     font-weight: 600;
-    filter: drop-shadow(0 0 0.2rem green);
 
     :first-child {
       margin-right: 1rem;
