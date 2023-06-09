@@ -48,7 +48,7 @@ function AdminUserManager() {
     // const cookies = document.cookie;
     // console.log(cookies);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/admin`, config)
+      .get(`${process.env.REACT_APP_API_URL}/admins`, config)
       .then((res) => {
         setData(res.data.data);
       })
