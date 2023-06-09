@@ -95,7 +95,6 @@ function DetailPage(props: DetailListProps) {
         };
 
         setData(formattedData);
-        console.log(formattedData);
       })
       .catch((error) => {
         setData(initialData);
