@@ -131,7 +131,7 @@ function Comment(props: any) {
           </tbody>
         </table>
       </CommentBox>
-      <div
+      {/* <div
         style={{
           padding: '1.3rem',
           marginTop: '3rem',
@@ -158,7 +158,7 @@ function Comment(props: any) {
           <StyledSkillSpan data={'초급자'}>초급자</StyledSkillSpan>
           <StyledSkillSpan data={'입문자'}>입문자</StyledSkillSpan>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
