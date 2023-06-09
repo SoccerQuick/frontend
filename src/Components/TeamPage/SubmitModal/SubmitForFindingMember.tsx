@@ -39,7 +39,11 @@ function DetailModal(props: props) {
         contents: memo,
       };
       axios
-        .post(`${process.env.REACT_APP_API_URL}/group/${groupId}`, data, config)
+        .post(
+          `${process.env.REACT_APP_API_URL}/groups/${groupId}`,
+          data,
+          config
+        )
         .then((res) => {
           console.log('신청 성공 : ', res.data);
           alert('가입 신청에 성공하였습니다.');
