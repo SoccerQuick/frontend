@@ -163,7 +163,7 @@ function FindinMemberPageBoard(props: BoardProps) {
             <tbody>
               {filteredData.map((item, idx) => (
                 <StyledTr key={item.group_id}>
-                  <td style={{ width: '15%' }}>{item.location}</td>
+                  <td style={{ width: '17%' }}>{item.location}</td>
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.group_id}`} state={{ data: item }}>
                       <StyledTitle>{item.title}</StyledTitle>
@@ -230,7 +230,7 @@ const TeamPageBody = styled.div`
     text-align: center;
     :first-child {
       text-align: start;
-      padding-left: 3rem;
+      padding-left: 2rem;
     }
     :nth-child(2) {
       text-align: start;
@@ -285,9 +285,13 @@ const StyledTr = styled.tr`
 `;
 
 const StyledTitle = styled.p`
+  max-width: 30rem;
   font-size: 1.8rem;
   font-weight: 500;
-  display: inline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
   &:hover {
     transform: scale(1.1);
     color: #8b8b8b;
