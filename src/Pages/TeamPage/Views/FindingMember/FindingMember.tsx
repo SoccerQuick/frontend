@@ -145,23 +145,6 @@ function FindingMember(props: FindingMemberProps) {
     },
   ];
 
-  // 표에 출력할 리스트를 정하는 부분
-  // const tableList = [
-  //   { title: '작성자', body: 'author', style: { width: '10%' } },
-  //   { title: '모집 포지션', body: 'gk_current_count', style: { width: '25%' } },
-  //   { title: '모집 상태', body: 'status', style: { width: '10%' } },
-
-  //   // { title: '지역', body: 'location', style: { width: '10%' } },
-  //   // { title: '현재인원(GK)', body: 'gk_current_count', style: { width: '8%' } },
-  //   // { title: '모집인원(GK)', body: 'gk_count', style: { width: '8%' } },
-  //   // {
-  //   //   title: '현재인원(Player)',
-  //   //   body: 'player_current_count',
-  //   //   style: { width: '8%' },
-  //   // },
-  //   // { title: '모집인원(Player)', body: 'player_count', style: { width: '8%' } },
-  // ];
-
   return (
     <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
       <StyledHeader>
