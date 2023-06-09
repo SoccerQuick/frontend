@@ -85,8 +85,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         setAuthModal(false);
         navigate(window.location.pathname, { replace: true });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setLoginError('존재하지 않는 계정입니다.');
       });
   };

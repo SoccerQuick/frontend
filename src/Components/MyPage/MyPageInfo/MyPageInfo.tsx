@@ -104,7 +104,6 @@ export function MyPageInfo({
       const axiosError = err as AxiosError;
       if (axiosError.response) {
         const responseData = axiosError.response?.data as { message?: string };
-        console.log(responseData.message);
         setErrorMsg({
           formMsg: String(responseData.message),
           passwordFormMsg: '',
@@ -139,10 +138,11 @@ export function MyPageInfo({
         headers: headers,
         data: data,
       })
-      .then((res) => console.log(res))
+      .then(() => {
+        alert('탈퇴 되었습니다.');
+        navigate('/', { replace: true });
+      })
       .catch((e) => console.log(e));
-    alert('탈퇴 되었습니다.');
-    navigate('/', { replace: true });
   };
 
   return (

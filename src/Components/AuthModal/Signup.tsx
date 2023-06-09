@@ -155,7 +155,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
       } else {
         setResponseMsg('An error occurred');
       }
-      console.log(error);
     }
   };
 

@@ -25,9 +25,10 @@ export function MyPageMenu() {
       .delete(`${process.env.REACT_APP_API_URL}/auths/logout`, {
         withCredentials: true,
       })
-      .then((res) => console.log(res))
+      .then(() => {
+        navigate(window.location.pathname);
+      })
       .catch((e) => console.log(e));
-    navigate(window.location.pathname);
   };
   return (
     <StyledMenu>
