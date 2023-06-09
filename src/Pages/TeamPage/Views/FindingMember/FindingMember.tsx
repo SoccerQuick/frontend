@@ -148,8 +148,8 @@ function FindingMember(props: FindingMemberProps) {
   return (
     <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
       <StyledHeader>
-        <h1>팀원 구해요</h1>
-        <h3>함께 할 팀원을 구해보세요! 👋🏻</h3>
+        <h1>팀원 모집・신청</h1>
+        <h3>싸커퀵에서 함께할 팀을 만들어보세요! 👋🏻</h3>
       </StyledHeader>
       <FindingMemberPageBoard
         dropdownList={dropdownList}
@@ -197,6 +197,7 @@ const StyledBanner = styled.span`
 `;
 
 const StyledHeader = styled.div`
+  padding-left: 1rem;
   h1 {
     font-size: 3rem;
     margin: 0;
