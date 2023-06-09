@@ -69,7 +69,7 @@ function FindingMember(props: FindingMemberProps) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/groups`)
       .then((res) => {
-        const formattedData = res.data.data.map((item: any) => {
+        const formattedData = res.data.data.map((item: DataProps) => {
           return {
             ...item,
             author: item.leader_name,
