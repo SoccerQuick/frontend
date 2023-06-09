@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../store/selectors/authSelectors';
+import axios from 'axios';
 
 type MyPageBarProps = {
   handleMyPageMenu: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -22,6 +23,15 @@ export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
   };
   const handleAlertConfrim = () => {
     dispatch(AUTH_ACTIONS.logout());
+
+    // logout 보류 - 백엔드 단에서 get으로 하면 됨
+    // axios
+    //   .post(`${process.env.REACT_APP_API_URL}/auth/logout`, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => console.log(res))
+    //   .catch((e) => console.log(e));
+
     navigate('/');
   };
   return (

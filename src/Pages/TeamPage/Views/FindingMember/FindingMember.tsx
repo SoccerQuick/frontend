@@ -198,7 +198,7 @@ export default FindingMember;
 // 팀페이지 헤더 (애니메이션 구현)
 const TeamPageHeader = styled.div`
   font-size: 2rem;
-  border: 1px solid;
+  border: 1px solid #eee;
   overflow: hidden;
 `;
 

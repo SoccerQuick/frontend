@@ -21,7 +21,7 @@ export default function WriteReviewPage() {
   }
 
   return (
-    <div style={{ height: '65vh' }}>
+    <div style={{ height: '63.8vh' }}>
       <StyledBody>
         <StyledTitle
           value={title}

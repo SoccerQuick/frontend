@@ -49,7 +49,10 @@ function DetailPage() {
       >
         등록번호 {id} 팀 모집 페이지 내용 ㄱㅁㅇ : 지금은 더미데이터 사용.
         API요청 받아와서 작업할 예정임.
-        <DetailPageBoard detailList={detailList} data={dummydata} />
+        <DetailPageBoard
+          detailList={detailList}
+          //   data={dummydata}
+        />
       </div>
     </>
   );
