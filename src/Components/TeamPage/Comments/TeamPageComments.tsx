@@ -1,5 +1,7 @@
 import React from 'react';
-import { useNavigate, Link, useLocation, Navigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../../store/selectors/authSelectors';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -14,7 +16,12 @@ type Applicant = {
 };
 
 function Comment(props: any) {
-  const { data } = props;
+  const { data, user } = props;
+
+  // 글 작성자인지 확인하기 위한 데이터
+  const userData = useSelector(userSelector);
+
+  // API 요청을 보내기 위한 파라미터 수집
   const location = useLocation();
   const url = location.pathname.split('/').pop();
   const config = {
@@ -26,48 +33,61 @@ function Comment(props: any) {
 
   // 멤버를 승인하는 핸들러
   const acceptMember = (id: string) => {
-    const body = {
-      user_id: id,
-    };
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URL}/group/${url}/accept`,
-        body,
-        config
-      )
-      .then((res) => {
-        console.log('멤버 수락 완료!: ', res.data);
-        alert('멤버 수락 완료!');
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.error('뭔가 오류발생함 ㅎㅎㅜㅜ : ', e);
-      });
+    const confirmed = window.confirm('정말로 수락하시겠습니까?');
+    if (confirmed) {
+      const body = {
+        user_id: id,
+      };
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URL}/group/${url}/accept`,
+          body,
+          config
+        )
+        .then((res) => {
+          console.log('멤버 수락 완료!: ', res.data);
+          alert('멤버 수락 완료!');
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('뭔가 오류발생함 ㅎㅎㅜㅜ : ', e);
+        });
+    }
   };
 
   // 멤버를 거절하는 핸들러
   const rejectMember = (id: string) => {
-    const body = {
-      user_id: id,
-    };
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URL}/group/${url}/reject`,
-        body,
-        config
-      )
-      .then((res) => {
-        console.log('멤버 거절 완료!: ', res.data);
-        alert('멤버 거절 완료!');
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.error('뭔가 오류발생함 ㅎㅎㅜㅜ : ', e);
-      });
+    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+    if (confirmed) {
+      const body = {
+        user_id: id,
+      };
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URL}/group/${url}/reject`,
+          body,
+          config
+        )
+        .then((res) => {
+          console.log('멤버 거절 완료!: ', res.data);
+          alert('멤버 거절 완료!');
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('뭔가 오류발생함 ㅎㅎㅜㅜ : ', e);
+        });
+    }
   };
 
   return (
     <>
+      <button
+        onClick={() => {
+          console.log('데이터 : ', data, '닉네임 :', userData?.nickname);
+        }}
+      >
+        유저정보체크
+      </button>
       <CommentBox>
         <table>
           <thead>
@@ -99,16 +119,20 @@ function Comment(props: any) {
                   </StyledSkillSpan>
                 </td>
                 <td>{applicant.contents}</td>
-                <td>
-                  <StyledButton onClick={() => acceptMember(applicant.id)}>
-                    ✔️수락
-                  </StyledButton>
-                </td>
-                <td>
-                  <StyledButton onClick={() => rejectMember(applicant.id)}>
-                    ❌거절
-                  </StyledButton>
-                </td>
+                {user === userData?.nickname && (
+                  <>
+                    <td>
+                      <StyledButton onClick={() => acceptMember(applicant.id)}>
+                        ✔️수락
+                      </StyledButton>
+                    </td>
+                    <td>
+                      <StyledButton onClick={() => rejectMember(applicant.id)}>
+                        ❌거절
+                      </StyledButton>
+                    </td>
+                  </>
+                )}
               </StyledTr>
             ))}
           </tbody>
