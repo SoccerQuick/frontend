@@ -1,5 +1,5 @@
 import react, { useEffect, useState } from 'react';
-import { FormData } from '../../Pages/MyPage';
+import { FormData } from '../../../Pages/MyPage';
 import styled from 'styled-components';
 import { PasswordForm } from './MyPageInfo';
 

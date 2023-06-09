@@ -1,9 +1,9 @@
 import react, { useState, FormEvent } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { FormData } from '../../Pages/MyPage';
+import { FormData } from '../../../Pages/MyPage';
 import { MyPageInput } from './MyPageInput';
-import { checkNewPassword } from './checkPassword';
+import { checkNewPassword } from '../checkPassword';
 
 type MyPageInfoProps = {
   formData: FormData;
