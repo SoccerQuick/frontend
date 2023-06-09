@@ -38,11 +38,11 @@ export function MyPage() {
   const isLogIn = useSelector(isLogInSelector);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (isLogIn) {
+    if (isLogIn) {
+      setTimeout(() => {
         getUserData();
-      }
-    }, 1000);
+      }, 1000);
+    }
   }, [isLogIn]);
 
   const getUserData = () => {

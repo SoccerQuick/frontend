@@ -1,6 +1,7 @@
 import react, { useState, useEffect } from 'react';
-import { ReviewPost } from './SearchMyReviewPost';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { ReviewPost } from './SearchMyReviewPost';
 import { GroupPost } from './SearchMyTeamPost';
 
 type MyPostTableProps = {
@@ -16,12 +17,17 @@ function MyPostTable({
   reviewData,
   groupData,
 }: MyPostTableProps) {
-  const customizeDate = (date: string) => {
-    return new Date(date).toLocaleDateString('ko-KR');
-  };
+  const navigate = useNavigate();
+
   return (
     <TableContainer>
-      <StyledTitleDiv>{title}</StyledTitleDiv>
+      <StyledTitleDiv>
+        {title}
+        <span>
+          {' '}
+          ( 총 {reviewData ? reviewData.length : groupData?.length} )
+        </span>
+      </StyledTitleDiv>
       <table>
         <thead>
           <StyledTitleTr key={title}>
@@ -36,13 +42,21 @@ function MyPostTable({
               return (
                 <StyledItemTr key={`review-${idx}`}>
                   <td>{item.name}</td>
-                  <StyledCommentTd>{item.comment}</StyledCommentTd>
-                  <td>{'서울 구장'}</td>
-
-                  <td>{item.rating}</td>
-                  <td>{customizeDate(item.createdAt)}</td>
                   <td>
-                    <button>조회</button>
+                    {' '}
+                    <StyledLongSpan>{item.comment}</StyledLongSpan>
+                  </td>
+                  <td>{'서울 구장'}</td>
+                  <td style={{ fontWeight: 'bold' }}>{item.rating}</td>
+                  <td>{item.userslikes.length}</td>
+                  <td>
+                    <StyledButton
+                      onClick={() => {
+                        navigate(`/review/detail/${item.review_id}`);
+                      }}
+                    >
+                      조회
+                    </StyledButton>
                   </td>
                 </StyledItemTr>
               );
@@ -52,14 +66,28 @@ function MyPostTable({
               return (
                 <StyledItemTr key={`review-${idx}`}>
                   <td>{item.leader_name}</td>
-                  <StyledCommentTd>{item.title}</StyledCommentTd>
+                  <td>
+                    <StyledLongSpan>{item.title}</StyledLongSpan>
+                    <span style={{ color: 'red' }}>
+                      [{item.applicant.length}]
+                    </span>
+                  </td>
                   <td>{item.location}</td>
                   <td>{item.status}</td>
-                  <td>{`${item.gk_current_count}/${item.gk_count}`}</td>
-                  <td>{`${item.player_current_count}/${item.player_count}`}</td>
-                  <td>{customizeDate(item.createdAt)}</td>
+                  <td
+                    style={{ color: 'blue' }}
+                  >{`${item.player_current_count}/${item.player_count}`}</td>
+                  <td
+                    style={{ color: 'red' }}
+                  >{`${item.gk_current_count}/${item.gk_count}`}</td>
                   <td>
-                    <button>조회</button>
+                    <StyledButton
+                      onClick={() => {
+                        navigate(`/teampage/team/${item.group_id}`);
+                      }}
+                    >
+                      조회
+                    </StyledButton>
                   </td>
                 </StyledItemTr>
               );
@@ -85,9 +113,18 @@ const TableContainer = styled.div`
 `;
 
 const StyledTitleDiv = styled.div`
-  width: 80%;
+  display: flex;
+  width: 90%;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+
+  > span {
+    padding-left: 1rem;
+    align-self: flex-end;
+    font-size: 0.5rem;
+    color: grey;
+  }
 `;
 
 const StyledTitleTr = styled.tr`
@@ -106,6 +143,7 @@ const StyledTitleTr = styled.tr`
   & > th:nth-child(2) {
     flex: 4;
     text-align: start;
+    padding-left: 1rem;
   }
 
   & > th:first-child {
@@ -135,14 +173,24 @@ const StyledItemTr = styled.tr`
   & > td:first-child {
     flex: 2;
     text-align: start;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 `;
 
-const StyledCommentTd = styled.td`
+const StyledLongSpan = styled.span`
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 20rem;
+  margin-right: 1rem;
+`;
+
+const StyledButton = styled.button`
+  width: 7rem;
+  height: 3.8rem;
+  border-radius: 0.7rem;
+  background-color: var(--color--green);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 500;
 `;
