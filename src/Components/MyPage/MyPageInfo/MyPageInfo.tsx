@@ -57,6 +57,17 @@ export function MyPageInfo({
       }
     }
 
+    // eslint-disable-next-line no-restricted-globals
+    const result = confirm('정보를 수정 하시겠습니까?');
+    if (result) {
+      handleMyInfoChangeConfirm(newPassword, oldPassword);
+    }
+  };
+
+  const handleMyInfoChangeConfirm = async (
+    newPassword: String,
+    oldPassword: String
+  ) => {
     try {
       const response = await axios.patch(
         `${process.env.REACT_APP_API_URL}/user`,
@@ -73,9 +84,7 @@ export function MyPageInfo({
           withCredentials: true,
         }
       );
-
-      alert('회원정보가 변경되었습니다.');
-      console.log(response.data);
+      alert(response.data.message);
       setErrorMsg({
         formMsg: '',
         passwordFormMsg: '',
@@ -108,21 +117,24 @@ export function MyPageInfo({
     // eslint-disable-next-line no-restricted-globals
     const result = confirm('정말 탈퇴 하시겠습니까?');
     if (result) {
-      handleAlertWithDrawalConfirm();
+      handleAlertWithDrawalConfirm(oldPassword);
     }
   };
 
-  const handleAlertWithDrawalConfirm = () => {
+  const handleAlertWithDrawalConfirm = (oldPassword: String) => {
     dispatch(AUTH_ACTIONS.logout());
+    const headers = { withCredentials: true };
+    const data = { password: oldPassword };
 
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user`, {
-        withCredentials: true,
+        headers: headers,
+        data: data,
       })
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
     alert('탈퇴 되었습니다. 그동안 이용해주셔서 감사합니다.');
-    navigate('/');
+    navigate('/', { replace: true });
   };
 
   return (
