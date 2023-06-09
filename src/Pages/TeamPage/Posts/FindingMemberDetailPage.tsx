@@ -164,10 +164,10 @@ function DetailPage(props: DetailListProps) {
             <StyledMiniButton>수정</StyledMiniButton>
           </Link>
         )}
-        {(userData?.name === data.author || userData?.role) && (
+        {(userData?.name === data.author || userData?.role !== 'user') && (
           <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
         )}
-        {(userData?.name === data.author || userData?.role) && (
+        {(userData?.name === data.author || userData?.role !== 'user') && (
           <StyledMiniButton
             onClick={() => {
               console.log(data.accept);
