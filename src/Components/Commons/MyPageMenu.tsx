@@ -27,7 +27,7 @@ export function MyPageMenu() {
       })
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
-    navigate(window.location.pathname, { replace: true });
+    navigate(window.location.pathname);
   };
   return (
     <StyledMenu>

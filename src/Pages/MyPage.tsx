@@ -10,6 +10,8 @@ import MyPageCheckPassword from '../Components/MyPage/MyPageInfo/MyPageCheckPass
 import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavoriteGroundList';
 import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost';
 import SearchMyReviewPost from '../Components/MyPage/SearchMyPost/SearchMyReviewPost';
+import { useSelector } from 'react-redux';
+import { isLogInSelector } from '../store/selectors/authSelectors';
 
 export type FormData = {
   user_id: string;
@@ -33,12 +35,15 @@ export function MyPage() {
   const [checkedBarItem, setCheckedBarItem] = useState(1);
   const [checkMyPassword, setCheckPassword] = useState(false);
   const [password, setPassword] = useState('');
+  const isLogIn = useSelector(isLogInSelector);
 
   useEffect(() => {
     setTimeout(() => {
-      getUserData();
+      if (isLogIn) {
+        getUserData();
+      }
     }, 1000);
-  }, []);
+  }, [isLogIn]);
 
   const getUserData = () => {
     axios

@@ -1,4 +1,4 @@
-import react, { useState, FormEvent } from 'react';
+import react, { useState, FormEvent, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { FormData } from '../../../Pages/MyPage';
@@ -41,6 +41,12 @@ export function MyPageInfo({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
+
+  useEffect(() => {
+    if (!user) {
+      window.location.reload();
+    }
+  }, [user]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -123,8 +129,10 @@ export function MyPageInfo({
 
   const handleAlertWithDrawalConfirm = (oldPassword: String) => {
     dispatch(AUTH_ACTIONS.logout());
-    const headers = { withCredentials: true };
-    const data = { password: oldPassword };
+    const headers = {
+      withCredentials: true,
+    };
+    const data = { password: oldPassword, user_id: formData.user_id };
 
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user`, {
@@ -133,7 +141,7 @@ export function MyPageInfo({
       })
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
-    alert('탈퇴 되었습니다. 그동안 이용해주셔서 감사합니다.');
+    alert('탈퇴 되었습니다.');
     navigate('/', { replace: true });
   };
 
