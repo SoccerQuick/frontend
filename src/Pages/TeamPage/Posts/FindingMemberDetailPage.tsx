@@ -180,7 +180,7 @@ function DetailPage(props: DetailListProps) {
             </StyledPosition>
             <StyledPosition>
               <StyledPositionIcon color="green">
-                <img src={playerIcon} alt="playerIcon" />
+                <img src={goalKeeperIcon} alt="playerIcon" />
               </StyledPositionIcon>
               <StyledPositionName>
                 <div>골키퍼</div>
@@ -327,7 +327,7 @@ const StyledImgDiv = styled.div`
 const StyledDetailDiv = styled.div`
   font-size: 2rem;
 
-  padding: 1rem 0;
+  padding: 1rem 0 3rem 0;
   h3 {
     font-size: 2.2rem;
   }
@@ -371,7 +371,8 @@ const StyledPositionIcon = styled.div<{ color?: string }>`
   border-bottom-left-radius: 2rem;
   img {
     width: 5.6rem;
-    margin: 0.4rem 0 0 0.7rem;
+    margin: ${({ color }) =>
+      color === 'green' ? '1rem 0 0 0.7rem' : '0.4rem 0 0 0.7rem'};
   }
 `;
 
