@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Modal,
@@ -33,6 +34,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
   });
   const [loginError, setLoginError] = useState<string>('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -81,6 +83,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         );
         setLoginError('');
         setAuthModal(false);
+        navigate(window.location.pathname, { replace: true });
       })
       .catch((err) => {
         console.log(err);

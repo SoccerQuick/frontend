@@ -47,7 +47,6 @@ export function MyPage() {
       })
       .then((res) => res.data.userData)
       .then((user) => {
-        console.log(user);
         setFormData((prev) => ({
           ...prev,
           user_id: user.user_id,

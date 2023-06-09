@@ -24,15 +24,14 @@ export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
   const handleAlertConfrim = () => {
     dispatch(AUTH_ACTIONS.logout());
 
-    // logout 보류 - 백엔드 단에서 get으로 하면 됨
-    // axios
-    //   .post(`${process.env.REACT_APP_API_URL}/auth/logout`, {
-    //     withCredentials: true,
-    //   })
-    //   .then((res) => console.log(res))
-    //   .catch((e) => console.log(e));
-    // navigate('/');
-    window.location.reload();
+    // logout
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/auth/logout`, {
+        withCredentials: true,
+      })
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+    navigate(window.location.pathname, { replace: true });
   };
   return (
     <StyledMenu onMouseLeave={handleMyPageMenu}>
