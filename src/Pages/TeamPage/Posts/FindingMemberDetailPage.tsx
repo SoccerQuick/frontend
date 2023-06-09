@@ -13,6 +13,8 @@ import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/Sub
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import chevronIcon from '../../../styles/icon/chevron_green.svg';
 import ballIcon from '../../../styles/icon/soccerball.svg';
+import playerIcon from '../../../styles/icon/player.svg';
+import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
 
 type DetailList = {
@@ -88,12 +90,12 @@ function DetailPage(props: DetailListProps) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/groups/${url}`)
       .then((res) => {
-        console.log(res);
         const formattedData = {
           ...res.data.data,
           author: res.data.data.leader_name,
         };
         setData(formattedData);
+        console.log(formattedData);
       })
       .catch((error) => {
         setData(initialData);
@@ -123,7 +125,6 @@ function DetailPage(props: DetailListProps) {
         });
     }
   };
-  console.log(data);
 
   return (
     <StyledWrap>
@@ -144,33 +145,67 @@ function DetailPage(props: DetailListProps) {
         </StyledAuthorDiv>
       </StyledHeader>
       <StyledDetailDiv>
-        <h3>모집 상세</h3>
+        <h3>모집 정보</h3>
+        <StyledDetailLocationLi>
+          <StyledDetailLabel>활동 지역</StyledDetailLabel>
+          <p>{data.location}</p>
+        </StyledDetailLocationLi>
         <div>
-          <StyledDetailLocationLi>
-            <StyledDetailLabel>활동 지역</StyledDetailLabel>
-            <p>{data.location}</p>
-          </StyledDetailLocationLi>
-          <StyledDetailLi>
-            <StyledDetailLabel>모집 현황</StyledDetailLabel>
-            <div>
-              <StyledDetailPosition>
-                <p>필드플레이어</p>
+          <StyledDetailLabel>모집 현황</StyledDetailLabel>
+          <StyledPositionContainer>
+            <StyledPosition>
+              <StyledPositionIcon>
+                <img src={playerIcon} alt="playerIcon" />
+              </StyledPositionIcon>
+              <StyledPositionName>
+                <div>필드플레이어</div>
                 <div>
-                  {data.player_current_count}명/{data.player_count}명
+                  {data.player_count - data.player_current_count > 0
+                    ? `${
+                        data.player_count - data.player_current_count
+                      }자리 남았어요!`
+                    : '마감되었어요.'}
                 </div>
-              </StyledDetailPosition>
-              <StyledDetailPosition>
-                <p>골키퍼</p>
+              </StyledPositionName>
+              <StyledPositionDetail>
+                <p>
+                  현재<span>{data.player_current_count}</span>명
+                </p>
+              </StyledPositionDetail>
+              <StyledPositionDetail>
+                <p>
+                  총<span> {data.player_count}</span>명 모집 예정
+                </p>
+              </StyledPositionDetail>
+            </StyledPosition>
+            <StyledPosition>
+              <StyledPositionIcon color="green">
+                <img src={playerIcon} alt="playerIcon" />
+              </StyledPositionIcon>
+              <StyledPositionName>
+                <div>골키퍼</div>
                 <div>
-                  {data.gk_current_count}명/{data.gk_count}명
+                  {data.gk_count - data.gk_current_count > 0
+                    ? `${data.gk_count - data.gk_current_count}자리 남았어요!`
+                    : '마감되었어요.'}
                 </div>
-              </StyledDetailPosition>
-            </div>
-          </StyledDetailLi>
+              </StyledPositionName>
+              <StyledPositionDetail color="green">
+                <p>
+                  현재<span>{data.gk_current_count}</span>명
+                </p>
+              </StyledPositionDetail>
+              <StyledPositionDetail color="green">
+                <p>
+                  총<span> {data.gk_count}</span>명 모집 예정
+                </p>
+              </StyledPositionDetail>
+            </StyledPosition>
+          </StyledPositionContainer>
         </div>
       </StyledDetailDiv>
-
       <StyledBody>
+        <h3>상세 내용</h3>
         <div>
           <HtmlParser data={data.contents} />
         </div>
@@ -243,7 +278,7 @@ const StyledWrap = styled.div`
   margin: 3rem auto;
   border: 0.2rem solid lightgray;
   border-radius: 2rem;
-  padding: 2rem;
+  padding: 2.5rem;
 `;
 
 const StyledHeader = styled.div<{ status: string }>`
@@ -262,6 +297,7 @@ const StyledBoardName = styled.div`
   color: #71c171;
   font-size: 1.7rem;
   font-weight: 600;
+  padding: 0.3rem 0;
   img {
     width: 0.8rem;
     vertical-align: middle;
@@ -289,8 +325,9 @@ const StyledImgDiv = styled.div`
 `;
 
 const StyledDetailDiv = styled.div`
-  font-size: 1.9rem;
-  margin-bottom: 3rem;
+  font-size: 2rem;
+
+  padding: 1rem 0;
   h3 {
     font-size: 2.2rem;
   }
@@ -308,25 +345,67 @@ const StyledDetailLocationLi = styled.div`
   padding-bottom: 1.3rem;
 `;
 
-const StyledDetailLi = styled.div`
-  display: flex;
-  justify-content: flex-start;
+const StyledPositionContainer = styled.div`
+  padding-top: 1rem;
 `;
 
-const StyledDetailPosition = styled.div`
+const StyledPosition = styled.div`
   display: flex;
-  background-color: #ffffff;
+  justify-content: space-between;
+  align-items: center;
+  filter: drop-shadow(0 0 0.2rem #a2a2a2);
+  border-radius: 2rem;
+  background: white;
+  margin: 1.5rem 0;
+  div:nth-child(2) {
+    width: 40%;
+  }
+`;
 
-  :first-child {
+const StyledPositionIcon = styled.div<{ color?: string }>`
+  width: 8rem;
+  height: 8rem;
+  background: ${({ color }) =>
+    color === 'green' ? 'var(--color--green)' : 'orange'};
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  img {
+    width: 5.6rem;
+    margin: 0.4rem 0 0 0.7rem;
   }
+`;
+
+const StyledPositionName = styled.div`
+  font-size: 2rem;
+  font-weight: 500;
+  color: #5e5c5c;
+  div:last-child {
+    font-size: 1.6rem;
+    color: #ff5500;
+    font-weight: 500;
+  }
+`;
+
+const StyledPositionDetail = styled.div<{ color?: string }>`
   p {
-    padding-right: 1rem;
-    width: 14rem;
+    font-size: 1.8rem;
+    span {
+      font-size: 3rem;
+      font-weight: 500;
+      color: ${({ color }) => (color === 'green' ? '#00ac00' : 'orange')};
+      vertical-align: sub;
+      padding: 0 0.4rem;
+    }
   }
+  padding-right: 5rem;
 `;
 
 const StyledBody = styled.div`
   min-height: 20rem;
+  padding: 2rem 0;
+  h3 {
+    font-size: 2.2rem;
+  }
 `;
 
 const StyledAuthorButtonContainer = styled.div`

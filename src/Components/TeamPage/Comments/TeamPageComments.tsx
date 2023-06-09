@@ -3,8 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 import styled from 'styled-components';
-import BallIcon from '../../../styles/icon/soccerball.svg';
-import CheckIcon from '../../../styles/icon/check_white.svg';
+import ballIcon from '../../../styles/icon/soccerball.svg';
+import checkIcon from '../../../styles/icon/check_white.svg';
+import commentIcon from '../../../styles/icon/comment.svg';
 import axios from 'axios';
 
 type Applicant = {
@@ -83,13 +84,16 @@ function Comment(props: any) {
   return (
     <StyledCommentContainer>
       <div>
-        <StyledCommentTitle>신청 목록</StyledCommentTitle>
+        <StyledCommentTitle>
+          <img src={commentIcon} alt="" />
+          신청 목록
+        </StyledCommentTitle>
 
         {data.map((applicant: Applicant, index: number) => (
           <CommentLiContainer key={index}>
             <StyledAuthorDiv>
               <StyledImgDiv>
-                <img src={BallIcon} alt="BallIcon" />
+                <img src={ballIcon} alt="BallIcon" />
               </StyledImgDiv>
               <p>{applicant.name}</p>
             </StyledAuthorDiv>
@@ -110,7 +114,7 @@ function Comment(props: any) {
             <StyledCommentButtons>
               <button onClick={() => rejectMember(applicant.id)}>거절</button>
               <button onClick={() => acceptMember(applicant.id)}>
-                <img src={CheckIcon} alt="" /> 수락
+                <img src={checkIcon} alt="" /> 수락
               </button>
             </StyledCommentButtons>
             {/* )} */}
@@ -132,6 +136,11 @@ const StyledCommentContainer = styled.div`
 const StyledCommentTitle = styled.h2`
   font-size: 2.2rem;
   padding: 1rem 0;
+  img {
+    width: 4.3rem;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+  }
 `;
 
 const CommentLiContainer = styled.div`
@@ -156,8 +165,8 @@ const StyledAuthorDiv = styled.div`
 `;
 
 const StyledImgDiv = styled.div`
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 100%;
   border: 0.2rem solid lightgray;
 `;
