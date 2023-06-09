@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import chevronIcon from '../../styles/icon/chevron_down.svg';
 
 type Props = {
   list: string[];
@@ -61,16 +62,7 @@ function DropDown(props: Props) {
           {selected.length > 0 ? selected : list[0]}
         </div>
         <div>
-          <img
-            src="/dropdown.png"
-            style={{
-              flex: 1,
-              width: '5rem',
-              height: '3rem',
-              alignSelf: 'center',
-              paddingLeft: '0.9rem',
-            }}
-          />
+          <img src={chevronIcon} />
         </div>
       </DropdownButton>
       {click && (
@@ -99,6 +91,8 @@ const DropdownWrapper = styled.div`
   z-index: 999;
   position: relative;
   display: inline-block;
+  width: 16rem;
+  margin-right: 1rem;
 `;
 
 const DropdownButton = styled.button`
@@ -111,13 +105,21 @@ const DropdownButton = styled.button`
   align-items: center;
   color: #333;
   padding-left: 2rem;
+  margin-right: 3rem;
   width: 100%;
   height: 100%;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 1rem;
   font-size: ${(props) =>
     props.style?.fontSize ? props.style.fontSize : '13px'};
   cursor: pointer;
+  img {
+    flex: 1;
+    width: 2rem;
+    height: 4rem;
+    align-self: center;
+    margin: 0 1rem;
+  }
 `;
 
 const DropdownMenu = styled.div`

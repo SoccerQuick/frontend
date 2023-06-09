@@ -1,6 +1,7 @@
 import React from 'react';
 import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
 import FindPageBoard from '../../../../Components/TeamPage/FindPage/FindPageBoard';
+import FindingMemberPageBoard from './FindingMemberPageBoard';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -24,10 +25,10 @@ type DataProps = {
   skill?: string;
   status: string;
   title: string;
-  gk_count?: number;
-  gk_current_count?: number;
-  player_count?: number;
-  player_current_count?: number;
+  gk_count: number;
+  gk_current_count: number;
+  player_count: number;
+  player_current_count: number;
   random_matched?: string;
   applicant?: Applicant[];
   [key: string]: string | number | undefined | Applicant[];
@@ -150,27 +151,28 @@ function FindingMember(props: FindingMemberProps) {
   // 표에 출력할 리스트를 정하는 부분
   const tableList = [
     { title: '작성자', body: 'author', style: { width: '10%' } },
-    { title: '지역', body: 'location', style: { width: '10%' } },
-    { title: '현재인원(GK)', body: 'gk_current_count', style: { width: '8%' } },
-    { title: '모집인원(GK)', body: 'gk_count', style: { width: '8%' } },
-    {
-      title: '현재인원(Player)',
-      body: 'player_current_count',
-      style: { width: '8%' },
-    },
-    { title: '모집인원(Player)', body: 'player_count', style: { width: '8%' } },
+    { title: '모집 포지션', body: 'gk_current_count', style: { width: '25%' } },
+    { title: '모집 상태', body: 'status', style: { width: '10%' } },
+
+    // { title: '지역', body: 'location', style: { width: '10%' } },
+    // { title: '현재인원(GK)', body: 'gk_current_count', style: { width: '8%' } },
+    // { title: '모집인원(GK)', body: 'gk_count', style: { width: '8%' } },
+    // {
+    //   title: '현재인원(Player)',
+    //   body: 'player_current_count',
+    //   style: { width: '8%' },
+    // },
+    // { title: '모집인원(Player)', body: 'player_count', style: { width: '8%' } },
   ];
 
   return (
     <div style={{ margin: '1rem 1rem', padding: '1rem 0rem' }}>
-      <TeamPageHeader>
-        <StyledBanner>
-          팀원 모집 게시판입니다! 싸커퀵에서 훌륭한 동료를 구해보세요~
-        </StyledBanner>
-      </TeamPageHeader>
-      <FindPageBoard
+      <StyledHeader>
+        <h1>팀원 구해요</h1>
+        <h3>함께 할 팀원을 구해보세요! 👋🏻</h3>
+      </StyledHeader>
+      <FindingMemberPageBoard
         dropdownList={dropdownList}
-        tableList={tableList}
         handleReset={handleReset}
         setShowModal={setShowModal}
         // setModalData={setModalData}
@@ -184,7 +186,7 @@ function FindingMember(props: FindingMemberProps) {
             display: loc.pathname === '/teampage/submit' ? 'none' : 'flex',
           }}
         >
-          <button>글 작성하기</button>
+          <StyledWriteButton>글 작성하기</StyledWriteButton>
         </Link>
       </TeamPageFooter>
     </div>
@@ -214,12 +216,34 @@ const StyledBanner = styled.span`
   }
 `;
 
+const StyledHeader = styled.div`
+  h1 {
+    font-size: 3rem;
+    margin: 0;
+  }
+  h3 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    color: #9da7ae;
+    margin: 1rem 0 2rem 0;
+  }
+`;
+
 const TeamPageFooter = styled.div`
   display: flex;
-  background-color: skyblue;
   justify-content: flex-end;
   width: fit-content;
   margin-top: 3rem;
-  margin-right: 3rem;
+  margin-right: 4rem;
   float: right;
+`;
+
+const StyledWriteButton = styled.button`
+  width: 13rem;
+  height: 5rem;
+  border-radius: 0.8rem;
+  background-color: var(--color--green);
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 600;
 `;
