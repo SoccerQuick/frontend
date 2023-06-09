@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import react from 'react';
 import styled from 'styled-components';
 
 type MyPageBarProps = {

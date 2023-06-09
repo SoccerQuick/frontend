@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from 'react';
+import react from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReviewPost } from './SearchMyReviewPost';
