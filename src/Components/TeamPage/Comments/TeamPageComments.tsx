@@ -40,7 +40,7 @@ function Comment(props: any) {
       };
       axios
         .patch(
-          `${process.env.REACT_APP_API_URL}/group/${url}/accept`,
+          `${process.env.REACT_APP_API_URL}/groups/${url}/accept`,
           body,
           config
         )
@@ -57,14 +57,14 @@ function Comment(props: any) {
 
   // 멤버를 거절하는 핸들러
   const rejectMember = (id: string) => {
-    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+    const confirmed = window.confirm('거절하시겠습니까?');
     if (confirmed) {
       const body = {
         user_id: id,
       };
       axios
         .patch(
-          `${process.env.REACT_APP_API_URL}/group/${url}/reject`,
+          `${process.env.REACT_APP_API_URL}/groups/${url}/reject`,
           body,
           config
         )
@@ -81,13 +81,6 @@ function Comment(props: any) {
 
   return (
     <>
-      <button
-        onClick={() => {
-          console.log('데이터 : ', data, '닉네임 :', userData?.nickname);
-        }}
-      >
-        유저정보체크
-      </button>
       <CommentBox>
         <table>
           <thead>

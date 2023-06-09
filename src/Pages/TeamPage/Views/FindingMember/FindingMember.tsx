@@ -67,7 +67,7 @@ function FindingMember(props: FindingMemberProps) {
 
   React.useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/group`)
+      .get(`${process.env.REACT_APP_API_URL}/groups`)
       .then((res) => {
         const formattedData = res.data.data.map((item: any) => {
           return {
