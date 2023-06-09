@@ -31,8 +31,8 @@ export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
     //   })
     //   .then((res) => console.log(res))
     //   .catch((e) => console.log(e));
-
-    navigate('/');
+    // navigate('/');
+    window.location.reload();
   };
   return (
     <StyledMenu onMouseLeave={handleMyPageMenu}>

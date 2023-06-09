@@ -31,7 +31,7 @@ function SearchMyTeamPost() {
   ];
   const user = useSelector(userSelector);
   const filteredItems = groupList.filter(
-    (item: GroupPost) => item.status === '모집중'
+    (item: GroupPost) => item.leader_name === '고마오'
   );
   useEffect(() => {
     axios
