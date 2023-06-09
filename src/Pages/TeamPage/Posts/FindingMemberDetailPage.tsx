@@ -151,6 +151,13 @@ function DetailPage(props: DetailListProps) {
           <HtmlParser data={data.contents} />
         </StyledBox>
       </StyledContainer>
+      <button
+        onClick={() => {
+          console.log(userData);
+        }}
+      >
+        버튼
+      </button>
       <div
         style={{
           display: 'flex',
@@ -158,16 +165,17 @@ function DetailPage(props: DetailListProps) {
           justifyContent: 'flex-end',
         }}
       >
-        {userData?.nickname === data.author && (
-          <div>
-            <Link to={`/teampage/edit/${url}`} state={data}>
-              <StyledMiniButton>수정</StyledMiniButton>
-            </Link>
-            <StyledMiniButton onClick={deletePostHandler}>
-              삭제
-            </StyledMiniButton>
-          </div>
-        )}
+        {userData?.nickname === data.author ||
+          (userData?.role && (
+            <div>
+              <Link to={`/teampage/edit/${url}`} state={data}>
+                <StyledMiniButton>수정</StyledMiniButton>
+              </Link>
+              <StyledMiniButton onClick={deletePostHandler}>
+                삭제
+              </StyledMiniButton>
+            </div>
+          ))}
       </div>
       <StyledContainer>
         <StyledBox style={{ width: '100rem' }}>
