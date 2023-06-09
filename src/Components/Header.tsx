@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MypageIcon from '../styles/icon/mypage.svg';
@@ -12,16 +12,30 @@ import { isLogInSelector } from '../store/selectors/authSelectors';
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
   const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
+  const myPageMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const isLogin = useSelector(isLogInSelector);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setAuthModal((prev) => !prev);
     setMyPageMenu((prev) => !prev);
   };
-  const handleMyPageMenu = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setMyPageMenu((prev) => !prev);
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      myPageMenuRef.current &&
+      !myPageMenuRef.current.contains(e.target as Node)
+    ) {
+      setMyPageMenu((prev) => !prev);
+    }
   };
 
   return (
@@ -34,9 +48,14 @@ const Header = () => {
       <HeaderMenu>
         <HeaderMyPage>
           {isLogin ? (
-            <HeaderMyPageButton onClick={handleMyPageMenu}>
+            <HeaderMyPageButton
+              ref={myPageMenuRef}
+              onClick={() => {
+                setMyPageMenu((prev) => !prev);
+              }}
+            >
               <img src={MypageIcon} alt="my" />
-              {myPageMenu && <MyPageMenu handleMyPageMenu={handleMyPageMenu} />}
+              {myPageMenu && <MyPageMenu />}
             </HeaderMyPageButton>
           ) : (
             <HeaderLoginButton onClick={handleLoginModal}>
@@ -110,4 +129,5 @@ const HeaderMyPageButton = styled.div`
   margin: 0.3rem 2rem 0 2rem;
   border-radius: 2.5rem;
   border: 1px solid #e5e5e5;
+  cursor: pointer;
 `;
