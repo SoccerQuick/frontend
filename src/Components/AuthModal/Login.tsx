@@ -70,6 +70,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
           user_id: userData.user_id,
           name: userData.name,
           nickname: userData.nick_name,
+          role: userData.role,
         };
         const token = 'your-auth-token';
         dispatch(

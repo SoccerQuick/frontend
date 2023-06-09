@@ -190,13 +190,13 @@ function DetailPage(props: DetailListProps) {
       </StyledContainer>
       <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
-          {isLogin && (
+          {isLogin && userData?.nickname !== data.author && (
             <StyledButton
               onClick={() => {
                 setShowModal(true);
               }}
             >
-              {data.leader_name ? '👪함께하기' : '✏️댓글 달기'}
+              👪함께하기
             </StyledButton>
           )}
           <StyledButton
