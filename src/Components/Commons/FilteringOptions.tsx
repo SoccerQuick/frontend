@@ -2,7 +2,7 @@ import React from 'react';
 
 const FILTERING_OPTIONS = {
   adminUserPage: {
-    status: ['통합검색', '닉네임', 'e-mail', '권한'],
+    status: ['통합검색', '이름', '닉네임', 'e-mail', '정지상태', '권한'],
   },
   findingTeam: {
     status: ['모집상태', '모집중', '모집 완료'],
