@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
+import { useSelector } from 'react-redux';
+import {
+  isLogInSelector,
+  userSelector,
+} from '../../../store/selectors/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
 import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
@@ -12,45 +17,108 @@ type DetailList = {
   title: string;
   value: string;
 };
+
 type Applicant = {
   id: string;
   position: string;
   level: string;
   contents: string;
-  _id?: string;
 };
 
-type DataType = {
-  applicant?: Applicant[];
+type DataProps = {
   group_id?: string;
-  num: number;
-  title: string;
-  author: string;
   location: string;
-  status: string;
+  author: string;
+  body: string;
+  gender: string;
   position?: string;
   skill?: string;
-  gk_need?: number;
-  gk?: number;
-  player_need?: number;
-  player?: number;
-  gender: string;
-  contents: string;
+  status: string;
+  title: string;
+  gk_count?: number;
+  gk_current_count?: number;
+  player_count?: number;
+  player_current_count?: number;
+  random_matched?: string;
+  applicant?: Applicant[];
   [key: string]: string | number | undefined | Applicant[];
+};
+
+const initialData = {
+  group_id: '',
+  location: '',
+  leader_name: '',
+  author: '',
+  contents: '',
+  gender: '',
+  num: '',
+  position: '',
+  skill: '',
+  status: '',
+  title: '',
+  gk_count: 0,
+  gk_current_count: 0,
+  player_count: 0,
+  player_current_count: 0,
+  random_matched: '',
+  applicant: [],
 };
 
 type DetailListProps = {
   detailList: DetailList[];
-  data: any;
 };
 
 function DetailPage(props: DetailListProps) {
+  // 글 작성자인지 확인하기 위한 데이터
+  const userData = useSelector(userSelector);
+  const isLogin = useSelector(isLogInSelector);
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
-  const { detailList, data } = props;
+  const { detailList } = props;
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(false);
 
-  const additionalData = { data };
+  // 최초 렌더링 시 데이터를 받아와서 저장하는 부분
+  const location = useLocation();
+  const url = location.pathname.split('/').pop();
+  const [data, setData] = React.useState<any>(initialData); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
+  React.useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/group/${url}`)
+      .then((res) => {
+        const formattedData = {
+          ...res.data.data,
+          author: res.data.data.leader_name,
+        };
+        setData(formattedData);
+      })
+      .catch((error) => {
+        setData(initialData);
+        console.log('데이터를 못 가져왔어요..');
+      });
+  }, []);
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+  // 삭제 요청을 보내는 버튼
+  const deletePostHandler = () => {
+    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+    if (confirmed) {
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/group/${url}`, config)
+        .then((res) => {
+          alert('게시글이 삭제되었습니다.');
+          console.log('삭제 성공');
+          navigate('/teampage/team');
+        })
+        .catch((error) => {
+          console.log('삭제 실패');
+        });
+    }
+  };
 
   return (
     <>
@@ -82,8 +150,27 @@ function DetailPage(props: DetailListProps) {
         >
           <HtmlParser data={data.contents} />
         </StyledBox>
-        {/* 댓글창 / 신청자목록을 불러오는 부분 */}
-        <StyledBox>
+      </StyledContainer>
+      <div
+        style={{
+          display: 'flex',
+          height: '3rem',
+          justifyContent: 'flex-end',
+        }}
+      >
+        {userData?.nickname === data.author && (
+          <div>
+            <Link to={`/teampage/edit/${url}`} state={data}>
+              <StyledMiniButton>수정</StyledMiniButton>
+            </Link>
+            <StyledMiniButton onClick={deletePostHandler}>
+              삭제
+            </StyledMiniButton>
+          </div>
+        )}
+      </div>
+      <StyledContainer>
+        <StyledBox style={{ width: '100rem' }}>
           <StyledDiv
             style={{
               width: '100%',
@@ -94,31 +181,30 @@ function DetailPage(props: DetailListProps) {
               flexWrap: 'wrap',
             }}
           >
+            {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
             {data.applicant?.length > 0 && (
-              <TeamPageComments data={data.applicant} />
+              <TeamPageComments data={data.applicant} user={data.author} />
             )}
           </StyledDiv>
         </StyledBox>
       </StyledContainer>
       <StyledContainer>
         <StyledBox style={{ justifyContent: 'center' }}>
+          {isLogin && (
+            <StyledButton
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              {data.leader_name ? '👪함께하기' : '✏️댓글 달기'}
+            </StyledButton>
+          )}
           <StyledButton
             onClick={() => {
-              setShowModal(true);
+              navigate(`/teampage/team`);
             }}
           >
-            {data.leader_name ? '함께하기' : '댓글 달기'}
-          </StyledButton>
-
-          <Link to={`/teampage/edit/:id`} state={additionalData}>
-            <StyledButton>수정하기</StyledButton>
-          </Link>
-          <StyledButton
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            돌아가기
+            ↩️돌아가기
           </StyledButton>
         </StyledBox>
         {showModal &&
@@ -143,9 +229,6 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 1rem;
-  /* background-color: beige; */
-  /* width: 100rem; */
-  /* background-color: beige; */
 `;
 
 const StyledBox = styled.div`
@@ -160,7 +243,6 @@ const StyledTitle = styled.div`
   margin: 0rem 2rem;
   font-size: 1.9rem;
   padding: 1rem 1rem;
-  /* border: 1px solid #eee; */
 `;
 
 const StyledDiv = styled.div`
@@ -169,20 +251,9 @@ const StyledDiv = styled.div`
   font-size: 2rem;
 `;
 
-// const StyledInputText = styled.input`
-//   display: flex;
-//   padding-left: 1rem;
-//   width: 9rem;
-//   height: 4rem;
-//   text-align: center;
-//   align-items: center;
-// `;
-
 const StyledDivText = styled.div`
   display: flex;
   padding-left: 1rem;
-  /* background-color: skyblue; */
-  /* width: 9rem; */
   width: fit-content;
   height: 4rem;
   text-align: center;
@@ -190,29 +261,23 @@ const StyledDivText = styled.div`
   font-size: 2rem;
 `;
 
-// const StyledInputNumber = styled.input`
-//   display: flex;
-//   padding-left: 1rem;
-//   width: 6rem;
-//   height: 4rem;
-//   text-align: center;
-// `;
-
 const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
+  background-color: white;
+  margin: 6rem 3rem 2rem 3rem;
+  &:hover {
+    color: gray;
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
 `;
 
-const Styledcontents = styled.div`
-  padding: 2rem 2rem;
-  width: 100rem;
-  height: 45rem;
-  background-color: beige;
-  font-size: 3rem;
-`;
-
-const StyledComment = styled.div`
-  /* display: grid; */
-  margin: 0.4rem 0.4rem;
-  align-items: center;
-  font-size: 2rem;
+const StyledMiniButton = styled.button`
+  font-size: 1.7rem;
+  margin: 1rem 1rem 0rem 0.4rem;
+  background-color: white;
+  &:hover {
+    color: gray;
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
 `;

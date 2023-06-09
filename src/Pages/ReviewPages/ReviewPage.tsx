@@ -8,6 +8,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
+import ReviewDetailPage from './ReviewDetailPage';
 import WriteReviewPage from './WriteReviewPage';
 import Avatar1 from '../../styles/icon/avatar1.png';
 import Avatar2 from '../../styles/icon/avatar2.png';
@@ -21,6 +22,8 @@ const REVIEW_LIST_DUMMY_DATA = [
   {
     userIcon: '최도원',
     reviewTitle: '이번 매치 OOO 매니저님 너무 친절하셨어요! 또 뵙고 싶네요~',
+    reviewContent:
+      '우아ㅗ아ㅗ아왕롼ㅇ뢈ㅇ라양야야야얌나야냥냐얀랸얄ㄴ야ㅑㄹㅇ냐 뀨뀨ㅜㄴㅁ우ㅏㄴㅇㅁㄴㅇ먄럄뉾ㄴㄹㄴ뮮ㄴㄹㄴ뮮뉴ㅠㄻ뉴 ㅠㅁㄴ라윰닒ㄴ율ㄴㅇㄻㅁㅁㅇㄹㅇㄴㄹㄴㅇㄹ',
     author: '최도원',
     area: '수원',
     stadium: '수원 HM파크',
@@ -94,6 +97,10 @@ export default function ReviewPage() {
     });
   }
 
+  function handleReviewTitleClick(index: number) {
+    navigate(`/review/detail/${index}`, { state: reviewList[index] });
+  }
+
   function handleLikeButtonClick(index: number) {
     setReviewList((prevList) => {
       const updatedList = [...prevList];
@@ -110,12 +117,17 @@ export default function ReviewPage() {
     });
   }
 
+  function handleWriteButtonClick() {
+    navigate('/review/write');
+  }
+
   return (
     <>
       <Header />
       <HeaderCategory />
       <Routes>
         <Route path="/write" element={<WriteReviewPage />} />
+        <Route path="/detail/:index" element={<ReviewDetailPage />} />
         <Route
           path="/"
           element={
@@ -171,9 +183,14 @@ export default function ReviewPage() {
                   ? reviewList.map((item, index) => (
                       <StyledReviewList key={index}>
                         <span className="review-user-icon">
-                          {<img src={AVATARS[index]} alt="avatar1" />}
+                          {<img src={AVATARS[index]} alt="userIcon" />}
                         </span>
-                        <span className="review-title">{item.reviewTitle}</span>
+                        <span
+                          className="review-title"
+                          onClick={() => handleReviewTitleClick(index)}
+                        >
+                          {item.reviewTitle}
+                        </span>
                         <span className="review-author">{item.author}</span>
                         <span className="review-area">{item.area}</span>
                         <span className="review-stadium">{item.stadium}</span>
@@ -197,7 +214,12 @@ export default function ReviewPage() {
                         <span className="review-user-icon">
                           {<img src={AVATARS[index]} alt="avatar1" />}
                         </span>
-                        <span className="review-title">{item.reviewTitle}</span>
+                        <span
+                          className="review-title"
+                          onClick={() => handleReviewTitleClick(index)}
+                        >
+                          {item.reviewTitle}
+                        </span>
                         <span className="review-author">{item.author}</span>
                         <span className="review-area">{item.area}</span>
                         <span className="review-stadium">{item.stadium}</span>
@@ -221,7 +243,7 @@ export default function ReviewPage() {
                 <StyledWrite>
                   <button
                     onClick={() => {
-                      navigate('/review/write');
+                      handleWriteButtonClick();
                     }}
                   >
                     글쓰기
@@ -338,6 +360,11 @@ const StyledReviewList = styled.div`
     border: 2px solid #ededed;
     border-radius: 3rem;
     background-color: #fafafa;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #cccccc;
+    }
   }
 
   .review-author {

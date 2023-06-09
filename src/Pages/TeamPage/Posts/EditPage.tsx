@@ -3,17 +3,36 @@ import styled from 'styled-components';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import FindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
+// import FindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
 import FindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
 import axios from 'axios';
 
+// const initialData = {
+//   group_id: '',
+//   location: '',
+//   leader_name: '',
+//   author: '',
+//   contents: '',
+//   gender: '',
+//   num: '',
+//   position: '',
+//   skill: '',
+//   status: '',
+//   title: '',
+//   gk_count: 0,
+//   gk_current_count: 0,
+//   player_count: 0,
+//   player_current_count: 0,
+//   random_matched: '',
+//   applicant: [],
+// };
+
 function EditPage() {
   const location = useLocation();
-  const additionalData = location.state;
-  const { data } = additionalData;
-
+  const url = location.pathname.split('/').pop();
+  const data = location.state;
   let category: string;
-  if (data.leader_name) {
+  if (data.author) {
     category = '팀원 구해요';
   } else {
     category = '팀 구해요';
@@ -36,41 +55,41 @@ function EditPage() {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const navigate = useNavigate();
 
-  // API요청 설정
+  // 새 글을 작성하는 axios 명령
   const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
     withCredentials: true,
   };
-
-  // 새 글을 작성하는 axios 명령
-  const handlePostRequest = () => {
-    let data;
+  const handlePatchRequest = () => {
+    let postData;
     if (category === '팀원 구해요') {
-      data = {
-        leader_id: '6480bae19854c0d4bc9b4cde', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
-        leader_name: '고마오', //현재 수동입력, 접속 유저 데이터에서 가져오게 해야함
+      postData = {
         title: title,
         location: area,
-        play_date: '아무때나',
-        // allowRandom: allowRandom,
-        player_current_count: player,
-        player_count: playerNeed,
-        gk_current_count: gk,
-        gk_count: gkNeed,
+        player_current_count: player.toString(),
+        player_count: playerNeed.toString(),
+        gk_current_count: gk.toString(),
+        gk_count: gkNeed.toString(),
         contents: body,
       };
-      // axios
-      //   .post(`${process.env.REACT_APP_API_URL}/group`, data, config)
-      //   .then((res) => {
-      //     console.log('POST 요청 성공 : ', res.data);
-      //   })
-      //   .catch((e) => {
-      //     console.error('POST 요청 실패 : ', e);
-      //   });
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URL}/group/${url}/info`,
+          postData,
+          config
+        )
+        .then((res) => {
+          console.log('수정 요청 성공 : ', res.data);
+          alert('글 수정이 완료되었습니다.');
+          navigate(`/teampage/team/${url}`);
+        })
+        .catch((e) => {
+          console.error('글 수정 실패 : ', e);
+        });
     } else if (category === '팀 구해요') {
-      data = {
+      postData = {
         title: title,
         gender: gender,
         skill: skill,
@@ -81,7 +100,7 @@ function EditPage() {
     }
 
     // 정상 출력되는지 테스트용 콘솔
-    console.log(data);
+    console.log(postData);
   };
 
   // 입력값을 검사하는 validator - 오류를 조금 더 상세하게 출력하는 것이 효과가 있을까?
@@ -102,7 +121,7 @@ function EditPage() {
   const quillModules = {
     toolbar: {
       container: [
-        [{ header: [1, 2, 3, 4, false] }],
+        // [{ header: [1, 2, 3, 4, false] }],
         ['bold', 'italic', 'underline', 'strike'],
         // ['link'],
         [{ list: 'ordered' }, { list: 'bullet' }],
@@ -122,7 +141,7 @@ function EditPage() {
           </StyledDiv>
           <StyledTitle>활동지역</StyledTitle>
           <StyledInputText
-            defaultValue={area}
+            defaultValue={data.location}
             onChange={(e) => {
               setArea(e.target.value);
             }}
@@ -155,16 +174,6 @@ function EditPage() {
             setGkNeed={setGkNeed}
           />
         )}
-        {category === '팀 구해요' && (
-          <FindingTeam
-            gender={gender}
-            skill={skill}
-            position={position}
-            setGender={setGender}
-            setSkill={setSkill}
-            setPosition={setPosition}
-          />
-        )}
       </StyledContainer>
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>
@@ -181,7 +190,7 @@ function EditPage() {
               try {
                 const validationResult = submitValidator();
                 if (validationResult === '통과') {
-                  handlePostRequest();
+                  handlePatchRequest();
                 }
               } catch (error) {
                 alert(error);

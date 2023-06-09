@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import DropDown from '../../Commons/DropDown';
+import DropDown from '../../../../Components/Commons/DropDown';
 
 type DropdownList = {
   option: string[];
@@ -62,22 +62,12 @@ type BoardProps = {
   tableList: TableList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
-  // data: any;
 };
 
 // SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 166줄에서 넘어옴
 function Board(props: BoardProps) {
-  const {
-    dropdownList,
-    tableList,
-    handleReset,
-    // setShowModal,
-    // setModalData,
-    filteredData,
-    // data,
-  } = props;
+  const { dropdownList, tableList, handleReset, filteredData } = props;
 
   return (
     <div style={{ width: '101rem' }}>
@@ -110,8 +100,6 @@ function Board(props: BoardProps) {
                 {tableList.map((item) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
-
-                {/* <th>미리보기</th> */}
               </tr>
             </thead>
             <tbody>
@@ -120,8 +108,8 @@ function Board(props: BoardProps) {
                   <td style={{ width: '5%' }}>{filteredData.length - idx}</td>
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.group_id}`} state={{ data: item }}>
-                      <StyledTitle>{item.title}</StyledTitle>
-                    </Link>{' '}
+                      <StyledSpan>{item.title}</StyledSpan>
+                    </Link>
                     <span style={{ marginLeft: '0.5rem', color: 'red' }}>
                       {item.applicant &&
                         item.applicant.length > 0 &&
@@ -133,18 +121,6 @@ function Board(props: BoardProps) {
                       {item[cell.body as keyof typeof item] as React.ReactNode}
                     </td>
                   ))}
-
-                  {/* <td>
-                    <button
-                      // 실제로 나중에는 objectId로 get요청을 보내서 데이터를 가져오게 해야 할 것이다.
-                      onClick={() => {
-                        setShowModal(true);
-                        // setModalData(data[item.num - 1]);
-                      }}
-                    >
-                      조회
-                    </button>
-                  </td> */}
                 </StyledTr>
               ))}
             </tbody>
@@ -198,7 +174,7 @@ const StyledTr = styled.tr`
   border-bottom: 0.1rem solid #dddddd;
 `;
 
-const StyledTitle = styled.td`
+const StyledSpan = styled.span`
   &:hover {
     transform: scale(1.1);
     color: #8b8b8b;
