@@ -9,7 +9,6 @@ import {
   userSelector,
 } from '../../../store/selectors/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
-// import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
 import axios from 'axios';
 
@@ -26,22 +25,22 @@ type DetailList = {
 // };
 
 // type DataProps = {
-//   group_id?: string;
+//   group_id: string;
 //   location: string;
 //   author: string;
-//   body: string;
+//   contents: string;
 //   gender: string;
-//   position?: string;
-//   skill?: string;
+//   position: string;
+//   skill: string;
 //   status: string;
 //   title: string;
-//   gk_count?: number;
-//   gk_current_count?: number;
-//   player_count?: number;
-//   player_current_count?: number;
-//   random_matched?: string;
-//   applicant?: Applicant[];
-//   [key: string]: string | number | undefined | Applicant[];
+//   gk_count: number;
+//   gk_current_count: number;
+//   player_count: number;
+//   player_current_count: number;
+//   random_matched: string;
+//   applicant: Applicant[];
+//   [key: string]: string | number | Applicant[];
 // };
 
 const initialData = {
@@ -90,6 +89,7 @@ function DetailPage(props: DetailListProps) {
           ...res.data.data,
           author: res.data.data.leader_name,
         };
+
         setData(formattedData);
       })
       .catch((error) => {
