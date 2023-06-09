@@ -114,7 +114,7 @@ export function MyPageInfo({
 
   const handleAlertWithDrawalConfirm = () => {
     dispatch(AUTH_ACTIONS.logout());
-    // 여기도 안되네..
+
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user`, {
         withCredentials: true,
