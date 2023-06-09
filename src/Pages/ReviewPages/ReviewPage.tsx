@@ -416,6 +416,7 @@ const StyledStickyButtons = styled.div`
 
 const StyledWrite = styled.span`
   > button {
+    font-size: 1.5rem;
     padding: 1.5rem 2rem;
     border: 1px solid #ededed;
     border-radius: 3rem;
@@ -423,7 +424,7 @@ const StyledWrite = styled.span`
     box-shadow: 1px 1px #ededed;
     box-shadow: 2px 2px #ededed;
     &:hover {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: bold;
       color: black;
     }
