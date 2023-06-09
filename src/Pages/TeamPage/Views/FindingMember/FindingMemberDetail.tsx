@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams, useLocation } from 'react-router-dom';
-import DetailPageBoard from '../../Posts/DetailPage';
+import DetailPageBoard from '../../Posts/FindingMemberDetailPage';
 import axios from 'axios';
 
 function DetailPage() {

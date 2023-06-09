@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import DropDown from '../../Commons/DropDown';
+import DropDown from '../../../../Components/Commons/DropDown';
 
 type DropdownList = {
   option: string[];
@@ -62,22 +62,12 @@ type BoardProps = {
   tableList: TableList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalData: React.Dispatch<React.SetStateAction<modalDataProps>>;
   filteredData: filteredData[];
-  // data: any;
 };
 
 // SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 166줄에서 넘어옴
 function Board(props: BoardProps) {
-  const {
-    dropdownList,
-    tableList,
-    handleReset,
-    // setShowModal,
-    // setModalData,
-    filteredData,
-    // data,
-  } = props;
+  const { dropdownList, tableList, handleReset, filteredData } = props;
 
   return (
     <div style={{ width: '101rem' }}>
@@ -110,8 +100,6 @@ function Board(props: BoardProps) {
                 {tableList.map((item) => (
                   <th key={item.title}>{item.title}</th>
                 ))}
-
-                {/* <th>미리보기</th> */}
               </tr>
             </thead>
             <tbody>
