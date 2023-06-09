@@ -11,6 +11,7 @@ import {
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
 // import SubmitForFindingTeam from '../../../Components/TeamPage/SubmitModal/SubmitForFindingTeam';
 import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
+import BallIcon from '../../../styles/icon/soccerball.svg';
 import axios from 'axios';
 
 type DetailList = {
@@ -120,66 +121,84 @@ function DetailPage(props: DetailListProps) {
         });
     }
   };
+  console.log(detailList);
 
   return (
-    <>
-      <StyledContainer style={{ marginTop: '3rem' }}>
-        <StyledBox
-          style={{
-            width: '100rem',
-          }}
-        >
-          <StyledTitle>제 목</StyledTitle>
-          <StyledDivText style={{ textAlign: 'left', width: '47rem' }}>
-            {data.title}
-          </StyledDivText>
-          <StyledTitle style={{ marginLeft: '30rem' }}>작성자</StyledTitle>
-          <StyledDiv style={{ width: '9rem' }}>{data.author}</StyledDiv>
-        </StyledBox>
-        <StyledBox style={{ justifyContent: 'space-around', width: '100rem' }}>
-          {detailList.map((item: DetailList) => (
-            <StyledDiv key={item.title}>
-              <StyledTitle>{item.title}</StyledTitle>
-              <StyledDivText>{data[item.value]}</StyledDivText>
-            </StyledDiv>
-          ))}
-        </StyledBox>
-      </StyledContainer>
-      <StyledContainer>
-        <StyledBox
-          style={{ display: 'grid', border: '1px solid', borderRadius: '1rem' }}
-        >
+    <StyledWrap>
+      <StyledHeader status={data.status}>
+        <StyledBoardName>팀원 모집・신청</StyledBoardName>
+
+        <h1>
+          <span>[{data.status}] </span>
+          {data.title}
+        </h1>
+        <StyledAuthorDiv>
+          <StyledImgDiv>
+            <img src={BallIcon} alt="BallIcon" />
+          </StyledImgDiv>
+          <p>{data.author}</p>
+        </StyledAuthorDiv>
+      </StyledHeader>
+      <StyledDetailDiv>
+        <h3>모집 상세</h3>
+        <div>
+          <StyledDetailLocationLi>
+            <StyledDetailLabel>활동 지역</StyledDetailLabel>
+            <p>{data.location}</p>
+          </StyledDetailLocationLi>
+          <StyledDetailLi>
+            <StyledDetailLabel>모집 현황</StyledDetailLabel>
+            <div>
+              <StyledDetailPosition>
+                <p>필드플레이어</p>
+                <div>
+                  {data.player_current_count}명/{data.player_count}명
+                </div>
+              </StyledDetailPosition>
+              <StyledDetailPosition>
+                <p>골키퍼</p>
+                <div>
+                  {data.gk_current_count}명/{data.gk_count}명
+                </div>
+              </StyledDetailPosition>
+            </div>
+          </StyledDetailLi>
+        </div>
+        {/* {detailList.map((item: DetailList) => (
+          <StyledDetailLi key={item.title}>
+            <div>{item.title}</div>
+            <div>{data[item.value]}</div>
+          </StyledDetailLi>
+        ))} */}
+      </StyledDetailDiv>
+
+      <StyledBody>
+        <div>
           <HtmlParser data={data.contents} />
-        </StyledBox>
-      </StyledContainer>
-      <div
-        style={{
-          display: 'flex',
-          height: '3rem',
-          justifyContent: 'flex-end',
-        }}
-      >
+        </div>
+      </StyledBody>
+      <StyledAuthorButtonContainer>
         {userData?.name === data.author && (
           <Link to={`/teampage/edit/${url}`} state={data}>
-            <StyledMiniButton>수정</StyledMiniButton>
+            <button>수정</button>
           </Link>
         )}
         {(userData?.name === data.author || userData?.role !== 'user') && (
-          <StyledMiniButton onClick={deletePostHandler}>삭제</StyledMiniButton>
+          <button onClick={deletePostHandler}>삭제</button>
         )}
         {(userData?.name === data.author || userData?.role !== 'user') && (
-          <StyledMiniButton
+          <button
             onClick={() => {
               console.log(data.accept);
             }}
           >
             조회
-          </StyledMiniButton>
+          </button>
         )}
-      </div>
-      <StyledContainer>
-        <StyledBox style={{ width: '100rem' }}>
-          <StyledDiv
+      </StyledAuthorButtonContainer>
+      <div>
+        <div style={{ width: '100rem' }}>
+          <div
             style={{
               width: '100%',
               display: 'flex',
@@ -193,28 +212,28 @@ function DetailPage(props: DetailListProps) {
             {data.applicant?.length > 0 && (
               <TeamPageComments data={data.applicant} user={data.author} />
             )}
-          </StyledDiv>
-        </StyledBox>
-      </StyledContainer>
-      <StyledContainer>
-        <StyledBox style={{ justifyContent: 'center' }}>
-          {isLogin && userData?.nickname !== data.author && (
-            <StyledButton
-              onClick={() => {
-                setShowModal(true);
-              }}
-            >
-              👪함께하기
-            </StyledButton>
-          )}
-          <StyledButton
+          </div>
+        </div>
+      </div>
+      <div>
+        <StyledFooter>
+          <button
             onClick={() => {
               navigate(`/teampage/team`);
             }}
           >
-            ↩️돌아가기
-          </StyledButton>
-        </StyledBox>
+            돌아가기
+          </button>
+          {isLogin && userData?.nickname !== data.author && (
+            <button
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              함께하기
+            </button>
+          )}
+        </StyledFooter>
         {showModal &&
           (data.leader_name ? (
             <SubmitForFindingMember
@@ -225,68 +244,134 @@ function DetailPage(props: DetailListProps) {
             ''
             // <SubmitForFindingTeam setShowModal={setShowModal} />
           ))}
-      </StyledContainer>
-    </>
+      </div>
+    </StyledWrap>
   );
 }
 
 export default DetailPage;
 
-const StyledContainer = styled.div`
-  display: grid;
-  grid-gap: 10px 0px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
+const StyledWrap = styled.div`
+  width: 98.4rem;
+  margin: auto;
+  border: 0.2rem solid lightgray;
+  border-radius: 2rem;
+  padding: 2rem;
 `;
 
-const StyledBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 10rem;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-  padding: 1rem 1rem;
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledDivText = styled.div`
-  display: flex;
-  padding-left: 1rem;
-  width: fit-content;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledButton = styled.button`
-  background-color: white;
-  margin: 6rem 3rem 2rem 3rem;
-  &:hover {
-    color: gray;
-    text-decoration: underline;
-    transform: scale(1.1);
+const StyledHeader = styled.div<{ status: string }>`
+  border-bottom: 0.2rem solid lightgray;
+  h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+    span {
+      color: ${({ status }) =>
+        status === '모집중' ? 'var(--color--green)' : 'gray'};
+    }
   }
 `;
 
-const StyledMiniButton = styled.button`
+const StyledBoardName = styled.div`
+  color: #71c171;
   font-size: 1.7rem;
-  margin: 1rem 1rem 0rem 0.4rem;
-  background-color: white;
-  &:hover {
+  font-weight: 600;
+`;
+
+const StyledAuthorDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 2rem;
+  p {
+    font-size: 1.8rem;
+    padding-left: 1rem;
+  }
+`;
+
+const StyledImgDiv = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100%;
+  border: 0.2rem solid lightgray;
+`;
+
+const StyledDetailDiv = styled.div`
+  font-size: 1.9rem;
+  margin-bottom: 3rem;
+  h3 {
+    font-size: 2.2rem;
+  }
+`;
+
+const StyledDetailLabel = styled.div`
+  color: gray;
+  padding-right: 2rem;
+`;
+
+const StyledDetailLocationLi = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 1.3rem;
+`;
+
+const StyledDetailLi = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const StyledDetailPosition = styled.div`
+  display: flex;
+  background-color: #ffffff;
+
+  :first-child {
+  }
+  p {
+    padding-right: 1rem;
+    width: 14rem;
+  }
+`;
+
+const StyledBody = styled.div`
+  border-top: 0.1rem solid lightgray;
+  min-height: 30rem;
+`;
+
+const StyledAuthorButtonContainer = styled.div`
+  margin: 2rem auto;
+  display: flex;
+  height: 3rem;
+  justify-content: flex-end;
+  button {
     color: gray;
-    text-decoration: underline;
-    transform: scale(1.1);
+    background-color: white;
+  }
+  button:not(:first-child):before {
+    content: '|';
+    padding-right: 1.5rem;
+    color: lightgray;
+  }
+`;
+
+const StyledFooter = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 3rem;
+  button {
+    width: 11rem;
+    height: 4.5rem;
+    border-radius: 0.7rem;
+    background-color: var(--color--green);
+    color: white;
+    font-size: 1.7rem;
+    font-weight: 600;
+    filter: drop-shadow(0 0 0.2rem green);
+
+    :first-child {
+      margin-right: 1rem;
+      background-color: white;
+      color: #787878;
+      filter: drop-shadow(0 0 0.2rem grey);
+    }
   }
 `;
