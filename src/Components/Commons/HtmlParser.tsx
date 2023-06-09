@@ -19,7 +19,7 @@ function Parser(props: any) {
 export default Parser;
 
 const StyledBody = styled.div`
-  padding: 2rem 2rem;
+  padding: 2rem 0;
   width: 100rem;
   white-space: pre-wrap;
   font-size: 2rem;
