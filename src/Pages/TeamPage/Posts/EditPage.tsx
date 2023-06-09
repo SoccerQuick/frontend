@@ -74,7 +74,7 @@ function EditPage() {
       };
       axios
         .patch(
-          `${process.env.REACT_APP_API_URL}/group/${url}/info`,
+          `${process.env.REACT_APP_API_URL}/groups/${url}/info`,
           postData,
           config
         )

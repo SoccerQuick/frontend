@@ -35,7 +35,7 @@ function SearchMyTeamPost() {
   );
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/group`, {
+      .get(`${process.env.REACT_APP_API_URL}/groups`, {
         withCredentials: true,
       })
       .then((res) => res.data.data)
