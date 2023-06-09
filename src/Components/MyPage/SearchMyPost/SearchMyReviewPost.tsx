@@ -5,24 +5,26 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 
 export type ReviewPost = {
+  review_id: string;
   comment: string;
   dom_id: string;
   createdAt: string;
   name: string;
   rating: number;
+  userslikes: Array<string>;
   updatedAt: string;
 };
 
 function SearchMyReviewPost() {
   const [reviewList, setReviewList] = useState<ReviewPost[]>([]);
-  const properties = ['작성자', '코멘트', '구장', '평점', '작성일자'];
+  const properties = ['작성자', '코멘트', '구장', '평점', '좋아요'];
   const user = useSelector(userSelector);
   const filteredItems = reviewList.filter(
-    (item: ReviewPost) => item.name === '테스트'
+    (item: ReviewPost) => item.name === user?.name
   );
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/review`, {
+      .get(`${process.env.REACT_APP_API_URL}/reviews`, {
         withCredentials: true,
       })
       .then((res) => res.data.data)

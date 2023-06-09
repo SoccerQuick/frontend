@@ -11,8 +11,8 @@ import {
   ModalTerms,
 } from '../Commons/AuthComponents';
 
-const postSignupUrl = `${process.env.REACT_APP_API_URL}/auth/signup`; // signup api url
-const postIdCheckUrl = `${process.env.REACT_APP_API_URL}/auth/id`; // id-check api url
+const postSignupUrl = `${process.env.REACT_APP_API_URL}/auths/signup`; // signup api url
+const postIdCheckUrl = `${process.env.REACT_APP_API_URL}/auths/id`; // id-check api url
 
 // Signup type
 type SignupProps = {
@@ -155,7 +155,6 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
       } else {
         setResponseMsg('An error occurred');
       }
-      console.log(error);
     }
   };
 

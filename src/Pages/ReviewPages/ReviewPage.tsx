@@ -360,6 +360,7 @@ const StyledReviewList = styled.div`
     border: 2px solid #ededed;
     border-radius: 3rem;
     background-color: #fafafa;
+    z-index: 1;
 
     &:hover {
       cursor: pointer;
@@ -406,24 +407,24 @@ const StyledReviewList = styled.div`
 
 const StyledStickyButtons = styled.div`
   display: grid;
-  grid-template-columns: 20fr 1fr;
+  grid-template-columns: 50fr 1fr;
   place-items: center;
   position: sticky;
   bottom: 5rem;
-  margin: 3rem 0 5rem 0;
+  margin: 3rem 0 5rem 5rem;
 `;
 
 const StyledWrite = styled.span`
   > button {
-    padding: 2rem 3rem;
+    font-size: 1.5rem;
+    padding: 1.5rem 2rem;
     border: 1px solid #ededed;
     border-radius: 3rem;
     background-color: white;
     box-shadow: 1px 1px #ededed;
     box-shadow: 2px 2px #ededed;
     &:hover {
-      opacity: 1;
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: bold;
       color: black;
     }
