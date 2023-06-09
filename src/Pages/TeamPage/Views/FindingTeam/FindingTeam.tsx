@@ -76,7 +76,7 @@ function FindingTeam(props: FindingTeamProps) {
 
   React.useEffect(() => {
     // axios
-    //   .get(`${process.env.REACT_APP_API_URL}/group`)
+    //   .get(`${process.env.REACT_APP_API_URL}/groups`)
     //   .then((res) => {
     //     // 가져온 데이터가 있다면 data에 저장한다.
     //     console.log('데이터 받아옴 ㅎㅎ');

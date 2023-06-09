@@ -40,7 +40,7 @@ function Comment(props: any) {
       };
       axios
         .patch(
-          `${process.env.REACT_APP_API_URL}/group/${url}/accept`,
+          `${process.env.REACT_APP_API_URL}/groups/${url}/accept`,
           body,
           config
         )
@@ -64,7 +64,7 @@ function Comment(props: any) {
       };
       axios
         .patch(
-          `${process.env.REACT_APP_API_URL}/group/${url}/reject`,
+          `${process.env.REACT_APP_API_URL}/groups/${url}/reject`,
           body,
           config
         )

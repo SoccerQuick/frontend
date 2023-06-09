@@ -84,7 +84,7 @@ function DetailPage(props: DetailListProps) {
   const [data, setData] = React.useState<any>(initialData); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
   React.useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/group/${url}`)
+      .get(`${process.env.REACT_APP_API_URL}/groups/${url}`)
       .then((res) => {
         const formattedData = {
           ...res.data.data,
@@ -109,7 +109,7 @@ function DetailPage(props: DetailListProps) {
     const confirmed = window.confirm('정말로 삭제하시겠습니까?');
     if (confirmed) {
       axios
-        .delete(`${process.env.REACT_APP_API_URL}/group/${url}`, config)
+        .delete(`${process.env.REACT_APP_API_URL}/groups/${url}`, config)
         .then((res) => {
           alert('게시글이 삭제되었습니다.');
           console.log('삭제 성공');
