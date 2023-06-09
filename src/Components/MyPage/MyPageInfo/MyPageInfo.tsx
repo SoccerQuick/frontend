@@ -76,7 +76,7 @@ export function MyPageInfo({
   ) => {
     try {
       const response = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/user`,
+        `${process.env.REACT_APP_API_URL}/users`,
         {
           user_id: formData.user_id,
           name: formData.name,
@@ -135,7 +135,7 @@ export function MyPageInfo({
     const data = { password: oldPassword, user_id: formData.user_id };
 
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/user`, {
+      .delete(`${process.env.REACT_APP_API_URL}/users`, {
         headers: headers,
         data: data,
       })

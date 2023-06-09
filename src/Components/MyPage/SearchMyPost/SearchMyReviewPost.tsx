@@ -22,7 +22,7 @@ function SearchMyReviewPost() {
   );
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/review`, {
+      .get(`${process.env.REACT_APP_API_URL}/reviews`, {
         withCredentials: true,
       })
       .then((res) => res.data.data)

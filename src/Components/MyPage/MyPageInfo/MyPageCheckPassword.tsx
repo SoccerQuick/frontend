@@ -32,7 +32,7 @@ function MyPageCheckPassword({
     };
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/password`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/auths/password`, data, {
         withCredentials: true,
       })
       .then((res) => res.request)

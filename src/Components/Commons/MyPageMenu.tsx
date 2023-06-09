@@ -22,7 +22,7 @@ export function MyPageMenu() {
 
     // logout
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/auth/logout`, {
+      .delete(`${process.env.REACT_APP_API_URL}/auths/logout`, {
         withCredentials: true,
       })
       .then((res) => console.log(res))

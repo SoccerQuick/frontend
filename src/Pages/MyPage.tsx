@@ -47,7 +47,7 @@ export function MyPage() {
 
   const getUserData = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user/`, {
+      .get(`${process.env.REACT_APP_API_URL}/users/`, {
         withCredentials: true,
       })
       .then((res) => res.data.userData)
