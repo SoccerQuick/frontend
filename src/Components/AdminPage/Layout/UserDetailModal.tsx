@@ -15,6 +15,8 @@ interface UserData {
   createdAt: string;
   login_banned: boolean;
   login_banEndDate: string | null;
+  community_banned: boolean;
+  community_banEndDate: string | null;
 }
 
 type props = {
@@ -89,6 +91,34 @@ function DetailModal(props: props) {
     }
   };
 
+  // 관리자 임명 API
+  const handleUserCommunityBan = () => {
+    const confirmed = window.confirm(
+      `⚠️${modalData.nick_name}유저의 커뮤니티 작성을 금지하려고 합니다. 신중하게 결정해 주세요.`
+    );
+    if (confirmed) {
+      const data = {
+        banUserId: modalData.user_id,
+      };
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URL}/admins/bans/community`,
+          data,
+          config
+        )
+        .then((res) => {
+          console.log('해당 유저의 커뮤니티 정지 완료 : ', res.data);
+          alert(`${modalData.nick_name}유저의 커뮤니티 기능이 정지되었습니다.`);
+          setShowDetailModal(false);
+          setShowManagementModal(false);
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('사용자 정지 실패 : ', e);
+        });
+    }
+  };
+
   // 출력할 데이터를 포맷팅하는 변수
   const detailList = {
     이름: modalData.name,
@@ -102,9 +132,15 @@ function DetailModal(props: props) {
         : modalData.role === 'manager'
         ? '🌟관리자'
         : '일반회원',
-    '계정 상태': modalData.login_banned ? 'Banned' : '정상',
+    '계정 상태': modalData.login_banned
+      ? '로그인 정지'
+      : modalData.community_banned
+      ? '커뮤니티 정지'
+      : '정상',
     '정지 기간': modalData.login_banned
-      ? modalData.login_banEndDate?.split('T').join(' ')
+      ? modalData.login_banEndDate?.split('T').join(' ').slice(0, -5)
+      : modalData.community_banned
+      ? modalData.community_banEndDate?.split('T').join(' ').slice(0, -5)
       : '-',
     가입일자: modalData.createdAt.split('T')[0].slice(2),
   };
@@ -179,6 +215,12 @@ function DetailModal(props: props) {
                 onClick={handleUserBlockLogin}
               >
                 로그인 정지
+              </ManagementButton>
+              <ManagementButton
+                data={showManagementModal ? 'true' : 'false'}
+                onClick={handleUserCommunityBan}
+              >
+                커뮤니티 정지
               </ManagementButton>
               <ReturnButton
                 style={{ zIndex: 999 }}
