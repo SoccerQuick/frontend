@@ -3,9 +3,16 @@ import styled from 'styled-components';
 import CustomMapMarker from './CustomMapMarker';
 import ResetMapBtn from './ResetMapBtn';
 import FieldDummy from './fieldDummy';
+import { DomDataType } from '../../../Pages/SearchPage';
+
 import { listeners } from 'process';
 
-const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
+interface FieldMapType {
+  searchKeyword: string;
+  totalDomData: DomDataType[];
+}
+
+const FieldMap: React.FC<FieldMapType> = ({ searchKeyword, totalDomData }) => {
   const { naver } = window;
   const mapElement = useRef<HTMLElement | null | any>(null);
   let map: naver.maps.Map;
@@ -60,16 +67,16 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
   //구장 데이터 배열 순회하면서 마커 생성 진행!
   const addMarkers = () => {
     // let mapBounds = map.getBounds();
-    for (let i = 0; i < FieldDummy.length; i++) {
+    for (let i = 0; i < totalDomData.length; i++) {
       if (createMarkerList.length > 100) {
         break;
       }
 
-      let markerObj = FieldDummy[i];
+      let markerObj = totalDomData[i];
       // let position = new naver.maps.LatLng(markerObj.lat, markerObj.lng);
       // if (mapBounds.hasPoint(position)) {
-      const { id, title, lat, lng } = markerObj;
-      addMarker(id, title, lat, lng);
+      const { _id, title, lat, lng } = markerObj;
+      addMarker(_id, title, lat, lng);
       // }
     }
   };
@@ -92,7 +99,8 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
       createMarkerList.push(newMarker);
     } catch (e) {}
   };
-
+  console.log(createMarkerList);
+  console.log(totalDomData);
   useEffect(() => {
     const MoveEventListner = naver.maps.Event.addListener(
       map,
