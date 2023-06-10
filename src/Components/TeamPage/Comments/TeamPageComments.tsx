@@ -91,7 +91,7 @@ function Comment(props: any) {
 
         {data.map((applicant: Applicant, index: number) => (
           <CommentLiContainer key={index}>
-            <StyledAuthorDiv>
+            <StyledAuthorDiv gender={applicant.gender}>
               <StyledImgDiv>
                 <img src={ballIcon} alt="BallIcon" />
               </StyledImgDiv>
@@ -100,6 +100,9 @@ function Comment(props: any) {
             <StyledContents>{applicant.contents}</StyledContents>
             {/* {user === userData?.nickname && ( */}
             <StyledCommentDetailDiv>
+              <StyledGender gender={applicant.gender}>
+                #{applicant.gender}
+              </StyledGender>
               <StyledPosition position={applicant.position}>
                 #
                 {applicant.position === '상관없음'
@@ -153,7 +156,7 @@ const CommentLiContainer = styled.div`
   }
 `;
 
-const StyledAuthorDiv = styled.div`
+const StyledAuthorDiv = styled.div<{ gender?: string }>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -180,14 +183,23 @@ const StyledCommentDetailDiv = styled.div`
     align-items: center;
     padding-bottom: 0.6rem;
   }
+  span {
+    font-weight: 400;
+    padding: 0 0.8rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+  }
+`;
+
+const StyledGender = styled.span<{ gender?: string }>`
+  color: ${({ gender }) => (gender === '여' ? '#ba4d1e' : '#17879d')};
+  background-color: ${({ gender }) =>
+    gender === '여' ? '#fcf6f6' : '#f6fbfc'};
 `;
 
 const StyledPosition = styled.span<{ position: string }>`
   color: ${({ position }) => getColorByPosition(position)};
   background-color: #f8f7f7;
-  padding: 0 0.8rem;
-  border-radius: 0.5rem;
-  margin-right: 1rem;
 `;
 
 const getColorByPosition = (data: string) => {
@@ -203,8 +215,6 @@ const getColorByPosition = (data: string) => {
 const StyledLevel = styled.span<{ level: string }>`
   color: ${({ level }) => getColorBySkill(level)};
   background-color: ${({ level }) => getBackgroundColorBySkill(level)};
-  padding: 0 0.8rem;
-  border-radius: 0.5rem;
 `;
 
 const getColorBySkill = (data: string) => {

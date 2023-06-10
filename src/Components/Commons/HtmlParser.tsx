@@ -20,7 +20,8 @@ export default Parser;
 
 const StyledBody = styled.div`
   padding: 2rem 0;
-  width: 100rem;
+  width: 100%;
+  min-height: 20rem;
   white-space: pre-wrap;
   font-size: 2rem;
 `;
