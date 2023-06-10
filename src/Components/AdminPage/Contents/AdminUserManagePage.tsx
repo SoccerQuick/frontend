@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import AdminModal from '../Layout/AdminModal';
+import UserDetailModal from '../Layout/UserDetailModal';
 import DropDown from '../../Commons/DropDown';
 import FilterlingOptions from '../../Commons/FilteringOptions';
 
@@ -15,10 +15,16 @@ interface UserData {
   role: string;
   gender: string;
   createdAt: string;
+  login_banned: boolean;
+  login_banEndDate: string | null;
+  community_banned: boolean;
+  community_banEndDate: string | null;
 }
 
 function AdminUserManager() {
-  const [showModal, setShowModal] = React.useState<boolean>(false);
+  const [showDetailModal, setShowDetailModal] = React.useState<boolean>(false);
+  const [showManagementModal, setShowManagementModal] =
+    React.useState<boolean>(false);
   const [modalData, setModalData] = React.useState<UserData>({
     admin_id: '',
     user_id: '',
@@ -29,6 +35,10 @@ function AdminUserManager() {
     role: '',
     gender: '',
     createdAt: '',
+    login_banned: false,
+    login_banEndDate: null,
+    community_banned: false,
+    community_banEndDate: null,
   });
   const [option, setOption] = React.useState('통합검색');
 
@@ -48,7 +58,7 @@ function AdminUserManager() {
     // const cookies = document.cookie;
     // console.log(cookies);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/admin`, config)
+      .get(`${process.env.REACT_APP_API_URL}/admins`, config)
       .then((res) => {
         setData(res.data.data);
       })
@@ -62,15 +72,21 @@ function AdminUserManager() {
   function filter(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const newData = data.filter((item) => {
+      // 통합검색
       if (option === '통합검색') {
         if (
           item.role.includes(inputValue) ||
           item.name.includes(inputValue) ||
+          item.nick_name.includes(inputValue) ||
           item.email.includes(inputValue)
         ) {
           return true;
         }
       } else if (option === '닉네임') {
+        if (item.nick_name.includes(inputValue)) {
+          return true;
+        }
+      } else if (option === '이름') {
         if (item.name.includes(inputValue)) {
           return true;
         }
@@ -111,15 +127,18 @@ function AdminUserManager() {
       </UserManageContainer>
       <UserManageContainerTable>
         <table>
-          <caption>유저 관리</caption>
+          {/* <caption>유저 관리</caption> */}
           <thead>
             <StyledTr>
               <th style={{ width: '5%' }}>순번</th>
-              <th style={{ width: '30%' }}>닉네임</th>
-              <th style={{ width: '30%' }}>E-mail</th>
-              <th style={{ width: '15%' }}>권한</th>
-              <th style={{ width: '10%' }}>상세정보</th>
-              <th style={{ width: '10%' }}>정보수정</th>
+              <th style={{ width: '7%' }}>권한</th>
+              <th style={{ width: '7%' }}>이름</th>
+              <th style={{ width: '8%' }}>닉네임</th>
+              <th style={{ width: '10%' }}>E-mail</th>
+              <th style={{ width: '7%' }}>상태</th>
+              <th style={{ width: '10%' }}>정지기간</th>
+              <th style={{ width: '10%' }}>가입일자</th>
+              <th style={{ width: '5%' }}>회원관리</th>
             </StyledTr>
           </thead>
           <tbody>
@@ -129,29 +148,56 @@ function AdminUserManager() {
             ).map((item, idx) => (
               <StyledTr key={idx}>
                 <td style={{ width: '5%' }}>{idx + 1}</td>
-                <td style={{ width: '30%' }}>{item.name}</td>
-                <td style={{ width: '30%' }}>{item.email}</td>
-                <td style={{ width: '15%' }}>{item.role}</td>
-                <td style={{ width: '10%' }}>
-                  <button
-                    onClick={() => {
-                      setShowModal(true);
-                      setModalData(item);
-                    }}
-                  >
-                    조회
-                  </button>
+                <td style={{ width: '7%' }}>
+                  {item.role === 'admin'
+                    ? '👑총 관리자'
+                    : item.role === 'manager'
+                    ? '🌟관리자'
+                    : '일반회원'}
+                </td>
+                <td style={{ width: '7%' }}>{item.name}</td>
+                <td style={{ width: '8%' }}>{item.nick_name}</td>
+                <td style={{ width: '10%' }}>{item.email}</td>
+                <td style={{ width: '7%' }}>
+                  {item.login_banned
+                    ? '로그인 정지'
+                    : item.community_banned
+                    ? '커뮤니티 정지'
+                    : '정상'}
                 </td>
                 <td style={{ width: '10%' }}>
-                  <button>정보수정</button>
+                  {item.login_banned
+                    ? item.login_banEndDate?.split('T')[0].slice(2)
+                    : item.community_banned
+                    ? item.community_banEndDate?.split('T')[0].slice(2)
+                    : '-'}
+                </td>
+                <td style={{ width: '5%' }}>
+                  {item.createdAt.split('T')[0].slice(2)}
+                </td>
+                <td style={{ width: '5%' }}>
+                  <StyledButton
+                    onClick={() => {
+                      setShowDetailModal(true);
+                      setModalData(item);
+                      console.log(item);
+                    }}
+                  >
+                    🔍
+                  </StyledButton>
                 </td>
               </StyledTr>
             ))}
           </tbody>
         </table>
       </UserManageContainerTable>
-      {showModal && (
-        <AdminModal setShowModal={setShowModal} modalData={modalData} />
+      {showDetailModal && (
+        <UserDetailModal
+          setShowDetailModal={setShowDetailModal}
+          showManagementModal={showManagementModal}
+          setShowManagementModal={setShowManagementModal}
+          modalData={modalData}
+        />
       )}
     </>
   );
@@ -160,6 +206,7 @@ function AdminUserManager() {
 export default AdminUserManager;
 
 const UserManageContainer = styled.div`
+  padding-top: 2rem;
   text-align: center;
   display: flex;
   justify-content: flex-end;
@@ -169,20 +216,24 @@ const UserManageContainerTable = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+  margin-top: 2rem;
   padding-left: 3rem;
   width: 70%;
   font-size: 2rem;
   table {
     width: 100%;
+    border-collapse: collapse;
   }
 
   tr {
     // display: flex;
+    border-bottom: 1px solid #000;
     justify-content: space-between;
     align-items: center;
   }
   td {
     // display: flex;
+    /* border-bottom: 1px solid #000; */
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -195,4 +246,9 @@ const StyledTr = styled.tr`
   padding: 2rem 1rem;
   font-size: 1.6rem;
   border-bottom: 0.1rem solid #dddddd;
+`;
+
+const StyledButton = styled.button`
+  font-size: 1.4rem;
+  border-radius: 1rem;
 `;

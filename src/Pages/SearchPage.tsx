@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
-import SearchModal from '../Components/SearchPage/Layout/SearchModal';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
 import GroundComparison from '../Components/SearchPage/Contents/GroundComparison';
 import ComparisonData from '../Components/SearchPage/Contents/ComparisonData';
@@ -30,7 +29,6 @@ export interface groundDataType {
 
 function SearchPage() {
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [modalData, setModalData] = React.useState<any>([]);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
   const [checkedArray, setCheckedArray] = useState<groundDataType[]>([]);
   const [checkedInModal, setCheckedInModal] = useState<string[]>([]);
@@ -74,19 +72,9 @@ function SearchPage() {
           <SearchData
             showModal={showModal}
             setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
             checkedArray={checkedArray}
             setCheckedArray={setCheckedArray}
           />
-          {showModal && (
-            <SearchModal
-              showModal={showModal}
-              setShowModal={setShowModal}
-              modalData={modalData}
-              setModalData={setModalData}
-            />
-          )}
         </div>
       </div>
       {showComparisonModal && (

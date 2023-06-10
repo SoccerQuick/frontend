@@ -88,7 +88,7 @@ function DropDown(props: Props) {
 export default DropDown;
 
 const DropdownWrapper = styled.div`
-  z-index: 999;
+  z-index: 998;
   position: relative;
   display: inline-block;
   width: 16rem;

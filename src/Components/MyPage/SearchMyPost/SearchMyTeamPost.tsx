@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 
 export type GroupPost = {
+  group_id: string;
   leader_name: string;
   title: string;
   location: string;
@@ -13,29 +14,21 @@ export type GroupPost = {
   player_count: number;
   gk_current_count: number;
   player_current_count: number;
-
+  applicant: Array<string>;
   createdAt: string;
   updatedAt: string;
 };
 
 function SearchMyTeamPost() {
   const [groupList, setGroupList] = useState<GroupPost[]>([]);
-  const properties = [
-    '작성자',
-    '제목',
-    '지역',
-    '모집 상태',
-    'GK',
-    'Player',
-    '작성일자',
-  ];
+  const properties = ['작성자', '제목', '지역', '모집 상태', 'Player', 'GK'];
   const user = useSelector(userSelector);
   const filteredItems = groupList.filter(
-    (item: GroupPost) => item.leader_name === '고마오'
+    (item: GroupPost) => item.leader_name === user?.name
   );
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/group`, {
+      .get(`${process.env.REACT_APP_API_URL}/groups`, {
         withCredentials: true,
       })
       .then((res) => res.data.data)

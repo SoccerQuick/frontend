@@ -5,11 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../store/selectors/authSelectors';
 import axios from 'axios';
 
-type MyPageBarProps = {
-  handleMyPageMenu: (event: React.MouseEvent<HTMLDivElement>) => void;
-};
-
-export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
+export function MyPageMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
@@ -26,15 +22,16 @@ export function MyPageMenu({ handleMyPageMenu }: MyPageBarProps) {
 
     // logout
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/auth/logout`, {
+      .delete(`${process.env.REACT_APP_API_URL}/auths/logout`, {
         withCredentials: true,
       })
-      .then((res) => console.log(res))
+      .then(() => {
+        navigate(window.location.pathname);
+      })
       .catch((e) => console.log(e));
-    navigate(window.location.pathname, { replace: true });
   };
   return (
-    <StyledMenu onMouseLeave={handleMyPageMenu}>
+    <StyledMenu>
       <StyledMenuProfile>
         <StyledImgWrapper>
           <StyledProfileImg src={'/logo192.png'} alt="profile" />

@@ -1,32 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-// import FindingTeam from '../../../Components/TeamPage/PostPage/FindingTeam';
 import FindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
 import axios from 'axios';
-
-// const initialData = {
-//   group_id: '',
-//   location: '',
-//   leader_name: '',
-//   author: '',
-//   contents: '',
-//   gender: '',
-//   num: '',
-//   position: '',
-//   skill: '',
-//   status: '',
-//   title: '',
-//   gk_count: 0,
-//   gk_current_count: 0,
-//   player_count: 0,
-//   player_current_count: 0,
-//   random_matched: '',
-//   applicant: [],
-// };
-
 function EditPage() {
   const location = useLocation();
   const url = location.pathname.split('/').pop();
@@ -74,7 +52,7 @@ function EditPage() {
       };
       axios
         .patch(
-          `${process.env.REACT_APP_API_URL}/group/${url}/info`,
+          `${process.env.REACT_APP_API_URL}/groups/${url}/info`,
           postData,
           config
         )
@@ -160,12 +138,10 @@ function EditPage() {
       <StyledContainer>
         {category === '팀원 구해요' && (
           <FindingMembers
-            // allowRandom={allowRandom}
             player={player}
             setPlayer={setPlayer}
             gk={gk}
             setGk={setGk}
-            // setAllowRandom={setAllowRandom}
             playerNeed={playerNeed}
             setPlayerNeed={setPlayerNeed}
             gkNeed={gkNeed}
@@ -218,9 +194,6 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 1rem;
-  /* background-color: beige; */
-  /* width: 100rem; */
-  /* background-color: beige; */
 `;
 
 const StyledBox = styled.div`
@@ -247,14 +220,6 @@ const StyledInputText = styled.input`
   height: 4rem;
   text-align: center;
   align-items: center;
-`;
-
-const StyledInputNumber = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 6rem;
-  height: 4rem;
-  text-align: center;
 `;
 
 const StyledButton = styled.button`
