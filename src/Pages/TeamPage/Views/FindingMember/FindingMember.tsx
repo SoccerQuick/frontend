@@ -1,6 +1,5 @@
 import React from 'react';
 import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
-import FindPageBoard from '../FindingTeam/FindingTeamPageBoard';
 import FindingMemberPageBoard from './FindingMemberPageBoard';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -8,14 +7,14 @@ import { isLogInSelector } from '../../../../store/selectors/authSelectors';
 import styled from 'styled-components';
 import axios from 'axios';
 
-type Applicant = {
+interface Applicant {
   id: string;
   position: string;
   level: string;
   contents: string;
-};
+}
 
-type DataProps = {
+interface DataProps {
   group_id?: string;
   location: string;
   author: string;
@@ -33,15 +32,15 @@ type DataProps = {
   random_matched?: string;
   applicant?: Applicant[];
   [key: string]: string | number | undefined | Applicant[];
-};
+}
 
-type FindingMemberProps = {
+interface FindingMemberProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-type FindMemberFilter = {
+}
+interface FindMemberFilter {
   status: string | null;
   location: string | null;
-};
+}
 
 function FindingMember(props: FindingMemberProps) {
   const isLogin = useSelector(isLogInSelector);
@@ -174,27 +173,6 @@ function FindingMember(props: FindingMemberProps) {
 }
 
 export default FindingMember;
-
-// 팀페이지 헤더 (애니메이션 구현)
-const TeamPageHeader = styled.div`
-  font-size: 2rem;
-  border: 1px solid #eee;
-  overflow: hidden;
-`;
-
-const StyledBanner = styled.span`
-  display: inline-block;
-
-  animation: slide-left 8s linear infinite;
-  @keyframes slide-left {
-    0% {
-      transform: translateX(200%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-`;
 
 const StyledHeader = styled.div`
   padding-left: 1rem;

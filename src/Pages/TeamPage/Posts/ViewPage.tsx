@@ -16,36 +16,10 @@ import playerIcon from '../../../styles/icon/player.svg';
 import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
 
-type DetailList = {
+interface DetailList {
   title: string;
   value: string;
-};
-
-// type Applicant = {
-//   id: string;
-//   position: string;
-//   level: string;
-//   contents: string;
-// };
-
-// type DataProps = {
-//   group_id: string;
-//   location: string;
-//   author: string;
-//   contents: string;
-//   gender: string;
-//   position: string;
-//   skill: string;
-//   status: string;
-//   title: string;
-//   gk_count: number;
-//   gk_current_count: number;
-//   player_count: number;
-//   player_current_count: number;
-//   random_matched: string;
-//   applicant: Applicant[];
-//   [key: string]: string | number | Applicant[];
-// };
+}
 
 const initialData = {
   group_id: '',
@@ -66,10 +40,6 @@ const initialData = {
   random_matched: '',
   applicant: [],
   accept: [],
-};
-
-type DetailListProps = {
-  detailList: DetailList[];
 };
 
 function DetailPage() {
