@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import AdminMainPage from '../../Components/AdminPage/Contents/AdminMainPage';
-import AdminTeamManager from '../../Components/AdminPage/Contents/AdminTeamManagePage';
 import AdminUserManager from '../../Components/AdminPage/Contents/AdminUserManagePage';
 import { Routes, Route, Link } from 'react-router-dom';
 
 function AdminPage() {
+  const [mainButton, setMainButton] = React.useState(true);
+  const [userButton, setUserButton] = React.useState(false);
   return (
     <>
       <Header />
@@ -15,39 +16,33 @@ function AdminPage() {
         <BodyContainer>
           <BodyLeftBar>
             <Link to="/admin">
-              <button
+              <MainButton
                 style={{ margin: '2rem 2rem', width: '14rem', height: '4rem' }}
+                onClick={() => {
+                  setMainButton(true);
+                  setUserButton(false);
+                }}
+                state={mainButton ? 'true' : 'false'}
               >
-                관리자 메인
-              </button>
+                🔒관리자 메인
+              </MainButton>
             </Link>
             <Link to="/admin/user">
-              <button
+              <UserButton
                 style={{ margin: '2rem 2rem', width: '14rem', height: '4rem' }}
+                onClick={() => {
+                  setMainButton(false);
+                  setUserButton(true);
+                }}
+                state={userButton ? 'true' : 'false'}
               >
-                유저 관리
-              </button>
+                🔨유저 관리
+              </UserButton>
             </Link>
-            <Link to="/admin/team">
-              <button
-                style={{ margin: '2rem 2rem', width: '14rem', height: '4rem' }}
-              >
-                등록된 팀 관리
-              </button>
-            </Link>
-            <button
-              style={{ margin: '2rem 2rem', width: '14rem', height: '4rem' }}
-              onClick={() => {
-                alert('ㄱㅁㅇ');
-              }}
-            >
-              고마오 관리
-            </button>
           </BodyLeftBar>
           <BodyMain>
             <Routes>
               <Route path="/user" element={<AdminUserManager />} />
-              <Route path="/team" element={<AdminTeamManager />} />
               <Route path="/" element={<AdminMainPage />} />
             </Routes>
           </BodyMain>
@@ -64,14 +59,6 @@ const AdminContainer = styled.div`
   font-size: 3rem;
 `;
 
-// const HeaderContainer = styled.div`
-//   display: flex;
-//   width: 100%;
-//   height: 3em;
-//   top: 0;
-//   background-color: beige;
-// `;
-
 const BodyContainer = styled.div`
   background-color: skyblue;
   height: fit-content;
@@ -87,16 +74,40 @@ const BodyLeftBar = styled.div`
   background-color: yellowgreen;
 `;
 
-// const FooterContainer = styled.div`
-//   display: flex;
-//   position: fixed;
-//   width: 100%;
-//   height: 6rem;
-//   bottom: 0;
-//   background-color: grey;
-// `;
-
 const BodyMain = styled.div`
   background-color: rgb(245, 245, 245);
   height: 80rem;
+`;
+
+const MainButton = styled.button<{ state: string }>`
+  border: 1px solid;
+
+  ${(props) =>
+    props.state === 'true' &&
+    `
+    background-color: lightgray;
+  `}
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    background-color: darkgray;
+  }
+`;
+
+const UserButton = styled.button<{ state: string }>`
+  border: 1px solid;
+  ${(props) =>
+    props.state === 'true' &&
+    `
+    background-color: lightgray;
+  `}
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    background-color: darkgray;
+  }
 `;

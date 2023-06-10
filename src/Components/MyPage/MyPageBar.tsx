@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import react from 'react';
 import styled from 'styled-components';
 
 type MyPageBarProps = {
@@ -65,6 +65,7 @@ const StyledBarItemContainer = styled.div`
   width: 80%;
   margin: 1rem 0;
   height: 3rem;
+  cursor: pointer;
 `;
 
 const StyledBarItem = styled.div<{ selected: boolean }>`

@@ -51,7 +51,7 @@ function SubmitPage() {
         contents: content,
       };
       axios
-        .post(`${process.env.REACT_APP_API_URL}/group`, data, config)
+        .post(`${process.env.REACT_APP_API_URL}/groups`, data, config)
         .then((res) => {
           console.log('POST 요청 성공 : ', res.data);
           alert('팀원 모집글이 등록되었습니다.');
@@ -224,12 +224,6 @@ const StyledTitle = styled.div`
   font-size: 1.9rem;
 `;
 
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
 const StyledInputText = styled.input`
   display: flex;
   padding-left: 1rem;
@@ -237,14 +231,6 @@ const StyledInputText = styled.input`
   height: 4rem;
   text-align: center;
   align-items: center;
-`;
-
-const StyledInputNumber = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 6rem;
-  height: 4rem;
-  text-align: center;
 `;
 
 const StyledButton = styled.button`

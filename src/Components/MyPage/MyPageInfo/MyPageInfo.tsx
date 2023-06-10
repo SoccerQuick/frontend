@@ -1,4 +1,4 @@
-import react, { useState, FormEvent } from 'react';
+import react, { useState, FormEvent, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { FormData } from '../../../Pages/MyPage';
@@ -42,6 +42,12 @@ export function MyPageInfo({
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
 
+  useEffect(() => {
+    if (!user) {
+      window.location.reload();
+    }
+  }, [user]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { newPassword, newPasswordConfirm } = passwordForm;
@@ -70,7 +76,7 @@ export function MyPageInfo({
   ) => {
     try {
       const response = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/user`,
+        `${process.env.REACT_APP_API_URL}/users`,
         {
           user_id: formData.user_id,
           name: formData.name,
@@ -98,7 +104,6 @@ export function MyPageInfo({
       const axiosError = err as AxiosError;
       if (axiosError.response) {
         const responseData = axiosError.response?.data as { message?: string };
-        console.log(responseData.message);
         setErrorMsg({
           formMsg: String(responseData.message),
           passwordFormMsg: '',
@@ -123,18 +128,21 @@ export function MyPageInfo({
 
   const handleAlertWithDrawalConfirm = (oldPassword: String) => {
     dispatch(AUTH_ACTIONS.logout());
-    const headers = { withCredentials: true };
-    const data = { password: oldPassword };
+    const headers = {
+      withCredentials: true,
+    };
+    const data = { password: oldPassword, user_id: formData.user_id };
 
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/user`, {
+      .delete(`${process.env.REACT_APP_API_URL}/users`, {
         headers: headers,
         data: data,
       })
-      .then((res) => console.log(res))
+      .then(() => {
+        alert('탈퇴 되었습니다.');
+        navigate('/', { replace: true });
+      })
       .catch((e) => console.log(e));
-    alert('탈퇴 되었습니다. 그동안 이용해주셔서 감사합니다.');
-    navigate('/', { replace: true });
   };
 
   return (

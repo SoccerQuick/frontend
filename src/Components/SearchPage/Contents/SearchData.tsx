@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
@@ -10,16 +10,12 @@ import axios from 'axios';
 type FindingGroundProps = {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: any[];
-  setModalData: React.Dispatch<React.SetStateAction<any[]>>;
   checkedArray: groundDataType[];
   setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
 };
 
 // SoccerQuick/Frontend/src/Pages/SearchPage.tsx 75번째 줄에서 연결됨
 function FindingGround(props: FindingGroundProps) {
-  const setShowModal = props.setShowModal;
-  const setModalData = props.setModalData;
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
 
@@ -112,14 +108,7 @@ function FindingGround(props: FindingGroundProps) {
                   </StyledMainTd>
 
                   <td>
-                    <StyledButton
-                      onClick={() => {
-                        setShowModal(true);
-                        setModalData(data[idx]);
-                      }}
-                    >
-                      조회
-                    </StyledButton>
+                    <StyledButton>조회</StyledButton>
                   </td>
                 </StyledTr>
               ))}

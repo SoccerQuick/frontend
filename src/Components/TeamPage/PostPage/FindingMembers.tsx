@@ -1,21 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
-type Props = {
-  // allowRandom: string;
+interface Props {
   gk: number;
   gkNeed: number;
   player: number;
   playerNeed: number;
-  // setAllowRandom: React.Dispatch<React.SetStateAction<string>>;
+
   setPlayer: React.Dispatch<React.SetStateAction<number>>;
   setGk: React.Dispatch<React.SetStateAction<number>>;
   setPlayerNeed: React.Dispatch<React.SetStateAction<number>>;
   setGkNeed: React.Dispatch<React.SetStateAction<number>>;
-};
+}
 
-// props를 주고받는 경로 : Pages/TeamPage/Posts/EditPage,PostPage
 function FindingMembers(props: Props) {
   const {
     gk,

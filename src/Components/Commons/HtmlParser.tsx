@@ -10,17 +10,12 @@ function Parser(props: any) {
   return <StyledBody>{parsedBody}</StyledBody>;
 }
 
-// function Parser(props: any) {
-//   const { data } = props;
-//   const htmlString = data;
-//   return <StyledBody dangerouslySetInnerHTML={{ __html: htmlString }} />;
-// }
-
 export default Parser;
 
 const StyledBody = styled.div`
-  padding: 2rem 2rem;
-  width: 100rem;
+  padding: 2rem 0;
+  width: 100%;
+  min-height: 20rem;
   white-space: pre-wrap;
   font-size: 2rem;
 `;
