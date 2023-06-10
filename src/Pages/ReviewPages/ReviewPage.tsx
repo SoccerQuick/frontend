@@ -126,9 +126,9 @@ export default function ReviewPage() {
   }, [area, stadium]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5500/reviews', config)
-      .then((res) => console.log(res));
+    axios.get('http://localhost:5500/reviews', config).then((res) => {
+      alert('success');
+    });
   });
 
   useEffect(() => {
