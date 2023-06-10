@@ -112,13 +112,14 @@ function Comment(props: any) {
                 #{applicant.level}
               </StyledLevel>
             </StyledCommentDetailDiv>
-
-            <StyledCommentButtons>
-              <button onClick={() => rejectMember(applicant.id)}>거절</button>
-              <button onClick={() => acceptMember(applicant.id)}>
-                <img src={checkIcon} alt="" /> 수락
-              </button>
-            </StyledCommentButtons>
+            {userData?.name === user && (
+              <StyledCommentButtons>
+                <button onClick={() => rejectMember(applicant.id)}>거절</button>
+                <button onClick={() => acceptMember(applicant.id)}>
+                  <img src={checkIcon} alt="" /> 수락
+                </button>
+              </StyledCommentButtons>
+            )}
           </CommentLiContainer>
         ))}
       </div>
