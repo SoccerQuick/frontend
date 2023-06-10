@@ -16,11 +16,6 @@ import playerIcon from '../../../styles/icon/player.svg';
 import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
 
-interface DetailList {
-  title: string;
-  value: string;
-}
-
 const initialData = {
   group_id: '',
   location: '',
@@ -192,10 +187,14 @@ function DetailPage() {
             <button>수정</button>
           </Link>
         )}
-        {(userData?.name === data.author || userData?.role !== 'user') && (
+        {(userData?.name === data.author ||
+          userData?.role === 'admin' ||
+          userData?.role === 'manager') && (
           <button onClick={deletePostHandler}>삭제</button>
         )}
-        {(userData?.name === data.author || userData?.role !== 'user') && (
+        {(userData?.name === data.author ||
+          userData?.role === 'admin' ||
+          userData?.role === 'manager') && (
           <button
             onClick={() => {
               console.log(data.accept);
@@ -232,16 +231,12 @@ function DetailPage() {
             </button>
           )}
         </StyledFooter>
-        {showModal &&
-          (data.leader_name ? (
-            <SubmitForFindingMember
-              setShowModal={setShowModal}
-              groupId={data.group_id}
-            />
-          ) : (
-            ''
-            // <SubmitForFindingTeam setShowModal={setShowModal} />
-          ))}
+        {showModal && (
+          <SubmitForFindingMember
+            setShowModal={setShowModal}
+            groupId={data.group_id}
+          />
+        )}
       </div>
     </StyledWrap>
   );
