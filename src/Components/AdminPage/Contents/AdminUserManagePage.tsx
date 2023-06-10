@@ -134,7 +134,6 @@ function AdminUserManager() {
               <th style={{ width: '7%' }}>상태</th>
               <th style={{ width: '10%' }}>정지기간</th>
               <th style={{ width: '10%' }}>가입일자</th>
-              <th style={{ width: '5%' }}>상세정보</th>
               <th style={{ width: '5%' }}>회원관리</th>
             </StyledTr>
           </thead>
@@ -171,19 +170,10 @@ function AdminUserManager() {
                     onClick={() => {
                       setShowDetailModal(true);
                       setModalData(item);
+                      console.log(item);
                     }}
                   >
                     🔍
-                  </StyledButton>
-                </td>
-                <td style={{ width: '5%' }}>
-                  <StyledButton
-                    onClick={() => {
-                      setShowManagementModal(true);
-                      setModalData(item);
-                    }}
-                  >
-                    🛠️
                   </StyledButton>
                 </td>
               </StyledTr>
@@ -199,7 +189,6 @@ function AdminUserManager() {
           modalData={modalData}
         />
       )}
-      <div>🔨🔒❌</div>
     </>
   );
 }
