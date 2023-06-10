@@ -3,9 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 import styled from 'styled-components';
+import ballIcon from '../../../styles/icon/soccerball.svg';
+import checkIcon from '../../../styles/icon/check_white.svg';
+import commentIcon from '../../../styles/icon/comment.svg';
 import axios from 'axios';
 
-type Applicant = {
+interface Applicant {
   _id?: string;
   id: string;
   name: string;
@@ -13,9 +16,14 @@ type Applicant = {
   position: string;
   level: string;
   contents: string;
-};
+}
 
-function Comment(props: any) {
+interface CommentProps {
+  data: Applicant[];
+  user: string;
+}
+
+function Comment(props: CommentProps) {
   const { data, user } = props;
 
   // 글 작성자인지 확인하기 위한 데이터
@@ -78,214 +86,200 @@ function Comment(props: any) {
         });
     }
   };
-
   return (
-    <>
-      <CommentBox>
-        <table>
-          <thead>
-            <StyledTr>
-              <th style={{ width: '5%' }}>#</th>
-              <th style={{ width: '6%' }}>이름</th>
-              <th style={{ width: '6%' }}>성별</th>
-              <th style={{ width: '13%' }}>포지션</th>
-              <th style={{ width: '10%' }}>실력</th>
-              <th style={{ width: '30%' }}>신청멘트</th>
-              <th style={{ width: '10%' }}></th>
-              <th style={{ width: '10%' }}></th>
-            </StyledTr>
-          </thead>
-          <tbody>
-            {data.map((applicant: Applicant, index: number) => (
-              <StyledTr key={index}>
-                <td>{index + 1}</td>
-                <td>{applicant.name}</td>
-                <td>{applicant.gender}</td>
-                <td>
-                  <StyledPositionSpan data={applicant.position}>
-                    {applicant.position}
-                  </StyledPositionSpan>
-                </td>
-                <td>
-                  <StyledSkillSpan data={applicant.level}>
-                    {applicant.level}
-                  </StyledSkillSpan>
-                </td>
-                <td>{applicant.contents}</td>
-                {user === userData?.nickname && (
-                  <>
-                    <td>
-                      <StyledButton onClick={() => acceptMember(applicant.id)}>
-                        ✔️수락
-                      </StyledButton>
-                    </td>
-                    <td>
-                      <StyledButton onClick={() => rejectMember(applicant.id)}>
-                        ❌거절
-                      </StyledButton>
-                    </td>
-                  </>
-                )}
-              </StyledTr>
-            ))}
-          </tbody>
-        </table>
-      </CommentBox>
-      <div
-        style={{
-          padding: '1.3rem',
-          marginTop: '3rem',
-          border: '1px solid',
-          borderRadius: '1rem',
-          width: '90rem',
-        }}
-      >
-        <div>
-          포지션/실력 박스 색상 모음 - 이거 지우면 아래 버튼 올라오니 걱정ㄴㄴ
-        </div>
-        <div>
-          <StyledPositionSpan data={'골키퍼'}>골키퍼</StyledPositionSpan>
-          <StyledPositionSpan data={'필드플레이어'}>
-            필드플레이어
-          </StyledPositionSpan>
-          <StyledPositionSpan data={'상관없음'}>상관없음</StyledPositionSpan>
-        </div>
-        <div>
-          <StyledSkillSpan data={'프로'}>프로</StyledSkillSpan>
-          <StyledSkillSpan data={'세미프로'}>세미프로</StyledSkillSpan>
-          <StyledSkillSpan data={'고급자'}>고급자</StyledSkillSpan>
-          <StyledSkillSpan data={'중급자'}>중급자</StyledSkillSpan>
-          <StyledSkillSpan data={'초급자'}>초급자</StyledSkillSpan>
-          <StyledSkillSpan data={'입문자'}>입문자</StyledSkillSpan>
-        </div>
+    <StyledCommentContainer>
+      <div>
+        <StyledCommentTitle>
+          <img src={commentIcon} alt="" />
+          신청 목록
+        </StyledCommentTitle>
+
+        {data.map((applicant: Applicant, index: number) => (
+          <CommentLiContainer key={index}>
+            <StyledAuthorDiv gender={applicant.gender}>
+              <StyledImgDiv>
+                <img src={ballIcon} alt="BallIcon" />
+              </StyledImgDiv>
+              <p>{applicant.name}</p>
+            </StyledAuthorDiv>
+            <StyledContents>{applicant.contents}</StyledContents>
+            <StyledCommentDetailDiv>
+              <StyledGender gender={applicant.gender}>
+                #{applicant.gender}
+              </StyledGender>
+              <StyledPosition position={applicant.position}>
+                #
+                {applicant.position === '상관없음'
+                  ? '포지션 무관'
+                  : applicant.position}
+              </StyledPosition>
+              <StyledLevel level={applicant.level}>
+                #{applicant.level}
+              </StyledLevel>
+            </StyledCommentDetailDiv>
+            {userData?.name === user && (
+              <StyledCommentButtons>
+                <button onClick={() => rejectMember(applicant.id)}>거절</button>
+                <button onClick={() => acceptMember(applicant.id)}>
+                  <img src={checkIcon} alt="" /> 수락
+                </button>
+              </StyledCommentButtons>
+            )}
+          </CommentLiContainer>
+        ))}
       </div>
-    </>
+    </StyledCommentContainer>
   );
 }
 
 export default Comment;
 
-const CommentBox = styled.div`
-  display: flex;
-  margin-top: 2rem;
-  justify-content: space-evenly;
-  font-size: 1.7rem;
-  // background-color: beige;
+const StyledCommentContainer = styled.div`
   width: 100%;
-  table {
-    width: 100%;
-  }
+  margin: 1rem auto;
+  border-top: 0.1rem solid lightgray;
+`;
 
-  tr {
-    // display: flex;
-    font-size: 1.6rem;
-    justify-content: space-between;
-    align-items: center;
-  }
-  td {
-    // display: flex;
-    font-size: 1.7rem;
-    padding: 0.4rem;
-    height: 4rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+const StyledCommentTitle = styled.h2`
+  font-size: 2.2rem;
+  padding: 1rem 0;
+  img {
+    width: 4.3rem;
+    vertical-align: middle;
+    margin-right: 0.4rem;
   }
 `;
 
-const StyledPositionSpan = styled.span<{ data: string }>`
-  display: inline-block;
-  width: 11rem;
-  text-align: center;
-  padding: 0.4rem;
-  margin: 0.5rem 0.4rem;
-  border: 1px solid;
-  width: fit-content;
+const CommentLiContainer = styled.div`
+  padding: 2rem;
+  background-color: white;
   border-radius: 2rem;
-  font-weight: 700;
-  color: ${({ data }) => getColorByPosition(data)};
-  background-color: ${({ data }) => getBackgroundColorByPosition(data)};
+  filter: drop-shadow(0 0 0.2rem #c6c6c6);
+  :not(first-child) {
+    margin-top: 2rem;
+  }
+`;
+
+const StyledAuthorDiv = styled.div<{ gender?: string }>`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 1rem;
+  p {
+    font-size: 1.8rem;
+    padding-left: 1rem;
+  }
+`;
+
+const StyledImgDiv = styled.div`
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+  border: 0.2rem solid lightgray;
+`;
+
+const StyledCommentDetailDiv = styled.div`
+  font-size: 1.7rem;
+  padding: 0.7rem 0;
+  > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 0.6rem;
+  }
+  span {
+    font-weight: 400;
+    padding: 0 0.8rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+  }
+`;
+
+const StyledGender = styled.span<{ gender?: string }>`
+  color: ${({ gender }) => (gender === '여' ? '#ba4d1e' : '#17879d')};
+  background-color: ${({ gender }) =>
+    gender === '여' ? '#fcf6f6' : '#f6fbfc'};
+`;
+
+const StyledPosition = styled.span<{ position: string }>`
+  color: ${({ position }) => getColorByPosition(position)};
+  background-color: #f8f7f7;
 `;
 
 const getColorByPosition = (data: string) => {
   if (data === '골키퍼') {
-    return '#061822';
-  } else if (data === '플레이어') {
-    // return 'rgb(33, 133, 33)';
-    return '#061822';
-  } else if (data === '상관없음') {
-    // return '#2079ff';
-    return '#061822';
-  }
-};
-const getBackgroundColorByPosition = (data: string) => {
-  if (data === '골키퍼') {
-    return '#fcfcb6';
+    return 'rgb(232, 101, 47)';
   } else if (data === '필드플레이어') {
-    return 'rgb(255,231,0)';
+    return 'rgb(103, 109, 178)';
   } else if (data === '상관없음') {
-    return '#63e494';
+    return '#616161';
   }
 };
 
-const StyledSkillSpan = styled.span<{ data: string }>`
-  display: inline-block;
-  width: 11rem;
-  text-align: center;
-  padding: 0.4rem;
-  margin: 0.5rem 0.4rem;
-  border: 1px solid;
-  border-radius: 2rem;
-  font-weight: 700;
-  color: ${({ data }) => getColorBySkill(data)};
-  background-color: ${({ data }) => getBackgroundColorBySkill(data)};
+const StyledLevel = styled.span<{ level: string }>`
+  color: ${({ level }) => getColorBySkill(level)};
+  background-color: ${({ level }) => getBackgroundColorBySkill(level)};
 `;
 
 const getColorBySkill = (data: string) => {
   if (data === '프로') {
-    return 'rgb(34, 90, 202)';
+    return 'white';
   } else if (data === '세미프로') {
-    return 'rgb(10,58,47)';
+    return '#883532';
   } else if (data === '고급자') {
-    return 'rgb(100,68,35)';
+    return '#233D87';
   } else if (data === '중급자') {
-    return 'rgb(51,55,59)';
+    return '#B78638';
   } else if (data === '초급자') {
-    return 'rgb(89,61,56)';
+    return '#336939';
   } else if (data === '입문자') {
-    return 'rgb(61,46,43)';
+    return '#525056';
   }
 };
 const getBackgroundColorBySkill = (data: string) => {
   if (data === '프로') {
-    return 'rgb(141, 221, 248)';
+    return '#848484';
   } else if (data === '세미프로') {
-    return 'rgb(90, 219, 213)';
+    return '#FAE4E3';
   } else if (data === '고급자') {
-    return 'rgb(240, 222, 164)';
+    return '#ECF0FB)';
   } else if (data === '중급자') {
-    return 'rgb(162, 187, 233)';
+    return '#E6FAEA';
   } else if (data === '초급자') {
-    return 'rgb(255, 190, 165)';
+    return '#FDF1DC';
   } else if (data === '입문자') {
-    return 'rgb(223, 187, 187)';
+    return '#F2F1F1';
   }
 };
 
-const StyledTr = styled.tr`
-  height: 4rem;
-  margin: 1rem 1rem;
-  padding: 2rem 1rem;
-  font-size: 1.6rem;
-
-  border-bottom: 0.1rem solid #dddddd;
+const StyledContents = styled.div`
+  font-size: 2rem;
+  padding: 1rem 0;
 `;
 
-const StyledButton = styled.button`
-  background-color: white;
-  &:hover {
-    /* color: blue; */
-    /* text-decoration: underline; */
-    transform: scale(1.1);
+const StyledCommentButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    width: 11rem;
+    height: 4.5rem;
+    border-radius: 0.7rem;
+    background-color: var(--color--green);
+    color: white;
+    font-size: 1.7rem;
+    font-weight: 600;
+    img {
+      width: 2rem;
+      vertical-align: middle;
+      padding: 0 0.3rem 0.2rem 0;
+    }
+
+    :first-child {
+      margin-right: 1rem;
+      background-color: white;
+      color: #787878;
+      filter: drop-shadow(0 0 0.1rem grey);
+    }
   }
 `;

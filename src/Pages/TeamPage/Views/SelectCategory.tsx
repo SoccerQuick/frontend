@@ -35,7 +35,9 @@ function FindPage(props: props) {
             <StyledButtonText>팀원 구하기</StyledButtonText>
           </StyledButton>
         </Link>
-        <Link to="/teampage/player">
+        {/* 백엔드 API가 제공되지 않아서 현재 사용 불가능한 기능.*/}
+        {/* 관련 코드 파일들은 모두 삭제(백업)된 상태입니다. */}
+        {/* <Link to="/teampage/player">
           <StyledButton
             onClick={() => {
               setFindingMember(false);
@@ -51,7 +53,7 @@ function FindPage(props: props) {
             </StyledImg>
             <StyledButtonText>팀 구하기</StyledButtonText>
           </StyledButton>
-        </Link>
+        </Link> */}
       </StyledDiv>
     </StyledWrapper>
   );
