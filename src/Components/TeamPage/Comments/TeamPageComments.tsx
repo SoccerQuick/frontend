@@ -8,7 +8,7 @@ import checkIcon from '../../../styles/icon/check_white.svg';
 import commentIcon from '../../../styles/icon/comment.svg';
 import axios from 'axios';
 
-type Applicant = {
+interface Applicant {
   _id?: string;
   id: string;
   name: string;
@@ -16,9 +16,14 @@ type Applicant = {
   position: string;
   level: string;
   contents: string;
-};
+}
 
-function Comment(props: any) {
+interface CommentProps {
+  data: Applicant[];
+  user: string;
+}
+
+function Comment(props: CommentProps) {
   const { data, user } = props;
 
   // 글 작성자인지 확인하기 위한 데이터
