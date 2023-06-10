@@ -72,19 +72,19 @@ type DetailListProps = {
   detailList: DetailList[];
 };
 
-function DetailPage(props: DetailListProps) {
+function DetailPage() {
   // 글 작성자인지 확인하기 위한 데이터
   const userData = useSelector(userSelector);
   const isLogin = useSelector(isLogInSelector);
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
-  const { detailList } = props;
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(false);
 
   // 최초 렌더링 시 데이터를 받아와서 저장하는 부분
   const location = useLocation();
   const url = location.pathname.split('/').pop();
-  const [data, setData] = React.useState<any>(initialData); // <<<<<<<<<<< any 타입 정의를 해야되는데 좀 어려움
+  //DB에서 받아올 데이터를 저장하는 필드로, 애니타입을 선언하였음. 이후의 데이터는 포맷팅하여 타입 관리함.
+  const [data, setData] = React.useState<any>(initialData);
   React.useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/groups/${url}`)

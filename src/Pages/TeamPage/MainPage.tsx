@@ -5,7 +5,7 @@ import Header from '../../Components/Header';
 import { Routes, Route } from 'react-router-dom';
 import FindPage from './Views/SelectCategory';
 import FindingMember from './Views/FindingMember/FindingMember';
-import FindingMemberDetail from './Views/FindingMember/FindingMemberDetail';
+import ViewPage from './Posts/ViewPage';
 import SubmitPage from './Posts/PostPage';
 import EditPage from './Posts/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
@@ -26,7 +26,7 @@ function TeamPage() {
             path="/team"
             element={<FindingMember setShowModal={setShowModal} />}
           />
-          <Route path="/team/:id" element={<FindingMemberDetail />} />
+          <Route path="/team/:id" element={<ViewPage />} />
           <Route
             path="/"
             element={
