@@ -2,13 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import FindPage from './Views/SelectCategory';
 import FindingMember from './Views/FindingMember/FindingMember';
-import FindingTeam from './Views/FindingTeam/FindingTeam';
-import FindingTeamDetail from './Views/FindingTeam/FindingTeamDetail';
 import FindingMemberDetail from './Views/FindingMember/FindingMemberDetail';
-import PreView from '../../Components/TeamPage/PreView/PreViewModal';
 import SubmitPage from './Posts/PostPage';
 import EditPage from './Posts/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
@@ -16,7 +13,6 @@ function TeamPage() {
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  // const [modalData, setModalData] = React.useState<any>([]);
 
   return (
     <>
@@ -27,23 +23,8 @@ function TeamPage() {
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
           <Route
-            path="/player"
-            element={
-              <FindingTeam
-                setShowModal={setShowModal}
-                // setModalData={setModalData}
-              />
-            }
-          />
-          <Route path="/player/:id" element={<FindingTeamDetail />} />
-          <Route
             path="/team"
-            element={
-              <FindingMember
-                setShowModal={setShowModal}
-                // setModalData={setModalData}
-              />
-            }
+            element={<FindingMember setShowModal={setShowModal} />}
           />
           <Route path="/team/:id" element={<FindingMemberDetail />} />
           <Route
@@ -65,11 +46,6 @@ function TeamPage() {
 }
 
 export default TeamPage;
-
-const Teampage = styled.div`
-  display: grid;
-  justify-content: center;
-`;
 
 const TeamPageBody = styled.div`
   width: 98.5rem;
