@@ -78,6 +78,7 @@ function SearchPage() {
   const [showComparisonData, setShowComparisonData] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalDomData, setTotalDomData] = useState<DomDataType[]>([]);
+  const [renderingDonData, setRenderingDomData] = useState<DomDataType[]>([]);
 
   const location = useLocation();
   const searchValue = location.state?.searchValue || '서울';
@@ -99,6 +100,19 @@ function SearchPage() {
       .then((res: any) => setTotalDomData(res.data.data))
       .catch((e: any) => console.log(e));
   }, []);
+
+  useEffect(() => {
+    console.log(searchKeyword);
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/doms/search?keywords=${searchKeyword}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res: any) => console.log(res))
+      .catch((e: any) => console.log(e));
+  }, [searchKeyword]);
 
   return (
     <>
