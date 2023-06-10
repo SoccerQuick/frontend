@@ -98,7 +98,6 @@ function Comment(props: any) {
               <p>{applicant.name}</p>
             </StyledAuthorDiv>
             <StyledContents>{applicant.contents}</StyledContents>
-            {/* {user === userData?.nickname && ( */}
             <StyledCommentDetailDiv>
               <StyledPosition position={applicant.position}>
                 #
@@ -117,7 +116,6 @@ function Comment(props: any) {
                 <img src={checkIcon} alt="" /> 수락
               </button>
             </StyledCommentButtons>
-            {/* )} */}
           </CommentLiContainer>
         ))}
       </div>
