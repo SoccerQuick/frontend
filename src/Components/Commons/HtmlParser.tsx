@@ -10,12 +10,6 @@ function Parser(props: any) {
   return <StyledBody>{parsedBody}</StyledBody>;
 }
 
-// function Parser(props: any) {
-//   const { data } = props;
-//   const htmlString = data;
-//   return <StyledBody dangerouslySetInnerHTML={{ __html: htmlString }} />;
-// }
-
 export default Parser;
 
 const StyledBody = styled.div`

@@ -4,20 +4,20 @@ import { Link, useLocation } from 'react-router-dom';
 import DropDown from '../../../../Components/Commons/DropDown';
 import resetIcon from '../../../../styles/icon/reset_black.svg';
 
-type DropdownList = {
+interface DropdownList {
   option: string[];
   state: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
-};
+}
 
-type Applicant = {
+interface Applicant {
   id: string;
   position: string;
   level: string;
   contents: string;
-};
+}
 
-type filteredData = {
+interface filteredData {
   applicant?: Applicant[];
   group_id?: string;
   num: number;
@@ -35,36 +35,16 @@ type filteredData = {
   gk_current_count: number;
   player_count: number;
   player_current_count: number;
-};
+}
 
-type modalDataProps = {
-  applicant?: Applicant[];
-  group_id?: string;
-  location: string;
-  leader_name?: string;
-  author?: string;
-  body: string;
-  gender: string;
-  num: number; // 수정 필요함(어떻게 들어올 지 모름)
-  position?: string;
-  skill?: string;
-  status: string;
-  title: string;
-  gk_need?: number;
-  gk?: number;
-  player_need?: number;
-  player?: number;
-  allowRandom?: string;
-};
-
-type BoardProps = {
+interface BoardProps {
   dropdownList: DropdownList[];
   handleReset: () => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   filteredData: filteredData[];
-};
+}
 
-// SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 166줄에서 넘어옴
+// SoccerQuick/Frontend/src/Pages/TeamPage/Views/FindingMember/FindingMember.tsx 에서 넘어옴
 function FindinMemberPageBoard(props: BoardProps) {
   const { dropdownList, handleReset, filteredData } = props;
 
