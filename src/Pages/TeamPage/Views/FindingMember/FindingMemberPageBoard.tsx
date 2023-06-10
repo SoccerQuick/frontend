@@ -145,7 +145,7 @@ function FindinMemberPageBoard(props: BoardProps) {
                         `[${item.applicant?.length}]`}
                     </span>
                   </td>
-                  <td>{item.author}</td>
+                  <td style={{ width: '13%' }}>{item.author}</td>
                   <StyledPositionTd>
                     {checkPosition(
                       item.gk_current_count,
