@@ -66,9 +66,9 @@ const items = [
   { key: 'ball', value: '공 대여' },
   { key: 'bibs', value: '조끼 대여' },
   { key: 'parking_free', value: '무료 주차' },
-  { key: 'parking', value: '주차장' },
+  { key: 'parking', value: '주차 가능' },
   { key: 'shower', value: '샤워실' },
-  { key: 'beverage', value: '음료 판매' },
+  { key: 'beverage', value: '음료 구비' },
 ];
 
 // Left Bar
@@ -138,7 +138,7 @@ const getColorBydata = (data: string) => {
   } else if (data === 'parking') {
     return '#a442b8';
   } else if (data === 'beverage') {
-    return '#ec0808';
+    return '#5e7f0c';
   }
 };
 const getBackgroundColorBydata = (data: string) => {
