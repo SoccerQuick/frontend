@@ -44,7 +44,8 @@ export function MyPageInfo({
 
   useEffect(() => {
     if (!user) {
-      window.location.reload();
+      alert('마이페이지는 로그인 후 사용해주세요.');
+      navigate('/');
     }
   }, [user]);
 
