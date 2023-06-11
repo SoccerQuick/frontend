@@ -50,7 +50,12 @@ const ComparisonData: React.FC<ComparsionDataProps> = ({
                     comparisonData.map((item) => (
                       <StyledGridItem key={item.title}>
                         <StyledGroundContent image>
-                          <img src={item.stadiums[0].images[0].image} alt="" />
+                          {item.stadiums[0].images[0] && (
+                            <img
+                              src={item.stadiums[0].images[0].image}
+                              alt=""
+                            />
+                          )}
                         </StyledGroundContent>
                         <StyledGroundContent bold>
                           <p>{item.title}</p>
@@ -67,15 +72,11 @@ const ComparisonData: React.FC<ComparsionDataProps> = ({
                           ))}
                         </StyledGroundContent>
                         <StyledGroundContent long>
-                          {/* {item.provided.map((data) => (
-                            <span>{data}</span>
-                          ))} */}
-
                           {Object.keys(ProvidedElementList).map(
                             (provided) =>
-                              `item.${provided}` && (
+                              item[provided] && (
                                 <span key={provided}>
-                                  {`ProvidedElementList.${provided}`}
+                                  {ProvidedElementList[provided]}
                                 </span>
                               )
                           )}

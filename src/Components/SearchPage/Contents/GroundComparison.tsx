@@ -79,7 +79,9 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
             {checkedArray &&
               checkedArray.map((item, idx) => (
                 <StyledItemsLi key={item.title + idx}>
-                  <img src={item.stadiums[0].images[0].image} alt="" />
+                  {item.stadiums[0].images[0] && (
+                    <img src={item.stadiums[0].images[0].image} alt="" />
+                  )}
                   <StyledItemTitle>
                     <p>{item.address.area}</p>
                     <p>{item.title}</p>
