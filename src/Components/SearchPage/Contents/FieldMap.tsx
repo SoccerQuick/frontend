@@ -97,7 +97,6 @@ const FieldMap: React.FC<FieldMapType> = ({
       createMarkerList.push(newMarker);
     } catch (e) {}
   };
-
   useEffect(() => {
     if (newMap) {
       const MoveEventListner = naver.maps.Event.addListener(
