@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
@@ -38,6 +39,7 @@ export const ProvidedElementList: ProvidedElementListType = {
 
 // SoccerQuick/Frontend/src/Pages/SearchPage.tsx 75번째 줄에서 연결됨
 function FindingGround(props: FindingGroundProps) {
+  const navigate = useNavigate();
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
@@ -89,6 +91,10 @@ function FindingGround(props: FindingGroundProps) {
     }
   }, [filterOption, sortedDomData]);
 
+  const clickDomHandler = (domId: string) => {
+    navigate(`/ground/${domId}`);
+  };
+
   return (
     <SearchContainer style={{ width: '100%' }}>
       <SearchFilter setFilterOption={setFilterOption} />
@@ -120,7 +126,9 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledCheckboxTd>
                     <StyledAddressTd>{item.address.area}</StyledAddressTd>
                     <StyledMainTd>
-                      <p>{item.title}</p>
+                      <p onClick={(e) => clickDomHandler(item.dom_id)}>
+                        {item.title}
+                      </p>
                       <StyledTableCell>
                         {Object.keys(ProvidedElementList).map(
                           (provided) =>
@@ -134,7 +142,11 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledMainTd>
 
                     <td>
-                      <StyledButton>조회</StyledButton>
+                      <StyledButton
+                        onClick={(e) => clickDomHandler(item.dom_id)}
+                      >
+                        조회
+                      </StyledButton>
                     </td>
                   </StyledTr>
                 ))}
@@ -262,6 +274,7 @@ const StyledMainTd = styled.td`
   padding-left: 4rem;
   p {
     font-size: 1.9rem;
+    cursor: pointer;
   }
 `;
 

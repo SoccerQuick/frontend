@@ -49,7 +49,7 @@ export interface DomDataType {
     id: number;
     info: string;
     inout_door: string;
-    inoutdoor_nm: string;
+    inout_door_nm: string;
     name: string;
     size_x: number;
     size_y: number;
