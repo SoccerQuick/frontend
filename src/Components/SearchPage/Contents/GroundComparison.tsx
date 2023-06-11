@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import chevronIcon from '../../../styles/icon/chevron_down.svg';
 import checkIcon from '../../../styles/icon/check.svg';
 import deleteIcon from '../../../styles/icon/delete.svg';
+import logo from '../../../styles/icon/exampleImg.svg';
 
 interface GroundComparisonProps {
   checkedArray: DomDataType[];
@@ -77,8 +78,13 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
             {checkedArray &&
               checkedArray.map((item, idx) => (
                 <StyledItemsLi key={item.title + idx}>
-                  {item.stadiums[0].images[0] && (
-                    <img src={item.stadiums[0].images[0].image} alt="" />
+                  {item.stadiums[0].images[0] ? (
+                    <img
+                      src={item.stadiums[0].images[0].image}
+                      alt="domImage"
+                    />
+                  ) : (
+                    <img src={logo} alt="logo" />
                   )}
                   <StyledItemTitle>
                     <p>{item.address.area}</p>
