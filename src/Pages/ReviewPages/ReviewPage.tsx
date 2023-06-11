@@ -238,6 +238,7 @@ export default function ReviewPage() {
                         {areaFilterView &&
                           areaList.map((item, index) => (
                             <li
+                              className="area"
                               key={index}
                               onClick={() => {
                                 setArea(item);
@@ -266,6 +267,7 @@ export default function ReviewPage() {
                         {stadiumFilterView &&
                           filterList[area].map((item, index) => (
                             <li
+                              className="stadium"
                               key={index}
                               onClick={() => {
                                 area === '지역'
@@ -288,7 +290,7 @@ export default function ReviewPage() {
                       onChange={(e) => {
                         handleSearch(e.target.value);
                       }}
-                      placeholder="검색어를 입력해주세요."
+                      placeholder="지역 혹은 구장으로 검색"
                     />
                   </div>
                 </StyledReviewHeader>
@@ -407,12 +409,12 @@ const StyledReviewHeader = styled.div`
     display: flex;
     flex-direction: row;
     position: relative;
+    font-size: 2rem;
+    font-weight: 500;
+    z-index: 2;
 
     .areaFilter {
       position: absolute;
-      z-index: 2;
-      font-size: 1.5rem;
-      font-weight: 700;
       padding: 1rem 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 2rem;
@@ -423,15 +425,24 @@ const StyledReviewHeader = styled.div`
 
     .stadiumFilter {
       position: absolute;
-      z-index: 2;
-      font-size: 1.5rem;
-      font-weight: 700;
       padding: 1rem 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 2rem;
       box-shadow: 2px 2px #e0e0e0;
       background-color: white;
       left: 10rem;
+    }
+  }
+
+  .area {
+    &:hover {
+      background-color: ${(picked) => picked && '#dedede;'};
+    }
+  }
+
+  .stadium {
+    &:hover {
+      background-color: ${(picked) => picked && '#dedede;'};
     }
   }
 
@@ -443,7 +454,8 @@ const StyledReviewHeader = styled.div`
   }
 
   .search-input {
-    font-size: 1.65rem;
+    width: 65%;
+    font-size: 1.8rem;
     padding: 1rem;
     margin-left: 1rem;
     border: 1px solid #bebebe;
