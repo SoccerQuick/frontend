@@ -5,47 +5,44 @@ import checkIcon from '../../../styles/icon/check.svg';
 function MyFavoriteGroundList() {
   const [filteredData, setFilteredData] = useState(dummydata_filteredGround);
   return (
-    <>
-      {' '}
-      <Searchpage>
-        <SearchPageBody>
-          <table>
-            <thead>
-              <StyledLabelTr>
-                <th></th>
-                <th>지역</th>
-                <th>경기장</th>
-                <th>상세조회</th>
-              </StyledLabelTr>
-            </thead>
-            <tbody>
-              {filteredData.map((item, idx) => (
-                <StyledTr key={item.title + idx}>
-                  <StyledCheckboxTd>
-                    <label htmlFor={item.title}></label>
-                  </StyledCheckboxTd>
-                  <StyledAddressTd>{item.address.shortAddress}</StyledAddressTd>
-                  <StyledMainTd>
-                    <p>{item.title}</p>
-                    <StyledTableCell>
-                      {item.provided.map((data, index) => (
-                        <StyledTable key={index} data={data}>
-                          {data}
-                        </StyledTable>
-                      ))}
-                    </StyledTableCell>
-                  </StyledMainTd>
+    <Searchpage>
+      <SearchPageBody>
+        <table>
+          <thead>
+            <StyledLabelTr>
+              <th></th>
+              <th>지역</th>
+              <th>경기장</th>
+              <th>상세조회</th>
+            </StyledLabelTr>
+          </thead>
+          <tbody>
+            {filteredData.map((item, idx) => (
+              <StyledTr key={item.title + idx}>
+                <StyledCheckboxTd>
+                  <label htmlFor={item.title}></label>
+                </StyledCheckboxTd>
+                <StyledAddressTd>{item.address.shortAddress}</StyledAddressTd>
+                <StyledMainTd>
+                  <p>{item.title}</p>
+                  <StyledTableCell>
+                    {item.provided.map((data, index) => (
+                      <StyledTable key={index} data={data}>
+                        {data}
+                      </StyledTable>
+                    ))}
+                  </StyledTableCell>
+                </StyledMainTd>
 
-                  <td>
-                    <StyledButton onClick={() => {}}>조회</StyledButton>
-                  </td>
-                </StyledTr>
-              ))}
-            </tbody>
-          </table>
-        </SearchPageBody>
-      </Searchpage>
-    </>
+                <td>
+                  <StyledButton onClick={() => {}}>조회</StyledButton>
+                </td>
+              </StyledTr>
+            ))}
+          </tbody>
+        </table>
+      </SearchPageBody>
+    </Searchpage>
   );
 }
 
