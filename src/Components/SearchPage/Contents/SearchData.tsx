@@ -21,6 +21,7 @@ type ProvidedElementListType = {
 
 export const ProvidedElementList: ProvidedElementListType = {
   parking: '주차 가능',
+  parking_free: '무료 주차',
   bibs: '조끼 대여',
   beverage: '음료 구비',
   ball: '공 대여',
@@ -56,15 +57,31 @@ function FindingGround(props: FindingGroundProps) {
     }
   };
 
-  // Left Bar에서 설정한 필터링 옵션이 담기는 상태. get 요청 보낼 때 전달해주어야 함.
-  const [filterOption, setFilterOption] = React.useState<string[]>([]);
+  // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
+  // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
+  const [filterOption, setFilterOption] = React.useState<any[]>([]);
 
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
-  const [filteredData, setFilteredData] = React.useState<DomDataType[]>();
+  const [filteredData, setFilteredData] =
+    React.useState<DomDataType[]>(sortedDomData);
 
+  // 이곳에 필터링 함수 작성
   useEffect(() => {
-    setFilteredData(sortedDomData);
-  });
+    // 필터링 옵션의 각 필터옵션에 대하여
+    if (filterOption.length === 0) {
+      setFilteredData(sortedDomData);
+    } else {
+      const filteredDomdata = sortedDomData.filter((data) => {
+        for (let option of filterOption) {
+          if (!data[option.key]) {
+            return false;
+          }
+        }
+        return true;
+      });
+      setFilteredData(filteredDomdata);
+    }
+  }, [filterOption, sortedDomData]);
 
   return (
     <SearchContainer style={{ width: '100%' }}>
@@ -105,10 +122,7 @@ function FindingGround(props: FindingGroundProps) {
                         {Object.keys(ProvidedElementList).map(
                           (provided) =>
                             item[provided] && (
-                              <StyledTable
-                                key={provided}
-                                data={ProvidedElementList[provided]}
-                              >
+                              <StyledTable key={provided} data={provided}>
                                 {ProvidedElementList[provided]}
                               </StyledTable>
                             )
@@ -259,37 +273,41 @@ const StyledButton = styled.button`
 `;
 
 const getColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#531dab';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#096dd9';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#d4380d';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#08979c';
-  } else if (data === '주차 가능') {
+  } else if (data === 'parking') {
     return '#c41d7f';
-  } else if (data === '음료 구비') {
+  } else if (data === 'beverage') {
     return '#5e7f0c';
-  } else if (data === '샤워실') {
+  } else if (data === 'shower') {
     return '#d46b08';
+  } else if (data === 'parking_free') {
+    return '#c41d7f';
   }
 };
 
 const getBackgroundColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#f9f0ff';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#e6f7ff';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#fff2e8';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#e6fffb';
-  } else if (data === '주차 가능') {
+  } else if (data === 'parking') {
     return '#fff0f6';
-  } else if (data === '음료 구비') {
+  } else if (data === 'beverage') {
     return '#f0fff3';
-  } else if (data === '샤워실') {
+  } else if (data === 'shower') {
+    return '#fff7e6';
+  } else if (data === 'parking_free') {
     return '#fff7e6';
   }
 };
