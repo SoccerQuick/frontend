@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { DomDataType } from '../../Pages/SearchPage';
 
-const groundDetailCarousel: React.FC<{ groundImg: string[] }> = ({
-  groundImg,
+const groundDetailCarousel: React.FC<{ stadiums: DomDataType['stadiums'] }> = ({
+  stadiums,
 }) => {
   return (
     <Wrap>
@@ -17,14 +18,14 @@ const groundDetailCarousel: React.FC<{ groundImg: string[] }> = ({
         slidesToScroll={1}
         customPaging={(idx) => (
           <PagingImg>
-            <img src={groundImg[idx]} />
+            <img src={stadiums[0].images[0].image} />
           </PagingImg>
         )}
       >
-        {groundImg &&
-          groundImg.map((img) => (
-            <ImageItems>
-              <Img src={img} alt="" />
+        {stadiums &&
+          stadiums.map((stadium) => (
+            <ImageItems key={stadium._id}>
+              <Img src={stadium.images[0].image} alt="" />
             </ImageItems>
           ))}
       </Slider>
