@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import ResetIcon from '../../../styles/icon/reset_white.svg';
 import CustomMapMarker from './CustomMapMarker';
-import ResetMapBtn from './ResetMapBtn';
 import FieldDummy from './fieldDummy';
-import { listeners } from 'process';
+import { DomDataType } from '../../../Pages/SearchPage';
 
-const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
+interface FieldMapType {
+  searchKeyword: string;
+  totalDomData: DomDataType[];
+  setSortedDomData: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+}
+
+const FieldMap: React.FC<FieldMapType> = ({
+  searchKeyword,
+  totalDomData,
+  setSortedDomData,
+}) => {
   const { naver } = window;
   const mapElement = useRef<HTMLElement | null | any>(null);
   let map: naver.maps.Map;
@@ -44,7 +54,7 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     const center = new naver.maps.LatLng(AddressY, AddressX);
     const mapOptions: naver.maps.MapOptions = {
       center: center,
-      zoom: 14,
+      zoom: 12,
       zoomControl: true,
       zoomControlOptions: {
         style: naver.maps.ZoomControlStyle.SMALL,
@@ -55,21 +65,22 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     };
     map = new naver.maps.Map(mapElement.current, mapOptions);
     addMarkers();
-  }, [AddressX, AddressY]);
+    resetListHandler();
+  }, [AddressX, AddressY, totalDomData]);
 
   //구장 데이터 배열 순회하면서 마커 생성 진행!
   const addMarkers = () => {
     // let mapBounds = map.getBounds();
-    for (let i = 0; i < FieldDummy.length; i++) {
+    for (let i = 0; i < totalDomData.length; i++) {
       if (createMarkerList.length > 100) {
         break;
       }
 
-      let markerObj = FieldDummy[i];
+      let markerObj = totalDomData[i];
       // let position = new naver.maps.LatLng(markerObj.lat, markerObj.lng);
       // if (mapBounds.hasPoint(position)) {
-      const { id, title, lat, lng } = markerObj;
-      addMarker(id, title, lat, lng);
+      const { _id, title, lat, lng } = markerObj;
+      addMarker(_id, title, lat, lng);
       // }
     }
   };
@@ -92,7 +103,8 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
       createMarkerList.push(newMarker);
     } catch (e) {}
   };
-
+  console.log(createMarkerList);
+  console.log(totalDomData);
   useEffect(() => {
     const MoveEventListner = naver.maps.Event.addListener(
       map,
@@ -131,10 +143,33 @@ const FieldMap: React.FC<{ searchKeyword: string }> = ({ searchKeyword }) => {
     marker.setMap(null);
   };
 
+  const resetListHandler = () => {
+    const newArray = [...totalDomData].sort((a, b) => {
+      const currentCenterLatLng = map.getCenter();
+      const DomLatLngA = new naver.maps.LatLng(a.lng, a.lat);
+      const DomLatLngB = new naver.maps.LatLng(b.lng, b.lat);
+
+      const projection = map.getProjection();
+      const distanceA = projection.getDistance(currentCenterLatLng, DomLatLngA);
+      const distanceB = projection.getDistance(currentCenterLatLng, DomLatLngB);
+
+      if (distanceA < distanceB) return -1;
+      else if (distanceA > distanceB) return 1;
+      else return 0;
+    });
+
+    setSortedDomData(newArray);
+  };
+
   return (
     <StyledMapContainer>
       <StyledMap id="map" ref={mapElement}></StyledMap>;
-      <ResetMapBtn />
+      <StyledButton onClick={() => resetListHandler()}>
+        <StyledButtonIcon>
+          <img src={ResetIcon} alt="" />
+        </StyledButtonIcon>
+        <StyledButtonContent>현 위치에서 검색</StyledButtonContent>
+      </StyledButton>
     </StyledMapContainer>
   );
 };
@@ -149,4 +184,42 @@ const StyledMap = styled.div`
   width: 98.4rem;
   height: 47rem;
   margin: 0 auto;
+`;
+const StyledButton = styled.div`
+  position: absolute;
+  display: table;
+  padding: 1rem 0.8rem;
+  table-layout: auto;
+  border-radius: 2.3rem;
+  background-color: var(--color--darkgreen);
+  z-index: 10;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const StyledButtonIcon = styled.div`
+  display: table-cell;
+  display: inline-block;
+  width: 2.7rem;
+  height: 2.7rem;
+  padding-top: 0.2rem;
+  margin-left: 0.7rem;
+`;
+
+const StyledButtonContent = styled.div`
+  max-width: 17rem;
+  height: 3rem;
+  padding: 0 1.5rem 0 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: pointer;
+  color: white;
+  font-size: 1.7rem;
+  letter-spacing: -0.04rem;
+  font-weight: 600;
+  line-height: 3rem;
 `;

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { groundDataType } from '../../../Pages/SearchPage';
+import { DomDataType, groundDataType } from '../../../Pages/SearchPage';
 import styled from 'styled-components';
 import chevronIcon from '../../../styles/icon/chevron_down.svg';
 import checkIcon from '../../../styles/icon/check.svg';
 import deleteIcon from '../../../styles/icon/delete.svg';
 
 interface GroundComparisonProps {
-  checkedArray: groundDataType[];
-  setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
+  checkedArray: DomDataType[];
+  setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   checkedInModal: string[];
   setCheckedInModal: React.Dispatch<React.SetStateAction<string[]>>;
   showComparisonData: boolean;
@@ -79,9 +79,9 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
             {checkedArray &&
               checkedArray.map((item, idx) => (
                 <StyledItemsLi key={item.title + idx}>
-                  <img src={item.image[0]} alt="" />
+                  <img src={item.stadiums[0].images[0].image} alt="" />
                   <StyledItemTitle>
-                    <p>{item.address.shortAddress}</p>
+                    <p>{item.address.area}</p>
                     <p>{item.title}</p>
                   </StyledItemTitle>
                   <StyledItemButtonBox>

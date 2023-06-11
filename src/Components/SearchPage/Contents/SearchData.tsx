@@ -4,24 +4,41 @@ import Select from 'react-select';
 import SearchFilter from './SearchFilter';
 import { groundDataType } from '../../../Pages/SearchPage';
 import checkIcon from '../../../styles/icon/check.svg';
+import { DomDataType } from '../../../Pages/SearchPage';
 
 import axios from 'axios';
 
 type FindingGroundProps = {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  checkedArray: groundDataType[];
-  setCheckedArray: React.Dispatch<React.SetStateAction<groundDataType[]>>;
+  checkedArray: DomDataType[];
+  setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+  sortedDomData: DomDataType[];
+  setSortedDomData: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+};
+
+type ProvidedElementListType = {
+  [key: string]: string;
+};
+
+export const ProvidedElementList: ProvidedElementListType = {
+  parking: '주차 가능',
+  bibs: '조끼 대여',
+  beverage: '음료 구비',
+  ball: '공 대여',
+  shower: '샤워실',
+  shoes: '풋살화 대여',
+  toilet: '남녀 구분 화장실',
 };
 
 // SoccerQuick/Frontend/src/Pages/SearchPage.tsx 75번째 줄에서 연결됨
 function FindingGround(props: FindingGroundProps) {
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
+  const sortedDomData = props.sortedDomData;
+  const setSortedDomData = props.setSortedDomData;
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
-    value: groundDataType
+    value: DomDataType
   ) => {
     if (e.target.checked) {
       if (checkedArray.length >= 5) {
@@ -42,27 +59,12 @@ function FindingGround(props: FindingGroundProps) {
   // Left Bar에서 설정한 필터링 옵션이 담기는 상태. get 요청 보낼 때 전달해주어야 함.
   const [filterOption, setFilterOption] = React.useState<string[]>([]);
 
-  //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<any[]>([]);
-  React.useEffect(() => {
-    // axios
-    //   .get('gomao.com')
-    //   .then((res) => {
-    //     // 가져온 데이터가 있다면 data에 저장한다.
-    //     setData(res.data);
-    //   })
-    //   .catch((error) => {
-    //     // 가져온 데이터가 없다면 dummyData를 사용한다.
-    setData(dummydata_filteredGround);
-    // });
-  }, []);
-
-  // DB에서 데이터를 가져오는 부분, 현재는 더미데이터를 불러오고 있음
-
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
-  const [filteredData, setFilteredData] = React.useState(
-    dummydata_filteredGround
-  );
+  const [filteredData, setFilteredData] = React.useState<DomDataType[]>();
+
+  useEffect(() => {
+    setFilteredData(sortedDomData);
+  });
 
   return (
     <SearchContainer style={{ width: '100%' }}>
@@ -82,36 +84,43 @@ function FindingGround(props: FindingGroundProps) {
               </StyledLabelTr>
             </thead>
             <tbody>
-              {filteredData.map((item, idx) => (
-                <StyledTr key={item.title + idx}>
-                  <StyledCheckboxTd>
-                    <input
-                      type="checkbox"
-                      id={item.title}
-                      checked={checkedArray.some(
-                        (data) => data.title === item.title
-                      )}
-                      onChange={(e) => checkHandler(e, item)}
-                    />
-                    <label htmlFor={item.title}></label>
-                  </StyledCheckboxTd>
-                  <StyledAddressTd>{item.address.shortAddress}</StyledAddressTd>
-                  <StyledMainTd>
-                    <p>{item.title}</p>
-                    <StyledTableCell>
-                      {item.provided.map((data, index) => (
-                        <StyledTable key={index} data={data}>
-                          {data}
-                        </StyledTable>
-                      ))}
-                    </StyledTableCell>
-                  </StyledMainTd>
+              {filteredData &&
+                filteredData.map((item, idx) => (
+                  <StyledTr key={item.title + idx}>
+                    <StyledCheckboxTd>
+                      <input
+                        type="checkbox"
+                        id={item.title}
+                        checked={checkedArray.some(
+                          (data) => data.title === item.title
+                        )}
+                        onChange={(e) => checkHandler(e, item)}
+                      />
+                      <label htmlFor={item.title}></label>
+                    </StyledCheckboxTd>
+                    <StyledAddressTd>{item.address.area}</StyledAddressTd>
+                    <StyledMainTd>
+                      <p>{item.title}</p>
+                      <StyledTableCell>
+                        {Object.keys(ProvidedElementList).map(
+                          (provided) =>
+                            item[provided] && (
+                              <StyledTable
+                                key={provided}
+                                data={ProvidedElementList[provided]}
+                              >
+                                {ProvidedElementList[provided]}
+                              </StyledTable>
+                            )
+                        )}
+                      </StyledTableCell>
+                    </StyledMainTd>
 
-                  <td>
-                    <StyledButton>조회</StyledButton>
-                  </td>
-                </StyledTr>
-              ))}
+                    <td>
+                      <StyledButton>조회</StyledButton>
+                    </td>
+                  </StyledTr>
+                ))}
             </tbody>
           </table>
         </SearchPageBody>
@@ -258,8 +267,10 @@ const getColorBydata = (data: string) => {
     return '#d4380d';
   } else if (data === '조끼 대여') {
     return '#08979c';
-  } else if (data === '무료 주차') {
+  } else if (data === '주차 가능') {
     return '#c41d7f';
+  } else if (data === '음료 구비') {
+    return '#5e7f0c';
   } else if (data === '샤워실') {
     return '#d46b08';
   }
@@ -274,8 +285,10 @@ const getBackgroundColorBydata = (data: string) => {
     return '#fff2e8';
   } else if (data === '조끼 대여') {
     return '#e6fffb';
-  } else if (data === '무료 주차') {
+  } else if (data === '주차 가능') {
     return '#fff0f6';
+  } else if (data === '음료 구비') {
+    return '#f0fff3';
   } else if (data === '샤워실') {
     return '#fff7e6';
   }
