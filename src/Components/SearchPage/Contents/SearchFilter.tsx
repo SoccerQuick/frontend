@@ -38,11 +38,11 @@ function SearchFilter(props: any) {
           {items.map((item, index) => (
             <StyledTable
               key={index}
-              data={item}
+              data={item.key} // item 의 원소가 string에서 object로 변경됨.
               active={buttonStates[index]}
               onClick={() => handleButtonClick(index)}
             >
-              {item}
+              {item.value}
             </StyledTable>
           ))}
         </StyledOptions>
@@ -59,13 +59,16 @@ function SearchFilter(props: any) {
 
 export default SearchFilter;
 
+// item 옵션이 변동됨. 비교는 items.key로 해야 할 것임.
 const items = [
-  '풋살화 대여',
-  '남녀 구분 화장실',
-  '공 대여',
-  '조끼 대여',
-  '무료 주차',
-  '샤워실',
+  { key: 'shoes', value: '풋살화 대여' },
+  { key: 'toilet', value: '남녀 구분 화장실' },
+  { key: 'ball', value: '공 대여' },
+  { key: 'bibs', value: '조끼 대여' },
+  { key: 'parking_free', value: '무료 주차' },
+  { key: 'parking', value: '주차장' },
+  { key: 'shower', value: '샤워실' },
+  { key: 'beverage', value: '음료 판매' },
 ];
 
 // Left Bar
@@ -120,32 +123,40 @@ const StyledTable = styled.button<{ data: string; active: boolean }>`
 `;
 
 const getColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#531dab';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#096dd9';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#d4380d';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#08979c';
-  } else if (data === '무료 주차') {
+  } else if (data === 'parking_free') {
     return '#c41d7f';
-  } else if (data === '샤워실') {
+  } else if (data === 'shower') {
     return '#d46b08';
+  } else if (data === 'parking') {
+    return '#a442b8';
+  } else if (data === 'beverage') {
+    return '#ec0808';
   }
 };
 const getBackgroundColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#f9f0ff';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#e6f7ff';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#fff2e8';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#e6fffb';
-  } else if (data === '무료 주차') {
+  } else if (data === 'parking_free') {
     return '#fff0f6';
-  } else if (data === '샤워실') {
+  } else if (data === 'shower') {
+    return '#fff7e6';
+  } else if (data === 'parking') {
+    return '#fff7e6';
+  } else if (data === 'beverage') {
     return '#fff7e6';
   }
 };
