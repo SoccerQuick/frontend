@@ -12,6 +12,9 @@ import Avatar4 from '../styles/icon/avatar4.png';
 
 export default function Main() {
   const navigate = useNavigate();
+  const clickBtnHandler = (searchValue: string) => {
+    navigate('/ground', { state: { searchValue } });
+  };
   return (
     <>
       <Header />
@@ -53,7 +56,55 @@ export default function Main() {
                     src="Images/cramp.png"
                     alt="cramp"
                     onClick={() => {
-                      alert('서울에서 진행되는 매치로 고고씽');
+                      clickBtnHandler('서울');
+                    }}
+                  />
+                </span>
+              </div>
+              <div className="field-list-text">
+                <span className="field-list-text-title">🛬 in 인천</span>
+                <span className="field-list-text-content">
+                  인천에서 진행되는 매치 모아보기
+                </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      clickBtnHandler('인천');
+                    }}
+                  />
+                </span>
+              </div>
+              <div className="field-list-text">
+                <span className="field-list-text-title">👩🏻‍🔬 in 대전</span>
+                <span className="field-list-text-content">
+                  대전에서 진행되는 매치 모아보기
+                </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      clickBtnHandler('대전');
+                    }}
+                  />
+                </span>
+              </div>
+              <div className="field-list-text">
+                <span className="field-list-text-title">🍎 in 대구</span>
+                <span className="field-list-text-content">
+                  대구에서 진행되는 매치 모아보기
+                </span>
+                <span>
+                  <img
+                    className="move-to-list-page"
+                    src="Images/cramp.png"
+                    alt="cramp"
+                    onClick={() => {
+                      clickBtnHandler('대구');
                     }}
                   />
                 </span>
@@ -69,23 +120,7 @@ export default function Main() {
                     src="Images/cramp.png"
                     alt="cramp"
                     onClick={() => {
-                      alert('부산에서 진행되는 매치로 고고씽');
-                    }}
-                  />
-                </span>
-              </div>
-              <div className="field-list-text">
-                <span className="field-list-text-title">🏭 in 울산</span>
-                <span className="field-list-text-content">
-                  울산에서 진행되는 매치 모아보기
-                </span>
-                <span>
-                  <img
-                    className="move-to-list-page"
-                    src="Images/cramp.png"
-                    alt="cramp"
-                    onClick={() => {
-                      alert('울산에서 진행되는 매치로 고고씽');
+                      clickBtnHandler('부산');
                     }}
                   />
                 </span>
@@ -101,39 +136,7 @@ export default function Main() {
                     src="Images/cramp.png"
                     alt="cramp"
                     onClick={() => {
-                      alert('제주에서 진행되는 매치로 고고씽');
-                    }}
-                  />
-                </span>
-              </div>
-              <div className="field-list-text">
-                <span className="field-list-text-title">🎋 in 담양</span>
-                <span className="field-list-text-content">
-                  담양에서 진행되는 매치 모아보기
-                </span>
-                <span>
-                  <img
-                    className="move-to-list-page"
-                    src="Images/cramp.png"
-                    alt="cramp"
-                    onClick={() => {
-                      alert('담양에서 진행되는 매치로 고고씽');
-                    }}
-                  />
-                </span>
-              </div>
-              <div className="field-list-text">
-                <span className="field-list-text-title">🍐 in 나주</span>
-                <span className="field-list-text-content">
-                  나주에서 진행되는 매치 모아보기
-                </span>
-                <span>
-                  <img
-                    className="move-to-list-page"
-                    src="Images/cramp.png"
-                    alt="cramp"
-                    onClick={() => {
-                      alert('나주에서 진행되는 매치로 고고씽');
+                      clickBtnHandler('제주');
                     }}
                   />
                 </span>
