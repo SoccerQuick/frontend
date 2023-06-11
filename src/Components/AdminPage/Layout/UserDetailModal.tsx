@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface UserData {
   admin_id?: string;
@@ -13,6 +15,8 @@ interface UserData {
   createdAt: string;
   login_banned: boolean;
   login_banEndDate: string | null;
+  community_banned: boolean;
+  community_banEndDate: string | null;
 }
 
 type props = {
@@ -23,27 +27,122 @@ type props = {
 };
 
 function DetailModal(props: props) {
-  const { showManagementModal, setShowDetailModal, setShowManagementModal } =
-    props;
+  const {
+    showManagementModal,
+    setShowDetailModal,
+    setShowManagementModal,
+    modalData,
+  } = props;
+  const navigate = useNavigate();
+
+  // 헤더 및 쿠키 설정 부분
+  const config = {
+    withCredentials: true,
+  };
+  // 관리자 임명 API
+  const handleUserToManager = () => {
+    const confirmed = window.confirm(
+      `${modalData.nick_name}유저를 임명하려고 합니다. 동의하십니까? 신중하게 결정해 주세요.`
+    );
+    if (confirmed) {
+      const data = {
+        updateUser: modalData.user_id,
+      };
+      axios
+        .patch(`${process.env.REACT_APP_API_URL}/admins/role`, data, config)
+        .then((res) => {
+          console.log('관리자 등업 성공 : ', res.data);
+          alert(`${modalData.nick_name}유저를 관리자로 임명하였습니다.`);
+          setShowDetailModal(false);
+          setShowManagementModal(false);
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('권한 변경 실패 : ', e);
+        });
+    }
+  };
+
+  // 관리자 임명 API
+  const handleUserBlockLogin = () => {
+    const confirmed = window.confirm(
+      `⚠️${modalData.nick_name}유저의 로그인을 금지하려고 합니다. 신중하게 결정해 주세요.`
+    );
+    if (confirmed) {
+      const data = {
+        banUserId: modalData.user_id,
+      };
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URL}/admins/bans/login`,
+          data,
+          config
+        )
+        .then((res) => {
+          console.log('해당 유저의 로그인 정지 완료 : ', res.data);
+          alert(`${modalData.nick_name}유저의 로그인 기능이 정지되었습니다.`);
+          setShowDetailModal(false);
+          setShowManagementModal(false);
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('사용자 정지 실패 : ', e);
+        });
+    }
+  };
+
+  // 관리자 임명 API
+  const handleUserCommunityBan = () => {
+    const confirmed = window.confirm(
+      `⚠️${modalData.nick_name}유저의 커뮤니티 작성을 금지하려고 합니다. 신중하게 결정해 주세요.`
+    );
+    if (confirmed) {
+      const data = {
+        banUserId: modalData.user_id,
+      };
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URL}/admins/bans/community`,
+          data,
+          config
+        )
+        .then((res) => {
+          console.log('해당 유저의 커뮤니티 정지 완료 : ', res.data);
+          alert(`${modalData.nick_name}유저의 커뮤니티 기능이 정지되었습니다.`);
+          setShowDetailModal(false);
+          setShowManagementModal(false);
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.error('사용자 정지 실패 : ', e);
+        });
+    }
+  };
 
   // 출력할 데이터를 포맷팅하는 변수
   const detailList = {
-    이름: props.modalData.name,
-    닉네임: props.modalData.nick_name,
-    성별: props.modalData.gender,
-    전화번호: props.modalData.phone_number,
-    'E-mail': props.modalData.email,
+    이름: modalData.name,
+    닉네임: modalData.nick_name,
+    성별: modalData.gender,
+    전화번호: modalData.phone_number,
+    'E-mail': modalData.email,
     역할:
-      props.modalData.role === 'admin'
+      modalData.role === 'admin'
         ? '👑총 관리자'
-        : props.modalData.role === 'manager'
+        : modalData.role === 'manager'
         ? '🌟관리자'
         : '일반회원',
-    '계정 상태': props.modalData.login_banned ? 'Banned' : '정상',
-    '정지 기간': props.modalData.login_banned
-      ? props.modalData.login_banEndDate?.split('T').join(' ')
+    '계정 상태': modalData.login_banned
+      ? '로그인 정지'
+      : modalData.community_banned
+      ? '커뮤니티 정지'
+      : '정상',
+    '정지 기간': modalData.login_banned
+      ? modalData.login_banEndDate?.split('T').join(' ').slice(0, -5)
+      : modalData.community_banned
+      ? modalData.community_banEndDate?.split('T').join(' ').slice(0, -5)
       : '-',
-    가입일자: props.modalData.createdAt.split('T')[0].slice(2),
+    가입일자: modalData.createdAt.split('T')[0].slice(2),
   };
 
   return (
@@ -58,6 +157,7 @@ function DetailModal(props: props) {
             }}
             onClick={() => {
               setShowDetailModal(false);
+              setShowManagementModal(false);
             }}
           >
             X
@@ -104,11 +204,23 @@ function DetailModal(props: props) {
 
           {showManagementModal && (
             <ManagementButtonContainer>
-              <ManagementButton data={showManagementModal ? 'true' : 'false'}>
+              <ManagementButton
+                data={showManagementModal ? 'true' : 'false'}
+                onClick={handleUserToManager}
+              >
                 관리자 임명
               </ManagementButton>
-              <ManagementButton data={showManagementModal ? 'true' : 'false'}>
+              <ManagementButton
+                data={showManagementModal ? 'true' : 'false'}
+                onClick={handleUserBlockLogin}
+              >
                 로그인 정지
+              </ManagementButton>
+              <ManagementButton
+                data={showManagementModal ? 'true' : 'false'}
+                onClick={handleUserCommunityBan}
+              >
+                커뮤니티 정지
               </ManagementButton>
               <ReturnButton
                 style={{ zIndex: 999 }}

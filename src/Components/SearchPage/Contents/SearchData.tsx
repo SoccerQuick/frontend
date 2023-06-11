@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
@@ -117,7 +117,7 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledMainTd>
 
                     <td>
-                      <StyledButton onClick={() => {}}>조회</StyledButton>
+                      <StyledButton>조회</StyledButton>
                     </td>
                   </StyledTr>
                 ))}

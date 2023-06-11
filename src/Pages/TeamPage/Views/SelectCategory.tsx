@@ -36,7 +36,7 @@ function FindPage(props: props) {
           </StyledButton>
         </Link>
         {/* 백엔드 API가 제공되지 않아서 현재 사용 불가능한 기능.*/}
-        {/* FindingTeam 폴더 산하 파일들 현재 동작하지 않음.*/}
+        {/* 관련 코드 파일들은 모두 삭제(백업)된 상태입니다. */}
         {/* <Link to="/teampage/player">
           <StyledButton
             onClick={() => {

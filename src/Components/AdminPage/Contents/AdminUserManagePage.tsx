@@ -17,6 +17,8 @@ interface UserData {
   createdAt: string;
   login_banned: boolean;
   login_banEndDate: string | null;
+  community_banned: boolean;
+  community_banEndDate: string | null;
 }
 
 function AdminUserManager() {
@@ -35,6 +37,8 @@ function AdminUserManager() {
     createdAt: '',
     login_banned: false,
     login_banEndDate: null,
+    community_banned: false,
+    community_banEndDate: null,
   });
   const [option, setOption] = React.useState('통합검색');
 
@@ -134,7 +138,6 @@ function AdminUserManager() {
               <th style={{ width: '7%' }}>상태</th>
               <th style={{ width: '10%' }}>정지기간</th>
               <th style={{ width: '10%' }}>가입일자</th>
-              <th style={{ width: '5%' }}>상세정보</th>
               <th style={{ width: '5%' }}>회원관리</th>
             </StyledTr>
           </thead>
@@ -156,11 +159,17 @@ function AdminUserManager() {
                 <td style={{ width: '8%' }}>{item.nick_name}</td>
                 <td style={{ width: '10%' }}>{item.email}</td>
                 <td style={{ width: '7%' }}>
-                  {item.login_banned ? '로그인 정지' : '정상'}
+                  {item.login_banned
+                    ? '로그인 정지'
+                    : item.community_banned
+                    ? '커뮤니티 정지'
+                    : '정상'}
                 </td>
                 <td style={{ width: '10%' }}>
                   {item.login_banned
                     ? item.login_banEndDate?.split('T')[0].slice(2)
+                    : item.community_banned
+                    ? item.community_banEndDate?.split('T')[0].slice(2)
                     : '-'}
                 </td>
                 <td style={{ width: '5%' }}>
@@ -171,19 +180,10 @@ function AdminUserManager() {
                     onClick={() => {
                       setShowDetailModal(true);
                       setModalData(item);
+                      console.log(item);
                     }}
                   >
                     🔍
-                  </StyledButton>
-                </td>
-                <td style={{ width: '5%' }}>
-                  <StyledButton
-                    onClick={() => {
-                      setShowManagementModal(true);
-                      setModalData(item);
-                    }}
-                  >
-                    🛠️
                   </StyledButton>
                 </td>
               </StyledTr>
@@ -199,7 +199,6 @@ function AdminUserManager() {
           modalData={modalData}
         />
       )}
-      <div>🔨🔒❌</div>
     </>
   );
 }

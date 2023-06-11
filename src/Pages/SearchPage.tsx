@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchData from '../Components/SearchPage/Contents/SearchData';
-import SearchModal from '../Components/SearchPage/Layout/SearchModal';
 import HeaderCategory from '../Components/Commons/HeaderCategory';
 import GroundComparison from '../Components/SearchPage/Contents/GroundComparison';
 import ComparisonData from '../Components/SearchPage/Contents/ComparisonData';

@@ -194,9 +194,7 @@ const StyledSubTitle = styled.div`
 const StyledBlock = styled.div`
   z-index: 500;
   display: block;
-  /* background-color: skyblue; */
   align-items: center;
-  /* border: 1px solid #dddddd; */
   border-radius: 2rem;
   margin: 0.7rem;
   padding: 1rem 1rem;
