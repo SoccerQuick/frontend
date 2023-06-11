@@ -65,7 +65,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
     axios
       .post(postLoginUrl, data, { withCredentials: true })
       .then((res) => {
-        return res.data.userData;
+        return res.data.data;
       })
       .then((userData) => {
         const user = {
@@ -85,7 +85,8 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         setAuthModal(false);
         navigate(window.location.pathname, { replace: true });
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         setLoginError('존재하지 않는 계정입니다.');
       });
   };
