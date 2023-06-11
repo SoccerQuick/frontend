@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
@@ -19,6 +20,12 @@ type ProvidedElementListType = {
   [key: string]: string;
 };
 
+interface ItemType {
+  key: string;
+  value: string;
+  selected: boolean;
+}
+
 export const ProvidedElementList: ProvidedElementListType = {
   parking: '주차 가능',
   parking_free: '무료 주차',
@@ -32,10 +39,11 @@ export const ProvidedElementList: ProvidedElementListType = {
 
 // SoccerQuick/Frontend/src/Pages/SearchPage.tsx 75번째 줄에서 연결됨
 function FindingGround(props: FindingGroundProps) {
+  const navigate = useNavigate();
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
-  const setSortedDomData = props.setSortedDomData;
+  // const setSortedDomData = props.setSortedDomData;
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -59,7 +67,7 @@ function FindingGround(props: FindingGroundProps) {
 
   // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
   // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
-  const [filterOption, setFilterOption] = React.useState<any[]>([]);
+  const [filterOption, setFilterOption] = React.useState<ItemType[]>([]);
 
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] =
@@ -83,12 +91,13 @@ function FindingGround(props: FindingGroundProps) {
     }
   }, [filterOption, sortedDomData]);
 
+  const clickDomHandler = (domId: string) => {
+    navigate(`/ground/${domId}`);
+  };
+
   return (
     <SearchContainer style={{ width: '100%' }}>
-      <SearchFilter
-        filterOption={filterOption}
-        setFilterOption={setFilterOption}
-      />
+      <SearchFilter setFilterOption={setFilterOption} />
       <Searchpage>
         <SearchPageBody>
           <table>
@@ -117,7 +126,9 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledCheckboxTd>
                     <StyledAddressTd>{item.address.area}</StyledAddressTd>
                     <StyledMainTd>
-                      <p>{item.title}</p>
+                      <p onClick={(e) => clickDomHandler(item.dom_id)}>
+                        {item.title}
+                      </p>
                       <StyledTableCell>
                         {Object.keys(ProvidedElementList).map(
                           (provided) =>
@@ -131,7 +142,11 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledMainTd>
 
                     <td>
-                      <StyledButton>조회</StyledButton>
+                      <StyledButton
+                        onClick={(e) => clickDomHandler(item.dom_id)}
+                      >
+                        조회
+                      </StyledButton>
                     </td>
                   </StyledTr>
                 ))}
@@ -259,6 +274,7 @@ const StyledMainTd = styled.td`
   padding-left: 4rem;
   p {
     font-size: 1.9rem;
+    cursor: pointer;
   }
 `;
 
