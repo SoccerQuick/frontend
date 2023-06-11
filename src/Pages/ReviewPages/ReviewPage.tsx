@@ -221,66 +221,62 @@ export default function ReviewPage() {
               <StyledList>
                 <StyledReviewHeader>
                   <div className="filter">
-                    <span>
-                      <ul className="areaFilter">
-                        <p
-                          onClick={() => {
-                            if (stadiumFilterView) {
-                              setStadiumFilterView(false);
+                    <ul className="areaFilter">
+                      <p
+                        onClick={() => {
+                          if (stadiumFilterView) {
+                            setStadiumFilterView(false);
+                            setAreaFilterView(!areaFilterView);
+                          } else {
+                            setAreaFilterView(!areaFilterView);
+                          }
+                        }}
+                      >
+                        {area}
+                      </p>
+                      {areaFilterView &&
+                        areaList.map((item, index) => (
+                          <li
+                            className="area"
+                            key={index}
+                            onClick={() => {
+                              setArea(item);
                               setAreaFilterView(!areaFilterView);
-                            } else {
-                              setAreaFilterView(!areaFilterView);
-                            }
-                          }}
-                        >
-                          {area}
-                        </p>
-                        {areaFilterView &&
-                          areaList.map((item, index) => (
-                            <li
-                              className="area"
-                              key={index}
-                              onClick={() => {
-                                setArea(item);
-                                setAreaFilterView(!areaFilterView);
-                              }}
-                            >
-                              {item}
-                            </li>
-                          ))}
-                      </ul>
-                    </span>
-                    <span>
-                      <ul className="stadiumFilter">
-                        <p
-                          onClick={() => {
-                            if (areaFilterView) {
-                              setAreaFilterView(false);
+                            }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                    </ul>
+                    <ul className="stadiumFilter">
+                      <p
+                        onClick={() => {
+                          if (areaFilterView) {
+                            setAreaFilterView(false);
+                            setStadiumFilterView(!stadiumFilterView);
+                          } else {
+                            setStadiumFilterView(!stadiumFilterView);
+                          }
+                        }}
+                      >
+                        {stadium}
+                      </p>
+                      {stadiumFilterView &&
+                        filterList[area].map((item, index) => (
+                          <li
+                            className="stadium"
+                            key={index}
+                            onClick={() => {
+                              area === '지역'
+                                ? setStadium('구장')
+                                : setStadium(item);
                               setStadiumFilterView(!stadiumFilterView);
-                            } else {
-                              setStadiumFilterView(!stadiumFilterView);
-                            }
-                          }}
-                        >
-                          {stadium}
-                        </p>
-                        {stadiumFilterView &&
-                          filterList[area].map((item, index) => (
-                            <li
-                              className="stadium"
-                              key={index}
-                              onClick={() => {
-                                area === '지역'
-                                  ? setStadium('구장')
-                                  : setStadium(item);
-                                setStadiumFilterView(!stadiumFilterView);
-                              }}
-                            >
-                              {item}
-                            </li>
-                          ))}
-                      </ul>
-                    </span>
+                            }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                    </ul>
                   </div>
                   <div className="search">
                     <img src={Magnifier} alt="magnifier" />
@@ -409,7 +405,7 @@ const StyledReviewHeader = styled.div`
     display: flex;
     flex-direction: row;
     position: relative;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 500;
     z-index: 2;
 
@@ -435,14 +431,16 @@ const StyledReviewHeader = styled.div`
   }
 
   .area {
+    padding: 1rem 0;
     &:hover {
-      background-color: ${(picked) => picked && '#dedede;'};
+      background-color: #dedede;
     }
   }
 
   .stadium {
+    padding: 1rem 0;
     &:hover {
-      background-color: ${(picked) => picked && '#dedede;'};
+      background-color: #dedede;
     }
   }
 
