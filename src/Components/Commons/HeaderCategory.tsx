@@ -75,6 +75,7 @@ const StyledCategoryText = styled.span<CategoryTextProps>`
 
   &:hover {
     font-size: ${({ focused }) => (focused ? '2.2rem' : '2.1rem')};
-    box-shadow: 0 0 10px 1px #cccccc;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e8e8e8;
   }
 `;
