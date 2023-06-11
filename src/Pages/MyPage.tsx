@@ -12,6 +12,7 @@ import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost
 import SearchMyReviewPost from '../Components/MyPage/SearchMyPost/SearchMyReviewPost';
 import { useSelector } from 'react-redux';
 import { isLogInSelector } from '../store/selectors/authSelectors';
+import SearchMyApplicationPost from '../Components/MyPage/SearchMyPost/SearchMyApplicationPost';
 
 export type FormData = {
   user_id: string;
@@ -50,7 +51,7 @@ export function MyPage() {
       .get(`${process.env.REACT_APP_API_URL}/users/`, {
         withCredentials: true,
       })
-      .then((res) => res.data.userData)
+      .then((res) => res.data.data)
       .then((user) => {
         setFormData((prev) => ({
           ...prev,
@@ -97,6 +98,7 @@ export function MyPage() {
       {checkedBarItem === 2 ? (
         <MyPageContainer>
           <SearchMyTeamPost />
+          <SearchMyApplicationPost />
           <SearchMyReviewPost />
         </MyPageContainer>
       ) : (
@@ -132,7 +134,7 @@ const MyPageContainer = styled.div`
   justify-content: flex-start;
   align-items: space-evenly;
   width: 98.4rem;
-  height: 80rem;
+  height: 100%;
   padding: 0 2rem;
   margin: 2rem auto;
   position: relative;
