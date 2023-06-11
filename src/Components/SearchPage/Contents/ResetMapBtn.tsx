@@ -4,7 +4,7 @@ import ResetIcon from '../../../styles/icon/reset_white.svg';
 
 const ResetMapBtn = () => {
   return (
-    <StyledButton onClick={() => alert('하잉')}>
+    <StyledButton>
       <StyledButtonIcon>
         <img src={ResetIcon} alt="" />
       </StyledButtonIcon>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { groundDataType } from '../../../Pages/SearchPage';
+import { DomDataType, groundDataType } from '../../../Pages/SearchPage';
+import { ProvidedElementList } from './SearchData';
 
 interface ComparsionDataProps {
-  checkedArray: groundDataType[];
+  checkedArray: DomDataType[];
   checkedInModal: string[];
   setShowComparisonData: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -13,7 +14,7 @@ const ComparisonData: React.FC<ComparsionDataProps> = ({
   checkedInModal,
   setShowComparisonData,
 }) => {
-  const [comparisonData, setComparisonData] = useState<groundDataType[]>([]);
+  const [comparisonData, setComparisonData] = useState<DomDataType[]>([]);
 
   useEffect(() => {
     const newComparisonData = [...checkedArray].filter((item) =>
@@ -49,26 +50,35 @@ const ComparisonData: React.FC<ComparsionDataProps> = ({
                     comparisonData.map((item) => (
                       <StyledGridItem key={item.title}>
                         <StyledGroundContent image>
-                          <img src={item.image[0]} alt="" />
+                          <img src={item.stadiums[0].images[0].image} alt="" />
                         </StyledGroundContent>
                         <StyledGroundContent bold>
                           <p>{item.title}</p>
                         </StyledGroundContent>
                         <StyledGroundContent short>
-                          <p>{item.address.shortAddress}</p>
+                          <p>{item.address.area}</p>
                         </StyledGroundContent>
                         <StyledGroundContent>
                           <p>{item.address.fullAddress}</p>
                         </StyledGroundContent>
                         <StyledGroundContent long>
                           {item.stadiums.map((stadium) => (
-                            <span>{stadium.usage}</span>
+                            <span>{stadium.name}</span>
                           ))}
                         </StyledGroundContent>
                         <StyledGroundContent long>
-                          {item.provided.map((data) => (
+                          {/* {item.provided.map((data) => (
                             <span>{data}</span>
-                          ))}
+                          ))} */}
+
+                          {Object.keys(ProvidedElementList).map(
+                            (provided) =>
+                              `item.${provided}` && (
+                                <span key={provided}>
+                                  {`ProvidedElementList.${provided}`}
+                                </span>
+                              )
+                          )}
                         </StyledGroundContent>
                       </StyledGridItem>
                     ))}
