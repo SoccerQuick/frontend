@@ -107,7 +107,6 @@ const SearchPageBody = styled.div`
 const StyledLabelTr = styled.tr`
   height: 6rem;
   padding-bottom: 1rem;
-  /* border-bottom: 1px solid #d5d5d5ae; */
   background-color: #fafafa;
   border-bottom: 1px solid #d5d5d5ae;
   box-shadow: 0px 5px 5px -5px #cbc9c9d5;
