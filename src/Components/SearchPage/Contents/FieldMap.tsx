@@ -73,10 +73,6 @@ const FieldMap: React.FC<FieldMapType> = ({
   //구장 데이터 배열 순회하면서 마커 생성 진행!
   const addMarkers = () => {
     for (let i = 0; i < totalDomData.length; i++) {
-      if (createMarkerList.length > 100) {
-        break;
-      }
-
       let markerObj = totalDomData[i];
       const { _id, title, lat, lng } = markerObj;
       addMarker(_id, title, lat, lng);
