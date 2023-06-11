@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ResetIcon from '../../../styles/icon/reset_white.svg';
 import CustomMapMarker from './CustomMapMarker';
@@ -17,6 +18,7 @@ const FieldMap: React.FC<FieldMapType> = ({
 }) => {
   const { naver } = window;
   let map: naver.maps.Map;
+  const navigate = useNavigate();
   const mapElement = useRef<HTMLElement | null | any>(null);
   const [newMap, setNewMap] = useState<naver.maps.Map | null>(null);
   const [AddressX, setAddressX] = useState<number>(0);
@@ -73,18 +75,19 @@ const FieldMap: React.FC<FieldMapType> = ({
   const addMarkers = () => {
     for (let i = 0; i < totalDomData.length; i++) {
       let markerObj = totalDomData[i];
-      const { _id, title, lat, lng } = markerObj;
-      addMarker(_id, title, lat, lng);
+      const { dom_id, title, lat, lng } = markerObj;
+      addMarker(dom_id, title, lat, lng);
     }
   };
 
   //마커 생성 하고 createMarkerList에 추가!!
-  const addMarker = (id: number, name: string, lat: number, lng: number) => {
+  const addMarker = (id: string, name: string, lat: number, lng: number) => {
     try {
       let newMarker = new naver.maps.Marker({
         position: new naver.maps.LatLng(lng, lat),
         map,
         title: name,
+
         clickable: true,
         icon: {
           content: CustomMapMarker({ title: name }),
@@ -94,6 +97,9 @@ const FieldMap: React.FC<FieldMapType> = ({
       });
       newMarker.setTitle(name);
       createMarkerList.push(newMarker);
+      naver.maps.Event.addListener(newMarker, 'click', () =>
+        markerClickHandler(id)
+      );
     } catch (e) {}
   };
   useEffect(() => {
@@ -157,6 +163,10 @@ const FieldMap: React.FC<FieldMapType> = ({
     });
 
     setSortedDomData(newArray);
+  };
+
+  const markerClickHandler = (id: string) => {
+    navigate(`/ground/${id}`);
   };
 
   return (

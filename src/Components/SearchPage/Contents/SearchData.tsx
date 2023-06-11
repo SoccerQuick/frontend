@@ -214,6 +214,7 @@ const StyledTableCell = styled.div`
   font-weight: 400;
   color: #888888;
   line-height: 2rem;
+  overflow: hidden;
 `;
 
 const StyledTable = styled.div<{ data: string }>`
@@ -227,6 +228,8 @@ const StyledTable = styled.div<{ data: string }>`
   font-weight: 400;
   color: ${({ data }) => getColorBydata(data)};
   background-color: ${({ data }) => getBackgroundColorBydata(data)};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const StyledTr = styled.tr`
