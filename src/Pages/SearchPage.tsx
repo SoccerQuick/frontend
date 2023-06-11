@@ -31,6 +31,7 @@ export interface groundDataType {
 }
 
 export interface DomDataType {
+  [key: string]: string | number | boolean | [] | {};
   address: { area: string; fullAddress: string };
   ball: boolean;
   beverage: boolean;
@@ -58,9 +59,9 @@ export interface DomDataType {
     _id: string;
     images: {
       id: number;
-      img: string;
+      image: string;
     }[];
-  };
+  }[];
   title: string;
   toilet: boolean;
   url: string;
@@ -70,15 +71,13 @@ export interface DomDataType {
 }
 
 function SearchPage() {
-  const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [modalData, setModalData] = React.useState<any>([]);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
-  const [checkedArray, setCheckedArray] = useState<groundDataType[]>([]);
+  const [checkedArray, setCheckedArray] = useState<DomDataType[]>([]);
   const [checkedInModal, setCheckedInModal] = useState<string[]>([]);
   const [showComparisonData, setShowComparisonData] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalDomData, setTotalDomData] = useState<DomDataType[]>([]);
-  const [renderingDonData, setRenderingDomData] = useState<DomDataType[]>([]);
+  const [sortedDomData, setSortedDomData] = useState<DomDataType[]>([]);
 
   const location = useLocation();
   const searchValue = location.state?.searchValue || '서울';
@@ -97,22 +96,12 @@ function SearchPage() {
       .get(`${process.env.REACT_APP_API_URL}/doms`, {
         withCredentials: true,
       })
-      .then((res: any) => setTotalDomData(res.data.data))
+      .then((res: any) => {
+        console.log(res);
+        setTotalDomData(res.data.data);
+      })
       .catch((e: any) => console.log(e));
   }, []);
-
-  useEffect(() => {
-    console.log(searchKeyword);
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/doms/search?keywords=${searchKeyword}`,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res: any) => console.log(res))
-      .catch((e: any) => console.log(e));
-  }, [searchKeyword]);
 
   return (
     <>
@@ -126,32 +115,25 @@ function SearchPage() {
       </HeaderNavContainer>
       <div style={{ justifyContent: 'center' }}>
         {searchKeyword && (
-          <FieldMap searchKeyword={searchKeyword} totalDomData={totalDomData} />
+          <FieldMap
+            searchKeyword={searchKeyword}
+            totalDomData={totalDomData}
+            setSortedDomData={setSortedDomData}
+          />
         )}
 
         <div
           style={{
-            height: '100rem',
             width: '98.4rem',
             margin: 'auto',
           }}
         >
           <SearchData
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalData={modalData}
-            setModalData={setModalData}
             checkedArray={checkedArray}
             setCheckedArray={setCheckedArray}
+            sortedDomData={sortedDomData}
+            setSortedDomData={setSortedDomData}
           />
-          {showModal && (
-            <SearchModal
-              showModal={showModal}
-              setShowModal={setShowModal}
-              modalData={modalData}
-              setModalData={setModalData}
-            />
-          )}
         </div>
       </div>
       {showComparisonModal && (
