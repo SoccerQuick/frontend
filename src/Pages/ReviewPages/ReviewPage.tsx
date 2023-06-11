@@ -126,10 +126,12 @@ export default function ReviewPage() {
   }, [area, stadium]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8800/reviews`, config).then((res) => {
-      if (res.status === 200) {
-      }
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/reviews`, config)
+      .then((res) => {
+        if (res.status === 200) {
+        }
+      });
   });
 
   useEffect(() => {
@@ -362,15 +364,6 @@ export default function ReviewPage() {
                     ))}
               </StyledList>
               <StyledStickyButtons>
-                <StyledWrite>
-                  <button
-                    onClick={() => {
-                      handleWriteButtonClick();
-                    }}
-                  >
-                    글쓰기
-                  </button>
-                </StyledWrite>
                 <StyledScrollToBottomButton>
                   <button onClick={handleScrollToTop}>⬆</button>
                 </StyledScrollToBottomButton>
@@ -549,29 +542,14 @@ const StyledReviewList = styled.div`
 `;
 
 const StyledStickyButtons = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   grid-template-columns: 50fr 1fr;
   place-items: center;
   position: sticky;
   bottom: 5rem;
   margin: 3rem 0 5rem 5rem;
-`;
-
-const StyledWrite = styled.span`
-  > button {
-    font-size: 1.5rem;
-    padding: 1.5rem 2rem;
-    border: 1px solid #ededed;
-    border-radius: 3rem;
-    background-color: white;
-    box-shadow: 1px 1px #ededed;
-    box-shadow: 2px 2px #ededed;
-    &:hover {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: black;
-    }
-  }
 `;
 
 const StyledScrollToBottomButton = styled.span`
