@@ -198,6 +198,15 @@ const StyledItemTitle = styled.div`
     font-weight: 600;
     font-size: 1.5rem;
     color: gray;
+    padding-bottom: 0.2rem;
+  }
+  p:last-child {
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 `;
 
