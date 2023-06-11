@@ -270,7 +270,7 @@ const getColorBydata = (data: string) => {
   } else if (data === '주차 가능') {
     return '#c41d7f';
   } else if (data === '음료 구비') {
-    return '#c41d7f';
+    return '#5e7f0c';
   } else if (data === '샤워실') {
     return '#d46b08';
   }
@@ -288,7 +288,7 @@ const getBackgroundColorBydata = (data: string) => {
   } else if (data === '주차 가능') {
     return '#fff0f6';
   } else if (data === '음료 구비') {
-    return '#fff0f6';
+    return '#f0fff3';
   } else if (data === '샤워실') {
     return '#fff7e6';
   }
