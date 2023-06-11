@@ -92,118 +92,120 @@ function DetailPage() {
 
   return (
     <StyledWrap>
-      <StyledHeader status={data.status}>
-        <StyledBoardName
-          onClick={() => {
-            navigate(`/teampage/team`);
-          }}
-        >
-          <div>
-            <img src={chevronIcon} alt="chevronIcon" />
-            팀원 모집・신청
-          </div>
-        </StyledBoardName>
-
-        <h1>
-          <span>[{data.status}] </span>
-          {data.title}
-        </h1>
-        <StyledAuthorDiv>
-          <StyledImgDiv>
-            <img src={ballIcon} alt="BallIcon" />
-          </StyledImgDiv>
-          <p>{data.author}</p>
-        </StyledAuthorDiv>
-      </StyledHeader>
-      <StyledDetailDiv>
-        <h3>모집 정보</h3>
-        <StyledDetailLocationLi>
-          <StyledDetailLabel>활동 지역</StyledDetailLabel>
-          <p>{data.location}</p>
-        </StyledDetailLocationLi>
-        <div>
-          <StyledDetailLabel>모집 현황</StyledDetailLabel>
-          <StyledPositionContainer>
-            <StyledPosition>
-              <StyledPositionIcon>
-                <img src={playerIcon} alt="playerIcon" />
-              </StyledPositionIcon>
-              <StyledPositionName>
-                <div>필드플레이어</div>
-                <div>
-                  {data.player_count - data.player_current_count > 0
-                    ? `${
-                        data.player_count - data.player_current_count
-                      }자리 남았어요!`
-                    : '마감되었어요.'}
-                </div>
-              </StyledPositionName>
-              <StyledPositionDetail>
-                <p>
-                  현재<span>{data.player_current_count}</span>명
-                </p>
-              </StyledPositionDetail>
-              <StyledPositionDetail>
-                <p>
-                  총<span> {data.player_count}</span>명 모집 예정
-                </p>
-              </StyledPositionDetail>
-            </StyledPosition>
-            <StyledPosition>
-              <StyledPositionIcon color="green">
-                <img src={goalKeeperIcon} alt="playerIcon" />
-              </StyledPositionIcon>
-              <StyledPositionName>
-                <div>골키퍼</div>
-                <div>
-                  {data.gk_count - data.gk_current_count > 0
-                    ? `${data.gk_count - data.gk_current_count}자리 남았어요!`
-                    : '마감되었어요.'}
-                </div>
-              </StyledPositionName>
-              <StyledPositionDetail color="green">
-                <p>
-                  현재<span>{data.gk_current_count}</span>명
-                </p>
-              </StyledPositionDetail>
-              <StyledPositionDetail color="green">
-                <p>
-                  총<span> {data.gk_count}</span>명 모집 예정
-                </p>
-              </StyledPositionDetail>
-            </StyledPosition>
-          </StyledPositionContainer>
-        </div>
-      </StyledDetailDiv>
-      <StyledBody>
-        <h3>상세 내용</h3>
-        <div>
-          <HtmlParser data={data.contents} />
-        </div>
-      </StyledBody>
-      <StyledAuthorButtonContainer>
-        {userData?.name === data.author && (
-          <Link to={`/teampage/edit/${url}`} state={data}>
-            <button>수정</button>
-          </Link>
-        )}
-        {(userData?.name === data.author ||
-          userData?.role === 'admin' ||
-          userData?.role === 'manager') && (
-          <button onClick={deletePostHandler}>삭제</button>
-        )}
-        {(userData?.name === data.author ||
-          userData?.role === 'admin' ||
-          userData?.role === 'manager') && (
-          <button
+      <StyledPost>
+        <StyledHeader status={data.status}>
+          <StyledBoardName
             onClick={() => {
-              console.log(data.accept);
+              navigate(`/teampage/team`);
             }}
           >
-            조회
-          </button>
-        )}
-      </StyledAuthorButtonContainer>
+            <div>
+              <img src={chevronIcon} alt="chevronIcon" />
+              팀원 모집・신청
+            </div>
+          </StyledBoardName>
+
+          <h1>
+            <span>[{data.status}] </span>
+            {data.title}
+          </h1>
+          <StyledAuthorDiv>
+            <StyledImgDiv>
+              <img src={ballIcon} alt="BallIcon" />
+            </StyledImgDiv>
+            <p>{data.author}</p>
+          </StyledAuthorDiv>
+        </StyledHeader>
+        <StyledDetailDiv>
+          <h3>모집 정보</h3>
+          <StyledDetailLocationLi>
+            <StyledDetailLabel>활동 지역</StyledDetailLabel>
+            <p>{data.location}</p>
+          </StyledDetailLocationLi>
+          <div>
+            <StyledDetailLabel>모집 현황</StyledDetailLabel>
+            <StyledPositionContainer>
+              <StyledPosition>
+                <StyledPositionIcon>
+                  <img src={playerIcon} alt="playerIcon" />
+                </StyledPositionIcon>
+                <StyledPositionName>
+                  <div>필드플레이어</div>
+                  <div>
+                    {data.player_count - data.player_current_count > 0
+                      ? `${
+                          data.player_count - data.player_current_count
+                        }자리 남았어요!`
+                      : '마감되었어요.'}
+                  </div>
+                </StyledPositionName>
+                <StyledPositionDetail>
+                  <p>
+                    현재<span>{data.player_current_count}</span>명
+                  </p>
+                </StyledPositionDetail>
+                <StyledPositionDetail>
+                  <p>
+                    총<span> {data.player_count}</span>명 모집 예정
+                  </p>
+                </StyledPositionDetail>
+              </StyledPosition>
+              <StyledPosition>
+                <StyledPositionIcon color="green">
+                  <img src={goalKeeperIcon} alt="playerIcon" />
+                </StyledPositionIcon>
+                <StyledPositionName>
+                  <div>골키퍼</div>
+                  <div>
+                    {data.gk_count - data.gk_current_count > 0
+                      ? `${data.gk_count - data.gk_current_count}자리 남았어요!`
+                      : '마감되었어요.'}
+                  </div>
+                </StyledPositionName>
+                <StyledPositionDetail color="green">
+                  <p>
+                    현재<span>{data.gk_current_count}</span>명
+                  </p>
+                </StyledPositionDetail>
+                <StyledPositionDetail color="green">
+                  <p>
+                    총<span> {data.gk_count}</span>명 모집 예정
+                  </p>
+                </StyledPositionDetail>
+              </StyledPosition>
+            </StyledPositionContainer>
+          </div>
+        </StyledDetailDiv>
+        <StyledBody>
+          <h3>상세 내용</h3>
+          <div>
+            <HtmlParser data={data.contents} />
+          </div>
+        </StyledBody>
+        <StyledAuthorButtonContainer>
+          {userData?.name === data.author && (
+            <Link to={`/teampage/edit/${url}`} state={data}>
+              <button>수정</button>
+            </Link>
+          )}
+          {(userData?.name === data.author ||
+            userData?.role === 'admin' ||
+            userData?.role === 'manager') && (
+            <button onClick={deletePostHandler}>삭제</button>
+          )}
+          {(userData?.name === data.author ||
+            userData?.role === 'admin' ||
+            userData?.role === 'manager') && (
+            <button
+              onClick={() => {
+                console.log(data.accept);
+              }}
+            >
+              조회
+            </button>
+          )}
+        </StyledAuthorButtonContainer>
+      </StyledPost>
       <div>
         <StyledCommentsDiv>
           {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
@@ -247,8 +249,12 @@ export default DetailPage;
 const StyledWrap = styled.div`
   width: 98.4rem;
   margin: 3rem auto;
+`;
+
+const StyledPost = styled.div`
   border: 0.2rem solid lightgray;
   border-radius: 2rem;
+
   padding: 2.5rem;
 `;
 
