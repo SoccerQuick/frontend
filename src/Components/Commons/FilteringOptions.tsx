@@ -6,7 +6,7 @@ const FILTERING_OPTIONS = {
   },
   findingTeam: {
     status: ['모집상태', '모집중', '모집 완료'],
-    location: ['활동지역', '서울', '부산', '경기', '인천'],
+    area: ['활동지역', '서울', '부산', '경기', '인천'],
     skill: [
       '실력수준',
       '프로',
@@ -21,7 +21,7 @@ const FILTERING_OPTIONS = {
   },
   findingMember: {
     status: ['모집상태', '모집중', '모집 완료'],
-    location: ['활동지역', '서울', '부산', '경기', '인천'],
+    area: ['활동지역', '서울', '부산', '경기', '인천'],
     random_matched: ['랜덤매칭', '허용', '비허용'],
     gender: ['성별', '남', '여', '상관없음'],
   },
