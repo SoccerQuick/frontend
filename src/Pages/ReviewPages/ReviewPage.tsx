@@ -158,11 +158,9 @@ export default function ReviewPage() {
     );
   }
 
-  function handleScrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+  function handleOutsideClick() {
+    setAreaFilterView(false);
+    setStadiumFilterView(false);
   }
 
   function handleReviewTitleClick(index: number) {
@@ -185,12 +183,15 @@ export default function ReviewPage() {
     });
   }
 
-  function handleWriteButtonClick() {
-    navigate('/review/write');
+  function handleScrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   return (
-    <>
+    <div onClick={handleOutsideClick}>
       <Header />
       <HeaderCategory />
       <Routes>
@@ -221,7 +222,10 @@ export default function ReviewPage() {
               <StyledList>
                 <StyledReviewHeader>
                   <div className="filter">
-                    <ul className="areaFilter">
+                    <ul
+                      className="areaFilter"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <p
                         onClick={() => {
                           if (stadiumFilterView) {
@@ -241,14 +245,18 @@ export default function ReviewPage() {
                             key={index}
                             onClick={() => {
                               setArea(item);
-                              setAreaFilterView(!areaFilterView);
+                              setAreaFilterView(false);
                             }}
                           >
                             {item}
                           </li>
                         ))}
                     </ul>
-                    <ul className="stadiumFilter">
+
+                    <ul
+                      className="stadiumFilter"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <p
                         onClick={() => {
                           if (areaFilterView) {
@@ -270,7 +278,7 @@ export default function ReviewPage() {
                               area === '지역'
                                 ? setStadium('구장')
                                 : setStadium(item);
-                              setStadiumFilterView(!stadiumFilterView);
+                              setStadiumFilterView(false);
                             }}
                           >
                             {item}
@@ -278,6 +286,7 @@ export default function ReviewPage() {
                         ))}
                     </ul>
                   </div>
+
                   <div className="search">
                     <img src={Magnifier} alt="magnifier" />
                     <input
@@ -371,7 +380,7 @@ export default function ReviewPage() {
         />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 
