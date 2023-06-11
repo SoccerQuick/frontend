@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DomDataType, groundDataType } from '../../../Pages/SearchPage';
+import { DomDataType } from '../../../Pages/SearchPage';
 import styled from 'styled-components';
 import chevronIcon from '../../../styles/icon/chevron_down.svg';
 import checkIcon from '../../../styles/icon/check.svg';
@@ -10,7 +10,6 @@ interface GroundComparisonProps {
   setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   checkedInModal: string[];
   setCheckedInModal: React.Dispatch<React.SetStateAction<string[]>>;
-  showComparisonData: boolean;
   setShowComparisonData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -19,7 +18,6 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
   setCheckedArray,
   checkedInModal,
   setCheckedInModal,
-  showComparisonData,
   setShowComparisonData,
 }) => {
   const [showModalContent, setShowModalContent] = useState(true);

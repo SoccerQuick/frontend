@@ -6,36 +6,16 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { DomDataType } from './SearchPage';
 import { ProvidedElementList } from '../Components/SearchPage/Contents/SearchData';
-import GroundDummy from '../Components/GroundDetail/dummyData_groundDetail';
 import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/scrollToTarget';
-// import ClipUrl from '../Components/ClipUrl';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 
-export interface groundDataType {
-  title: string;
-  image: string[];
-  address: {
-    shortAddress: string;
-    fullAddress: string;
-  };
-  stadiums: { usage: string; facility: string; image: string[] }[];
-  provided: string[];
-  nonProvided: string[];
-  reservation: {
-    [key: string]: string[];
-  };
-  url: string;
-  source: string;
-}
-
 const GroundDetail = () => {
   const [groundData, setGroundData] = useState<DomDataType>();
-  const [reservationData, setReservationData] = useState<string[]>([]);
   const [showImgModal, setShowImgModal] = useState(false);
   const [ImgModalIndex, setImgModalIndex] = useState(0);
   const { dom_id } = useParams();
@@ -50,10 +30,6 @@ const GroundDetail = () => {
       })
       .catch((e: any) => console.log(e));
   }, []);
-
-  const splitStadiumDetail = (detail: string) => {
-    return detail.split('•');
-  };
 
   const clipUrl = () => {
     if (groundData)

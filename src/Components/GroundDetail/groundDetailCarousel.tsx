@@ -4,7 +4,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { DomDataType } from '../../Pages/SearchPage';
-import gray from '../../styles/icon/gray.png';
 
 const groundDetailCarousel: React.FC<{ stadiums: DomDataType['stadiums'] }> = ({
   stadiums,

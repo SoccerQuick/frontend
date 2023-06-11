@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ResetIcon from '../../../styles/icon/reset_white.svg';
 import CustomMapMarker from './CustomMapMarker';
-import FieldDummy from './fieldDummy';
 import { DomDataType } from '../../../Pages/SearchPage';
 
 interface FieldMapType {
