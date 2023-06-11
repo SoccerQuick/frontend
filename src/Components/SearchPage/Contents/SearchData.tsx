@@ -3,11 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
-import { groundDataType } from '../../../Pages/SearchPage';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
-
-import axios from 'axios';
 
 type FindingGroundProps = {
   checkedArray: DomDataType[];
@@ -43,7 +40,6 @@ function FindingGround(props: FindingGroundProps) {
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
-  // const setSortedDomData = props.setSortedDomData;
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,

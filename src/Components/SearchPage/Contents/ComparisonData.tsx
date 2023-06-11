@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { DomDataType, groundDataType } from '../../../Pages/SearchPage';
+import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from './SearchData';
 
 interface ComparsionDataProps {
