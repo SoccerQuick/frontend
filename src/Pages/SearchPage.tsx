@@ -96,7 +96,6 @@ function SearchPage() {
         withCredentials: true,
       })
       .then((res: any) => {
-        console.log(res);
         setTotalDomData(res.data.data);
       })
       .catch((e: any) => console.log(e));
