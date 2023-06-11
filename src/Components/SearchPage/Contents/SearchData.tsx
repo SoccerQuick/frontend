@@ -19,6 +19,12 @@ type ProvidedElementListType = {
   [key: string]: string;
 };
 
+interface ItemType {
+  key: string;
+  value: string;
+  selected: boolean;
+}
+
 export const ProvidedElementList: ProvidedElementListType = {
   parking: '주차 가능',
   parking_free: '무료 주차',
@@ -35,7 +41,7 @@ function FindingGround(props: FindingGroundProps) {
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
-  const setSortedDomData = props.setSortedDomData;
+  // const setSortedDomData = props.setSortedDomData;
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -59,7 +65,7 @@ function FindingGround(props: FindingGroundProps) {
 
   // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
   // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
-  const [filterOption, setFilterOption] = React.useState<any[]>([]);
+  const [filterOption, setFilterOption] = React.useState<ItemType[]>([]);
 
   // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
   const [filteredData, setFilteredData] =
@@ -85,10 +91,7 @@ function FindingGround(props: FindingGroundProps) {
 
   return (
     <SearchContainer style={{ width: '100%' }}>
-      <SearchFilter
-        filterOption={filterOption}
-        setFilterOption={setFilterOption}
-      />
+      <SearchFilter setFilterOption={setFilterOption} />
       <Searchpage>
         <SearchPageBody>
           <table>
