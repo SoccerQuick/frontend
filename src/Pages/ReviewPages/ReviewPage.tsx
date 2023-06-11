@@ -126,8 +126,9 @@ export default function ReviewPage() {
   }, [area, stadium]);
 
   useEffect(() => {
-    axios.get('http://localhost:5500/reviews', config).then((res) => {
-      alert('success');
+    axios.get(`http://localhost:8800/reviews`, config).then((res) => {
+      if (res.status === 200) {
+      }
     });
   });
 
@@ -148,10 +149,10 @@ export default function ReviewPage() {
 
   function handleSearch(input: string) {
     setSearchInput(input);
-    const foundReviewList = reviewList.filter((v) => v.author.includes(input));
-    setSearchedReviewList(foundReviewList);
     setFilteredReviewListBySearch(
-      filteredReviewList.filter((v) => v.author.includes(input))
+      filteredReviewList.filter(
+        (v) => v.area.includes(input) || v.stadium.includes(input)
+      )
     );
   }
 
