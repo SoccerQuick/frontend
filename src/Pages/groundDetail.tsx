@@ -70,7 +70,7 @@ const GroundDetail = () => {
       {groundData && (
         <GroundDetailContainer>
           <div className="slider">
-            <GroundDetailCarousel stadiums={groundData.stadiums} />
+            {<GroundDetailCarousel stadiums={groundData.stadiums} />}
           </div>
           <GroundDetailHeader>
             <GroundDetailHeaderContent>

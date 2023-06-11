@@ -5,6 +5,7 @@ import largeIcon from '../../styles/icon/large.svg';
 import groundIcon from '../../styles/icon/ground.svg';
 import flagIcon from '../../styles/icon/flag.svg';
 import grassIcon from '../../styles/icon/grass.svg';
+import logo from '../../styles/icon/exampleImg.svg';
 
 interface StadiumsProps {
   stadiumsData: DomDataType['stadiums'];
@@ -23,15 +24,21 @@ const Stadiums: React.FC<StadiumsProps> = ({
         stadiumsData.map((stadium, idx) => (
           <Stadium key={stadium._id}>
             <StadiumImage>
-              <GroundImage src={stadium.images[0].image} alt="stadiumImg" />
-              <LargeIcon
-                onClick={() => {
-                  setShowImgModal(true);
-                  setImgModalIndex(idx);
-                }}
-              >
-                <img src={largeIcon} alt="largeIcon" />
-              </LargeIcon>
+              {stadium.images.length > 0 && stadium.images[0].image ? (
+                <>
+                  <GroundImage src={stadium.images[0].image} alt="stadiumImg" />
+                  <LargeIcon
+                    onClick={() => {
+                      setShowImgModal(true);
+                      setImgModalIndex(idx);
+                    }}
+                  >
+                    <img src={largeIcon} alt="largeIcon" />
+                  </LargeIcon>
+                </>
+              ) : (
+                <GroundImage src={logo} alt="stadiumImg" />
+              )}
             </StadiumImage>
             <StadiumDetail>
               <h2>{stadium.name}</h2>
