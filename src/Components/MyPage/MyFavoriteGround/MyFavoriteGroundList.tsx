@@ -1,9 +1,57 @@
-import react, { useState } from 'react';
+import react, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import checkIcon from '../../../styles/icon/check.svg';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {
+  isLogInSelector,
+  userSelector,
+} from '../../../store/selectors/authSelectors';
+import { DomDataType } from '../../../Pages/SearchPage';
+import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
 
 function MyFavoriteGroundList() {
-  const [filteredData, setFilteredData] = useState(dummydata_filteredGround);
+  const user = useSelector(userSelector);
+  const isLogIn = useSelector(isLogInSelector);
+  const [filteredData, setFilteredData] = useState<DomDataType[]>([]);
+
+  useEffect(() => {
+    if (isLogIn) {
+      getDomData();
+    }
+  }, [isLogIn]);
+
+  const getDomData = async () => {
+    const domInfo = await axios
+      .get(`${process.env.REACT_APP_API_URL}/doms`, { withCredentials: true })
+      .then((res) => res.data.data)
+      .catch((err) => console.log(err));
+
+    // const filteredDomInfo = domInfo.reduce(
+    //   (acc: Array<DomDataType>, group: DomDataType) => {
+    //     const filteredUsersFavorites = group.usersFavorites?.filter(
+    //       (type) => type === user?.name
+    //     );
+
+    //     if (filteredUsersFavorites && filteredUsersFavorites.length > 0) {
+    //       const filteredGroup: DomDataType = {
+    //         ...group,
+    //         // usersFavorites: filteredUsersFavorites,
+    //       };
+    //       return [...acc, filteredGroup];
+    //     }
+    //     return acc;
+    //   },
+    //   []
+    // );
+    // setFilteredData(filteredDomInfo);
+
+    setFilteredData(domInfo);
+  };
+
+  const navigate = useNavigate();
+
   return (
     <Searchpage>
       <SearchPageBody>
@@ -22,20 +70,29 @@ function MyFavoriteGroundList() {
                 <StyledCheckboxTd>
                   <label htmlFor={item.title}></label>
                 </StyledCheckboxTd>
-                <StyledAddressTd>{item.address.shortAddress}</StyledAddressTd>
+                <StyledAddressTd>{item.address.area}</StyledAddressTd>
                 <StyledMainTd>
                   <p>{item.title}</p>
                   <StyledTableCell>
-                    {item.provided.map((data, index) => (
-                      <StyledTable key={index} data={data}>
-                        {data}
-                      </StyledTable>
-                    ))}
+                    {Object.keys(ProvidedElementList).map(
+                      (provided) =>
+                        item[provided] && (
+                          <StyledTable key={provided} data={provided}>
+                            {ProvidedElementList[provided]}
+                          </StyledTable>
+                        )
+                    )}
                   </StyledTableCell>
                 </StyledMainTd>
 
                 <td>
-                  <StyledButton onClick={() => {}}>조회</StyledButton>
+                  <StyledButton
+                    onClick={() => {
+                      navigate(`/ground/${item.dom_id}`);
+                    }}
+                  >
+                    조회
+                  </StyledButton>
                 </td>
               </StyledTr>
             ))}
@@ -49,33 +106,41 @@ function MyFavoriteGroundList() {
 export default MyFavoriteGroundList;
 
 const getColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#531dab';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#096dd9';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#d4380d';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#08979c';
-  } else if (data === '무료 주차') {
+  } else if (data === 'parking') {
     return '#c41d7f';
-  } else if (data === '샤워실') {
+  } else if (data === 'beverage') {
+    return '#5e7f0c';
+  } else if (data === 'shower') {
     return '#d46b08';
+  } else if (data === 'parking_free') {
+    return '#c41d7f';
   }
 };
 
 const getBackgroundColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#f9f0ff';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#e6f7ff';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#fff2e8';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#e6fffb';
-  } else if (data === '무료 주차') {
+  } else if (data === 'parking') {
     return '#fff0f6';
-  } else if (data === '샤워실') {
+  } else if (data === 'beverage') {
+    return '#f0fff3';
+  } else if (data === 'shower') {
+    return '#fff7e6';
+  } else if (data === 'parking_free') {
     return '#fff7e6';
   }
 };

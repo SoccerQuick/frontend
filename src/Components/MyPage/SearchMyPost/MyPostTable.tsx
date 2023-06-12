@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReviewPost } from './SearchMyReviewPost';
 import { GroupPost } from './SearchMyTeamPost';
 import { MyApplicationGroupPost } from './SearchMyApplicationPost';
-import MyPagination from './MyPagination';
+import MyPagination from '../MyPagination';
 
 type MyPostTableProps = {
   title?: string;
