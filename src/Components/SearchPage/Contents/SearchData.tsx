@@ -95,7 +95,6 @@ function FindingGround(props: FindingGroundProps) {
   const clickDomHandler = (domId: string) => {
     navigate(`/ground/${domId}`);
   };
-  console.log(isLoading);
 
   return (
     <SearchContainer style={{ width: '100%' }}>
