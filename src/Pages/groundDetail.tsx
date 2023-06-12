@@ -48,9 +48,15 @@ const GroundDetail = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/doms/`, { domId: dom_id }, config)
       .then((res: any) => {
-        console.log(res);
+        alert(res.data.message);
       })
-      .catch((e: any) => console.log(e));
+      .catch((e: any) => {
+        if (e.response.data.statusCode === 401) {
+          alert('로그인 후 이용해주세요.');
+        } else {
+          alert(e.response.data.message);
+        }
+      });
   };
   return (
     <>
