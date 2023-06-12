@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Select from 'react-select';
 import SearchFilter from './SearchFilter';
 import GroundListSkeleton from './groundListSkeleton';
+import MyPagination from '../../MyPage/MyPagination';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
 
@@ -46,6 +46,21 @@ function FindingGround(props: FindingGroundProps) {
   const isLoading = props.isLoading;
   const setIsLoading = props.setIsLoading;
 
+  // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
+  // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
+  const [filterOption, setFilterOption] = React.useState<ItemType[]>([]);
+
+  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
+  const [filteredData, setFilteredData] =
+    React.useState<DomDataType[]>(sortedDomData);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const totalItemsCount = filteredData.length;
+  const lastIndexOfData = currentPage * itemsPerPage;
+  const firstIndexOfData = lastIndexOfData - itemsPerPage;
+  const currentData = filteredData.slice(firstIndexOfData, lastIndexOfData);
+
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
     value: DomDataType
@@ -65,14 +80,6 @@ function FindingGround(props: FindingGroundProps) {
       );
     }
   };
-
-  // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
-  // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
-  const [filterOption, setFilterOption] = React.useState<ItemType[]>([]);
-
-  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
-  const [filteredData, setFilteredData] =
-    React.useState<DomDataType[]>(sortedDomData);
 
   // 이곳에 필터링 함수 작성
   useEffect(() => {
@@ -119,7 +126,7 @@ function FindingGround(props: FindingGroundProps) {
 
             {!isLoading ? (
               <tbody>
-                {filteredData.map((item, idx) => (
+                {currentData.map((item, idx) => (
                   <StyledTr key={item.title + idx}>
                     <StyledCheckboxTd>
                       <input
@@ -164,6 +171,12 @@ function FindingGround(props: FindingGroundProps) {
             )}
           </table>
         </SearchPageBody>
+        <MyPagination
+          totalItemsCount={totalItemsCount ? totalItemsCount : 100}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </Searchpage>
     </SearchContainer>
   );
@@ -180,13 +193,18 @@ const Searchpage = styled.div`
   display: flex;
   font-size: 1.7rem;
   width: 98.4rem;
-  margin: auto;
+  margin: 0 auto 7rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 3rem;
   table {
     width: 100%;
   }
