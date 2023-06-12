@@ -13,7 +13,6 @@ import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/scrollToTarget';
 import Review from '../Components/GroundDetail/Review';
-// import ClipUrl from '../Components/ClipUrl';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 
@@ -23,11 +22,13 @@ const GroundDetail = () => {
   const [ImgModalIndex, setImgModalIndex] = useState(0);
   const { dom_id } = useParams();
 
+  const config = {
+    withCredentials: true,
+  };
+
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, {
-        withCredentials: true,
-      })
+      .get(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, config)
       .then((res: any) => {
         setGroundData(res.data.data);
       })
@@ -43,6 +44,20 @@ const GroundDetail = () => {
         });
   };
 
+  const clickFavoriteHandler = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/doms/`, { domId: dom_id }, config)
+      .then((res: any) => {
+        alert(res.data.message);
+      })
+      .catch((e: any) => {
+        if (e.response.data.statusCode === 401) {
+          alert('로그인 후 이용해주세요.');
+        } else {
+          alert(e.response.data.message);
+        }
+      });
+  };
   return (
     <>
       <Header />
@@ -71,7 +86,7 @@ const GroundDetail = () => {
                   홈페이지 바로가기
                 </a>
               </button>
-              <button>
+              <button onClick={() => clickFavoriteHandler()}>
                 <img src={starIcon} alt="" />찜
               </button>
             </GroundDetailHeaderBtn>
