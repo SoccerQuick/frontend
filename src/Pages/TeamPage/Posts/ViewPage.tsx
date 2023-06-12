@@ -54,9 +54,15 @@ function DetailPage() {
     axios
       .get(`${process.env.REACT_APP_API_URL}/groups/${url}`)
       .then((res) => {
+        const item = res.data.data;
         const formattedData = {
-          ...res.data.data,
-          author: res.data.data.leader_name,
+          ...item,
+          author: item.leader_name,
+          gk: item.gk_current_count,
+          gkNeed: item.gk_count,
+          player: item.player_current_count,
+          playerNeed: item.player_count,
+          area: item.location,
         };
 
         setData(formattedData);
@@ -120,7 +126,7 @@ function DetailPage() {
           <h3>모집 정보</h3>
           <StyledDetailLocationLi>
             <StyledDetailLabel>활동 지역</StyledDetailLabel>
-            <p>{data.location}</p>
+            <p>{data.area}</p>
           </StyledDetailLocationLi>
           <div>
             <StyledDetailLabel>모집 현황</StyledDetailLabel>
@@ -132,21 +138,19 @@ function DetailPage() {
                 <StyledPositionName>
                   <div>필드플레이어</div>
                   <div>
-                    {data.player_count - data.player_current_count > 0
-                      ? `${
-                          data.player_count - data.player_current_count
-                        }자리 남았어요!`
+                    {data.playerNeed - data.player > 0
+                      ? `${data.playerNeed - data.player}자리 남았어요!`
                       : '마감되었어요.'}
                   </div>
                 </StyledPositionName>
                 <StyledPositionDetail>
                   <p>
-                    현재<span>{data.player_current_count}</span>명
+                    현재<span>{data.player}</span>명
                   </p>
                 </StyledPositionDetail>
                 <StyledPositionDetail>
                   <p>
-                    총<span> {data.player_count}</span>명 모집 예정
+                    총<span> {data.playerNeed}</span>명 모집 예정
                   </p>
                 </StyledPositionDetail>
               </StyledPosition>
@@ -157,19 +161,19 @@ function DetailPage() {
                 <StyledPositionName>
                   <div>골키퍼</div>
                   <div>
-                    {data.gk_count - data.gk_current_count > 0
-                      ? `${data.gk_count - data.gk_current_count}자리 남았어요!`
+                    {data.gk_count - data.gk > 0
+                      ? `${data.gkNeed - data.gk}자리 남았어요!`
                       : '마감되었어요.'}
                   </div>
                 </StyledPositionName>
                 <StyledPositionDetail color="green">
                   <p>
-                    현재<span>{data.gk_current_count}</span>명
+                    현재<span>{data.gk}</span>명
                   </p>
                 </StyledPositionDetail>
                 <StyledPositionDetail color="green">
                   <p>
-                    총<span> {data.gk_count}</span>명 모집 예정
+                    총<span> {data.gkNeed}</span>명 모집 예정
                   </p>
                 </StyledPositionDetail>
               </StyledPosition>

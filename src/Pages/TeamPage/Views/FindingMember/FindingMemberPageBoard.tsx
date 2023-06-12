@@ -18,23 +18,28 @@ interface Applicant {
 }
 
 interface filteredData {
-  applicant?: Applicant[];
   group_id?: string;
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
   num: number;
-  title: string;
-  leader_name?: string;
-  author?: string;
-  location: string;
-  status: string;
   position?: string;
   skill?: string;
-  gender: string;
-  body: string;
-
+  status: string;
+  title: string;
+  gk: number;
+  gkNeed: number;
+  player: number;
+  playerNeed: number;
+  location: string;
   gk_count: number;
   gk_current_count: number;
   player_count: number;
   player_current_count: number;
+  random_matched?: string;
+  applicant?: Applicant[];
+  [key: string]: string | number | undefined | Applicant[];
 }
 
 interface BoardProps {
@@ -49,25 +54,25 @@ function FindinMemberPageBoard(props: BoardProps) {
   const { dropdownList, handleReset, filteredData } = props;
 
   const checkPosition = (
-    gk_current_count: number,
-    gk_count: number,
-    player_current_count: number,
-    player_count: number
+    gk: number,
+    gkNeed: number,
+    player: number,
+    playerNeed: number
   ) => {
-    if (gk_current_count < gk_count) {
-      if (player_current_count < player_count) {
+    if (gk < gkNeed) {
+      if (player < playerNeed) {
         return (
           <div>
             <p>
               필드플레이어&nbsp;
               <span>
-                ({player_current_count}/{player_count})
+                ({player}/{playerNeed})
               </span>
             </p>
             <p>
               골키퍼&nbsp;
               <span>
-                ({gk_current_count}/{gk_count})
+                ({gk}/{gkNeed})
               </span>
             </p>
           </div>
@@ -78,19 +83,19 @@ function FindinMemberPageBoard(props: BoardProps) {
             <p>
               골키퍼&nbsp;
               <span>
-                ({gk_current_count}/{gk_count})
+                ({gk}/{gkNeed})
               </span>
             </p>
           </div>
         );
       }
-    } else if (player_current_count < player_count) {
+    } else if (player < playerNeed) {
       return (
         <div>
           <p>
             필드플레이어&nbsp;
             <span>
-              ({player_current_count}/{player_count})
+              ({player}/{playerNeed})
             </span>
           </p>
         </div>
@@ -134,7 +139,7 @@ function FindinMemberPageBoard(props: BoardProps) {
             <tbody>
               {filteredData.map((item, idx) => (
                 <StyledTr key={item.group_id}>
-                  <td style={{ width: '17%' }}>{item.location}</td>
+                  <td style={{ width: '17%' }}>{item.area}</td>
                   <td style={{ width: '35%' }}>
                     <Link to={`./${item.group_id}`} state={{ data: item }}>
                       <StyledTitle>{item.title}</StyledTitle>
