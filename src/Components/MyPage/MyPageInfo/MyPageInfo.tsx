@@ -78,6 +78,7 @@ export function MyPageInfo({
     try {
       const response = await axios.patch(
         `${process.env.REACT_APP_API_URL}/users`,
+        // body값이 아닌 FormData 객체
         {
           user_id: formData.user_id,
           name: formData.name,
@@ -127,17 +128,18 @@ export function MyPageInfo({
     }
   };
 
-  const handleAlertWithDrawalConfirm = (oldPassword: String) => {
+  const handleAlertWithDrawalConfirm = async (oldPassword: String) => {
     dispatch(AUTH_ACTIONS.logout());
     const headers = {
       withCredentials: true,
     };
-    const data = { password: oldPassword, user_id: formData.user_id };
 
-    axios
-      .delete(`${process.env.REACT_APP_API_URL}/users`, {
-        headers: headers,
-        data: data,
+    const uri = `${process.env.REACT_APP_API_URL}/users`;
+
+    await axios
+      .delete(uri, {
+        data: { password: oldPassword },
+        withCredentials: headers.withCredentials,
       })
       .then(() => {
         alert('탈퇴 되었습니다.');
