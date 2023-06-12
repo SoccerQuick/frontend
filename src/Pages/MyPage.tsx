@@ -14,20 +14,22 @@ import { useSelector } from 'react-redux';
 import { isLogInSelector } from '../store/selectors/authSelectors';
 import SearchMyApplicationPost from '../Components/MyPage/SearchMyPost/SearchMyApplicationPost';
 
-export type FormData = {
+export type FormDataType = {
   user_id: string;
   name: string;
   nick_name: string;
+  profile: string;
   email: string;
   phone_number: string;
   gender: string;
 };
 
 export function MyPage() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormDataType>({
     user_id: '',
     name: '',
     nick_name: '',
+    profile: '',
     email: '',
     phone_number: '',
     gender: '',
@@ -36,6 +38,7 @@ export function MyPage() {
   const [checkedBarItem, setCheckedBarItem] = useState(1);
   const [checkMyPassword, setCheckPassword] = useState(false);
   const [password, setPassword] = useState('');
+  const [selectedImage, setSelectedImage] = useState<File>();
   const isLogIn = useSelector(isLogInSelector);
 
   useEffect(() => {
@@ -49,13 +52,16 @@ export function MyPage() {
       .get(`${process.env.REACT_APP_API_URL}/users/`, {
         withCredentials: true,
       })
-      .then((res) => res.data.data)
+      .then((res) => {
+        return res.data.data;
+      })
       .catch((err) => console.log(err));
     setFormData((prev) => ({
       ...prev,
       user_id: userInfo.user_id,
       name: userInfo.name,
       nick_name: userInfo.nick_name,
+      profile: userInfo.profile,
       email: userInfo.email,
       phone_number: userInfo.phone_number,
       gender: userInfo.gender,
@@ -73,11 +79,16 @@ export function MyPage() {
         <MyPageInfoContainer>
           {checkMyPassword ? (
             <>
-              <MyProfile formData={formData} />
+              <MyProfile
+                formData={formData}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />
               <MyPageInfo
                 oldPassword={password}
-                formData={formData}
-                setFormData={setFormData}
+                userData={formData}
+                setUserData={setFormData}
+                selectedImage={selectedImage}
               />
             </>
           ) : (
