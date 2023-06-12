@@ -14,10 +14,10 @@ export function MyPageMenu() {
     // eslint-disable-next-line no-restricted-globals
     const result = confirm('로그아웃 하시겠습니까?');
     if (result) {
-      handleAlertConfrim();
+      handleAlertConfirm();
     }
   };
-  const handleAlertConfrim = () => {
+  const handleAlertConfirm = () => {
     dispatch(AUTH_ACTIONS.logout());
 
     // logout

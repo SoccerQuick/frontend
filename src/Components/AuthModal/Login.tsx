@@ -83,6 +83,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         );
         setLoginError('');
         setAuthModal(false);
+
         navigate(window.location.pathname, { replace: true });
       })
       .catch((err) => {
