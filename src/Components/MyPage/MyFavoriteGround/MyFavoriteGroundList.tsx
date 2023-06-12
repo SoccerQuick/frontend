@@ -63,6 +63,10 @@ function MyFavoriteGroundList() {
 
   return (
     <Searchpage>
+      <StyledTitleDiv>
+        즐겨찾는 경기장
+        <span> ( 총 {totalItemsCount} )</span>
+      </StyledTitleDiv>
       <SearchPageBody>
         <table>
           <thead>
@@ -185,6 +189,21 @@ const SearchPageBody = styled.div`
   td {
     justify-content: center;
     align-items: center;
+  }
+`;
+
+const StyledTitleDiv = styled.div`
+  display: flex;
+  width: 90%;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+
+  > span {
+    padding-left: 1rem;
+    align-self: flex-end;
+    font-size: 0.5rem;
+    color: grey;
   }
 `;
 
