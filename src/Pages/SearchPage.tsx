@@ -10,24 +10,6 @@ import ComparisonData from '../Components/SearchPage/Contents/ComparisonData';
 import FeildSearchInput from '../Components/Search/FieldSearch';
 import FieldMap from '../Components/SearchPage/Contents/FieldMap';
 import axios from 'axios';
-import { info } from 'console';
-
-export interface groundDataType {
-  title: string;
-  image: string[];
-  address: {
-    shortAddress: string;
-    fullAddress: string;
-  };
-  stadiums: { usage: string; facility: string; image: string[] }[];
-  provided: string[];
-  nonProvided: string[];
-  reservation: {
-    [key: string]: string[];
-  };
-  url: string;
-  source: string;
-}
 
 export interface DomDataType {
   [key: string]: string | number | boolean | [] | {};
@@ -77,6 +59,7 @@ function SearchPage() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalDomData, setTotalDomData] = useState<DomDataType[]>([]);
   const [sortedDomData, setSortedDomData] = useState<DomDataType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const searchValue = location.state?.searchValue || '서울';
@@ -91,6 +74,10 @@ function SearchPage() {
   }, [checkedArray]);
 
   useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
     axios
       .get(`${process.env.REACT_APP_API_URL}/doms`, {
         withCredentials: true,
@@ -100,7 +87,6 @@ function SearchPage() {
       })
       .catch((e: any) => console.log(e));
   }, []);
-
   return (
     <>
       <Header />
@@ -111,7 +97,7 @@ function SearchPage() {
           setSearchKeyword={setSearchKeyword}
         />
       </HeaderNavContainer>
-      <div style={{ justifyContent: 'center' }}>
+      <StyledBody>
         {searchKeyword && (
           <FieldMap
             searchKeyword={searchKeyword}
@@ -131,16 +117,17 @@ function SearchPage() {
             setCheckedArray={setCheckedArray}
             sortedDomData={sortedDomData}
             setSortedDomData={setSortedDomData}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </div>
-      </div>
+      </StyledBody>
       {showComparisonModal && (
         <GroundComparison
           checkedArray={checkedArray}
           setCheckedArray={setCheckedArray}
           checkedInModal={checkedInModal}
           setCheckedInModal={setCheckedInModal}
-          showComparisonData={showComparisonData}
           setShowComparisonData={setShowComparisonData}
         />
       )}
@@ -163,4 +150,10 @@ const HeaderNavContainer = styled.div`
   height: 8rem;
   width: 98.4rem;
   margin: 0 auto;
+`;
+
+const StyledBody = styled.div`
+  justify-content: center;
+  width: 98.4rem;
+  margin: auto;
 `;

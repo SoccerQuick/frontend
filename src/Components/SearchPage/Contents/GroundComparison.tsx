@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { DomDataType, groundDataType } from '../../../Pages/SearchPage';
+import { DomDataType } from '../../../Pages/SearchPage';
 import styled from 'styled-components';
 import chevronIcon from '../../../styles/icon/chevron_down.svg';
 import checkIcon from '../../../styles/icon/check.svg';
 import deleteIcon from '../../../styles/icon/delete.svg';
+import logo from '../../../styles/icon/exampleImg.svg';
 
 interface GroundComparisonProps {
   checkedArray: DomDataType[];
   setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   checkedInModal: string[];
   setCheckedInModal: React.Dispatch<React.SetStateAction<string[]>>;
-  showComparisonData: boolean;
   setShowComparisonData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -19,7 +19,6 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
   setCheckedArray,
   checkedInModal,
   setCheckedInModal,
-  showComparisonData,
   setShowComparisonData,
 }) => {
   const [showModalContent, setShowModalContent] = useState(true);
@@ -79,8 +78,13 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
             {checkedArray &&
               checkedArray.map((item, idx) => (
                 <StyledItemsLi key={item.title + idx}>
-                  {item.stadiums[0].images[0] && (
-                    <img src={item.stadiums[0].images[0].image} alt="" />
+                  {item.stadiums[0].images[0] ? (
+                    <img
+                      src={item.stadiums[0].images[0].image}
+                      alt="domImage"
+                    />
+                  ) : (
+                    <img src={logo} alt="logo" />
                   )}
                   <StyledItemTitle>
                     <p>{item.address.area}</p>
@@ -194,6 +198,15 @@ const StyledItemTitle = styled.div`
     font-weight: 600;
     font-size: 1.5rem;
     color: gray;
+    padding-bottom: 0.2rem;
+  }
+  p:last-child {
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 `;
 

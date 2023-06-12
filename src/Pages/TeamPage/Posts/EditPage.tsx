@@ -41,13 +41,14 @@ function EditPage() {
   const handlePatchRequest = () => {
     let postData;
     if (category === '팀원 구해요') {
+      // 백엔드에 보낼 데이터를 포맷팅하는 부분
       postData = {
         title: title,
         location: area,
-        player_current_count: player.toString(),
-        player_count: playerNeed.toString(),
-        gk_current_count: gk.toString(),
-        gk_count: gkNeed.toString(),
+        player_current_count: player.toString(), // 백엔드에서 해당 값을 문자열로 받고 있음.
+        player_count: playerNeed.toString(), // 백엔드에서 해당 값을 문자열로 받고 있음.
+        gk_current_count: gk.toString(), // 백엔드에서 해당 값을 문자열로 받고 있음.
+        gk_count: gkNeed.toString(), // 백엔드에서 해당 값을 문자열로 받고 있음.
         contents: body,
       };
       axios

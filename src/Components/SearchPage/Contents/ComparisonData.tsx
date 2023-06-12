@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { DomDataType, groundDataType } from '../../../Pages/SearchPage';
+import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from './SearchData';
+import logo from '../../../styles/icon/exampleImg.svg';
 
 interface ComparsionDataProps {
   checkedArray: DomDataType[];
@@ -50,11 +51,13 @@ const ComparisonData: React.FC<ComparsionDataProps> = ({
                     comparisonData.map((item) => (
                       <StyledGridItem key={item.title}>
                         <StyledGroundContent image>
-                          {item.stadiums[0].images[0] && (
+                          {item.stadiums[0].images[0] ? (
                             <img
                               src={item.stadiums[0].images[0].image}
-                              alt=""
+                              alt="DomImage"
                             />
+                          ) : (
+                            <img src={logo} alt="logo" />
                           )}
                         </StyledGroundContent>
                         <StyledGroundContent bold>

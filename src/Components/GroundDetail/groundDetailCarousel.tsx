@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { DomDataType } from '../../Pages/SearchPage';
-import gray from '../../styles/icon/gray.png';
 
-const groundDetailCarousel: React.FC<{ stadiums: DomDataType['stadiums'] }> = ({
+const GroundDetailCarousel: React.FC<{ stadiums: DomDataType['stadiums'] }> = ({
   stadiums,
 }) => {
+  const [stadiumImages, setStadiumImages] = useState<
+    DomDataType['stadiums'][0]['images']
+  >(stadiums[0].images);
+
+  useEffect(() => {
+    if (stadiums[0].images.length > 7) {
+      const newStadiums = stadiums[0].images.slice(0, 7);
+      console.log(newStadiums);
+      setStadiumImages(newStadiums);
+    }
+  }, []);
+
   return (
     <Wrap>
       {stadiums[0].images.length > 0 && stadiums[0].images[0].image && (
@@ -24,7 +35,7 @@ const groundDetailCarousel: React.FC<{ stadiums: DomDataType['stadiums'] }> = ({
             </PagingImg>
           )}
         >
-          {stadiums[0].images.map((img) => (
+          {stadiumImages.map((img) => (
             <ImageItems key={img.id}>
               <Img src={img.image} />
             </ImageItems>
@@ -35,7 +46,7 @@ const groundDetailCarousel: React.FC<{ stadiums: DomDataType['stadiums'] }> = ({
   );
 };
 
-export default groundDetailCarousel;
+export default GroundDetailCarousel;
 
 const Wrap = styled.div`
   padding-bottom: 70px;
