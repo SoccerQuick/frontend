@@ -74,10 +74,10 @@ function SearchPage() {
   }, [checkedArray]);
 
   useEffect(() => {
-    // setIsLoading(true);
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 1000);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
     axios
       .get(`${process.env.REACT_APP_API_URL}/doms`, {
         withCredentials: true,

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
+import GroundListSkeleton from './groundListSkeleton';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
 
@@ -160,38 +161,7 @@ function FindingGround(props: FindingGroundProps) {
                 ))}
               </tbody>
             ) : (
-              <tbody>
-                <StyledSkeletonTr>
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                  <StyledSkeletonDiv>
-                    <div className="shimmer"></div>
-                    <div className="shimmer"></div>
-                  </StyledSkeletonDiv>
-
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                </StyledSkeletonTr>
-                <StyledSkeletonTr>
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                  <StyledSkeletonDiv>
-                    <div className="shimmer"></div>
-                    <div className="shimmer"></div>
-                  </StyledSkeletonDiv>
-
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                </StyledSkeletonTr>
-                <StyledSkeletonTr>
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                  <StyledSkeletonDiv>
-                    <div className="shimmer"></div>
-                    <div className="shimmer"></div>
-                  </StyledSkeletonDiv>
-
-                  <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-                </StyledSkeletonTr>
-              </tbody>
+              <GroundListSkeleton />
             )}
           </table>
         </SearchPageBody>
@@ -285,60 +255,6 @@ const StyledTr = styled.tr`
   padding: 2rem 1rem;
   font-size: 1.6rem;
   border-bottom: 0.1rem solid #dddddd;
-`;
-
-const loadingAnimation = keyframes`
-    100% {
-        background-position: -100% 0;
-    }
-`;
-
-const StyledSkeletonTr = styled(StyledTr)`
-  display: flex;
-  align-items: center;
-  .shimmer {
-    background: linear-gradient(
-      120deg,
-      #e5e5e5 30%,
-      #f0f0f0 38%,
-      #f0f0f0 40%,
-      #e5e5e5 48%
-    );
-    border-radius: 1rem;
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    animation: ${loadingAnimation} 1s infinite;
-  }
-`;
-
-const StyledSkeletonDiv = styled.div`
-  border-radius: 1.5rem;
-  :nth-child(1) {
-    width: 3rem;
-    height: 2.3rem;
-  }
-  :nth-child(2) {
-    width: 10rem;
-    height: 2.3rem;
-  }
-  :nth-child(3) {
-    width: 60rem;
-    div {
-      :first-child {
-        width: 50rem;
-        height: 3rem;
-        margin-bottom: 2rem;
-      }
-      :last-child {
-        width: 30rem;
-        height: 2.4rem;
-      }
-    }
-  }
-  :nth-child(4) {
-    width: 10rem;
-    height: 4rem;
-  }
 `;
 
 const StyledCheckboxTd = styled.td`
