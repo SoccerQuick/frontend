@@ -40,30 +40,26 @@ export function MyPage() {
 
   useEffect(() => {
     if (isLogIn) {
-      setTimeout(() => {
-        getUserData();
-      }, 1000);
+      getUserData();
     }
   }, [isLogIn]);
 
-  const getUserData = () => {
-    axios
+  const getUserData = async () => {
+    const userInfo = await axios
       .get(`${process.env.REACT_APP_API_URL}/users/`, {
         withCredentials: true,
       })
       .then((res) => res.data.data)
-      .then((user) => {
-        setFormData((prev) => ({
-          ...prev,
-          user_id: user.user_id,
-          name: user.name,
-          nick_name: user.nick_name,
-          email: user.email,
-          phone_number: user.phone_number,
-          gender: user.gender,
-        }));
-      })
       .catch((err) => console.log(err));
+    setFormData((prev) => ({
+      ...prev,
+      user_id: userInfo.user_id,
+      name: userInfo.name,
+      nick_name: userInfo.nick_name,
+      email: userInfo.email,
+      phone_number: userInfo.phone_number,
+      gender: userInfo.gender,
+    }));
   };
 
   return (
@@ -122,7 +118,7 @@ const MyPageInfoContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
   width: 98.4rem;
-  height: 80rem;
+  height: 85rem;
   padding: 0 2rem;
   margin: 2rem auto;
   background-color: rgb(247 247 247);

@@ -1,90 +1,170 @@
-import react, { useState } from 'react';
+import react, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import checkIcon from '../../../styles/icon/check.svg';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {
+  isLogInSelector,
+  userSelector,
+} from '../../../store/selectors/authSelectors';
+import { DomDataType } from '../../../Pages/SearchPage';
+import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
+import MyPagination from '../MyPagination';
 
 function MyFavoriteGroundList() {
-  const [filteredData, setFilteredData] = useState(dummydata_filteredGround);
-  return (
-    <>
-      {' '}
-      <Searchpage>
-        <SearchPageBody>
-          <table>
-            <thead>
-              <StyledLabelTr>
-                <th></th>
-                <th>지역</th>
-                <th>경기장</th>
-                <th>상세조회</th>
-              </StyledLabelTr>
-            </thead>
-            <tbody>
-              {filteredData.map((item, idx) => (
-                <StyledTr key={item.title + idx}>
-                  <StyledCheckboxTd>
-                    <label htmlFor={item.title}></label>
-                  </StyledCheckboxTd>
-                  <StyledAddressTd>{item.address.shortAddress}</StyledAddressTd>
-                  <StyledMainTd>
-                    <p>{item.title}</p>
-                    <StyledTableCell>
-                      {item.provided.map((data, index) => (
-                        <StyledTable key={index} data={data}>
-                          {data}
-                        </StyledTable>
-                      ))}
-                    </StyledTableCell>
-                  </StyledMainTd>
+  const user = useSelector(userSelector);
+  const isLogIn = useSelector(isLogInSelector);
+  const [filteredData, setFilteredData] = useState<DomDataType[]>([]);
 
-                  <td>
-                    <StyledButton onClick={() => {}}>조회</StyledButton>
-                  </td>
-                </StyledTr>
-              ))}
-            </tbody>
-          </table>
-        </SearchPageBody>
-      </Searchpage>
-    </>
+  // pagination
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const totalItemsCount = filteredData.length;
+  const lastIndexOfData = currentPage * itemsPerPage;
+  const firstIndexOfData = lastIndexOfData - itemsPerPage;
+  const currentData = filteredData.slice(firstIndexOfData, lastIndexOfData);
+
+  useEffect(() => {
+    if (isLogIn) {
+      getDomData();
+    }
+  }, [isLogIn]);
+
+  const getDomData = async () => {
+    const domInfo = await axios
+      .get(`${process.env.REACT_APP_API_URL}/doms`, { withCredentials: true })
+      .then((res) => res.data.data)
+      .catch((err) => console.log(err));
+
+    // const filteredDomInfo = domInfo.reduce(
+    //   (acc: Array<DomDataType>, group: DomDataType) => {
+    //     const filteredUsersFavorites = group.usersFavorites?.filter(
+    //       (type) => type === user?.name
+    //     );
+
+    //     if (filteredUsersFavorites && filteredUsersFavorites.length > 0) {
+    //       const filteredGroup: DomDataType = {
+    //         ...group,
+    //         // usersFavorites: filteredUsersFavorites,
+    //       };
+    //       return [...acc, filteredGroup];
+    //     }
+    //     return acc;
+    //   },
+    //   []
+    // );
+    // setFilteredData(filteredDomInfo);
+
+    setFilteredData(domInfo);
+  };
+
+  const navigate = useNavigate();
+
+  return (
+    <Searchpage>
+      <SearchPageBody>
+        <table>
+          <thead>
+            <StyledLabelTr>
+              <th></th>
+              <th>지역</th>
+              <th>경기장</th>
+              <th>상세조회</th>
+            </StyledLabelTr>
+          </thead>
+          <tbody>
+            {currentData.map((item, idx) => (
+              <StyledTr key={item.title + idx}>
+                <StyledCheckboxTd>
+                  <label htmlFor={item.title}></label>
+                </StyledCheckboxTd>
+                <StyledAddressTd>{item.address.area}</StyledAddressTd>
+                <StyledMainTd>
+                  <p>{item.title}</p>
+                  <StyledTableCell>
+                    {Object.keys(ProvidedElementList).map(
+                      (provided) =>
+                        item[provided] && (
+                          <StyledTable key={provided} data={provided}>
+                            {ProvidedElementList[provided]}
+                          </StyledTable>
+                        )
+                    )}
+                  </StyledTableCell>
+                </StyledMainTd>
+
+                <td>
+                  <StyledButton
+                    onClick={() => {
+                      navigate(`/ground/${item.dom_id}`);
+                    }}
+                  >
+                    조회
+                  </StyledButton>
+                </td>
+              </StyledTr>
+            ))}
+          </tbody>
+        </table>
+      </SearchPageBody>
+      <MyPagination
+        totalItemsCount={totalItemsCount ? totalItemsCount : 100}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
+    </Searchpage>
   );
 }
 
 export default MyFavoriteGroundList;
 
 const getColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#531dab';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#096dd9';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#d4380d';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#08979c';
-  } else if (data === '무료 주차') {
+  } else if (data === 'parking') {
     return '#c41d7f';
-  } else if (data === '샤워실') {
+  } else if (data === 'beverage') {
+    return '#5e7f0c';
+  } else if (data === 'shower') {
     return '#d46b08';
+  } else if (data === 'parking_free') {
+    return '#c41d7f';
   }
 };
 
 const getBackgroundColorBydata = (data: string) => {
-  if (data === '풋살화 대여') {
+  if (data === 'shoes') {
     return '#f9f0ff';
-  } else if (data === '남녀 구분 화장실') {
+  } else if (data === 'toilet') {
     return '#e6f7ff';
-  } else if (data === '공 대여') {
+  } else if (data === 'ball') {
     return '#fff2e8';
-  } else if (data === '조끼 대여') {
+  } else if (data === 'bibs') {
     return '#e6fffb';
-  } else if (data === '무료 주차') {
+  } else if (data === 'parking') {
     return '#fff0f6';
-  } else if (data === '샤워실') {
+  } else if (data === 'beverage') {
+    return '#f0fff3';
+  } else if (data === 'shower') {
+    return '#fff7e6';
+  } else if (data === 'parking_free') {
     return '#fff7e6';
   }
 };
 
 const Searchpage = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   font-size: 1.7rem;
   width: 98.4rem;
   margin-top: 2rem;
@@ -94,6 +174,7 @@ const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 2rem;
   table {
     width: 100%;
   }
@@ -110,22 +191,18 @@ const SearchPageBody = styled.div`
 const StyledLabelTr = styled.tr`
   height: 6rem;
   padding-bottom: 1rem;
-  /* border-bottom: 1px solid #d5d5d5ae; */
   background-color: #fafafa;
   border-bottom: 1px solid #d5d5d5ae;
   box-shadow: 0px 5px 5px -5px #cbc9c9d5;
   th {
     font-size: 1.8rem;
     font-weight: 500;
-    :last-child {
-      padding-right: 4rem;
-    }
     :nth-child(2) {
       text-align: start;
       padding-left: 4.5rem;
     }
-    :nth-child(3) {
-      padding-right: 5rem;
+    :nth-child(4) {
+      padding-right: 3rem;
     }
   }
 `;
@@ -193,7 +270,7 @@ const StyledAddressTd = styled.td`
 `;
 
 const StyledMainTd = styled.td`
-  padding-left: 10rem;
+  padding-left: 5rem;
   p {
     font-size: 1.9rem;
   }
@@ -207,69 +284,5 @@ const StyledButton = styled.button`
   color: white;
   font-size: 1.4rem;
   font-weight: 500;
+  margin-right: 3rem;
 `;
-
-const dummydata_filteredGround = [
-  {
-    title: '고양 싸커스토리 축구클럽 운정점',
-    image: [
-      'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_half.jpg',
-      'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_goal.jpg',
-      'https://plab-football.s3.amazonaws.com/media/gy_storywj_out_corner.jpg',
-    ],
-    address: {
-      shortAddress: '경기 / 고양시',
-      fullAddress: '경기도 고양시 일산서구 덕이로 310-2',
-    },
-    stadiums: [
-      {
-        usage: '다목적 구장',
-        facility: '90x50m •실외 •인조잔디',
-        image: [
-          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_001.jpeg',
-          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-56_003.jpeg',
-        ],
-      },
-      {
-        usage: '축구장',
-        facility: '100x64m •실외 •인조잔디',
-        image: [
-          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_001.jpeg',
-          'https://plab-football.s3.amazonaws.com/media/KakaoTalk_Photo_2023-01-30-16-09-16_002.jpeg',
-        ],
-      },
-      {
-        usage: '풋살장 (다목적 구장)',
-        facility: '20x40m •실외 •인조잔디',
-        image: [
-          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A5.jpg',
-          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A53.jpg',
-          'https://plab-football.s3.amazonaws.com/media/%EA%B3%A4%EC%A7%80%EC%95%94_%ED%8C%80%EC%97%85%EC%BA%A0%ED%8D%BC%EC%8A%A4_%ED%92%8B%EC%82%B4%EC%9E%A52.jpg',
-        ],
-      },
-    ],
-
-    provided: ['풋살화 대여', '남녀 구분 화장실', '공 대여', '조끼 대여'],
-    nonProvided: ['무료 주차', '샤워실'],
-    reservation: {
-      일반: [
-        '7일 전 취소 시 100% 환불',
-        '5일 전 취소 시 80% 환불',
-        '3일 전 취소 시 50% 환불',
-        '2일 전 ~ 예약 당일 환불 불가',
-        '캐시는 규정에 따라 자동 환급되며 잔액 환불 희망 시 나의 충전 내역에서 신청바랍니다',
-      ],
-      천재지변: [
-        '당일 천재지변으로 인해 구장 이용이 불가한 경우 100% 환불',
-        '적용기준: 호우경보, 대설경보, 태풍주의보, 태풍경보',
-      ],
-      '우천시 변경 기준': [
-        '시간 당 5mm 이상 시 날짜 변경 가능',
-        '기준: 당일 이용 2시간 전 기상청 날씨누리 해당 주소지 기준',
-        '단순 변심에 의한 날짜 변경은 불가',
-      ],
-    },
-    url: 'https://www.plabfootball.com/stadium/3415/info/',
-    source: '(주)플랩',
-  },
-];

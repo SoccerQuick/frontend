@@ -14,6 +14,11 @@ function MyProfile(props: { formData: FormData }) {
         <StyledImgWrapper>
           <StyledProfileImg src={'/logo192.png'} alt="profile" />
         </StyledImgWrapper>
+        <span
+          onClick={() => {
+            console.log('이미지 수정할 이벤트');
+          }}
+        >{`이미지 수정`}</span>
         <StyledText bold>{`${name} (${nick_name})`}</StyledText>
         <StyledText small>{user_id}</StyledText>
       </StyledProfileTop>
@@ -48,11 +53,16 @@ const StyledProfileTop = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 47%;
+  height: 50%;
   margin: 0.3rem;
   background-color: #fdfdfd;
   border-bottom: 1px solid rgb(247 247 247);
   border-radius: 16px 16px 0 0;
+  & > span {
+    color: #727f88;
+    cursor: pointer;
+    font-size: 5px;
+  }
 `;
 const StyledProfileBottom = styled.div`
   display: flex;
@@ -60,7 +70,7 @@ const StyledProfileBottom = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 43%;
+  height: 40%;
   background-color: #fdfdfd;
   border-radius: 0 0 16px 16px;
   & > div:nth-child(2) {
@@ -76,7 +86,7 @@ const StyledImgWrapper = styled.div`
   height: 9rem;
   border-radius: 100%;
   background-color: rgb(247 247 247);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledProfileImg = styled.img`

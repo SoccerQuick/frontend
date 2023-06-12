@@ -44,7 +44,8 @@ export function MyPageInfo({
 
   useEffect(() => {
     if (!user) {
-      window.location.reload();
+      alert('마이페이지는 로그인 후 사용해주세요.');
+      navigate('/');
     }
   }, [user]);
 
@@ -191,25 +192,17 @@ export function MyPageInfo({
           <div>
             {' '}
             <StyledSubmitButton>변경</StyledSubmitButton>
-            <StyledSubmitButton
-              style={{
-                color: '#fff',
-                backgroundColor: '#ec5d5e',
-              }}
-              onClick={handleWithDrawalClick}
-            >
+            <StyledRedSubmitButton onClick={handleWithDrawalClick}>
               회원 탈퇴
-            </StyledSubmitButton>
+            </StyledRedSubmitButton>
           </div>
         </StyledInfoForm>
-        <div style={{ color: 'red', marginTop: '1rem' }}>
-          {errorMsg.formMsg}
-        </div>
+        <StyledErrorDiv>{errorMsg.formMsg}</StyledErrorDiv>
       </StyledInfoBox>
       <StyledInfoBox>
         {' '}
         <StyledTitle>비밀번호 변경</StyledTitle>
-        <StyledInfoForm onSubmit={handleSubmit} style={{ height: '14rem' }}>
+        <StyledShortInfoForm onSubmit={handleSubmit}>
           <MyPageInput
             title="새 비밀번호"
             name="newPassword"
@@ -225,10 +218,8 @@ export function MyPageInfo({
             setPasswordForm={setPasswordForm}
           />
           <StyledSubmitButton>변경</StyledSubmitButton>
-        </StyledInfoForm>
-        <div style={{ color: 'red', marginBottom: '1rem' }}>
-          {errorMsg.passwordFormMsg}
-        </div>
+        </StyledShortInfoForm>
+        <StyledErrorDiv>{errorMsg.passwordFormMsg}</StyledErrorDiv>
       </StyledInfoBox>
     </StyledInfoContainer>
   );
@@ -287,4 +278,17 @@ const StyledSubmitButton = styled.button`
   background-color: #09cf00;
   color: #fff;
   border-radius: 0.5rem;
+`;
+
+const StyledRedSubmitButton = styled(StyledSubmitButton)`
+  background-color: #ec5d5e;
+`;
+
+const StyledErrorDiv = styled.div`
+  color: red;
+  margin: 0.5rem 0;
+`;
+
+const StyledShortInfoForm = styled(StyledInfoForm)`
+  height: 14rem;
 `;
