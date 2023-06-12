@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Header from '../Components/Header';
+import HeaderCategory from '../Components/Commons/HeaderCategory';
 import Footer from '../Components/Footer';
 import { DomDataType } from './SearchPage';
 import { ProvidedElementList } from '../Components/SearchPage/Contents/SearchData';
@@ -11,6 +12,8 @@ import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/scrollToTarget';
+import Review from '../Components/GroundDetail/Review';
+// import ClipUrl from '../Components/ClipUrl';
 import starIcon from '../styles/icon/star.svg';
 import homeIcon from '../styles/icon/home.svg';
 
@@ -43,6 +46,7 @@ const GroundDetail = () => {
   return (
     <>
       <Header />
+      <HeaderCategory />
       {groundData && (
         <GroundDetailContainer>
           <div className="slider">
@@ -129,8 +133,10 @@ const GroundDetail = () => {
               <p onClick={() => clipUrl()}>주소 복사</p>
             </GroundAddressDetail>
           </ContentsBox>
+          <ContentsBox>{dom_id && <Review dom_id={dom_id} />}</ContentsBox>
         </GroundDetailContainer>
       )}
+
       <Footer />
       {showImgModal && groundData && (
         <GroundImageModal
