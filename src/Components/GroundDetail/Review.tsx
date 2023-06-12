@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import Avatar from '../../styles/icon/avatar1.png';
 import LikeButton from '../Commons/LikeButton';
+import {
+  isLogInSelector,
+  userSelector,
+} from '../../store/selectors/authSelectors';
 
 interface DomId {
   dom_id: string;
@@ -21,8 +26,13 @@ const config = {
 export default function Review(props: DomId) {
   const [commentData, setCommentData] = useState<CommentData[]>([]);
   const [comment, setComment] = useState<string>('');
-
-  console.log(props.dom_id);
+  const [editComment, setEditComment] = useState<string>('');
+  const [isCommentEditable, setIsCommentEditable] = useState<boolean>(false);
+  const isLogin = useSelector(isLogInSelector);
+  const userData = useSelector(userSelector);
+  const userId = userData?.user_id;
+  const userName = userData?.name;
+  console.log(commentData);
 
   // url 주소 수정 필요
   useEffect(() => {
@@ -32,37 +42,18 @@ export default function Review(props: DomId) {
     });
   }, [props.dom_id]);
 
-  // 쿠키에서 JWT 추출 함수
-  function getJwtFromCookie() {
-    const name = 'accessToken='; // JWT 쿠키 이름
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookieArray = decodedCookie.split(';');
-
-    for (let i = 0; i < cookieArray.length; i++) {
-      let cookie = cookieArray[i];
-      while (cookie.charAt(0) === ' ') {
-        cookie = cookie.substring(1);
-      }
-      if (cookie.indexOf(name) === 0) {
-        return cookie.substring(name.length, cookie.length);
-      }
-    }
-
-    return null; // JWT가 존재하지 않는 경우
-  }
-
-  const jwt = getJwtFromCookie();
-  console.log(jwt);
-
   function submitWriteComment() {
+    if (!isLogin) {
+      return alert('로그인이 필요한 서비스입니다.');
+    }
     //401에러(Unauthorized)
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/reviews`,
         {
+          user_id: userId,
           dom_id: props.dom_id,
-          rating: 5,
-          comment,
+          contents: comment,
         },
         config
       )
@@ -72,13 +63,27 @@ export default function Review(props: DomId) {
         setCommentData((prevData: CommentData[]) => [
           ...prevData,
           {
-            // token에서 작성자 추출? 어디에서 가져오나용?
-            name: '작성자',
+            name: userId,
             comment,
             userslikes: [],
           },
         ]);
       });
+  }
+
+  function handleEditComment(index: number, comment: string) {
+    if (isCommentEditable) {
+      const newCommentData = [...commentData];
+      newCommentData[index].comment = editComment;
+      setCommentData(newCommentData);
+    }
+    setIsCommentEditable((prev) => !prev);
+  }
+
+  function handleDeleteComment(index: number) {
+    const newCommentData = [...commentData];
+    newCommentData.splice(index, 1);
+    setCommentData(newCommentData);
   }
 
   return (
@@ -98,12 +103,35 @@ export default function Review(props: DomId) {
             </span>
           </div>
           <div className="review-content">
-            <span className="comment">{item.comment}</span>
+            {isCommentEditable ? (
+              <input
+                value={item.comment}
+                onChange={(e) => {
+                  setEditComment(e.target.value);
+                }}
+              />
+            ) : (
+              <span className="comment">{item.comment}</span>
+            )}
           </div>
-          <div className="review-content-buttons">
-            <button className="review-edit">수정하기</button>
-            <button className="review-delete">삭제하기</button>
-          </div>
+          {isLogin && item.name === userName && (
+            <div className="review-content-buttons">
+              <button
+                className="review-edit"
+                onClick={() => {
+                  handleEditComment(index, comment);
+                }}
+              >
+                {isCommentEditable ? '완료' : '수정'}
+              </button>
+              <button
+                className="review-delete"
+                onClick={() => handleDeleteComment(index)}
+              >
+                삭제
+              </button>
+            </div>
+          )}
         </StyledComments>
       ))}
       <StyledWriteComment>
