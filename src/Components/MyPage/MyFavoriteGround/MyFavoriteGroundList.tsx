@@ -10,11 +10,20 @@ import {
 } from '../../../store/selectors/authSelectors';
 import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
+import MyPagination from '../MyPagination';
 
 function MyFavoriteGroundList() {
   const user = useSelector(userSelector);
   const isLogIn = useSelector(isLogInSelector);
   const [filteredData, setFilteredData] = useState<DomDataType[]>([]);
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const totalItemsCount = filteredData.length;
+  const lastIndexOfData = currentPage * itemsPerPage;
+  const firstIndexOfData = lastIndexOfData - itemsPerPage;
+  const currentData = filteredData.slice(firstIndexOfData, lastIndexOfData);
 
   useEffect(() => {
     if (isLogIn) {
@@ -65,7 +74,7 @@ function MyFavoriteGroundList() {
             </StyledLabelTr>
           </thead>
           <tbody>
-            {filteredData.map((item, idx) => (
+            {currentData.map((item, idx) => (
               <StyledTr key={item.title + idx}>
                 <StyledCheckboxTd>
                   <label htmlFor={item.title}></label>
@@ -99,6 +108,12 @@ function MyFavoriteGroundList() {
           </tbody>
         </table>
       </SearchPageBody>
+      <MyPagination
+        totalItemsCount={totalItemsCount ? totalItemsCount : 100}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
     </Searchpage>
   );
 }
@@ -147,6 +162,9 @@ const getBackgroundColorBydata = (data: string) => {
 
 const Searchpage = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   font-size: 1.7rem;
   width: 98.4rem;
   margin-top: 2rem;
@@ -156,6 +174,7 @@ const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 2rem;
   table {
     width: 100%;
   }
