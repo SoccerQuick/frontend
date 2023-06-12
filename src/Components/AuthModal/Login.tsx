@@ -72,13 +72,13 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
           user_id: userData.user_id,
           name: userData.name,
           nickname: userData.nick_name,
+          profile: userData.profile,
           role: userData.role,
         };
-        const token = 'your-auth-token';
+
         dispatch(
           AUTH_ACTIONS.login({
             user,
-            token,
           })
         );
         setLoginError('');

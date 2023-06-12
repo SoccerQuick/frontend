@@ -17,11 +17,11 @@ export function MyPageMenu() {
       handleAlertConfirm();
     }
   };
-  const handleAlertConfirm = () => {
+  const handleAlertConfirm = async () => {
     dispatch(AUTH_ACTIONS.logout());
 
     // logout
-    axios
+    await axios
       .delete(`${process.env.REACT_APP_API_URL}/auths/logout`, {
         withCredentials: true,
       })
@@ -34,7 +34,7 @@ export function MyPageMenu() {
     <StyledMenu>
       <StyledMenuProfile>
         <StyledImgWrapper>
-          <StyledProfileImg src={'/logo192.png'} alt="profile" />
+          <StyledProfileImg type="image" src={user?.profile} alt="profile" />
         </StyledImgWrapper>
         <StyledProfileInfo
           onClick={() => {
@@ -79,9 +79,9 @@ const StyledImgWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledProfileImg = styled.img`
-  min-width: 3.5rem;
-  max-height: 3.5rem;
+const StyledProfileImg = styled.input`
+  width: 3rem;
+  height: 3rem;
   border-radius: 100%;
   background-color: white;
   border: 1px solid #e5e5e5;

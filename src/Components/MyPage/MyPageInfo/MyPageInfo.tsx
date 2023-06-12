@@ -1,7 +1,7 @@
 import react, { useState, FormEvent, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { FormData } from '../../../Pages/MyPage';
+import { FormDataType } from '../../../Pages/MyPage';
 import { MyPageInput } from './MyPageInput';
 import { checkNewPassword } from '../checkPassword';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 
 type MyPageInfoProps = {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  userData: FormDataType;
+  setUserData: React.Dispatch<React.SetStateAction<FormDataType>>;
   oldPassword: string;
+  selectedImage: File | undefined;
 };
 
 export type ErrorMsg = {
@@ -26,9 +27,10 @@ export type PasswordForm = {
 };
 
 export function MyPageInfo({
-  formData,
-  setFormData,
+  userData,
+  setUserData,
   oldPassword,
+  selectedImage,
 }: MyPageInfoProps) {
   const [passwordForm, setPasswordForm] = useState<PasswordForm>({
     newPassword: '',
@@ -40,14 +42,14 @@ export function MyPageInfo({
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(userSelector);
+  const userInfo = useSelector(userSelector);
 
   useEffect(() => {
-    if (!user) {
+    if (!userInfo) {
       alert('마이페이지는 로그인 후 사용해주세요.');
       navigate('/');
     }
-  }, [user]);
+  }, [userInfo]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,31 +74,57 @@ export function MyPageInfo({
   };
 
   const handleMyInfoChangeConfirm = async (
-    newPassword: String,
-    oldPassword: String
+    newPassword: string,
+    oldPassword: string
   ) => {
     try {
-      const response = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/users`,
-        // body값이 아닌 FormData 객체
-        {
-          user_id: formData.user_id,
-          name: formData.name,
-          password: newPassword ? newPassword : oldPassword,
-          nick_name: formData.nick_name,
-          email: formData.email,
-          phone_number: formData.phone_number,
-          gender: formData.gender,
+      const formData = new FormData();
+      formData.append('user_id', userData.user_id);
+      formData.append('name', userData.name);
+      formData.append('nick_name', userData.nick_name);
+      formData.append('email', userData.email);
+      formData.append('phone_number', userData.phone_number);
+      formData.append('gender', userData.gender);
+      if (newPassword) {
+        formData.append('password', newPassword);
+      } else {
+        formData.append('password', oldPassword);
+      }
+      if (selectedImage) {
+        formData.append('image', selectedImage);
+      } else {
+        formData.append('image', userData.profile);
+      }
+
+      const url = `${process.env.REACT_APP_API_URL}/users`;
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-        {
-          withCredentials: true,
-        }
-      );
+        withCredentials: true,
+      };
+
+      const response = await axios.patch(url, formData, config);
       alert(response.data.message);
+
+      if (selectedImage && userInfo) {
+        const userProfile = URL.createObjectURL(selectedImage);
+
+        const user = {
+          user_id: userInfo.user_id,
+          name: userInfo.name,
+          nickname: userInfo.nickname,
+          profile: userProfile,
+          role: userInfo.role,
+        };
+        dispatch(AUTH_ACTIONS.updateUser({ user }));
+      }
+
       setErrorMsg({
         formMsg: '',
         passwordFormMsg: '',
       });
+
       setPasswordForm((prev) => ({
         ...prev,
         newPassword: '',
@@ -158,37 +186,37 @@ export function MyPageInfo({
           <MyPageInput
             title="아이디"
             name="user_id"
-            value={formData.user_id}
+            value={userData.user_id}
             noButton
           />
           <MyPageInput
             title="이름"
             name="name"
-            value={formData.name}
+            value={userData.name}
             noButton
           />
           <MyPageInput
             title="닉네임"
             name="nick_name"
-            value={formData.nick_name}
-            setFormData={setFormData}
+            value={userData.nick_name}
+            setFormData={setUserData}
           />
           <MyPageInput
             title="이메일"
             name="email"
-            value={formData.email}
-            setFormData={setFormData}
+            value={userData.email}
+            setFormData={setUserData}
           />
           <MyPageInput
             title="전화번호"
             name="phone_number"
-            value={formData.phone_number}
-            setFormData={setFormData}
+            value={userData.phone_number}
+            setFormData={setUserData}
           />
           <MyPageInput
             title="성별"
             name="gender"
-            value={formData.gender}
+            value={userData.gender}
             noButton
           />
           <div>
