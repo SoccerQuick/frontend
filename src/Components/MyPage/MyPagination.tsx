@@ -1,4 +1,4 @@
-import react from 'react';
+import react, { useState } from 'react';
 import styled from 'styled-components';
 
 type MyPaginationProps = {
@@ -14,9 +14,20 @@ function MyPagination({
   setCurrentPage,
   currentPage,
 }: MyPaginationProps) {
-  const pageNumbers = [];
+  const [pageGroup, setPageGroup] = useState(5);
   const pages = Math.ceil(totalItemsCount / itemsPerPage);
-  for (let i = 1; i <= pages; i++) {
+  const firstIndexOfPage =
+    currentPage % pageGroup
+      ? Math.floor(currentPage / pageGroup) * pageGroup + 1
+      : Math.floor((currentPage - 1) / pageGroup) * pageGroup + 1;
+  const lastIndexOfPage = Math.ceil(currentPage / pageGroup) * pageGroup;
+
+  const pageNumbers = [];
+
+  for (let i = firstIndexOfPage; i <= lastIndexOfPage; i++) {
+    if (pages < i) {
+      break;
+    }
     pageNumbers.push(i);
   }
 
@@ -43,13 +54,37 @@ function MyPagination({
   return (
     <nav>
       <StyledUl className="pagination">
+        <StyledLi
+          onClick={() => {
+            setCurrentPage(1);
+          }}
+        >
+          {'<<'}
+        </StyledLi>
         <StyledLi onClick={handlePrevClick}>{'<'}</StyledLi>
-        {pageNumbers.map((number) => (
-          <StyledLi key={number} currentPage={currentPage}>
-            <div onClick={() => setCurrentPage(number)}>{number}</div>
-          </StyledLi>
-        ))}
+        {pageNumbers.map((number) => {
+          if (number !== currentPage) {
+            return (
+              <StyledLi key={number}>
+                <div onClick={() => setCurrentPage(number)}>{number}</div>
+              </StyledLi>
+            );
+          } else {
+            return (
+              <StyledBoldLi key={number}>
+                <div onClick={() => setCurrentPage(number)}>{number}</div>
+              </StyledBoldLi>
+            );
+          }
+        })}
         <StyledLi onClick={handleNextClick}>{'>'}</StyledLi>
+        <StyledLi
+          onClick={() => {
+            setCurrentPage(pages);
+          }}
+        >
+          {'>>'}
+        </StyledLi>
       </StyledUl>
     </nav>
   );
@@ -62,7 +97,7 @@ const StyledUl = styled.ul`
   margin-top: 1rem;
 `;
 
-const StyledLi = styled.li<{ key?: number; currentPage?: number }>`
+const StyledLi = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,7 +105,10 @@ const StyledLi = styled.li<{ key?: number; currentPage?: number }>`
   cursor: pointer;
   width: 2rem;
   height: 2rem;
-  & > div {
-    color: ${(props) => (props.key === props.currentPage ? 'red' : 'grey')};
-  }
+  color: grey;
+`;
+
+const StyledBoldLi = styled(StyledLi)`
+  color: black;
+  font-weight: bold;
 `;
