@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
-import { groundDataType } from '../../../Pages/SearchPage';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
-
-import axios from 'axios';
 
 type FindingGroundProps = {
   checkedArray: DomDataType[];
@@ -38,10 +36,10 @@ export const ProvidedElementList: ProvidedElementListType = {
 
 // SoccerQuick/Frontend/src/Pages/SearchPage.tsx 75번째 줄에서 연결됨
 function FindingGround(props: FindingGroundProps) {
+  const navigate = useNavigate();
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
-  // const setSortedDomData = props.setSortedDomData;
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -89,6 +87,10 @@ function FindingGround(props: FindingGroundProps) {
     }
   }, [filterOption, sortedDomData]);
 
+  const clickDomHandler = (domId: string) => {
+    navigate(`/ground/${domId}`);
+  };
+
   return (
     <SearchContainer style={{ width: '100%' }}>
       <SearchFilter setFilterOption={setFilterOption} />
@@ -120,7 +122,9 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledCheckboxTd>
                     <StyledAddressTd>{item.address.area}</StyledAddressTd>
                     <StyledMainTd>
-                      <p>{item.title}</p>
+                      <p onClick={(e) => clickDomHandler(item.dom_id)}>
+                        {item.title}
+                      </p>
                       <StyledTableCell>
                         {Object.keys(ProvidedElementList).map(
                           (provided) =>
@@ -134,7 +138,11 @@ function FindingGround(props: FindingGroundProps) {
                     </StyledMainTd>
 
                     <td>
-                      <StyledButton>조회</StyledButton>
+                      <StyledButton
+                        onClick={(e) => clickDomHandler(item.dom_id)}
+                      >
+                        조회
+                      </StyledButton>
                     </td>
                   </StyledTr>
                 ))}
@@ -206,6 +214,7 @@ const StyledTableCell = styled.div`
   font-weight: 400;
   color: #888888;
   line-height: 2rem;
+  overflow: hidden;
 `;
 
 const StyledTable = styled.div<{ data: string }>`
@@ -219,6 +228,8 @@ const StyledTable = styled.div<{ data: string }>`
   font-weight: 400;
   color: ${({ data }) => getColorBydata(data)};
   background-color: ${({ data }) => getBackgroundColorBydata(data)};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const StyledTr = styled.tr`
@@ -262,6 +273,7 @@ const StyledMainTd = styled.td`
   padding-left: 4rem;
   p {
     font-size: 1.9rem;
+    cursor: pointer;
   }
 `;
 

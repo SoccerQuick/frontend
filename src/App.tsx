@@ -24,7 +24,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/teampage/*" element={<TeamPage />} />
             <Route path="/review/*" element={<ReviewPage />} />
-            <Route path="/groundDetail" element={<GroundDetail />} />
+            <Route path="/ground/:dom_id" element={<GroundDetail />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

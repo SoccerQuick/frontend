@@ -16,7 +16,7 @@ interface Applicant {
 
 interface DataProps {
   group_id?: string;
-  location: string;
+  area: string;
   author: string;
   body: string;
   gender: string;
@@ -25,6 +25,11 @@ interface DataProps {
   skill?: string;
   status: string;
   title: string;
+  gk: number;
+  gkNeed: number;
+  player: number;
+  playerNeed: number;
+  location: string;
   gk_count: number;
   gk_current_count: number;
   player_count: number;
@@ -39,26 +44,26 @@ interface FindingMemberProps {
 }
 interface FindMemberFilter {
   status: string | null;
-  location: string | null;
+  area: string | null;
 }
 
 function FindingMember(props: FindingMemberProps) {
   const isLogin = useSelector(isLogInSelector);
 
-  const loc = useLocation();
+  const location = useLocation();
   const { setShowModal } = props;
   const [status, setStatus] = React.useState('');
-  const [location, setLocation] = React.useState('');
+  const [area, setArea] = React.useState('');
 
   const [findMemberFilter, setFindMemberFilter] =
     React.useState<FindMemberFilter>({
       status: null,
-      location: null,
+      area: null,
     });
 
   function handleReset() {
     setStatus('');
-    setLocation('');
+    setArea('');
   }
 
   //새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
@@ -72,6 +77,11 @@ function FindingMember(props: FindingMemberProps) {
           return {
             ...item,
             author: item.leader_name,
+            gk: item.gk_current_count,
+            gkNeed: item.gk_count,
+            player: item.player_current_count,
+            playerNeed: item.player_count,
+            area: item.location,
           };
         });
         setData(formattedData);
@@ -85,10 +95,10 @@ function FindingMember(props: FindingMemberProps) {
   React.useEffect(() => {
     const filter = {
       status: status === '모집상태' ? '' : status,
-      location: location === '활동지역' ? '' : location,
+      area: area === '활동지역' ? '' : area,
     };
     setFindMemberFilter(filter);
-  }, [status, location]);
+  }, [status, area]);
 
   // 필터링 된 데이터를 관리하는 상태
   const [filteredData, setFilteredData] = React.useState(data);
@@ -138,9 +148,9 @@ function FindingMember(props: FindingMemberProps) {
       setState: setStatus,
     },
     {
-      option: FilteringOptions.findingMember.location,
-      state: location,
-      setState: setLocation,
+      option: FilteringOptions.findingMember.area,
+      state: area,
+      setState: setArea,
     },
   ];
 
@@ -161,7 +171,8 @@ function FindingMember(props: FindingMemberProps) {
           <Link
             to="/teampage/submit"
             style={{
-              display: loc.pathname === '/teampage/submit' ? 'none' : 'flex',
+              display:
+                location.pathname === '/teampage/submit' ? 'none' : 'flex',
             }}
           >
             <StyledWriteButton>글 작성하기</StyledWriteButton>

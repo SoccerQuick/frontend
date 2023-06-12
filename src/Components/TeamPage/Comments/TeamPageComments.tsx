@@ -137,7 +137,6 @@ export default Comment;
 const StyledCommentContainer = styled.div`
   width: 100%;
   margin: 1rem auto;
-  border-top: 0.1rem solid lightgray;
 `;
 
 const StyledCommentTitle = styled.h2`

@@ -10,24 +10,6 @@ import ComparisonData from '../Components/SearchPage/Contents/ComparisonData';
 import FeildSearchInput from '../Components/Search/FieldSearch';
 import FieldMap from '../Components/SearchPage/Contents/FieldMap';
 import axios from 'axios';
-import { info } from 'console';
-
-export interface groundDataType {
-  title: string;
-  image: string[];
-  address: {
-    shortAddress: string;
-    fullAddress: string;
-  };
-  stadiums: { usage: string; facility: string; image: string[] }[];
-  provided: string[];
-  nonProvided: string[];
-  reservation: {
-    [key: string]: string[];
-  };
-  url: string;
-  source: string;
-}
 
 export interface DomDataType {
   [key: string]: string | number | boolean | [] | {};
@@ -49,7 +31,7 @@ export interface DomDataType {
     id: number;
     info: string;
     inout_door: string;
-    inoutdoor_nm: string;
+    inout_door_nm: string;
     name: string;
     size_x: number;
     size_y: number;
@@ -140,7 +122,6 @@ function SearchPage() {
           setCheckedArray={setCheckedArray}
           checkedInModal={checkedInModal}
           setCheckedInModal={setCheckedInModal}
-          showComparisonData={showComparisonData}
           setShowComparisonData={setShowComparisonData}
         />
       )}
