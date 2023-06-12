@@ -14,12 +14,14 @@ import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/scrollToTarget';
 import Review from '../Components/GroundDetail/Review';
 import starIcon from '../styles/icon/star.svg';
+import starFilledIcon from '../styles/icon/star_filled.svg';
 import homeIcon from '../styles/icon/home.svg';
 
 const GroundDetail = () => {
   const [groundData, setGroundData] = useState<DomDataType>();
   const [showImgModal, setShowImgModal] = useState(false);
   const [ImgModalIndex, setImgModalIndex] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
   const { dom_id } = useParams();
 
   const config = {
@@ -35,20 +37,24 @@ const GroundDetail = () => {
       .catch((e: any) => console.log(e));
   }, []);
 
-  const clipUrl = () => {
-    if (groundData)
-      window.navigator.clipboard
-        .writeText(groundData.address.fullAddress)
-        .then(() => {
-          alert('주소가 복사되었습니다.');
-        });
-  };
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users`, config)
+      .then((res: any) => {
+        const favoriteGrounds = res.data.data.favoritePlaygrounds;
+        if (favoriteGrounds.includes(dom_id)) {
+          setIsFavorite(true);
+        }
+      })
+      .catch((e: any) => console.log(e));
+  }, []);
 
   const clickFavoriteHandler = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/doms/`, { domId: dom_id }, config)
       .then((res: any) => {
         alert(res.data.message);
+        setIsFavorite(true);
       })
       .catch((e: any) => {
         if (e.response.data.statusCode === 401) {
@@ -58,6 +64,16 @@ const GroundDetail = () => {
         }
       });
   };
+
+  const clipUrl = () => {
+    if (groundData)
+      window.navigator.clipboard
+        .writeText(groundData.address.fullAddress)
+        .then(() => {
+          alert('주소가 복사되었습니다.');
+        });
+  };
+
   return (
     <>
       <Header />
@@ -87,7 +103,12 @@ const GroundDetail = () => {
                 </a>
               </button>
               <button onClick={() => clickFavoriteHandler()}>
-                <img src={starIcon} alt="" />찜
+                {isFavorite ? (
+                  <img src={starFilledIcon} alt="" />
+                ) : (
+                  <img src={starIcon} alt="" />
+                )}
+                찜
               </button>
             </GroundDetailHeaderBtn>
           </GroundDetailHeader>
