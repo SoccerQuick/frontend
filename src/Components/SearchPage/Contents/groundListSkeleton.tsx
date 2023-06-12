@@ -5,34 +5,34 @@ const GroundListSkeleton = () => {
   return (
     <tbody>
       <StyledSkeletonTr>
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-        <StyledSkeletonDiv>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
+        <StyledSkeletonTd>
           <div className="shimmer"></div>
           <div className="shimmer"></div>
-        </StyledSkeletonDiv>
+        </StyledSkeletonTd>
 
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
       </StyledSkeletonTr>
       <StyledSkeletonTr>
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-        <StyledSkeletonDiv>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
+        <StyledSkeletonTd>
           <div className="shimmer"></div>
           <div className="shimmer"></div>
-        </StyledSkeletonDiv>
+        </StyledSkeletonTd>
 
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
       </StyledSkeletonTr>
       <StyledSkeletonTr>
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
-        <StyledSkeletonDiv>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
+        <StyledSkeletonTd>
           <div className="shimmer"></div>
           <div className="shimmer"></div>
-        </StyledSkeletonDiv>
+        </StyledSkeletonTd>
 
-        <StyledSkeletonDiv className="shimmer"></StyledSkeletonDiv>
+        <StyledSkeletonTd className="shimmer"></StyledSkeletonTd>
       </StyledSkeletonTr>
     </tbody>
   );
@@ -67,7 +67,7 @@ const StyledSkeletonTr = styled.tr`
   }
 `;
 
-const StyledSkeletonDiv = styled.div`
+const StyledSkeletonTd = styled.td`
   border-radius: 1.5rem;
   margin: 2rem;
   :nth-child(1) {

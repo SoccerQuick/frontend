@@ -112,7 +112,7 @@ function FindingGround(props: FindingGroundProps) {
                     <th>상세조회</th>
                   </>
                 ) : (
-                  ''
+                  <></>
                 )}
               </StyledLabelTr>
             </thead>
