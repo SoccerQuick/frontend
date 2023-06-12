@@ -171,7 +171,7 @@ const FieldMap: React.FC<FieldMapType> = ({
 
   return (
     <StyledMapContainer>
-      <StyledMap id="map" ref={mapElement}></StyledMap>;
+      <StyledMap id="map" ref={mapElement}></StyledMap>
       <StyledButton onClick={() => resetListHandler()}>
         <StyledButtonIcon>
           <img src={ResetIcon} alt="" />

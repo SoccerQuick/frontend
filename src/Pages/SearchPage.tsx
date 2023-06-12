@@ -59,6 +59,7 @@ function SearchPage() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalDomData, setTotalDomData] = useState<DomDataType[]>([]);
   const [sortedDomData, setSortedDomData] = useState<DomDataType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const searchValue = location.state?.searchValue || '서울';
@@ -73,6 +74,10 @@ function SearchPage() {
   }, [checkedArray]);
 
   useEffect(() => {
+    // setIsLoading(true);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 1000);
     axios
       .get(`${process.env.REACT_APP_API_URL}/doms`, {
         withCredentials: true,
@@ -82,7 +87,6 @@ function SearchPage() {
       })
       .catch((e: any) => console.log(e));
   }, []);
-
   return (
     <>
       <Header />
@@ -93,7 +97,7 @@ function SearchPage() {
           setSearchKeyword={setSearchKeyword}
         />
       </HeaderNavContainer>
-      <div style={{ justifyContent: 'center' }}>
+      <StyledBody>
         {searchKeyword && (
           <FieldMap
             searchKeyword={searchKeyword}
@@ -113,9 +117,11 @@ function SearchPage() {
             setCheckedArray={setCheckedArray}
             sortedDomData={sortedDomData}
             setSortedDomData={setSortedDomData}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </div>
-      </div>
+      </StyledBody>
       {showComparisonModal && (
         <GroundComparison
           checkedArray={checkedArray}
@@ -144,4 +150,10 @@ const HeaderNavContainer = styled.div`
   height: 8rem;
   width: 98.4rem;
   margin: 0 auto;
+`;
+
+const StyledBody = styled.div`
+  justify-content: center;
+  width: 98.4rem;
+  margin: auto;
 `;
