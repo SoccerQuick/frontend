@@ -50,19 +50,38 @@ const GroundDetail = () => {
   }, []);
 
   const clickFavoriteHandler = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/doms/`, { domId: dom_id }, config)
-      .then((res: any) => {
-        alert(res.data.message);
-        setIsFavorite(true);
-      })
-      .catch((e: any) => {
-        if (e.response.data.statusCode === 401) {
-          alert('로그인 후 이용해주세요.');
-        } else {
-          alert(e.response.data.message);
-        }
-      });
+    if (!isFavorite) {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/doms/`,
+          { domId: dom_id },
+          config
+        )
+        .then((res: any) => {
+          alert(res.data.message);
+          setIsFavorite(true);
+        })
+        .catch((e: any) => {
+          if (e.response.data.statusCode === 401) {
+            alert('로그인 후 이용해주세요.');
+          } else {
+            alert(e.response.data.message);
+          }
+        });
+    } else {
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, config)
+        .then((res: any) => {
+          setIsFavorite(false);
+        })
+        .catch((e: any) => {
+          if (e.response.data.statusCode === 401) {
+            alert('로그인 후 이용해주세요.');
+          } else {
+            alert(e.response.data.message);
+          }
+        });
+    }
   };
 
   const clipUrl = () => {
