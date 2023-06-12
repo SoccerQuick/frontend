@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ResetIcon from '../../../styles/icon/reset_white.svg';
 import CustomMapMarker from './CustomMapMarker';
-import FieldDummy from './fieldDummy';
 import { DomDataType } from '../../../Pages/SearchPage';
 
 interface FieldMapType {
@@ -17,8 +17,10 @@ const FieldMap: React.FC<FieldMapType> = ({
   setSortedDomData,
 }) => {
   const { naver } = window;
-  const mapElement = useRef<HTMLElement | null | any>(null);
   let map: naver.maps.Map;
+  const navigate = useNavigate();
+  const mapElement = useRef<HTMLElement | null | any>(null);
+  const [newMap, setNewMap] = useState<naver.maps.Map | null>(null);
   const [AddressX, setAddressX] = useState<number>(0);
   const [AddressY, setAddressY] = useState<number>(0);
   const createMarkerList: naver.maps.Marker[] = [];
@@ -64,34 +66,28 @@ const FieldMap: React.FC<FieldMapType> = ({
       scaleControl: false,
     };
     map = new naver.maps.Map(mapElement.current, mapOptions);
+    setNewMap(map);
     addMarkers();
     resetListHandler();
   }, [AddressX, AddressY, totalDomData]);
 
   //구장 데이터 배열 순회하면서 마커 생성 진행!
   const addMarkers = () => {
-    // let mapBounds = map.getBounds();
     for (let i = 0; i < totalDomData.length; i++) {
-      if (createMarkerList.length > 100) {
-        break;
-      }
-
       let markerObj = totalDomData[i];
-      // let position = new naver.maps.LatLng(markerObj.lat, markerObj.lng);
-      // if (mapBounds.hasPoint(position)) {
-      const { _id, title, lat, lng } = markerObj;
-      addMarker(_id, title, lat, lng);
-      // }
+      const { dom_id, title, lat, lng } = markerObj;
+      addMarker(dom_id, title, lat, lng);
     }
   };
 
   //마커 생성 하고 createMarkerList에 추가!!
-  const addMarker = (id: number, name: string, lat: number, lng: number) => {
+  const addMarker = (id: string, name: string, lat: number, lng: number) => {
     try {
       let newMarker = new naver.maps.Marker({
         position: new naver.maps.LatLng(lng, lat),
         map,
         title: name,
+
         clickable: true,
         icon: {
           content: CustomMapMarker({ title: name }),
@@ -101,26 +97,33 @@ const FieldMap: React.FC<FieldMapType> = ({
       });
       newMarker.setTitle(name);
       createMarkerList.push(newMarker);
+      naver.maps.Event.addListener(newMarker, 'click', () =>
+        markerClickHandler(id)
+      );
     } catch (e) {}
   };
-  console.log(createMarkerList);
-  console.log(totalDomData);
   useEffect(() => {
-    const MoveEventListner = naver.maps.Event.addListener(
-      map,
-      'idle',
-      idleHandler
-    );
-    return () => {
-      naver.maps.Event.removeListener(MoveEventListner);
-    };
-  }, []);
+    if (newMap) {
+      const MoveEventListner = naver.maps.Event.addListener(
+        newMap,
+        'idle',
+        idleHandler
+      );
+      return () => {
+        naver.maps.Event.removeListener(MoveEventListner);
+      };
+    }
+  }, [newMap]);
 
   const idleHandler = () => {
-    updateMarkers(map, createMarkerList);
+    updateMarkers(newMap, createMarkerList);
   };
 
-  const updateMarkers = (map: naver.maps.Map, markers: naver.maps.Marker[]) => {
+  const updateMarkers = (
+    map: naver.maps.Map | null,
+    markers: naver.maps.Marker[]
+  ) => {
+    if (!map) return;
     let mapBounds = map.getBounds();
     let marker: naver.maps.Marker, position;
     for (var i = 0; i < markers.length; i++) {
@@ -144,12 +147,13 @@ const FieldMap: React.FC<FieldMapType> = ({
   };
 
   const resetListHandler = () => {
+    if (!newMap) return;
     const newArray = [...totalDomData].sort((a, b) => {
-      const currentCenterLatLng = map.getCenter();
+      const currentCenterLatLng = newMap.getCenter();
       const DomLatLngA = new naver.maps.LatLng(a.lng, a.lat);
       const DomLatLngB = new naver.maps.LatLng(b.lng, b.lat);
 
-      const projection = map.getProjection();
+      const projection = newMap.getProjection();
       const distanceA = projection.getDistance(currentCenterLatLng, DomLatLngA);
       const distanceB = projection.getDistance(currentCenterLatLng, DomLatLngB);
 
@@ -161,9 +165,13 @@ const FieldMap: React.FC<FieldMapType> = ({
     setSortedDomData(newArray);
   };
 
+  const markerClickHandler = (id: string) => {
+    navigate(`/ground/${id}`);
+  };
+
   return (
     <StyledMapContainer>
-      <StyledMap id="map" ref={mapElement}></StyledMap>;
+      <StyledMap id="map" ref={mapElement}></StyledMap>
       <StyledButton onClick={() => resetListHandler()}>
         <StyledButtonIcon>
           <img src={ResetIcon} alt="" />
