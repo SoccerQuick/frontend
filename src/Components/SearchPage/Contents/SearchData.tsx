@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import SearchFilter from './SearchFilter';
+import GroundListSkeleton from './groundListSkeleton';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
 
@@ -11,6 +12,8 @@ type FindingGroundProps = {
   setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   sortedDomData: DomDataType[];
   setSortedDomData: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ProvidedElementListType = {
@@ -40,6 +43,8 @@ function FindingGround(props: FindingGroundProps) {
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
+  const isLoading = props.isLoading;
+  const setIsLoading = props.setIsLoading;
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -90,6 +95,7 @@ function FindingGround(props: FindingGroundProps) {
   const clickDomHandler = (domId: string) => {
     navigate(`/ground/${domId}`);
   };
+  console.log(isLoading);
 
   return (
     <SearchContainer style={{ width: '100%' }}>
@@ -99,15 +105,22 @@ function FindingGround(props: FindingGroundProps) {
           <table>
             <thead>
               <StyledLabelTr>
-                <th></th>
-                <th>지역</th>
-                <th>경기장</th>
-                <th>상세조회</th>
+                {!isLoading ? (
+                  <>
+                    <th></th>
+                    <th>지역</th>
+                    <th>경기장</th>
+                    <th>상세조회</th>
+                  </>
+                ) : (
+                  <div></div>
+                )}
               </StyledLabelTr>
             </thead>
-            <tbody>
-              {filteredData &&
-                filteredData.map((item, idx) => (
+
+            {!isLoading ? (
+              <tbody>
+                {filteredData.map((item, idx) => (
                   <StyledTr key={item.title + idx}>
                     <StyledCheckboxTd>
                       <input
@@ -146,7 +159,10 @@ function FindingGround(props: FindingGroundProps) {
                     </td>
                   </StyledTr>
                 ))}
-            </tbody>
+              </tbody>
+            ) : (
+              <GroundListSkeleton />
+            )}
           </table>
         </SearchPageBody>
       </Searchpage>
@@ -158,6 +174,7 @@ export default FindingGround;
 
 const SearchContainer = styled.div`
   position: relative;
+  min-height: 55rem;
 `;
 
 const Searchpage = styled.div`
