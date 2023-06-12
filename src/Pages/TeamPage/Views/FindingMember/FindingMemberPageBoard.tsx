@@ -129,11 +129,11 @@ function FindinMemberPageBoard(props: BoardProps) {
           <table>
             <thead>
               <StyledLabelTr>
-                <th>지역</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>모집 포지션/모집 현황</th>
-                <th>모집상태</th>
+                <th style={{ width: '17%' }}>지역</th>
+                <th style={{ width: '35%' }}>제목</th>
+                <th style={{ width: '13%' }}>작성자</th>
+                <th style={{ width: '21%' }}>모집 포지션/모집 현황</th>
+                <th style={{ width: '17%' }}>모집상태</th>
               </StyledLabelTr>
             </thead>
             <tbody>
@@ -151,7 +151,7 @@ function FindinMemberPageBoard(props: BoardProps) {
                     </span>
                   </td>
                   <td style={{ width: '13%' }}>{item.author}</td>
-                  <StyledPositionTd>
+                  <StyledPositionTd style={{ width: '21%' }}>
                     {checkPosition(
                       item.gk_current_count,
                       item.gk_count,
@@ -159,7 +159,7 @@ function FindinMemberPageBoard(props: BoardProps) {
                       item.player_count
                     )}
                   </StyledPositionTd>
-                  <td>
+                  <td style={{ width: '17%' }}>
                     <StyledStatusTd status={item.status}>
                       {item.status}
                     </StyledStatusTd>
