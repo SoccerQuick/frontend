@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
@@ -61,12 +61,12 @@ function SearchPage() {
   const [sortedDomData, setSortedDomData] = useState<DomDataType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const location = useLocation();
-  const searchValue = location.state?.searchValue || '서울';
+  const [seachParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    const searchValue = seachParams.get('q') || '서울';
     setSearchKeyword(searchValue);
-  }, [searchValue]);
+  }, [seachParams]);
 
   useEffect(() => {
     if (checkedArray.length > 0) setShowComparisonModal(true);
@@ -92,10 +92,7 @@ function SearchPage() {
       <Header />
       <HeaderNavContainer>
         <HeaderCategory />
-        <FeildSearchInput
-          searchKeyword={searchKeyword}
-          setSearchKeyword={setSearchKeyword}
-        />
+        <FeildSearchInput />
       </HeaderNavContainer>
       <StyledBody>
         {searchKeyword && (
