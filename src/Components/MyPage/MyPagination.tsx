@@ -1,5 +1,6 @@
-import react, { useState } from 'react';
+import react, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useSearchParams } from 'react-router-dom';
 
 type MyPaginationProps = {
   totalItemsCount: number; // 총 데이터 수
@@ -14,6 +15,7 @@ function MyPagination({
   setCurrentPage,
   currentPage,
 }: MyPaginationProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [pageGroup, setPageGroup] = useState(5);
   const pages = Math.ceil(totalItemsCount / itemsPerPage);
   const firstIndexOfPage =
@@ -23,6 +25,12 @@ function MyPagination({
   const lastIndexOfPage = Math.ceil(currentPage / pageGroup) * pageGroup;
 
   const pageNumbers = [];
+
+  useEffect(() => {
+    const urlCurrentPage = (Number(searchParams.get('start')) + 10) / 10;
+    console.log(urlCurrentPage);
+    setCurrentPage(urlCurrentPage);
+  }, [searchParams]);
 
   for (let i = firstIndexOfPage; i <= lastIndexOfPage; i++) {
     if (pages < i) {
@@ -34,8 +42,12 @@ function MyPagination({
   const handlePrevClick = () => {
     setCurrentPage((prev) => {
       if (prev - 1 > 0) {
+        searchParams.set('start', `${(prev - 2) * 10}`);
+        setSearchParams(searchParams);
         return prev - 1;
       } else {
+        searchParams.set('start', `0`);
+        setSearchParams(searchParams);
         return 1;
       }
     });
@@ -44,11 +56,23 @@ function MyPagination({
   const handleNextClick = () => {
     setCurrentPage((prev) => {
       if (prev + 1 < pages) {
+        searchParams.set('start', `${prev * 10}`);
+        setSearchParams(searchParams);
+
         return prev + 1;
       } else {
+        searchParams.set('start', `${(pages - 1) * 10}`);
+        setSearchParams(searchParams);
+
         return pages;
       }
     });
+  };
+
+  const handlePageNumberClick = (number: number) => {
+    setCurrentPage(number);
+    searchParams.set('start', `${(number - 1) * 10}`);
+    setSearchParams(searchParams);
   };
 
   return (
@@ -57,6 +81,8 @@ function MyPagination({
         <StyledLi
           onClick={() => {
             setCurrentPage(1);
+            searchParams.set('start', '0');
+            setSearchParams(searchParams);
           }}
         >
           {'<<'}
@@ -66,13 +92,17 @@ function MyPagination({
           if (number !== currentPage) {
             return (
               <StyledLi key={number}>
-                <div onClick={() => setCurrentPage(number)}>{number}</div>
+                <div onClick={() => handlePageNumberClick(number)}>
+                  {number}
+                </div>
               </StyledLi>
             );
           } else {
             return (
               <StyledBoldLi key={number}>
-                <div onClick={() => setCurrentPage(number)}>{number}</div>
+                <div onClick={() => handlePageNumberClick(number)}>
+                  {number}
+                </div>
               </StyledBoldLi>
             );
           }
@@ -81,6 +111,8 @@ function MyPagination({
         <StyledLi
           onClick={() => {
             setCurrentPage(pages);
+            searchParams.set('start', `${(Number(pages) - 1) * 10}`);
+            setSearchParams(searchParams);
           }}
         >
           {'>>'}
