@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 interface LikeButtonProps {
   userslikes: string[];
@@ -15,13 +15,12 @@ export default function LikeButton(props: LikeButtonProps) {
     } else {
       setLikesCount(likesCount + 1);
     }
-    // post로 likesCount 전송
     setIsClicked(!isClicked);
   }
 
   return (
     <>
-      <StyledLikeBtn onClick={handleOnClick}>
+      <StyledLikeBtn onClick={handleOnClick} isClicked={isClicked}>
         {isClicked ? '🧡' : '🤍'}
         {likesCount}
       </StyledLikeBtn>
@@ -29,6 +28,24 @@ export default function LikeButton(props: LikeButtonProps) {
   );
 }
 
-const StyledLikeBtn = styled.button`
+const StyledLikeBtn = styled.button<{ isClicked: boolean }>`
   background-color: transparent;
+
+  ${(props) =>
+    props.isClicked &&
+    css`
+      animation: scaleAnimation 0.5s linear;
+    `}
+
+  @keyframes scaleAnimation {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
