@@ -4,6 +4,7 @@ import { StyledInputBox, StyledInfoInput, StyledButton } from './MyPageInput';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
+import styled from 'styled-components';
 
 type MyPageCheckPasswordProps = {
   setCheckPassword: React.Dispatch<React.SetStateAction<boolean>>;
@@ -52,9 +53,9 @@ function MyPageCheckPassword({
 
   return (
     <StyledInfoContainer>
-      <StyledInfoBox style={{ height: '22rem' }}>
-        <StyledTitle style={{ marginTop: '3rem' }}>내 정보 확인</StyledTitle>
-        <StyledInputBox style={{ marginBottom: '4rem' }}>
+      <StyledShortInfoBox>
+        <StyledMarginTopTitle>내 정보 확인</StyledMarginTopTitle>
+        <StyledMarginBottomInputBox>
           <label>비밀번호 확인</label>
           <StyledInfoInput
             name="password"
@@ -63,11 +64,27 @@ function MyPageCheckPassword({
             onChange={handleChange}
           />
           <StyledButton onClick={handlePasswordCheck}>확인</StyledButton>
-        </StyledInputBox>
-        <div style={{ color: 'red', marginBottom: '3rem' }}>{errorMsg}</div>
-      </StyledInfoBox>
+        </StyledMarginBottomInputBox>
+        <div>{errorMsg}</div>
+      </StyledShortInfoBox>
     </StyledInfoContainer>
   );
 }
 
 export default MyPageCheckPassword;
+
+const StyledShortInfoBox = styled(StyledInfoBox)`
+  height: 22rem !important;
+  & > div:last-child {
+    color: red;
+    margin-bottom: 3rem;
+  }
+`;
+
+const StyledMarginTopTitle = styled(StyledTitle)`
+  margin-top: 3rem !important;
+`;
+
+const StyledMarginBottomInputBox = styled(StyledInputBox)`
+  margin-bottom: 4rem !important;
+`;

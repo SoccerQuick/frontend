@@ -1,5 +1,5 @@
 import react, { useEffect, useState } from 'react';
-import { FormData } from '../../../Pages/MyPage';
+import { FormDataType } from '../../../Pages/MyPage';
 import styled from 'styled-components';
 import { PasswordForm } from './MyPageInfo';
 
@@ -9,7 +9,7 @@ type MyPageInputProps = {
   type?: string;
   value: string;
   noButton?: boolean;
-  setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
+  setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
   setPasswordForm?: React.Dispatch<React.SetStateAction<PasswordForm>>;
 };
 

@@ -39,6 +39,7 @@ function SubmitPage() {
   const handlePostRequest = () => {
     let data;
     if (boardCategory === '팀원 구해요') {
+      // 백엔드에 보낼 데이터를 포맷팅 하는 부분
       data = {
         category: boardCategory,
         title: title,
