@@ -1,70 +1,10 @@
 import React from 'react';
-import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
+import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import FindingMemberPageBoard from './FindingMemberPageBoard';
+import { StyledHeader } from '../Styles/ViewsStyle';
 import styled from 'styled-components';
+import { DataProps, FindMemberFilter } from '../Types/TeamPageType';
 import axios from 'axios';
-
-interface Applicant {
-  id: string;
-  position: string;
-  level: string;
-  contents: string;
-}
-
-interface DataProps {
-  group_id?: string;
-  area: string;
-  author: string;
-  body: string;
-  gender: string;
-  num: number;
-  position?: string;
-  skill?: string;
-  status: string;
-  title: string;
-  gk: number;
-  gkNeed: number;
-  player: number;
-  playerNeed: number;
-  location: string;
-  gk_count: number;
-  gk_current_count: number;
-  player_count: number;
-  player_current_count: number;
-  random_matched?: string;
-  applicant?: Applicant[];
-  [key: string]: string | number | undefined | Applicant[];
-}
-
-interface filteredData {
-  group_id?: string;
-  area: string;
-  author: string;
-  body: string;
-  gender: string;
-  num: number;
-  position?: string;
-  skill?: string;
-  status: string;
-  title: string;
-  gk: number;
-  gkNeed: number;
-  player: number;
-  playerNeed: number;
-  location: string;
-  gk_count: number;
-  gk_current_count: number;
-  player_count: number;
-  player_current_count: number;
-  random_matched?: string;
-  applicant?: Applicant[];
-  [key: string]: string | number | undefined | Applicant[];
-}
-
-interface FindMemberFilter {
-  status: string | null;
-  area: string | null;
-}
 
 function FindingMember() {
   const [status, setStatus] = React.useState('');
@@ -119,7 +59,7 @@ function FindingMember() {
   const [filteredData, setFilteredData] = React.useState(data);
   // 페이지네이션 구현 부분
   const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
-  const [currentData, setCurrentData] = React.useState<filteredData[]>([]); // 초기 데이터
+  const [currentData, setCurrentData] = React.useState<DataProps[]>([]); // 초기 데이터
   const [totalPage, setTotalPage] = React.useState(0);
 
   // 데이터를 필터링하는 부분, 상관없음일 경우 무조건 결과에 포함시킨다.
@@ -197,17 +137,3 @@ function FindingMember() {
 }
 
 export default FindingMember;
-
-const StyledHeader = styled.div`
-  padding-left: 1rem;
-  h1 {
-    font-size: 3rem;
-    margin: 0;
-  }
-  h3 {
-    font-size: 1.9rem;
-    font-weight: 500;
-    color: #9da7ae;
-    margin: 1rem 0 2rem 0;
-  }
-`;
