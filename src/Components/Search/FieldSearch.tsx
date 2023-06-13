@@ -1,17 +1,11 @@
 import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../styles/icon/search.svg';
+import { useSearchParams } from 'react-router-dom';
 
-interface FeildSearchProps {
-  searchKeyword: string;
-  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const FeildSearch: React.FC<FeildSearchProps> = ({
-  searchKeyword,
-  setSearchKeyword,
-}) => {
+const FeildSearch = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [seachParams, setSearchParams] = useSearchParams();
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.currentTarget.value);
@@ -19,12 +13,16 @@ const FeildSearch: React.FC<FeildSearchProps> = ({
 
   const pressEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter' && searchValue.length > 0) {
-      setSearchKeyword(searchValue);
+      seachParams.set('q', searchValue);
+      setSearchParams(seachParams);
     }
   };
 
   const clickBtnHandler = () => {
-    if (searchValue.length > 0) setSearchKeyword(searchValue);
+    if (searchValue.length > 0) {
+      seachParams.set('q', searchValue);
+      setSearchParams(seachParams);
+    }
   };
 
   return (
