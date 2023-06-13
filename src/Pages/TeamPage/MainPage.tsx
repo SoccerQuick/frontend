@@ -4,10 +4,11 @@ import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import { Routes, Route } from 'react-router-dom';
 import FindPage from './Views/SelectCategory';
-import FindingMember from './Views/FindingMember/FindingMember';
-import ViewPage from './Posts/ViewPage';
-import SubmitPage from './Posts/PostPage';
-import EditPage from './Posts/EditPage';
+import { MainPageBody } from './Styles/ViewsStyle';
+import FindingMember from './Views/FindingMember';
+import ViewPage from './Views/ViewPage';
+import SubmitPage from './Views/PostPage';
+import EditPage from './Views/EditPage';
 import HeaderCategory from '../../Components/Commons/HeaderCategory';
 function TeamPage() {
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
@@ -18,7 +19,7 @@ function TeamPage() {
     <>
       <Header />
       <HeaderCategory />
-      <TeamPageBody>
+      <MainPageBody>
         <Routes>
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
@@ -36,16 +37,10 @@ function TeamPage() {
             }
           />
         </Routes>
-      </TeamPageBody>
+      </MainPageBody>
       <Footer />
     </>
   );
 }
 
 export default TeamPage;
-
-const TeamPageBody = styled.div`
-  width: 98.5rem;
-  min-height: 55rem;
-  margin: 0 auto 15rem auto;
-`;
