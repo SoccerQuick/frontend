@@ -1,19 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { css } from 'styled-components';
+import axios from 'axios';
 
 interface LikeButtonProps {
-  userslikes: string[];
+  likedreviews: string[];
+  reviewId?: string;
 }
+
+const config = {
+  withCredentials: true,
+};
 
 export default function LikeButton(props: LikeButtonProps) {
   const [isClicked, setIsClicked] = useState(false);
-  const [likesCount, setLikesCount] = useState(props.userslikes.length);
+  const [likesCount, setLikesCount] = useState(
+    props.likedreviews ? props.likedreviews.length : 0
+  );
+  const reviewId = props.reviewId;
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/reviews/${reviewId}`, config)
+      .then((res) => {
+        const userId = res.data.data.user_id;
+        const usersLikes = res.data.data.userslikes;
+        res.status === 200 && usersLikes.includes(userId) && setIsClicked(true);
+      });
+  }, []);
 
   function handleOnClick() {
     if (isClicked) {
-      setLikesCount(likesCount - 1);
+      axios
+        .delete(
+          `${process.env.REACT_APP_API_URL}/reviews/${reviewId}/likes`,
+          config
+        )
+        .then((res) => res.status === 204 && setLikesCount((prev) => prev - 1))
+        .catch((e) => {
+          console.log(e);
+        });
     } else {
-      setLikesCount(likesCount + 1);
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/reviews/likes`,
+          {
+            reviewId: reviewId,
+          },
+          config
+        )
+        .then((res) => {
+          res.status === 200 && setLikesCount((prev) => prev + 1);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
     setIsClicked(!isClicked);
   }
