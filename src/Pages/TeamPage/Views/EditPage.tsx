@@ -1,14 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useMemo, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../ReduxStore/store';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import FindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
+import FindingMembers from '../../../Components/TeamPage/FindingMembers';
 import axios from 'axios';
+import {
+  StyledContainer,
+  StyledBox,
+  StyledTitle,
+  StyledDiv,
+  StyledInputText,
+  StyledButton,
+} from '../Styles/PostsStyle';
+
 function EditPage() {
+  const quillRef = useRef<ReactQuill>(null);
+
   const location = useLocation();
   const url = location.pathname.split('/').pop();
-  const data = location.state;
+  // location 객체를 통해 받는 것은 보안 상 문제가 있음. 전역 상태관리를 추천함.
+  const data = useSelector((state: RootState) => state.data.data);
+  // const data = location.state;
 
   let category: string;
   if (data.author) {
@@ -94,18 +108,57 @@ function EditPage() {
     return '통과';
   }
 
-  // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
-  const quillModules = {
-    toolbar: {
-      container: [
-        // [{ header: [1, 2, 3, 4, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        // ['link'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['clean'],
-      ],
-    },
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.addEventListener('change', async () => {
+      if (input.files) {
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        try {
+          const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}/communities/uploads`,
+            formData,
+            { withCredentials: true }
+          );
+          const imageUrl = res.data.data;
+          const quill = quillRef.current?.getEditor();
+          const range = quill?.getSelection()?.index;
+
+          if (range) {
+            quill.insertEmbed(range, 'image', imageUrl);
+          }
+          return { ...res, success: true };
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    });
   };
+
+  // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
+  const quillModules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          ['image'],
+          [{ header: [1, 2, 3, 4, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ color: [] }],
+          // ['link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    };
+  }, []);
 
   return (
     <>
@@ -153,6 +206,7 @@ function EditPage() {
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>
           <ReactQuill
+            ref={quillRef}
             value={body}
             onChange={handleEditorChange}
             modules={quillModules}
@@ -189,40 +243,6 @@ function EditPage() {
 
 export default EditPage;
 
-const StyledContainer = styled.div`
-  display: grid;
-  grid-gap: 40px 0px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-`;
-
-const StyledBox = styled.div`
-  display: flex;
-  margin-top: 0rem;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledInputText = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 9rem;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-`;
-
-const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
-`;
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}

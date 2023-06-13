@@ -1,19 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import { FindingMemberProps } from '../../Types/TeamPageType';
+import {
+  StyledBox,
+  StyledTitle,
+  StyledInputNumber,
+} from '../../Pages/TeamPage/Styles/ComponentStyle';
 
-interface Props {
-  gk: number;
-  gkNeed: number;
-  player: number;
-  playerNeed: number;
-
-  setPlayer: React.Dispatch<React.SetStateAction<number>>;
-  setGk: React.Dispatch<React.SetStateAction<number>>;
-  setPlayerNeed: React.Dispatch<React.SetStateAction<number>>;
-  setGkNeed: React.Dispatch<React.SetStateAction<number>>;
-}
-
-function FindingMembers(props: Props) {
+function FindingMembers(props: FindingMemberProps) {
   const {
     gk,
     setGk,
@@ -68,22 +61,3 @@ function FindingMembers(props: Props) {
 }
 
 export default FindingMembers;
-
-const StyledBox = styled.div`
-  display: flex;
-  margin-top: 0rem;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-`;
-
-const StyledInputNumber = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 6rem;
-  height: 4rem;
-  text-align: center;
-`;

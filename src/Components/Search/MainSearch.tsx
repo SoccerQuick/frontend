@@ -12,12 +12,12 @@ const MainSearch = () => {
 
   const pressEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter') {
-      navigate('/ground', { state: { searchValue } });
+      navigate(`/ground?q=${searchValue}&start=0`);
     }
   };
 
   const clickBtnHandler = () => {
-    navigate('/ground', { state: { searchValue } });
+    navigate(`/ground?q=${searchValue}&start=0`);
   };
 
   return (
