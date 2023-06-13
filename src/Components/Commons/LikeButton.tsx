@@ -5,6 +5,7 @@ import axios from 'axios';
 interface LikeButtonProps {
   likedreviews: string[];
   reviewId?: string;
+  isLogin?: boolean;
 }
 
 const config = {
@@ -17,6 +18,7 @@ export default function LikeButton(props: LikeButtonProps) {
     props.likedreviews ? props.likedreviews.length : 0
   );
   const reviewId = props.reviewId;
+  const isLogin = props.isLogin;
 
   useEffect(() => {
     axios
@@ -29,39 +31,42 @@ export default function LikeButton(props: LikeButtonProps) {
   }, []);
 
   function handleOnClick() {
-    if (isClicked) {
-      axios
-        .delete(
-          `${process.env.REACT_APP_API_URL}/reviews/${reviewId}/likes`,
-          config
-        )
-        .then((res) => res.status === 204 && setLikesCount((prev) => prev - 1))
-        .catch((e) => {
-          console.log(e);
-        });
-    } else {
-      axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/reviews/likes`,
-          {
-            reviewId: reviewId,
-          },
-          config
-        )
-        .then((res) => {
-          res.status === 200 && setLikesCount((prev) => prev + 1);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
+    if (isLogin)
+      if (isClicked) {
+        axios
+          .delete(
+            `${process.env.REACT_APP_API_URL}/reviews/${reviewId}/likes`,
+            config
+          )
+          .then(
+            (res) => res.status === 204 && setLikesCount((prev) => prev - 1)
+          )
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        axios
+          .post(
+            `${process.env.REACT_APP_API_URL}/reviews/likes`,
+            {
+              reviewId: reviewId,
+            },
+            config
+          )
+          .then((res) => {
+            res.status === 200 && setLikesCount((prev) => prev + 1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     setIsClicked(!isClicked);
   }
 
   return (
     <>
       <StyledLikeBtn onClick={handleOnClick} isClicked={isClicked}>
-        {isClicked ? '🧡' : '🤍'}
+        {isClicked && isLogin ? '🧡' : '🤍'}
         {likesCount}
       </StyledLikeBtn>
     </>
