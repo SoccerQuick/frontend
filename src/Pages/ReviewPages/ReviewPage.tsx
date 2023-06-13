@@ -113,10 +113,6 @@ export default function ReviewPage() {
     autoplaySpeed: 3000,
   };
 
-  useEffect(() => {}, [area]);
-
-  useEffect(() => {}, [stadium]);
-
   useEffect(() => {
     const filter = {
       area: area === '지역' ? '' : area,
@@ -326,17 +322,7 @@ export default function ReviewPage() {
                         <span className="review-area">{item.area}</span>
                         <span className="review-stadium">{item.stadium}</span>
                         <span className="review-like-count">
-                          {
-                            <button
-                              className={`review-like-button ${
-                                clicked[index] ? 'heart-beat' : ''
-                              }`}
-                              onClick={() => handleLikeButtonClick(index)}
-                            >
-                              {clicked[index] ? '🧡' : '🤍'}
-                            </button>
-                          }
-                          {item.like}
+                          🧡 {item.like}
                         </span>
                       </StyledReviewList>
                     ))
@@ -355,17 +341,7 @@ export default function ReviewPage() {
                         <span className="review-area">{item.area}</span>
                         <span className="review-stadium">{item.stadium}</span>
                         <span className="review-like-count">
-                          {
-                            <button
-                              className={`review-like-button ${
-                                clicked[index] ? 'heart-beat' : ''
-                              }`}
-                              onClick={() => handleLikeButtonClick(index)}
-                            >
-                              {clicked[index] ? '🧡' : '🤍'}
-                            </button>
-                          }
-                          {item.like}
+                          🧡 {item.like}
                         </span>
                       </StyledReviewList>
                     ))}
@@ -534,22 +510,6 @@ const StyledReviewList = styled.div`
   }
   .review-like-button {
     background-color: #ffdcdc;
-  }
-
-  .heart-beat {
-    animation: heartBeat 0.5s linear;
-  }
-
-  @keyframes heartBeat {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
   }
 
   .review-like-count {

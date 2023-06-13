@@ -32,12 +32,12 @@ export const fetchDataRequest = () => ({
   type: fetchDataActionTypes.FETCH_DATA_REQUEST,
 });
 
-export const fetchDataSuccess = (data: any) => ({
+export const fetchDataSuccess = (data: string) => ({
   type: fetchDataActionTypes.FETCH_DATA_SUCCESS,
   payload: data,
 });
 
-export const fetchDataFailure = (error: any) => ({
+export const fetchDataFailure = (error: string) => ({
   type: fetchDataActionTypes.FETCH_DATA_FAIL,
   payload: error,
 });
