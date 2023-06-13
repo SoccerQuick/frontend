@@ -16,6 +16,7 @@ function MyFavoriteGroundList() {
   const user = useSelector(userSelector);
   const isLogIn = useSelector(isLogInSelector);
   const [filteredData, setFilteredData] = useState<DomDataType[]>([]);
+  // const [userFavoriteDoms, setUserFavoriteDoms] = useState<string[]>([]);
 
   // pagination
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -27,37 +28,38 @@ function MyFavoriteGroundList() {
 
   useEffect(() => {
     if (isLogIn) {
-      getDomData();
+      fetchData();
     }
   }, [isLogIn]);
 
-  const getDomData = async () => {
-    const domInfo = await axios
-      .get(`${process.env.REACT_APP_API_URL}/doms`, { withCredentials: true })
-      .then((res) => res.data.data)
-      .catch((err) => console.log(err));
-
-    // const filteredDomInfo = domInfo.reduce(
-    //   (acc: Array<DomDataType>, group: DomDataType) => {
-    //     const filteredUsersFavorites = group.usersFavorites?.filter(
-    //       (type) => type === user?.name
-    //     );
-
-    //     if (filteredUsersFavorites && filteredUsersFavorites.length > 0) {
-    //       const filteredGroup: DomDataType = {
-    //         ...group,
-    //         // usersFavorites: filteredUsersFavorites,
-    //       };
-    //       return [...acc, filteredGroup];
-    //     }
-    //     return acc;
-    //   },
-    //   []
-    // );
-    // setFilteredData(filteredDomInfo);
-
-    setFilteredData(domInfo);
+  const fetchData = async () => {
+    // Promise.all([getUserFavoriteDomData, getDomData])
+    //   .then((result) => {
+    //     const array:Array<string> = result[0];
+    //     console.log(array);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
+
+  const getUserFavoriteDomData = new Promise(async (resolve, reject) => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/users`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        resolve(res.data.data.favoritePlaygrounds);
+      })
+      .catch((err) => console.log(err));
+  });
+
+  const getDomData = new Promise(async (resolve, reject) => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/doms`, { withCredentials: true })
+      .then((res) => resolve(res.data.data))
+      .catch((err) => console.log(err));
+  });
 
   const navigate = useNavigate();
 
