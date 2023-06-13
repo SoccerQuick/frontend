@@ -113,10 +113,6 @@ export default function ReviewPage() {
     autoplaySpeed: 3000,
   };
 
-  useEffect(() => {}, [area]);
-
-  useEffect(() => {}, [stadium]);
-
   useEffect(() => {
     const filter = {
       area: area === '지역' ? '' : area,
