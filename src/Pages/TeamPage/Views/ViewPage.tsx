@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';

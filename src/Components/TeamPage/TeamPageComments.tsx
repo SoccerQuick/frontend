@@ -2,15 +2,11 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../store/selectors/authSelectors';
-import styled from 'styled-components';
 import ballIcon from '../../styles/icon/soccerball.svg';
 import checkIcon from '../../styles/icon/check_white.svg';
 import commentIcon from '../../styles/icon/comment.svg';
 import axios from 'axios';
-import {
-  SubmitApplicant,
-  CommentProps,
-} from '../../Types/TeamPage/TeamPageType';
+import { SubmitApplicant, CommentProps } from '../../Types/TeamPageType';
 import {
   StyledCommentContainer,
   StyledCommentTitle,

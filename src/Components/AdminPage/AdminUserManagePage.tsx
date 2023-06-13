@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
 import UserDetailModal from './UserDetailModal';
 import DropDown from '../Commons/DropDown';
@@ -12,7 +11,7 @@ import {
   PageSelect,
   PageButton,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
-import { UserData } from '../../Types/AdminPage/AdminPageTyle';
+import { UserData } from '../../Types/AdminPageTyle';
 
 function AdminUserManager() {
   const [showDetailModal, setShowDetailModal] = React.useState<boolean>(false);

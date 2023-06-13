@@ -1,5 +1,4 @@
 import React, { useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../ReduxStore/store';

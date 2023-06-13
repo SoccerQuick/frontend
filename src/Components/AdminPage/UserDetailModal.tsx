@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -12,7 +11,7 @@ import {
   ManagementButton,
   ReturnButton,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
-import { DedatilModalProps } from '../../Types/AdminPage/AdminPageTyle';
+import { DedatilModalProps } from '../../Types/AdminPageTyle';
 
 function DetailModal(props: DedatilModalProps) {
   const {

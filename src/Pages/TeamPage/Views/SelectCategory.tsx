@@ -1,7 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import teamIcon from '../../../styles/icon/team.svg';
 import memberIcon from '../../../styles/icon/member.svg';
 import {
   StyledWrapper,
@@ -10,7 +8,7 @@ import {
   StyledImg,
   StyledButtonText,
 } from '../Styles/ViewsStyle';
-import { FindPageProps } from '../../../Types/TeamPage/TeamPageType';
+import { FindPageProps } from '../../../Types/TeamPageType';
 
 function FindPage(props: FindPageProps) {
   const { setFindingMember, setFindingTeam } = props;

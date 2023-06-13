@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import { Routes, Route } from 'react-router-dom';
@@ -13,7 +12,6 @@ import HeaderCategory from '../../Components/Commons/HeaderCategory';
 function TeamPage() {
   const [findingTeam, setFindingTeam] = React.useState<boolean>(true);
   const [findingMember, setFindingMember] = React.useState<boolean>(true);
-  const [showModal, setShowModal] = React.useState<boolean>(false);
 
   return (
     <>

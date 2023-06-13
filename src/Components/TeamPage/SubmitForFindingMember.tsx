@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import DropDown from '../Commons/DropDown';
 import FILTERING_OPTIONS from '../Commons/FilteringOptions';
 import axios from 'axios';
-import { SumbitModalProps } from '../../Types/TeamPage/TeamPageType';
+import { SumbitModalProps } from '../../Types/TeamPageType';
 import {
   Modal,
   ModalPage,

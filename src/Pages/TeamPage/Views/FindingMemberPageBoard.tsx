@@ -1,5 +1,4 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import DropDown from '../../../Components/Commons/DropDown';
 import resetIcon from '../../../styles/icon/reset_black.svg';
@@ -19,7 +18,7 @@ import {
   PageSelect,
   PageButton,
 } from '../Styles/ViewsStyle';
-import { BoardProps } from '../../../Types/TeamPage/TeamPageType';
+import { BoardProps } from '../../../Types/TeamPageType';
 import { useSelector } from 'react-redux';
 import { isLogInSelector } from '../../../store/selectors/authSelectors';
 

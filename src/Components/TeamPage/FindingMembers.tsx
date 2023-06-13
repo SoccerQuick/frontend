@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { FindingMemberProps } from '../../Types/TeamPage/TeamPageType';
+import { FindingMemberProps } from '../../Types/TeamPageType';
 import {
   StyledBox,
   StyledTitle,
