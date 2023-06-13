@@ -516,22 +516,6 @@ const StyledReviewList = styled.div`
     background-color: #ffdcdc;
   }
 
-  .heart-beat {
-    animation: heartBeat 0.5s linear;
-  }
-
-  @keyframes heartBeat {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
   .review-like-count {
     display: flex;
     flex-direction: row;
