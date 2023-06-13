@@ -1,7 +1,13 @@
 import React from 'react';
 import { fetchDataActionTypes } from './actionTypes';
+import { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface DataState {
+  data: string | null;
+  loading: boolean;
+  error: string | null;
+}
+const initialState: DataState = {
   data: null,
   loading: false,
   error: null,
