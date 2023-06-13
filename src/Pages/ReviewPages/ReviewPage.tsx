@@ -326,17 +326,7 @@ export default function ReviewPage() {
                         <span className="review-area">{item.area}</span>
                         <span className="review-stadium">{item.stadium}</span>
                         <span className="review-like-count">
-                          {
-                            <button
-                              className={`review-like-button ${
-                                clicked[index] ? 'heart-beat' : ''
-                              }`}
-                              onClick={() => handleLikeButtonClick(index)}
-                            >
-                              {clicked[index] ? '🧡' : '🤍'}
-                            </button>
-                          }
-                          {item.like}
+                          🧡 {item.like}
                         </span>
                       </StyledReviewList>
                     ))
@@ -355,17 +345,7 @@ export default function ReviewPage() {
                         <span className="review-area">{item.area}</span>
                         <span className="review-stadium">{item.stadium}</span>
                         <span className="review-like-count">
-                          {
-                            <button
-                              className={`review-like-button ${
-                                clicked[index] ? 'heart-beat' : ''
-                              }`}
-                              onClick={() => handleLikeButtonClick(index)}
-                            >
-                              {clicked[index] ? '🧡' : '🤍'}
-                            </button>
-                          }
-                          {item.like}
+                          🧡 {item.like}
                         </span>
                       </StyledReviewList>
                     ))}
