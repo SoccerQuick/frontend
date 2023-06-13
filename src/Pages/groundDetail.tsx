@@ -19,6 +19,7 @@ import homeIcon from '../styles/icon/home.svg';
 
 const GroundDetail = () => {
   const [groundData, setGroundData] = useState<DomDataType>();
+  const [reviewData, setReviewData] = useState<[]>([]);
   const [showImgModal, setShowImgModal] = useState(false);
   const [ImgModalIndex, setImgModalIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -33,6 +34,7 @@ const GroundDetail = () => {
       .get(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, config)
       .then((res: any) => {
         setGroundData(res.data.data);
+        setReviewData(res.data.data.reviews);
       })
       .catch((e: any) => console.log(e));
   }, []);
@@ -188,7 +190,11 @@ const GroundDetail = () => {
               <p onClick={() => clipUrl()}>주소 복사</p>
             </GroundAddressDetail>
           </ContentsBox>
-          <ContentsBox>{dom_id && <Review dom_id={dom_id} />}</ContentsBox>
+          <ContentsBox>
+            {dom_id && reviewData && (
+              <Review dom_id={dom_id} reviewData={reviewData} />
+            )}
+          </ContentsBox>
         </GroundDetailContainer>
       )}
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -17,6 +17,8 @@ import {
 } from '../Styles/PostsStyle';
 
 function EditPage() {
+  const quillRef = useRef<ReactQuill>(null);
+
   const location = useLocation();
   const url = location.pathname.split('/').pop();
   // location 객체를 통해 받는 것은 보안 상 문제가 있음. 전역 상태관리를 추천함.
@@ -107,18 +109,57 @@ function EditPage() {
     return '통과';
   }
 
-  // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
-  const quillModules = {
-    toolbar: {
-      container: [
-        // [{ header: [1, 2, 3, 4, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        // ['link'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['clean'],
-      ],
-    },
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.addEventListener('change', async () => {
+      if (input.files) {
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        try {
+          const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}/communities/uploads`,
+            formData,
+            { withCredentials: true }
+          );
+          const imageUrl = res.data.data;
+          const quill = quillRef.current?.getEditor();
+          const range = quill?.getSelection()?.index;
+
+          if (range) {
+            quill.insertEmbed(range, 'image', imageUrl);
+          }
+          return { ...res, success: true };
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    });
   };
+
+  // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
+  const quillModules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          ['image'],
+          [{ header: [1, 2, 3, 4, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ color: [] }],
+          // ['link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    };
+  }, []);
 
   return (
     <>
@@ -166,6 +207,7 @@ function EditPage() {
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>
           <ReactQuill
+            ref={quillRef}
             value={body}
             onChange={handleEditorChange}
             modules={quillModules}
