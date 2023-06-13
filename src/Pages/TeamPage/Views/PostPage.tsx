@@ -12,7 +12,7 @@ import {
   StyledInputText,
   StyledButton,
 } from '../Styles/PostsStyle';
-import SubmitFindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
+import SubmitFindingMembers from '../../../Components/TeamPage/FindingMembers';
 import axios from 'axios';
 
 function SubmitPage() {

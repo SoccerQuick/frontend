@@ -30,8 +30,8 @@ import {
   isLogInSelector,
   userSelector,
 } from '../../../store/selectors/authSelectors';
-import SubmitForFindingMember from '../../../Components/TeamPage/SubmitModal/SubmitForFindingMember';
-import TeamPageComments from '../../../Components/TeamPage/Comments/TeamPageComments';
+import SubmitForFindingMember from '../../../Components/TeamPage/SubmitForFindingMember';
+import TeamPageComments from '../../../Components/TeamPage/TeamPageComments';
 import chevronIcon from '../../../styles/icon/chevron_green.svg';
 import ballIcon from '../../../styles/icon/soccerball.svg';
 import playerIcon from '../../../styles/icon/player.svg';

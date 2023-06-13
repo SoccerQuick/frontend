@@ -10,7 +10,7 @@ import {
   StyledImg,
   StyledButtonText,
 } from '../Styles/ViewsStyle';
-import { FindPageProps } from '../Types/TeamPageType';
+import { FindPageProps } from '../../../Types/TeamPage/TeamPageType';
 
 function FindPage(props: FindPageProps) {
   const { setFindingMember, setFindingTeam } = props;

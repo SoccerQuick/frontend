@@ -19,7 +19,7 @@ import {
   PageSelect,
   PageButton,
 } from '../Styles/ViewsStyle';
-import { BoardProps } from '../Types/TeamPageType';
+import { BoardProps } from '../../../Types/TeamPage/TeamPageType';
 import { useSelector } from 'react-redux';
 import { isLogInSelector } from '../../../store/selectors/authSelectors';
 

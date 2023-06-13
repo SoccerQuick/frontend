@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../ReduxStore/store';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import FindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
+import FindingMembers from '../../../Components/TeamPage/FindingMembers';
 import axios from 'axios';
 import {
   StyledContainer,

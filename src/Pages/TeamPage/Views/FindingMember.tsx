@@ -3,7 +3,10 @@ import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import FindingMemberPageBoard from './FindingMemberPageBoard';
 import { StyledHeader } from '../Styles/ViewsStyle';
 import styled from 'styled-components';
-import { DataProps, FindMemberFilter } from '../Types/TeamPageType';
+import {
+  DataProps,
+  FindMemberFilter,
+} from '../../../Types/TeamPage/TeamPageType';
 import axios from 'axios';
 
 function FindingMember() {
