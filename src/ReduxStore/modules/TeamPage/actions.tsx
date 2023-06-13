@@ -11,7 +11,6 @@ export const fetchData = (url: string | undefined): AppThunk<Promise<void>> => {
         `${process.env.REACT_APP_API_URL}/groups/${url}`
       );
       const item = res.data.data;
-
       const formattedData = {
         ...item,
         author: item.leader_name,

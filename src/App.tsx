@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store, persistor } from './store/store';
+// import { store, persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import './App.css';
 import MainPage from './Pages/Main';
@@ -11,6 +11,8 @@ import SearchPage from './Pages/SearchPage';
 import GroundDetail from './Pages/groundDetail';
 import Admin from './Pages/AdminPage/MainPage';
 import { MyPage } from './Pages/MyPage';
+// Redux 공부를 위한 추가 Store
+import { store, persistor } from './ReduxStore/store';
 
 function App() {
   return (

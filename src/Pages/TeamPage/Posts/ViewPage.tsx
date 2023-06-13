@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from '../../../ReduxStore/modules/TeamPage/actions';
+import { RootState, AppDispatch } from '../../../ReduxStore/store';
 import {
   isLogInSelector,
   userSelector,
@@ -16,27 +18,6 @@ import playerIcon from '../../../styles/icon/player.svg';
 import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
 
-const initialData = {
-  group_id: '',
-  location: '',
-  leader_name: '',
-  author: '',
-  contents: '',
-  gender: '',
-  num: '',
-  position: '',
-  skill: '',
-  status: '',
-  title: '',
-  gk_count: 0,
-  gk_current_count: 0,
-  player_count: 0,
-  player_current_count: 0,
-  random_matched: '',
-  applicant: [],
-  accept: [],
-};
-
 function DetailPage() {
   // 글 작성자인지 확인하기 위한 데이터
   const userData = useSelector(userSelector);
@@ -48,30 +29,12 @@ function DetailPage() {
   // 최초 렌더링 시 데이터를 받아와서 저장하는 부분
   const location = useLocation();
   const url = location.pathname.split('/').pop();
-  //DB에서 받아올 데이터를 저장하는 필드로, 애니타입을 선언하였음. 이후의 데이터는 포맷팅하여 타입 관리함.
-  const [data, setData] = React.useState<any>(initialData);
-  React.useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/groups/${url}`)
-      .then((res) => {
-        const item = res.data.data;
-        const formattedData = {
-          ...item,
-          author: item.leader_name,
-          gk: item.gk_current_count,
-          gkNeed: item.gk_count,
-          player: item.player_current_count,
-          playerNeed: item.player_count,
-          area: item.location,
-        };
+  const dispatch = useDispatch<AppDispatch>();
+  const data = useSelector((state: RootState) => state.data.data);
 
-        setData(formattedData);
-      })
-      .catch((error) => {
-        setData(initialData);
-        console.log('데이터를 못 가져왔어요..');
-      });
-  }, []);
+  React.useEffect(() => {
+    dispatch(fetchData(url));
+  }, [dispatch, url]);
 
   const config = {
     headers: {
@@ -98,152 +61,159 @@ function DetailPage() {
 
   return (
     <StyledWrap>
-      <StyledPost>
-        <StyledHeader status={data.status}>
-          <StyledBoardName
-            onClick={() => {
-              navigate(`/teampage/team`);
-            }}
-          >
-            <div>
-              <img src={chevronIcon} alt="chevronIcon" />
-              팀원 모집・신청
-            </div>
-          </StyledBoardName>
+      {!data ? (
+        <div>ㅇㅇ</div>
+      ) : (
+        <>
+          <StyledPost>
+            <StyledHeader status={data.status}>
+              <StyledBoardName
+                onClick={() => {
+                  navigate(`/teampage/team`);
+                }}
+              >
+                <div>
+                  <img src={chevronIcon} alt="chevronIcon" />
+                  팀원 모집・신청
+                </div>
+              </StyledBoardName>
 
-          <h1>
-            <span>[{data.status}] </span>
-            {data.title}
-          </h1>
-          <StyledAuthorDiv>
-            <StyledImgDiv>
-              <img src={ballIcon} alt="BallIcon" />
-            </StyledImgDiv>
-            <p>{data.author}</p>
-          </StyledAuthorDiv>
-        </StyledHeader>
-        <StyledDetailDiv>
-          <h3>모집 정보</h3>
-          <StyledDetailLocationLi>
-            <StyledDetailLabel>활동 지역</StyledDetailLabel>
-            <p>{data.area}</p>
-          </StyledDetailLocationLi>
+              <h1>
+                <span>[{data.status}] </span>
+                {data.title}
+              </h1>
+              <StyledAuthorDiv>
+                <StyledImgDiv>
+                  <img src={ballIcon} alt="BallIcon" />
+                </StyledImgDiv>
+                <p>{data.author}</p>
+              </StyledAuthorDiv>
+            </StyledHeader>
+            <StyledDetailDiv>
+              <h3>모집 정보</h3>
+              <StyledDetailLocationLi>
+                <StyledDetailLabel>활동 지역</StyledDetailLabel>
+                <p>{data.area}</p>
+              </StyledDetailLocationLi>
+              <div>
+                <StyledDetailLabel>모집 현황</StyledDetailLabel>
+                <StyledPositionContainer>
+                  <StyledPosition>
+                    <StyledPositionIcon>
+                      <img src={playerIcon} alt="playerIcon" />
+                    </StyledPositionIcon>
+                    <StyledPositionName>
+                      <div>필드플레이어</div>
+                      <div>
+                        {data.playerNeed - data.player > 0
+                          ? `${data.playerNeed - data.player}자리 남았어요!`
+                          : '마감되었어요.'}
+                      </div>
+                    </StyledPositionName>
+                    <StyledPositionDetail>
+                      <p>
+                        현재<span>{data.player}</span>명
+                      </p>
+                    </StyledPositionDetail>
+                    <StyledPositionDetail>
+                      <p>
+                        총<span> {data.playerNeed}</span>명 모집 예정
+                      </p>
+                    </StyledPositionDetail>
+                  </StyledPosition>
+                  <StyledPosition>
+                    <StyledPositionIcon color="green">
+                      <img src={goalKeeperIcon} alt="playerIcon" />
+                    </StyledPositionIcon>
+                    <StyledPositionName>
+                      <div>골키퍼</div>
+                      <div>
+                        {data.gk_count - data.gk > 0
+                          ? `${data.gkNeed - data.gk}자리 남았어요!`
+                          : '마감되었어요.'}
+                      </div>
+                    </StyledPositionName>
+                    <StyledPositionDetail color="green">
+                      <p>
+                        현재<span>{data.gk}</span>명
+                      </p>
+                    </StyledPositionDetail>
+                    <StyledPositionDetail color="green">
+                      <p>
+                        총<span> {data.gkNeed}</span>명 모집 예정
+                      </p>
+                    </StyledPositionDetail>
+                  </StyledPosition>
+                </StyledPositionContainer>
+              </div>
+            </StyledDetailDiv>
+            <StyledBody>
+              <h3>상세 내용</h3>
+              <div>
+                <HtmlParser data={data.contents} />
+              </div>
+            </StyledBody>
+            <StyledAuthorButtonContainer>
+              {userData?.name === data.author && (
+                // 현재 location 객체를 통해 data 를 주고받고 있음.
+                <Link to={`/teampage/edit/${url}`} state={data}>
+                  <button>수정</button>
+                </Link>
+              )}
+              {(userData?.name === data.author ||
+                userData?.role === 'admin' ||
+                userData?.role === 'manager') && (
+                <button onClick={deletePostHandler}>삭제</button>
+              )}
+              {(userData?.name === data.author ||
+                userData?.role === 'admin' ||
+                userData?.role === 'manager') && (
+                <button
+                  onClick={() => {
+                    console.log(data.accept);
+                  }}
+                >
+                  조회
+                </button>
+              )}
+            </StyledAuthorButtonContainer>
+          </StyledPost>
           <div>
-            <StyledDetailLabel>모집 현황</StyledDetailLabel>
-            <StyledPositionContainer>
-              <StyledPosition>
-                <StyledPositionIcon>
-                  <img src={playerIcon} alt="playerIcon" />
-                </StyledPositionIcon>
-                <StyledPositionName>
-                  <div>필드플레이어</div>
-                  <div>
-                    {data.playerNeed - data.player > 0
-                      ? `${data.playerNeed - data.player}자리 남았어요!`
-                      : '마감되었어요.'}
-                  </div>
-                </StyledPositionName>
-                <StyledPositionDetail>
-                  <p>
-                    현재<span>{data.player}</span>명
-                  </p>
-                </StyledPositionDetail>
-                <StyledPositionDetail>
-                  <p>
-                    총<span> {data.playerNeed}</span>명 모집 예정
-                  </p>
-                </StyledPositionDetail>
-              </StyledPosition>
-              <StyledPosition>
-                <StyledPositionIcon color="green">
-                  <img src={goalKeeperIcon} alt="playerIcon" />
-                </StyledPositionIcon>
-                <StyledPositionName>
-                  <div>골키퍼</div>
-                  <div>
-                    {data.gk_count - data.gk > 0
-                      ? `${data.gkNeed - data.gk}자리 남았어요!`
-                      : '마감되었어요.'}
-                  </div>
-                </StyledPositionName>
-                <StyledPositionDetail color="green">
-                  <p>
-                    현재<span>{data.gk}</span>명
-                  </p>
-                </StyledPositionDetail>
-                <StyledPositionDetail color="green">
-                  <p>
-                    총<span> {data.gkNeed}</span>명 모집 예정
-                  </p>
-                </StyledPositionDetail>
-              </StyledPosition>
-            </StyledPositionContainer>
+            <StyledCommentsDiv>
+              {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
+              {data.applicant?.length > 0 && (
+                <TeamPageComments data={data.applicant} user={data.author} />
+              )}
+            </StyledCommentsDiv>
           </div>
-        </StyledDetailDiv>
-        <StyledBody>
-          <h3>상세 내용</h3>
           <div>
-            <HtmlParser data={data.contents} />
+            <StyledFooter>
+              <button
+                onClick={() => {
+                  navigate(`/teampage/team`);
+                }}
+              >
+                목록으로
+              </button>
+              {isLogin && userData?.nickname !== data.author && (
+                <button
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
+                  함께하기
+                </button>
+              )}
+            </StyledFooter>
+            {showModal && (
+              <SubmitForFindingMember
+                setShowModal={setShowModal}
+                groupId={data.group_id}
+              />
+            )}
           </div>
-        </StyledBody>
-        <StyledAuthorButtonContainer>
-          {userData?.name === data.author && (
-            <Link to={`/teampage/edit/${url}`} state={data}>
-              <button>수정</button>
-            </Link>
-          )}
-          {(userData?.name === data.author ||
-            userData?.role === 'admin' ||
-            userData?.role === 'manager') && (
-            <button onClick={deletePostHandler}>삭제</button>
-          )}
-          {(userData?.name === data.author ||
-            userData?.role === 'admin' ||
-            userData?.role === 'manager') && (
-            <button
-              onClick={() => {
-                console.log(data.accept);
-              }}
-            >
-              조회
-            </button>
-          )}
-        </StyledAuthorButtonContainer>
-      </StyledPost>
-      <div>
-        <StyledCommentsDiv>
-          {/* applicant가 있으면 Comment 컴포넌트를 불러온다. */}
-          {data.applicant?.length > 0 && (
-            <TeamPageComments data={data.applicant} user={data.author} />
-          )}
-        </StyledCommentsDiv>
-      </div>
-      <div>
-        <StyledFooter>
-          <button
-            onClick={() => {
-              navigate(`/teampage/team`);
-            }}
-          >
-            목록으로
-          </button>
-          {isLogin && userData?.nickname !== data.author && (
-            <button
-              onClick={() => {
-                setShowModal(true);
-              }}
-            >
-              함께하기
-            </button>
-          )}
-        </StyledFooter>
-        {showModal && (
-          <SubmitForFindingMember
-            setShowModal={setShowModal}
-            groupId={data.group_id}
-          />
-        )}
-      </div>
+        </>
+      )}
     </StyledWrap>
   );
 }
