@@ -82,3 +82,36 @@ export interface FindPageProps {
   setFindingMember: React.Dispatch<React.SetStateAction<boolean>>;
   setFindingTeam: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+// Components
+
+export interface FindingMemberProps {
+  gk: number;
+  gkNeed: number;
+  player: number;
+  playerNeed: number;
+  setPlayer: React.Dispatch<React.SetStateAction<number>>;
+  setGk: React.Dispatch<React.SetStateAction<number>>;
+  setPlayerNeed: React.Dispatch<React.SetStateAction<number>>;
+  setGkNeed: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface SumbitModalProps {
+  groupId: string | undefined;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface SubmitApplicant {
+  _id?: string;
+  id: string;
+  name: string;
+  gender: string;
+  position: string;
+  level: string;
+  contents: string;
+}
+
+export interface CommentProps {
+  data: SubmitApplicant[];
+  user: string;
+}
