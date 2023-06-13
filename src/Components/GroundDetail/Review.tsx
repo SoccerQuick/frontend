@@ -144,6 +144,7 @@ export default function Review(props: ReviewProps) {
               <LikeButton
                 likedreviews={item.likedreviews}
                 reviewId={item.review_id}
+                isLogin={isLogin}
               />
             </span>
           </div>
