@@ -52,23 +52,32 @@ function AdminUserManager() {
   const config = {
     withCredentials: true,
   };
+
+  const [filteredData, setFilteredData] = React.useState<UserData[]>([]);
+  // 페이지네이션 구현 부분
+  const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
+  const [currentData, setCurrentData] = React.useState<UserData[]>([]); // 초기 데이터
+  const [totalPage, setTotalPage] = React.useState(0);
+
   // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<UserData[]>([]);
   React.useEffect(() => {
-    // const cookies = document.cookie;
-    // console.log(cookies);
     axios
       .get(`${process.env.REACT_APP_API_URL}/admins`, config)
       .then((res) => {
         setData(res.data.data);
+        setFilteredData(res.data.data);
+        if (currentData.length === 0) {
+          setCurrentData(res.data.data.slice(0, 14));
+        }
+        setTotalPage(Math.ceil(res.data.data.length / 14));
       })
       .catch((error) => {
         console.error(error);
         setData([]);
       });
-  }, []);
+  }, [currentPage, inputValue]);
 
-  const [filteredData, setFilteredData] = React.useState<UserData[]>([]);
   function filter(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const newData = data.filter((item) => {
@@ -102,10 +111,16 @@ function AdminUserManager() {
       return false;
     });
     setFilteredData(newData);
+    setTotalPage(Math.ceil(newData.length / 14));
   }
+  React.useEffect(() => {
+    setCurrentData(
+      filteredData.slice((currentPage - 1) * 14, currentPage * 14)
+    );
+  }, [currentPage, filteredData]);
 
   return (
-    <>
+    <div>
       <UserManageContainer>
         <DropDown
           list={FilterlingOptions.adminUserPage.status}
@@ -127,70 +142,101 @@ function AdminUserManager() {
       </UserManageContainer>
       <UserManageContainerTable>
         <table>
-          {/* <caption>유저 관리</caption> */}
           <thead>
             <StyledTr>
-              <th style={{ width: '5%' }}>순번</th>
-              <th style={{ width: '7%' }}>권한</th>
-              <th style={{ width: '7%' }}>이름</th>
-              <th style={{ width: '8%' }}>닉네임</th>
+              <th style={{ width: '4%' }}>순번</th>
+              <th style={{ width: '6%' }}>권한</th>
+              <th style={{ width: '6%' }}>이름</th>
+              <th style={{ width: '6%' }}>닉네임</th>
               <th style={{ width: '10%' }}>E-mail</th>
-              <th style={{ width: '7%' }}>상태</th>
-              <th style={{ width: '10%' }}>정지기간</th>
-              <th style={{ width: '10%' }}>가입일자</th>
-              <th style={{ width: '5%' }}>회원관리</th>
+              <th style={{ width: '6%' }}>상태</th>
+              <th style={{ width: '6%' }}>정지기간</th>
+              <th style={{ width: '6%' }}>가입일자</th>
+              <th style={{ width: '4%' }}>회원관리</th>
             </StyledTr>
           </thead>
           <tbody>
-            {(inputValue === '' && filteredData.length === 0
-              ? data
-              : filteredData
-            ).map((item, idx) => (
-              <StyledTr key={idx}>
-                <td style={{ width: '5%' }}>{idx + 1}</td>
-                <td style={{ width: '7%' }}>
-                  {item.role === 'admin'
-                    ? '👑총 관리자'
-                    : item.role === 'manager'
-                    ? '🌟관리자'
-                    : '일반회원'}
-                </td>
-                <td style={{ width: '7%' }}>{item.name}</td>
-                <td style={{ width: '8%' }}>{item.nick_name}</td>
-                <td style={{ width: '10%' }}>{item.email}</td>
-                <td style={{ width: '7%' }}>
-                  {item.login_banned
-                    ? '로그인 정지'
-                    : item.community_banned
-                    ? '커뮤니티 정지'
-                    : '정상'}
-                </td>
-                <td style={{ width: '10%' }}>
-                  {item.login_banned
-                    ? item.login_banEndDate?.split('T')[0].slice(2)
-                    : item.community_banned
-                    ? item.community_banEndDate?.split('T')[0].slice(2)
-                    : '-'}
-                </td>
-                <td style={{ width: '5%' }}>
-                  {item.createdAt.split('T')[0].slice(2)}
-                </td>
-                <td style={{ width: '5%' }}>
-                  <StyledButton
-                    onClick={() => {
-                      setShowDetailModal(true);
-                      setModalData(item);
-                      console.log(item);
+            {currentData.length > 0 ? (
+              currentData.map((item, idx) => (
+                <StyledTr key={idx}>
+                  <td style={{ width: '3rem' }}>
+                    {idx + 1 + (currentPage - 1) * 14}
+                  </td>
+                  <td style={{ width: '5rem' }}>
+                    {item.role === 'admin'
+                      ? '👑총 관리자'
+                      : item.role === 'manager'
+                      ? '🌟관리자'
+                      : '일반회원'}
+                  </td>
+                  <td style={{ width: '4rem' }}>{item.name}</td>
+                  <td style={{ width: '4.8rem' }}>{item.nick_name}</td>
+                  <td style={{ width: '4.9rem' }}>{item.email}</td>
+                  <td style={{ width: '7rem' }}>
+                    {item.login_banned
+                      ? '로그인 정지'
+                      : item.community_banned
+                      ? '커뮤니티 정지'
+                      : '정상'}
+                  </td>
+                  <td style={{ width: '4rem' }}>
+                    {item.login_banned
+                      ? item.login_banEndDate?.split('T')[0].slice(2)
+                      : item.community_banned
+                      ? item.community_banEndDate?.split('T')[0].slice(2)
+                      : '-'}
+                  </td>
+                  <td style={{ width: '6rem' }}>
+                    {item.createdAt.split('T')[0].slice(2)}
+                  </td>
+                  <td style={{ width: '3rem' }}>
+                    <StyledButton
+                      onClick={() => {
+                        setShowDetailModal(true);
+                        setModalData(item);
+                      }}
+                    >
+                      🔍
+                    </StyledButton>
+                  </td>
+                </StyledTr>
+              ))
+            ) : (
+              <tr style={{ height: '52vh' }}>
+                <td colSpan={11}>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'grey',
                     }}
                   >
-                    🔍
-                  </StyledButton>
+                    검색 결과가 없습니다.
+                  </div>
                 </td>
-              </StyledTr>
-            ))}
+              </tr>
+            )}
           </tbody>
         </table>
+        <PageSelect>
+          {Array.from({ length: totalPage }, (_, index) => (
+            <PageButton
+              key={index + 1}
+              onClick={() => {
+                setCurrentPage(index + 1);
+              }}
+              selected={index + 1}
+              currentPage={currentPage}
+            >
+              [{index + 1}]
+            </PageButton>
+          ))}
+        </PageSelect>
       </UserManageContainerTable>
+
       {showDetailModal && (
         <UserDetailModal
           setShowDetailModal={setShowDetailModal}
@@ -199,7 +245,7 @@ function AdminUserManager() {
           modalData={modalData}
         />
       )}
-    </>
+    </div>
   );
 }
 
@@ -214,26 +260,21 @@ const UserManageContainer = styled.div`
 `;
 const UserManageContainerTable = styled.div`
   text-align: center;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   margin-top: 2rem;
   padding-left: 3rem;
-  width: 70%;
+  width: 105rem;
   font-size: 2rem;
   table {
     width: 100%;
     border-collapse: collapse;
   }
-
   tr {
-    // display: flex;
     border-bottom: 1px solid #000;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
   }
   td {
-    // display: flex;
-    /* border-bottom: 1px solid #000; */
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -251,4 +292,36 @@ const StyledTr = styled.tr`
 const StyledButton = styled.button`
   font-size: 1.4rem;
   border-radius: 1rem;
+`;
+
+const PageSelect = styled.div`
+  clear: both;
+  margin: 1.7rem 0rem;
+  padding: 1rem 0rem;
+  justify-content: center;
+  display: flex;
+  border-top: 1px solid #ddd;
+  background-color: rgb(245, 245, 245);
+`;
+
+const PageButton = styled.button<{ selected: number; currentPage: number }>`
+  border: none;
+  margin: 0;
+  padding: 0.2rem;
+  text-decoration: none;
+  font-size: 1.9rem;
+  color: ${(props) =>
+    props.selected === props.currentPage ? 'blue' : 'black'};
+  background-color: rgb(245, 245, 245);
+  font-weight: ${(props) =>
+    props.selected === props.currentPage ? 'bold' : 'normal'};
+
+  &:hover {
+    text-decoration: underline;
+    color: gray;
+  }
+
+  &.selected {
+    font-weight: bold;
+  }
 `;

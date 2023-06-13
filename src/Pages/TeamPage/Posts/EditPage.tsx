@@ -1,14 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../ReduxStore/store';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import FindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
 import axios from 'axios';
+import { fetchData } from '../../../ReduxStore/modules/TeamPage/actions';
 function EditPage() {
   const location = useLocation();
   const url = location.pathname.split('/').pop();
-  const data = location.state;
+  // location 객체를 통해 받는 것은 보안 상 문제가 있음. 전역 상태관리를 추천함.
+  const data = useSelector((state: RootState) => state.data.data);
+  // const data = location.state;
 
   let category: string;
   if (data.author) {
@@ -226,3 +231,6 @@ const StyledInputText = styled.input`
 const StyledButton = styled.button`
   margin: 6rem 3rem 0rem 3rem;
 `;
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}
