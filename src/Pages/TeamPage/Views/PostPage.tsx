@@ -1,11 +1,17 @@
 import React, { useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import DropDown from '../../../Components/Commons/DropDown';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import SubmitFindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
+import {
+  StyledContainer,
+  StyledBox,
+  StyledTitle,
+  StyledInputText,
+  StyledButton,
+} from '../Styles/PostsStyle';
+import SubmitFindingMembers from '../../../Components/TeamPage/FindingMembers';
 import axios from 'axios';
 
 function SubmitPage() {
@@ -246,35 +252,3 @@ function SubmitPage() {
 }
 
 export default SubmitPage;
-
-const StyledContainer = styled.div`
-  display: grid;
-  grid-gap: 40px 0px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-`;
-
-const StyledBox = styled.div`
-  display: flex;
-  margin-top: 0rem;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-`;
-
-const StyledInputText = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 9rem;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-`;
-
-const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
-`;

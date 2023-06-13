@@ -1,13 +1,20 @@
 import React, { useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../ReduxStore/store';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import FindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
+import FindingMembers from '../../../Components/TeamPage/FindingMembers';
 import axios from 'axios';
-import { fetchData } from '../../../ReduxStore/modules/TeamPage/actions';
+import {
+  StyledContainer,
+  StyledBox,
+  StyledTitle,
+  StyledDiv,
+  StyledInputText,
+  StyledButton,
+} from '../Styles/PostsStyle';
+
 function EditPage() {
   const quillRef = useRef<ReactQuill>(null);
 
@@ -236,43 +243,6 @@ function EditPage() {
 
 export default EditPage;
 
-const StyledContainer = styled.div`
-  display: grid;
-  grid-gap: 40px 0px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-`;
-
-const StyledBox = styled.div`
-  display: flex;
-  margin-top: 0rem;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const StyledInputText = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 9rem;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-`;
-
-const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
-`;
 function dispatch(arg0: any) {
   throw new Error('Function not implemented.');
 }
