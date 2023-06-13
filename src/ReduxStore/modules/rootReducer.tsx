@@ -17,7 +17,7 @@ export default rootReducer;
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'data'],
+  whitelist: ['auth', 'data'], // 새로고침 시 유지해야 하는 데이터 목록. 만약 새로고침 시 삭제되어야 한다면 blacklist에 등재해야 함.
 };
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
