@@ -22,10 +22,7 @@ function TeamPage() {
         <Routes>
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
-          <Route
-            path="/team"
-            element={<FindingMember setShowModal={setShowModal} />}
-          />
+          <Route path="/team" element={<FindingMember />} />
           <Route path="/team/:id" element={<ViewPage />} />
           <Route
             path="/"

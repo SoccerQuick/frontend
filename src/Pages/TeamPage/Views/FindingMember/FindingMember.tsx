@@ -1,9 +1,6 @@
 import React from 'react';
 import FilteringOptions from '../../../../Components/Commons/FilteringOptions';
 import FindingMemberPageBoard from './FindingMemberPageBoard';
-import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../../../../store/selectors/authSelectors';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -39,19 +36,37 @@ interface DataProps {
   [key: string]: string | number | undefined | Applicant[];
 }
 
-interface FindingMemberProps {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+interface filteredData {
+  group_id?: string;
+  area: string;
+  author: string;
+  body: string;
+  gender: string;
+  num: number;
+  position?: string;
+  skill?: string;
+  status: string;
+  title: string;
+  gk: number;
+  gkNeed: number;
+  player: number;
+  playerNeed: number;
+  location: string;
+  gk_count: number;
+  gk_current_count: number;
+  player_count: number;
+  player_current_count: number;
+  random_matched?: string;
+  applicant?: Applicant[];
+  [key: string]: string | number | undefined | Applicant[];
 }
+
 interface FindMemberFilter {
   status: string | null;
   area: string | null;
 }
 
-function FindingMember(props: FindingMemberProps) {
-  const isLogin = useSelector(isLogInSelector);
-
-  const location = useLocation();
-  const { setShowModal } = props;
+function FindingMember() {
   const [status, setStatus] = React.useState('');
   const [area, setArea] = React.useState('');
 
@@ -102,6 +117,10 @@ function FindingMember(props: FindingMemberProps) {
 
   // 필터링 된 데이터를 관리하는 상태
   const [filteredData, setFilteredData] = React.useState(data);
+  // 페이지네이션 구현 부분
+  const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
+  const [currentData, setCurrentData] = React.useState<filteredData[]>([]); // 초기 데이터
+  const [totalPage, setTotalPage] = React.useState(0);
 
   // 데이터를 필터링하는 부분, 상관없음일 경우 무조건 결과에 포함시킨다.
   React.useEffect(() => {
@@ -138,6 +157,8 @@ function FindingMember(props: FindingMemberProps) {
       return true;
     });
     setFilteredData(newData.reverse()); // 최신 게시글이 위로 가게 정렬함
+    setCurrentData(newData.reverse().slice(0, 8)); // 첫 페이지 데이터를 미리 설정함
+    setTotalPage(Math.ceil(newData.length / 8)); // 총 페이지 버튼 갯수를 설정함
   }, [data, findMemberFilter]);
 
   // 드롭다운 리스트를 정하는 부분
@@ -163,22 +184,14 @@ function FindingMember(props: FindingMemberProps) {
       <FindingMemberPageBoard
         dropdownList={dropdownList}
         handleReset={handleReset}
-        setShowModal={setShowModal}
+        // setShowModal={setShowModal}
         filteredData={filteredData}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        currentData={currentData}
+        setCurrentData={setCurrentData}
+        totalPage={totalPage}
       />
-      <TeamPageFooter>
-        {isLogin && (
-          <Link
-            to="/teampage/submit"
-            style={{
-              display:
-                location.pathname === '/teampage/submit' ? 'none' : 'flex',
-            }}
-          >
-            <StyledWriteButton>글 작성하기</StyledWriteButton>
-          </Link>
-        )}
-      </TeamPageFooter>
     </div>
   );
 }
@@ -197,23 +210,4 @@ const StyledHeader = styled.div`
     color: #9da7ae;
     margin: 1rem 0 2rem 0;
   }
-`;
-
-const TeamPageFooter = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: fit-content;
-  margin-top: 3rem;
-  margin-right: 4rem;
-  float: right;
-`;
-
-const StyledWriteButton = styled.button`
-  width: 13rem;
-  height: 5rem;
-  border-radius: 0.8rem;
-  background-color: var(--color--green);
-  color: white;
-  font-size: 1.7rem;
-  font-weight: 600;
 `;

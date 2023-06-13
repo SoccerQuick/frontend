@@ -17,7 +17,7 @@ const FieldMap: React.FC<FieldMapType> = ({
   setSortedDomData,
 }) => {
   const { naver } = window;
-  let map: naver.maps.Map;
+  var map: naver.maps.Map;
   const navigate = useNavigate();
   const mapElement = useRef<HTMLElement | null | any>(null);
   const [newMap, setNewMap] = useState<naver.maps.Map | null>(null);
@@ -146,13 +146,16 @@ const FieldMap: React.FC<FieldMapType> = ({
     marker.setMap(null);
   };
 
+  useEffect(() => {
+    resetListHandler();
+  }, [newMap]);
+
   const resetListHandler = () => {
     if (!newMap) return;
     const newArray = [...totalDomData].sort((a, b) => {
       const currentCenterLatLng = newMap.getCenter();
       const DomLatLngA = new naver.maps.LatLng(a.lng, a.lat);
       const DomLatLngB = new naver.maps.LatLng(b.lng, b.lat);
-
       const projection = newMap.getProjection();
       const distanceA = projection.getDistance(currentCenterLatLng, DomLatLngA);
       const distanceB = projection.getDistance(currentCenterLatLng, DomLatLngB);
@@ -171,7 +174,7 @@ const FieldMap: React.FC<FieldMapType> = ({
 
   return (
     <StyledMapContainer>
-      <StyledMap id="map" ref={mapElement}></StyledMap>;
+      <StyledMap id="map" ref={mapElement}></StyledMap>
       <StyledButton onClick={() => resetListHandler()}>
         <StyledButtonIcon>
           <img src={ResetIcon} alt="" />

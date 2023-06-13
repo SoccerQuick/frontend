@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type AuthState = {
   isLogIn: boolean;
   user: User | null;
-  token: string | null;
 };
 
 export type User = {
@@ -11,27 +10,28 @@ export type User = {
   name: string;
   nickname: string;
   role: string;
+  profile: string;
 };
 
 const initialState: AuthState = {
   isLogIn: false,
   user: null,
-  token: null,
 };
 
 const authSlice = createSlice({
   name: 'auths',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ user: User; token: string }>) => {
+    login: (state, action: PayloadAction<{ user: User }>) => {
       state.isLogIn = true;
       state.user = action.payload.user;
-      state.token = action.payload.token;
     },
     logout: (state) => {
       state.isLogIn = false;
       state.user = null;
-      state.token = null;
+    },
+    updateUser: (state, action: PayloadAction<{ user: User }>) => {
+      state.user = action.payload.user;
     },
   },
 });
@@ -40,6 +40,7 @@ const authSlice = createSlice({
 export const AUTH_ACTIONS = {
   login: authSlice.actions.login,
   logout: authSlice.actions.logout,
+  updateUser: authSlice.actions.updateUser,
 };
 
 export default authSlice.reducer;

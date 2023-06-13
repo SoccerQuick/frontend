@@ -1,7 +1,7 @@
 import react, { useState, FormEvent, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { FormData } from '../../../Pages/MyPage';
+import { FormDataType } from '../../../Pages/MyPage';
 import { MyPageInput } from './MyPageInput';
 import { checkNewPassword } from '../checkPassword';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 
 type MyPageInfoProps = {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  userData: FormDataType;
+  setUserData: React.Dispatch<React.SetStateAction<FormDataType>>;
   oldPassword: string;
+  selectedImage: File | undefined;
 };
 
 export type ErrorMsg = {
@@ -26,9 +27,10 @@ export type PasswordForm = {
 };
 
 export function MyPageInfo({
-  formData,
-  setFormData,
+  userData,
+  setUserData,
   oldPassword,
+  selectedImage,
 }: MyPageInfoProps) {
   const [passwordForm, setPasswordForm] = useState<PasswordForm>({
     newPassword: '',
@@ -40,13 +42,14 @@ export function MyPageInfo({
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(userSelector);
+  const userInfo = useSelector(userSelector);
 
   useEffect(() => {
-    if (!user) {
-      window.location.reload();
+    if (!userInfo) {
+      alert('마이페이지는 로그인 후 사용해주세요.');
+      navigate('/');
     }
-  }, [user]);
+  }, [userInfo]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,30 +74,57 @@ export function MyPageInfo({
   };
 
   const handleMyInfoChangeConfirm = async (
-    newPassword: String,
-    oldPassword: String
+    newPassword: string,
+    oldPassword: string
   ) => {
     try {
-      const response = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/users`,
-        {
-          user_id: formData.user_id,
-          name: formData.name,
-          password: newPassword ? newPassword : oldPassword,
-          nick_name: formData.nick_name,
-          email: formData.email,
-          phone_number: formData.phone_number,
-          gender: formData.gender,
+      const formData = new FormData();
+      formData.append('user_id', userData.user_id);
+      formData.append('name', userData.name);
+      formData.append('nick_name', userData.nick_name);
+      formData.append('email', userData.email);
+      formData.append('phone_number', userData.phone_number);
+      formData.append('gender', userData.gender);
+      if (newPassword) {
+        formData.append('password', newPassword);
+      } else {
+        formData.append('password', oldPassword);
+      }
+      if (selectedImage) {
+        formData.append('image', selectedImage);
+      } else {
+        formData.append('image', userData.profile);
+      }
+
+      const url = `${process.env.REACT_APP_API_URL}/users`;
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-        {
-          withCredentials: true,
-        }
-      );
+        withCredentials: true,
+      };
+
+      const response = await axios.patch(url, formData, config);
       alert(response.data.message);
+
+      if (selectedImage && userInfo) {
+        const userProfile = URL.createObjectURL(selectedImage);
+
+        const user = {
+          user_id: userInfo.user_id,
+          name: userInfo.name,
+          nickname: userInfo.nickname,
+          profile: userProfile,
+          role: userInfo.role,
+        };
+        dispatch(AUTH_ACTIONS.updateUser({ user }));
+      }
+
       setErrorMsg({
         formMsg: '',
         passwordFormMsg: '',
       });
+
       setPasswordForm((prev) => ({
         ...prev,
         newPassword: '',
@@ -126,17 +156,18 @@ export function MyPageInfo({
     }
   };
 
-  const handleAlertWithDrawalConfirm = (oldPassword: String) => {
+  const handleAlertWithDrawalConfirm = async (oldPassword: String) => {
     dispatch(AUTH_ACTIONS.logout());
     const headers = {
       withCredentials: true,
     };
-    const data = { password: oldPassword, user_id: formData.user_id };
 
-    axios
-      .delete(`${process.env.REACT_APP_API_URL}/users`, {
-        headers: headers,
-        data: data,
+    const uri = `${process.env.REACT_APP_API_URL}/users`;
+
+    await axios
+      .delete(uri, {
+        data: { password: oldPassword },
+        withCredentials: headers.withCredentials,
       })
       .then(() => {
         alert('탈퇴 되었습니다.');
@@ -155,61 +186,53 @@ export function MyPageInfo({
           <MyPageInput
             title="아이디"
             name="user_id"
-            value={formData.user_id}
+            value={userData.user_id}
             noButton
           />
           <MyPageInput
             title="이름"
             name="name"
-            value={formData.name}
+            value={userData.name}
             noButton
           />
           <MyPageInput
             title="닉네임"
             name="nick_name"
-            value={formData.nick_name}
-            setFormData={setFormData}
+            value={userData.nick_name}
+            setFormData={setUserData}
           />
           <MyPageInput
             title="이메일"
             name="email"
-            value={formData.email}
-            setFormData={setFormData}
+            value={userData.email}
+            setFormData={setUserData}
           />
           <MyPageInput
             title="전화번호"
             name="phone_number"
-            value={formData.phone_number}
-            setFormData={setFormData}
+            value={userData.phone_number}
+            setFormData={setUserData}
           />
           <MyPageInput
             title="성별"
             name="gender"
-            value={formData.gender}
+            value={userData.gender}
             noButton
           />
           <div>
             {' '}
             <StyledSubmitButton>변경</StyledSubmitButton>
-            <StyledSubmitButton
-              style={{
-                color: '#fff',
-                backgroundColor: '#ec5d5e',
-              }}
-              onClick={handleWithDrawalClick}
-            >
+            <StyledRedSubmitButton onClick={handleWithDrawalClick}>
               회원 탈퇴
-            </StyledSubmitButton>
+            </StyledRedSubmitButton>
           </div>
         </StyledInfoForm>
-        <div style={{ color: 'red', marginTop: '1rem' }}>
-          {errorMsg.formMsg}
-        </div>
+        <StyledErrorDiv>{errorMsg.formMsg}</StyledErrorDiv>
       </StyledInfoBox>
       <StyledInfoBox>
         {' '}
         <StyledTitle>비밀번호 변경</StyledTitle>
-        <StyledInfoForm onSubmit={handleSubmit} style={{ height: '14rem' }}>
+        <StyledShortInfoForm onSubmit={handleSubmit}>
           <MyPageInput
             title="새 비밀번호"
             name="newPassword"
@@ -225,10 +248,8 @@ export function MyPageInfo({
             setPasswordForm={setPasswordForm}
           />
           <StyledSubmitButton>변경</StyledSubmitButton>
-        </StyledInfoForm>
-        <div style={{ color: 'red', marginBottom: '1rem' }}>
-          {errorMsg.passwordFormMsg}
-        </div>
+        </StyledShortInfoForm>
+        <StyledErrorDiv>{errorMsg.passwordFormMsg}</StyledErrorDiv>
       </StyledInfoBox>
     </StyledInfoContainer>
   );
@@ -287,4 +308,17 @@ const StyledSubmitButton = styled.button`
   background-color: #09cf00;
   color: #fff;
   border-radius: 0.5rem;
+`;
+
+const StyledRedSubmitButton = styled(StyledSubmitButton)`
+  background-color: #ec5d5e;
+`;
+
+const StyledErrorDiv = styled.div`
+  color: red;
+  margin: 0.5rem 0;
+`;
+
+const StyledShortInfoForm = styled(StyledInfoForm)`
+  height: 14rem;
 `;

@@ -158,11 +158,9 @@ export default function ReviewPage() {
     );
   }
 
-  function handleScrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+  function handleOutsideClick() {
+    setAreaFilterView(false);
+    setStadiumFilterView(false);
   }
 
   function handleReviewTitleClick(index: number) {
@@ -185,12 +183,15 @@ export default function ReviewPage() {
     });
   }
 
-  function handleWriteButtonClick() {
-    navigate('/review/write');
+  function handleScrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   return (
-    <>
+    <div onClick={handleOutsideClick}>
       <Header />
       <HeaderCategory />
       <Routes>
@@ -221,65 +222,71 @@ export default function ReviewPage() {
               <StyledList>
                 <StyledReviewHeader>
                   <div className="filter">
-                    <span>
-                      <ul className="areaFilter">
-                        <p
-                          onClick={() => {
-                            if (stadiumFilterView) {
-                              setStadiumFilterView(false);
-                              setAreaFilterView(!areaFilterView);
-                            } else {
-                              setAreaFilterView(!areaFilterView);
-                            }
-                          }}
-                        >
-                          {area}
-                        </p>
-                        {areaFilterView &&
-                          areaList.map((item, index) => (
-                            <li
-                              key={index}
-                              onClick={() => {
-                                setArea(item);
-                                setAreaFilterView(!areaFilterView);
-                              }}
-                            >
-                              {item}
-                            </li>
-                          ))}
-                      </ul>
-                    </span>
-                    <span>
-                      <ul className="stadiumFilter">
-                        <p
-                          onClick={() => {
-                            if (areaFilterView) {
+                    <ul
+                      className="areaFilter"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <p
+                        onClick={() => {
+                          if (stadiumFilterView) {
+                            setStadiumFilterView(false);
+                            setAreaFilterView(!areaFilterView);
+                          } else {
+                            setAreaFilterView(!areaFilterView);
+                          }
+                        }}
+                      >
+                        {area}
+                      </p>
+                      {areaFilterView &&
+                        areaList.map((item, index) => (
+                          <li
+                            className="area"
+                            key={index}
+                            onClick={() => {
+                              setArea(item);
                               setAreaFilterView(false);
-                              setStadiumFilterView(!stadiumFilterView);
-                            } else {
-                              setStadiumFilterView(!stadiumFilterView);
-                            }
-                          }}
-                        >
-                          {stadium}
-                        </p>
-                        {stadiumFilterView &&
-                          filterList[area].map((item, index) => (
-                            <li
-                              key={index}
-                              onClick={() => {
-                                area === '지역'
-                                  ? setStadium('구장')
-                                  : setStadium(item);
-                                setStadiumFilterView(!stadiumFilterView);
-                              }}
-                            >
-                              {item}
-                            </li>
-                          ))}
-                      </ul>
-                    </span>
+                            }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                    </ul>
+
+                    <ul
+                      className="stadiumFilter"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <p
+                        onClick={() => {
+                          if (areaFilterView) {
+                            setAreaFilterView(false);
+                            setStadiumFilterView(!stadiumFilterView);
+                          } else {
+                            setStadiumFilterView(!stadiumFilterView);
+                          }
+                        }}
+                      >
+                        {stadium}
+                      </p>
+                      {stadiumFilterView &&
+                        filterList[area].map((item, index) => (
+                          <li
+                            className="stadium"
+                            key={index}
+                            onClick={() => {
+                              area === '지역'
+                                ? setStadium('구장')
+                                : setStadium(item);
+                              setStadiumFilterView(false);
+                            }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                    </ul>
                   </div>
+
                   <div className="search">
                     <img src={Magnifier} alt="magnifier" />
                     <input
@@ -288,7 +295,7 @@ export default function ReviewPage() {
                       onChange={(e) => {
                         handleSearch(e.target.value);
                       }}
-                      placeholder="검색어를 입력해주세요."
+                      placeholder="지역 혹은 구장으로 검색"
                     />
                   </div>
                 </StyledReviewHeader>
@@ -373,7 +380,7 @@ export default function ReviewPage() {
         />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 
@@ -407,12 +414,12 @@ const StyledReviewHeader = styled.div`
     display: flex;
     flex-direction: row;
     position: relative;
+    font-size: 1.8rem;
+    font-weight: 500;
+    z-index: 2;
 
     .areaFilter {
       position: absolute;
-      z-index: 2;
-      font-size: 1.5rem;
-      font-weight: 700;
       padding: 1rem 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 2rem;
@@ -423,15 +430,26 @@ const StyledReviewHeader = styled.div`
 
     .stadiumFilter {
       position: absolute;
-      z-index: 2;
-      font-size: 1.5rem;
-      font-weight: 700;
       padding: 1rem 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 2rem;
       box-shadow: 2px 2px #e0e0e0;
       background-color: white;
       left: 10rem;
+    }
+  }
+
+  .area {
+    padding: 1rem 0;
+    &:hover {
+      background-color: #dedede;
+    }
+  }
+
+  .stadium {
+    padding: 1rem 0;
+    &:hover {
+      background-color: #dedede;
     }
   }
 
@@ -443,7 +461,8 @@ const StyledReviewHeader = styled.div`
   }
 
   .search-input {
-    font-size: 1.65rem;
+    width: 65%;
+    font-size: 1.8rem;
     padding: 1rem;
     margin-left: 1rem;
     border: 1px solid #bebebe;

@@ -48,15 +48,7 @@ const Header = () => {
       <HeaderMenu>
         <HeaderMyPage>
           {isLogin ? (
-            <HeaderMyPageButton
-              ref={myPageMenuRef}
-              onClick={() => {
-                setMyPageMenu((prev) => !prev);
-              }}
-            >
-              <img src={MypageIcon} alt="my" />
-              {myPageMenu && <MyPageMenu />}
-            </HeaderMyPageButton>
+            <MyPageMenu />
           ) : (
             <HeaderLoginButton onClick={handleLoginModal}>
               <img src={MypageIcon} alt="my" />
@@ -64,10 +56,6 @@ const Header = () => {
             </HeaderLoginButton>
           )}
         </HeaderMyPage>
-
-        <div>
-          <img src={MoreIcon} alt="more" />
-        </div>
       </HeaderMenu>
       {authModal && <AuthModal setAuthModal={setAuthModal} />}
     </HeaderContainer>
@@ -104,6 +92,7 @@ const HeaderMenu = styled.div`
   img {
     width: 2.5rem;
     height: 100%;
+    margin-right: 0.2rem;
   }
 `;
 
@@ -112,13 +101,15 @@ const HeaderMyPage = styled.div``;
 const HeaderLoginButton = styled.div`
   display: flex;
   position: relative;
-  width: 8rem;
-  padding: 0.5rem;
+  width: 10rem;
+  padding: 1rem;
   margin: 0.3rem 2rem 0 2rem;
   border-radius: 2.5rem;
   border: 1px solid #e5e5e5;
   & > div {
+    text-align: center;
     margin-top: 0.1rem;
+    width: 100%;
   }
 `;
 

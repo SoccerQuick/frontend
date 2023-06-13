@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Select from 'react-select';
 import SearchFilter from './SearchFilter';
+import GroundListSkeleton from './groundListSkeleton';
+import MyPagination from '../../MyPage/MyPagination';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
 
@@ -11,6 +12,8 @@ type FindingGroundProps = {
   setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   sortedDomData: DomDataType[];
   setSortedDomData: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ProvidedElementListType = {
@@ -40,6 +43,23 @@ function FindingGround(props: FindingGroundProps) {
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
   const sortedDomData = props.sortedDomData;
+  const isLoading = props.isLoading;
+  const setIsLoading = props.setIsLoading;
+
+  // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
+  // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
+  const [filterOption, setFilterOption] = React.useState<ItemType[]>([]);
+
+  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
+  const [filteredData, setFilteredData] =
+    React.useState<DomDataType[]>(sortedDomData);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const totalItemsCount = filteredData.length;
+  const lastIndexOfData = currentPage * itemsPerPage;
+  const firstIndexOfData = lastIndexOfData - itemsPerPage;
+  const currentData = filteredData.slice(firstIndexOfData, lastIndexOfData);
 
   const checkHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -60,14 +80,6 @@ function FindingGround(props: FindingGroundProps) {
       );
     }
   };
-
-  // Left Bar에서 설정한 필터링 옵션이 담기는 상태.
-  // SoccerQuick/Frontend/src/Components/SearchPage/Contents/SearchFilter.tsx Line12의 useEffect로 정의됨
-  const [filterOption, setFilterOption] = React.useState<ItemType[]>([]);
-
-  // 정렬 조건이 변할 때 페이지에 보여줄 데이터를 필터링 하는 부분
-  const [filteredData, setFilteredData] =
-    React.useState<DomDataType[]>(sortedDomData);
 
   // 이곳에 필터링 함수 작성
   useEffect(() => {
@@ -99,15 +111,22 @@ function FindingGround(props: FindingGroundProps) {
           <table>
             <thead>
               <StyledLabelTr>
-                <th></th>
-                <th>지역</th>
-                <th>경기장</th>
-                <th>상세조회</th>
+                {!isLoading ? (
+                  <>
+                    <th></th>
+                    <th>지역</th>
+                    <th>경기장</th>
+                    <th>상세조회</th>
+                  </>
+                ) : (
+                  <></>
+                )}
               </StyledLabelTr>
             </thead>
-            <tbody>
-              {filteredData &&
-                filteredData.map((item, idx) => (
+
+            {!isLoading ? (
+              <tbody>
+                {currentData.map((item, idx) => (
                   <StyledTr key={item.title + idx}>
                     <StyledCheckboxTd>
                       <input
@@ -146,9 +165,18 @@ function FindingGround(props: FindingGroundProps) {
                     </td>
                   </StyledTr>
                 ))}
-            </tbody>
+              </tbody>
+            ) : (
+              <GroundListSkeleton />
+            )}
           </table>
         </SearchPageBody>
+        <MyPagination
+          totalItemsCount={totalItemsCount ? totalItemsCount : 100}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </Searchpage>
     </SearchContainer>
   );
@@ -158,19 +186,25 @@ export default FindingGround;
 
 const SearchContainer = styled.div`
   position: relative;
+  min-height: 55rem;
 `;
 
 const Searchpage = styled.div`
   display: flex;
   font-size: 1.7rem;
   width: 98.4rem;
-  margin: auto;
+  margin: 0 auto 7rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const SearchPageBody = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 3rem;
   table {
     width: 100%;
   }
@@ -325,28 +359,6 @@ const getBackgroundColorBydata = (data: string) => {
   } else if (data === 'parking_free') {
     return '#fff7e6';
   }
-};
-
-// Select 라이브러리를 사용하여 만든 드롭다운 박스의 스타일 지정
-const SelectCategory = styled(Select)`
-  width: 16rem;
-  font-size: 2rem;
-`;
-// Select 라이브러리에서 사용할 세부 스타일 속성
-const SelectStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? '#38D411' : 'white',
-    color: state.isSelected ? 'white' : 'black',
-    ':hover': {
-      backgroundColor: state.isSelected ? '#38D411' : '#96DF84',
-    },
-  }),
 };
 
 const dummydata_filteredGround = [

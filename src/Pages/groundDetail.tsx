@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Header from '../Components/Header';
+import HeaderCategory from '../Components/Commons/HeaderCategory';
 import Footer from '../Components/Footer';
 import { DomDataType } from './SearchPage';
 import { ProvidedElementList } from '../Components/SearchPage/Contents/SearchData';
@@ -11,25 +12,77 @@ import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/scrollToTarget';
+import Review from '../Components/GroundDetail/Review';
 import starIcon from '../styles/icon/star.svg';
+import starFilledIcon from '../styles/icon/star_filled.svg';
 import homeIcon from '../styles/icon/home.svg';
 
 const GroundDetail = () => {
   const [groundData, setGroundData] = useState<DomDataType>();
   const [showImgModal, setShowImgModal] = useState(false);
   const [ImgModalIndex, setImgModalIndex] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
   const { dom_id } = useParams();
+
+  const config = {
+    withCredentials: true,
+  };
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, {
-        withCredentials: true,
-      })
+      .get(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, config)
       .then((res: any) => {
         setGroundData(res.data.data);
       })
       .catch((e: any) => console.log(e));
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users`, config)
+      .then((res: any) => {
+        const favoriteGrounds = res.data.data.favoritePlaygrounds;
+        if (favoriteGrounds.includes(dom_id)) {
+          setIsFavorite(true);
+        }
+      })
+      .catch((e: any) => console.log(e));
+  }, []);
+
+  const clickFavoriteHandler = () => {
+    if (!isFavorite) {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/doms/`,
+          { domId: dom_id },
+          config
+        )
+        .then((res: any) => {
+          alert(res.data.message);
+          setIsFavorite(true);
+        })
+        .catch((e: any) => {
+          if (e.response.data.statusCode === 401) {
+            alert('로그인 후 이용해주세요.');
+          } else {
+            alert(e.response.data.message);
+          }
+        });
+    } else {
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/doms/${dom_id}`, config)
+        .then((res: any) => {
+          setIsFavorite(false);
+        })
+        .catch((e: any) => {
+          if (e.response.data.statusCode === 401) {
+            alert('로그인 후 이용해주세요.');
+          } else {
+            alert(e.response.data.message);
+          }
+        });
+    }
+  };
 
   const clipUrl = () => {
     if (groundData)
@@ -43,6 +96,7 @@ const GroundDetail = () => {
   return (
     <>
       <Header />
+      <HeaderCategory />
       {groundData && (
         <GroundDetailContainer>
           <div className="slider">
@@ -67,8 +121,13 @@ const GroundDetail = () => {
                   홈페이지 바로가기
                 </a>
               </button>
-              <button>
-                <img src={starIcon} alt="" />찜
+              <button onClick={() => clickFavoriteHandler()}>
+                {isFavorite ? (
+                  <img src={starFilledIcon} alt="" />
+                ) : (
+                  <img src={starIcon} alt="" />
+                )}
+                찜
               </button>
             </GroundDetailHeaderBtn>
           </GroundDetailHeader>
@@ -129,8 +188,10 @@ const GroundDetail = () => {
               <p onClick={() => clipUrl()}>주소 복사</p>
             </GroundAddressDetail>
           </ContentsBox>
+          <ContentsBox>{dom_id && <Review dom_id={dom_id} />}</ContentsBox>
         </GroundDetailContainer>
       )}
+
       <Footer />
       {showImgModal && groundData && (
         <GroundImageModal
