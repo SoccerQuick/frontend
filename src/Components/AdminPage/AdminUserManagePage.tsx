@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import UserDetailModal from '../Layout/UserDetailModal';
-import DropDown from '../../Commons/DropDown';
-import FilterlingOptions from '../../Commons/FilteringOptions';
+import UserDetailModal from './UserDetailModal';
+import DropDown from '../Commons/DropDown';
+import FilterlingOptions from '../Commons/FilteringOptions';
 
 interface UserData {
   admin_id?: string;

@@ -9,7 +9,7 @@ import ReviewPage from './Pages/ReviewPages/ReviewPage';
 import TeamPage from './Pages/TeamPage/MainPage';
 import SearchPage from './Pages/SearchPage';
 import GroundDetail from './Pages/groundDetail';
-import Admin from './Pages/AdminPage/MainPage';
+import Admin from './Pages/AdminPage/Views/MainPage';
 import { MyPage } from './Pages/MyPage';
 // Redux 공부를 위한 추가 Store
 import { store, persistor } from './ReduxStore/store';

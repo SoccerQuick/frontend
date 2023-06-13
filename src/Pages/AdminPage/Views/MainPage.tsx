@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../../Components/Header';
-import Footer from '../../Components/Footer';
-import AdminMainPage from '../../Components/AdminPage/Contents/AdminMainPage';
-import AdminUserManager from '../../Components/AdminPage/Contents/AdminUserManagePage';
+import Header from '../../../Components/Header';
+import Footer from '../../../Components/Footer';
+import AdminMainPage from '../../../Components/AdminPage/AdminMainPage';
+import AdminUserManager from '../../../Components/AdminPage/AdminUserManagePage';
 import { Routes, Route, Link } from 'react-router-dom';
+import {
+  AdminContainer,
+  BodyContainer,
+  BodyLeftBar,
+  BodyMain,
+  MainButton,
+  UserButton,
+} from '../Styles/AdminPageStyle';
 
 function AdminPage() {
   const [mainButton, setMainButton] = React.useState(true);
@@ -54,64 +62,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-
-const AdminContainer = styled.div`
-  margin-top: 5rem;
-  font-size: 3rem;
-  height: 82vh;
-`;
-
-const BodyContainer = styled.div`
-  height: fit-content;
-`;
-
-const BodyLeftBar = styled.div`
-  display: flex;
-  float: left;
-  width: 25rem;
-  height: 75rem;
-  flex-direction: column;
-  align-items: center;
-  border-right: 1px solid #bbb;
-  /* background-color: yellowgreen; */
-`;
-
-const BodyMain = styled.div`
-  background-color: rgb(245, 245, 245);
-  width: 159rem;
-  height: 100rem;
-`;
-
-const MainButton = styled.button<{ state: string }>`
-  margin: 3rem 2rem 0rem 2rem;
-  border: 1px solid;
-  ${(props) =>
-    props.state === 'true' &&
-    `
-    background-color: lightgray;
-  `}
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    background-color: darkgray;
-  }
-`;
-
-const UserButton = styled.button<{ state: string }>`
-  margin: 3rem 2rem 0rem 2rem;
-  border: 1px solid;
-  ${(props) =>
-    props.state === 'true' &&
-    `
-    background-color: lightgray;
-  `}
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    background-color: darkgray;
-  }
-`;
