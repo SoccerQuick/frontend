@@ -144,6 +144,7 @@ function SubmitPage() {
           ['image'],
           [{ header: [1, 2, 3, 4, false] }],
           ['bold', 'italic', 'underline', 'strike'],
+          [{ color: [] }],
           // ['link'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           ['clean'],
