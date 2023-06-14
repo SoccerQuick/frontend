@@ -44,13 +44,6 @@ export function MyPageInfo({
   const dispatch = useDispatch();
   const userInfo = useSelector(userSelector);
 
-  useEffect(() => {
-    if (!userInfo) {
-      alert('마이페이지는 로그인 후 사용해주세요.');
-      navigate('/');
-    }
-  }, [userInfo]);
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { newPassword, newPasswordConfirm } = passwordForm;
