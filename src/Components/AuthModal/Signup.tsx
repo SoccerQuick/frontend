@@ -55,6 +55,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
     setUserId(e.target.value);
     setUserIdMsg('');
     setCheckUserId(false);
+    setResponseMsg('');
   };
 
   const handleUserIdCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,36 +76,43 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPassword(e.target.value);
+    setResponseMsg('');
   };
 
   const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPasswordConfirm(e.target.value);
+    setResponseMsg('');
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setName(e.target.value);
+    setResponseMsg('');
   };
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setNickname(e.target.value);
+    setResponseMsg('');
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setEmail(e.target.value);
+    setResponseMsg('');
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPhonenumber(e.target.value);
+    setResponseMsg('');
   };
 
   const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     setGender(e.target.value);
+    setResponseMsg('');
   };
 
   const handleTermCheck = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -114,6 +122,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
     } else {
       setTermCheck(true);
     }
+    setResponseMsg('');
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -296,6 +305,7 @@ const RegisterText = styled.div`
 `;
 
 const ResponseText = styled.div`
+  height: 2rem;
   color: red;
   font-style: normal;
   font-weight: 400;
