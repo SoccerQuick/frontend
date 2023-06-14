@@ -32,7 +32,6 @@ function MyPagination({
 
   useEffect(() => {
     const urlCurrentPage = (Number(searchParams.get('start')) + 10) / 10;
-    console.log(urlCurrentPage);
     setCurrentPage(urlCurrentPage);
   }, [searchParams]);
 
