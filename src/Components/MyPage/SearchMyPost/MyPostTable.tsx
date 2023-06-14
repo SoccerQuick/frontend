@@ -26,7 +26,8 @@ function MyPostTable({
   const totalItemsCount =
     (reviewData && reviewData.length) ||
     (groupData && groupData.length) ||
-    (applyTeamData && applyTeamData.length);
+    (applyTeamData && applyTeamData.length) ||
+    0;
 
   // get current data
   const lastIndexOfData = currentPage * itemsPerPage;
@@ -160,6 +161,8 @@ const TableContainer = styled.div`
 
   & > table {
     width: 100%;
+    height: 39rem;
+    background-color: #fdfdfd;
   }
 `;
 
@@ -210,6 +213,7 @@ const StyledItemTr = styled.tr`
   height: 8rem;
   border-bottom: 1px solid rgb(238, 238, 238);
   padding: 0 3rem;
+  background-color: #fff;
 
   & > td {
     flex: 2;

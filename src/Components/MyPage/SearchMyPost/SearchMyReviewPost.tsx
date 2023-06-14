@@ -20,7 +20,7 @@ function SearchMyReviewPost() {
   const properties = ['작성자', '코멘트', '구장', '평점', '좋아요'];
   const user = useSelector(userSelector);
   const filteredItems = reviewList.filter(
-    (item: ReviewPost) => item.name === '일반유저'
+    (item: ReviewPost) => item.name !== user?.name
   );
   useEffect(() => {
     axios
