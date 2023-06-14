@@ -11,7 +11,7 @@ import {
   ManagementButton,
   ReturnButton,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
-import { DedatilModalProps } from '../../Types/AdminPageTyle';
+import { DedatilModalProps } from '../../Types/AdminPageType';
 
 function DetailModal(props: DedatilModalProps) {
   const {
