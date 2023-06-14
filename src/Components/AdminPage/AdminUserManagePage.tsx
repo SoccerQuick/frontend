@@ -1,25 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
-import UserDetailModal from '../Layout/UserDetailModal';
-import DropDown from '../../Commons/DropDown';
-import FilterlingOptions from '../../Commons/FilteringOptions';
-
-interface UserData {
-  admin_id?: string;
-  user_id: string;
-  name: string;
-  nick_name: string;
-  email: string;
-  phone_number: string;
-  role: string;
-  gender: string;
-  createdAt: string;
-  login_banned: boolean;
-  login_banEndDate: string | null;
-  community_banned: boolean;
-  community_banEndDate: string | null;
-}
+import UserDetailModal from './UserDetailModal';
+import DropDown from '../Commons/DropDown';
+import FilterlingOptions from '../Commons/FilteringOptions';
+import {
+  UserManageContainer,
+  UserManageContainerTable,
+  StyledTr,
+  StyledButton,
+  PageSelect,
+  PageButton,
+} from '../../Pages/AdminPage/Styles/AdminPageStyle';
+import { UserData } from '../../Types/AdminPageTyle';
 
 function AdminUserManager() {
   const [showDetailModal, setShowDetailModal] = React.useState<boolean>(false);
@@ -250,78 +242,3 @@ function AdminUserManager() {
 }
 
 export default AdminUserManager;
-
-const UserManageContainer = styled.div`
-  padding-top: 2rem;
-  text-align: center;
-  display: flex;
-  justify-content: flex-end;
-  width: 70%;
-`;
-const UserManageContainerTable = styled.div`
-  text-align: center;
-  display: grid;
-  margin-top: 2rem;
-  padding-left: 3rem;
-  width: 105rem;
-  font-size: 2rem;
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  tr {
-    border-bottom: 1px solid #000;
-    justify-content: space-around;
-    align-items: center;
-  }
-  td {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-`;
-
-const StyledTr = styled.tr`
-  height: 4rem;
-  margin: 1rem 1rem;
-  padding: 2rem 1rem;
-  font-size: 1.6rem;
-  border-bottom: 0.1rem solid #dddddd;
-`;
-
-const StyledButton = styled.button`
-  font-size: 1.4rem;
-  border-radius: 1rem;
-`;
-
-const PageSelect = styled.div`
-  clear: both;
-  margin: 1.7rem 0rem;
-  padding: 1rem 0rem;
-  justify-content: center;
-  display: flex;
-  border-top: 1px solid #ddd;
-  background-color: rgb(245, 245, 245);
-`;
-
-const PageButton = styled.button<{ selected: number; currentPage: number }>`
-  border: none;
-  margin: 0;
-  padding: 0.2rem;
-  text-decoration: none;
-  font-size: 1.9rem;
-  color: ${(props) =>
-    props.selected === props.currentPage ? 'blue' : 'black'};
-  background-color: rgb(245, 245, 245);
-  font-weight: ${(props) =>
-    props.selected === props.currentPage ? 'bold' : 'normal'};
-
-  &:hover {
-    text-decoration: underline;
-    color: gray;
-  }
-
-  &.selected {
-    font-weight: bold;
-  }
-`;

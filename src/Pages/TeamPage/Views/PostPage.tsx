@@ -1,14 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FilteringOptions from '../../../Components/Commons/FilteringOptions';
 import DropDown from '../../../Components/Commons/DropDown';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import SubmitFindingMembers from '../../../Components/TeamPage/PostPage/FindingMembers';
+import {
+  StyledContainer,
+  StyledBox,
+  StyledTitle,
+  StyledInputText,
+  StyledButton,
+} from '../Styles/PostsStyle';
+import SubmitFindingMembers from '../../../Components/TeamPage/FindingMembers';
 import axios from 'axios';
 
 function SubmitPage() {
+  const quillRef = useRef<ReactQuill>(null);
   const [boardCategory, setBoardCategory] = React.useState('카테고리');
   const [title, setTitle] = React.useState('');
   const [area, setArea] = React.useState('');
@@ -103,18 +110,57 @@ function SubmitPage() {
     }
   }
 
-  // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
-  const quillModules = {
-    toolbar: {
-      container: [
-        [{ header: [1, 2, 3, 4, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        // ['link'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['clean'],
-      ],
-    },
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.addEventListener('change', async () => {
+      if (input.files) {
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        try {
+          const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}/communities/uploads`,
+            formData,
+            { withCredentials: true }
+          );
+          const imageUrl = res.data.data;
+          const quill = quillRef.current?.getEditor();
+          const range = quill?.getSelection()?.index;
+
+          if (range) {
+            quill.insertEmbed(range, 'image', imageUrl);
+          }
+          return { ...res, success: true };
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    });
   };
+
+  // quill 라이브러리 상단바에 사용할 모듈을 정하는 부분
+  const quillModules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          ['image'],
+          [{ header: [1, 2, 3, 4, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ color: [] }],
+          // ['link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    };
+  }, []);
 
   return (
     <>
@@ -172,6 +218,7 @@ function SubmitPage() {
       <StyledContainer>
         <StyledBox style={{ display: 'grid' }}>
           <ReactQuill
+            ref={quillRef}
             value={content}
             onChange={handleEditorChange}
             modules={quillModules}
@@ -205,35 +252,3 @@ function SubmitPage() {
 }
 
 export default SubmitPage;
-
-const StyledContainer = styled.div`
-  display: grid;
-  grid-gap: 40px 0px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-`;
-
-const StyledBox = styled.div`
-  display: flex;
-  margin-top: 0rem;
-`;
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0rem 2rem;
-  font-size: 1.9rem;
-`;
-
-const StyledInputText = styled.input`
-  display: flex;
-  padding-left: 1rem;
-  width: 9rem;
-  height: 4rem;
-  text-align: center;
-  align-items: center;
-`;
-
-const StyledButton = styled.button`
-  margin: 6rem 3rem 0rem 3rem;
-`;

@@ -1,15 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
-import DropDown from '../../Commons/DropDown';
-import FILTERING_OPTIONS from '../../Commons/FilteringOptions';
+import DropDown from '../Commons/DropDown';
+import FILTERING_OPTIONS from '../Commons/FilteringOptions';
 import axios from 'axios';
+import { SumbitModalProps } from '../../Types/TeamPageType';
+import {
+  Modal,
+  ModalPage,
+  DetailPage,
+  StyledHeader,
+  StyledSubTitle,
+  StyledBlock,
+  StyledInput,
+  StyledSpan,
+  StyledButtonContainer,
+  StyledButton,
+} from '../../Pages/TeamPage/Styles/ComponentStyle';
 
-type props = {
-  groupId: string | undefined;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function DetailModal(props: props) {
+function DetailModal(props: SumbitModalProps) {
   const { groupId, setShowModal } = props;
   const [position, setPosition] = React.useState('포지션');
   const [skill, setSkill] = React.useState('실력수준');
@@ -121,118 +128,3 @@ function DetailModal(props: props) {
 }
 
 export default DetailModal;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 500;
-`;
-
-const ModalPage = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 70rem;
-  height: 26rem;
-  background-color: rgba(255, 255, 255);
-  z-index: 501;
-`;
-
-const DetailPage = styled.div`
-  z-index: 900;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: beige;
-  width: 90%;
-  font-size: 2.3rem;
-
-  table {
-    width: 100%;
-  }
-
-  tr {
-    justify-content: space-between;
-    align-items: center;
-  }
-  td {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-`;
-
-const StyledHeader = styled.div`
-  z-index: 901;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: absolute;
-  top: 0;
-  margin-top: 2rem;
-  padding-bottom: 1rem;
-  width: 90%;
-  border-bottom: 1px solid #dddddd;
-`;
-
-const StyledSubTitle = styled.div`
-  z-index: 500;
-  font-size: 1.8rem;
-  position: absolute;
-  top: 0;
-  margin-top: 12.5rem;
-`;
-
-const StyledBlock = styled.div`
-  z-index: 500;
-  display: block;
-  align-items: center;
-  border-radius: 2rem;
-  margin: 0.7rem;
-  padding: 1rem 1rem;
-`;
-
-const StyledInput = styled.input`
-  z-index: 901;
-  width: 8rem;
-  padding: 0.5rem 1.3rem;
-`;
-
-const StyledSpan = styled.span`
-  z-index: 10;
-  display: inline-flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.6rem;
-  width: 6rem;
-`;
-
-const StyledButtonContainer = styled.div`
-  z-index: 899;
-  display: flex;
-  font-size: 1.8rem;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  margin-left: 44rem;
-  margin-top: 20rem;
-  width: 90%;
-  border-radius: 1rem;
-`;
-
-const StyledButton = styled.button`
-  z-index: 899;
-  margin: 0rem 1.5rem;
-  height: 4rem;
-  padding: 0rem 2rem;
-  border-radius: 2rem;
-`;

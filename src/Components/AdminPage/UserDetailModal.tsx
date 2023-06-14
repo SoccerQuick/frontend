@@ -1,32 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {
+  TeamPageBody,
+  Modal,
+  ModalPage,
+  DetailButtonContainer,
+  DetailButton,
+  ManagementButtonContainer,
+  ManagementButton,
+  ReturnButton,
+} from '../../Pages/AdminPage/Styles/AdminPageStyle';
+import { DedatilModalProps } from '../../Types/AdminPageTyle';
 
-interface UserData {
-  admin_id?: string;
-  user_id: string;
-  name: string;
-  nick_name: string;
-  email: string;
-  phone_number: string;
-  role: string;
-  gender: string;
-  createdAt: string;
-  login_banned: boolean;
-  login_banEndDate: string | null;
-  community_banned: boolean;
-  community_banEndDate: string | null;
-}
-
-type props = {
-  showManagementModal: boolean;
-  setShowManagementModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowDetailModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalData: UserData;
-};
-
-function DetailModal(props: props) {
+function DetailModal(props: DedatilModalProps) {
   const {
     showManagementModal,
     setShowDetailModal,
@@ -239,86 +226,3 @@ function DetailModal(props: props) {
 }
 
 export default DetailModal;
-
-const TeamPageBody = styled.div`
-  /* display: flex; */
-  flex-direction: row;
-  justify-content: space-between;
-  width: 90%;
-  font-size: 1.8rem;
-  table {
-    width: 100%;
-  }
-
-  tr {
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
-  td {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid;
-    padding: 0.4rem;
-  }
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-`;
-
-const ModalPage = styled.div`
-  position: fixed;
-  margin: 2rem;
-  padding: 1.2rem 1.3rem 0rem 6rem;
-  justify-content: center;
-  align-items: center;
-  width: 60rem;
-  height: 45rem;
-  background-color: rgba(255, 255, 255);
-  z-index: 999;
-`;
-
-const DetailButtonContainer = styled.div`
-  display: flex;
-  position: absolute;
-  width: 47.6rem;
-  justify-content: center;
-  z-index: 997;
-  /* background-color: beige; */
-`;
-
-const DetailButton = styled.button<{ data: string }>`
-  margin: 1rem 2rem;
-  padding: 0.4rem 2rem;
-  border-radius: 1rem;
-`;
-
-const ManagementButtonContainer = styled.div`
-  display: flex;
-  position: absolute;
-  width: 47.6rem;
-  justify-content: center;
-  z-index: 997;
-`;
-
-const ManagementButton = styled.button<{ data: string }>`
-  margin: 1rem 2rem;
-  padding: 0.4rem 2rem;
-  border-radius: 1rem;
-`;
-
-const ReturnButton = styled.button`
-  margin: 1rem 2rem;
-  padding: 0rem 1.4rem;
-`;
