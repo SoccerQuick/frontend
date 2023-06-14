@@ -44,6 +44,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
       ...prev,
       [name]: value,
     }));
+    setLoginError('');
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -125,6 +126,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
 export default Login;
 
 const LoginError = styled.div`
+  height: 1.3rem;
   align-self: start;
   font-size: 12px;
   line-height: 16px;
