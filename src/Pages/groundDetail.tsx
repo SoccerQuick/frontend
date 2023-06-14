@@ -10,6 +10,7 @@ import { ProvidedElementList } from '../Components/SearchPage/Contents/SearchDat
 import GroundDetailCarousel from '../Components/GroundDetail/groundDetailCarousel';
 import Stadiums from '../Components/GroundDetail/Stadiums';
 import GroundImageModal from '../Components/GroundDetail/GroundImageModal';
+import ShareModal from '../Components/GroundDetail/ShareModal';
 import OneMarkerMap from '../Components/GroundDetail/OneMarkerMap';
 import ScrollToTarget from '../Components/scrollToTarget';
 import Review from '../Components/GroundDetail/Review';
@@ -21,6 +22,7 @@ const GroundDetail = () => {
   const [groundData, setGroundData] = useState<DomDataType>();
   const [reviewData, setReviewData] = useState<[]>([]);
   const [showImgModal, setShowImgModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [ImgModalIndex, setImgModalIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const { dom_id } = useParams();
@@ -131,6 +133,7 @@ const GroundDetail = () => {
                 )}
                 찜
               </button>
+              <button onClick={() => setShowShareModal(true)}>공유하기</button>
             </GroundDetailHeaderBtn>
           </GroundDetailHeader>
           <Source>
@@ -206,6 +209,12 @@ const GroundDetail = () => {
           ImgModalIndex={ImgModalIndex}
         />
       )}
+      {showShareModal && groundData && (
+        <ShareModal
+          setShowShareModal={setShowShareModal}
+          groundData={groundData}
+        />
+      )}
     </>
   );
 };
@@ -261,13 +270,19 @@ const GroundDetailHeaderBtn = styled.div`
     width: 20rem;
     height: 5rem;
     color: white;
+    font-weight: 500;
     background: #09cf00;
-    border: 1px solid #09cf00;
-    box-shadow: 0px 0px 4px 2px rgba(55, 53, 47, 0.4);
+    box-shadow: 0px 0px 2px 2px rgba(123, 123, 123, 0.4);
     border-radius: 4px;
-    :last-child {
+    :not(:first-child) {
       width: 8rem;
       margin-left: 1.3rem;
+    }
+    :last-child {
+      width: 12rem;
+      background: white;
+      color: #0d9c05;
+      box-shadow: 0px 0px 2px 2px #dadada;
     }
     > a {
       color: white;
