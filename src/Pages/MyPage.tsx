@@ -40,6 +40,7 @@ export function MyPage() {
   const [password, setPassword] = useState('');
   const [selectedImage, setSelectedImage] = useState<File>();
   const isLogIn = useSelector(isLogInSelector);
+  const [favoritePlaygounds, setFavoritePlaygrounds] = useState<string[]>([]);
 
   useEffect(() => {
     if (isLogIn) {
@@ -66,6 +67,7 @@ export function MyPage() {
       phone_number: userInfo.phone_number,
       gender: userInfo.gender,
     }));
+    setFavoritePlaygrounds(userInfo.favoritePlaygrounds);
   };
 
   return (
@@ -113,7 +115,7 @@ export function MyPage() {
       )}
       {checkedBarItem === 3 ? (
         <MyPageContainer>
-          <MyFavoriteGroundList />
+          <MyFavoriteGroundList favoritePlaygrounds={favoritePlaygounds} />
         </MyPageContainer>
       ) : (
         ''
