@@ -140,6 +140,12 @@ const MyPageInfoContainer = styled.div`
   padding: 0 2rem;
   margin: 2rem auto;
   background-color: rgb(247 247 247);
+
+  @media (max-width: 768px) {
+    width: 70rem;
+    height: 130rem;
+    flex-direction: column;
+  }
 `;
 
 const MyPageContainer = styled.div`
@@ -148,7 +154,6 @@ const MyPageContainer = styled.div`
   justify-content: flex-start;
   align-items: space-evenly;
   width: 98.4rem;
-  height: 100%;
   padding: 0 2rem;
   margin: 2rem auto;
   position: relative;

@@ -73,8 +73,14 @@ const StyledProfileContainer = styled.div`
   align-self: start;
   width: 25rem;
   height: 64%;
-
   border-radius: 16px;
+
+  @media (max-width: 768px) {
+    align-self: center;
+    flex-direction: row;
+    width: 60rem;
+    padding-top: 2.5rem;
+  }
 `;
 
 const StyledProfileTop = styled.div`
@@ -88,6 +94,13 @@ const StyledProfileTop = styled.div`
   background-color: #fdfdfd;
   border-bottom: 1px solid rgb(247 247 247);
   border-radius: 16px 16px 0 0;
+
+  @media (max-width: 768px) {
+    width: 50%;
+    height: 100%;
+    margin: 0;
+    border-radius: 16px 0 0 16px;
+  }
 `;
 const StyledProfileBottom = styled.div`
   display: flex;
@@ -100,6 +113,12 @@ const StyledProfileBottom = styled.div`
   border-radius: 0 0 16px 16px;
   & > div:nth-child(2) {
     margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 50%;
+    height: 100%;
+    border-radius: 0 16px 16px 0;
   }
 `;
 
