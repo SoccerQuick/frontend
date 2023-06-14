@@ -1,4 +1,5 @@
 import react, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../Components/Footer';
@@ -41,10 +42,14 @@ export function MyPage() {
   const [selectedImage, setSelectedImage] = useState<File>();
   const isLogIn = useSelector(isLogInSelector);
   const [favoritePlaygounds, setFavoritePlaygrounds] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogIn) {
       getUserData();
+    } else {
+      alert('마이페이지는 로그인 후 사용해 주세요');
+      navigate('/');
     }
   }, [isLogIn]);
 
