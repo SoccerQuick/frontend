@@ -49,6 +49,7 @@ export interface DomDataType {
   usersFavorites: [];
   wear: string;
   _id: number;
+  reviews: [];
 }
 
 function SearchPage() {
