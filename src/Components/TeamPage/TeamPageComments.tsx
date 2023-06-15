@@ -16,10 +16,7 @@ import {
   StyledCommentDetailDiv,
   StyledGender,
   StyledPosition,
-  getColorByPosition,
   StyledLevel,
-  getColorBySkill,
-  getBackgroundColorBySkill,
   StyledContents,
   StyledCommentButtons,
 } from '../../Pages/TeamPage/Styles/ComponentStyle';

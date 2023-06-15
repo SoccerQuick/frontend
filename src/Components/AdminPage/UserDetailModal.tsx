@@ -210,12 +210,12 @@ function DetailModal(props: DedatilModalProps) {
                 커뮤니티 정지
               </ManagementButton>
               <ReturnButton
-                style={{ zIndex: 999 }}
+                style={{ zIndex: 999, height: '2.8rem' }}
                 onClick={() => {
                   setShowManagementModal(false);
                 }}
               >
-                X
+                ↩️
               </ReturnButton>
             </ManagementButtonContainer>
           )}
