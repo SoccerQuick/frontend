@@ -9,6 +9,7 @@ import Avatar1 from '../styles/icon/avatar1.png';
 import Avatar2 from '../styles/icon/avatar2.png';
 import Avatar3 from '../styles/icon/avatar3.png';
 import Avatar4 from '../styles/icon/avatar4.png';
+import Avatar5 from '../styles/icon/avatar5.png';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -33,7 +34,10 @@ export default function Main() {
         <StyledListContainer>
           <StyledFieldList>
             <StyledListTitleContainer>
-              <h1 className="field-list-header-text">🥅 경기장 리스트</h1>
+              <span>
+                <span className="emoji">🥅</span>
+                <h2 className="field-list-header-text"> 경기장 리스트</h2>
+              </span>
               <span
                 className="viewAll"
                 onClick={() => {
@@ -145,7 +149,10 @@ export default function Main() {
           </StyledFieldList>
           <StyledReviewList>
             <StyledListTitleContainer>
-              <h1 className="review-list-header-text">👀 싸커퀵 풋살 후기</h1>
+              <span>
+                <span className="emoji">👀&nbsp;</span>
+                <h2 className="review-list-header-text">싸커퀵 풋살 후기</h2>
+              </span>
               <span
                 className="viewAll"
                 onClick={() => {
@@ -175,10 +182,10 @@ export default function Main() {
               </div>
               <div className="review-list-example">
                 <span>
-                  <img src={Avatar2} alt="avatar" />
+                  <img src={Avatar5} alt="avatar" />
                 </span>
                 <span className="review-list-examples-text">
-                  OO 플랫폼 OOO 매니저님 너무 친절하셨어요! 또 뵙고 싶네요~
+                  플랩풋볼 권성경 매니저님 너무 친절하셨어요!
                 </span>
               </div>
             </div>
@@ -213,7 +220,7 @@ const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 98.4rem;
-  margin: 0 auto; /* 좌우 여백 자동 조정 */
+  margin: 2rem auto 5rem auto; /* 좌우 여백 자동 조정 */
 `;
 
 const StyledImageContainer = styled.div`
@@ -222,13 +229,13 @@ const StyledImageContainer = styled.div`
   background-color: #f2f5f7;
   justify-content: center;
   align-items: center;
-  height: 45vh; /* 화면 높이의 특정 비율로 설정 */
+  height: 45rem; /* 화면 높이의 특정 비율로 설정 */
   position: relative;
 `;
 
 const StyledImage = styled.img`
   width: 100%;
-  height: 45vh;
+  height: 45rem;
   position: absolute;
   top: 0;
 `;
@@ -238,9 +245,8 @@ const StyledImageContents = styled.div`
   flex-direction: column;
   justify-content: space-around;
   position: absolute;
-  top: 30%;
-  left: 10%;
-
+  top: 25%;
+  left: 5%;
   width: 40%;
 `;
 
@@ -262,7 +268,7 @@ const StyledImageText = styled.h1`
 const StyledListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5vh 1rem 1rem 1rem;
+  padding: 3rem 1rem 1rem 1rem;
   width: 98.4rem;
   margin: 1.4rem auto;
 `;
@@ -279,6 +285,22 @@ const StyledListTitleContainer = styled.div`
     > img {
       margin-left: 1rem;
     }
+  }
+
+  > span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.5rem;
+
+    > img {
+      padding-top: 3px;
+    }
+  }
+
+  .emoji {
+    font-size: 2rem;
+    padding-bottom: 5px;
   }
 `;
 
@@ -301,11 +323,11 @@ const StyledFieldList = styled.div`
     align-items: center;
     padding: 2rem;
     border: 2px solid #eeeeee;
-    border-radius: 0.5rem;
+    border-radius: 2rem;
   }
 
   .field-list-text-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .field-list-text-content {
@@ -347,6 +369,9 @@ const StyledReviewList = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    > span > img {
+      width: 7rem;
+    }
   }
 
   .review-list-examples-text {
