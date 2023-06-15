@@ -30,11 +30,11 @@ html {
 }
 
 /* 반응형  */
-/* @media all and (max-width: 3900px) {
+@media all and (max-width: 1400px) {
   html {
-    font-size: 60%;
+    font-size: 46.5%;
   }
-} */
+}
 
 @media all and (min-width: 1400px) and (max-width: 1550px) {
   html {
