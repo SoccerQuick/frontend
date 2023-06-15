@@ -215,6 +215,9 @@ export const DetailButton = styled.button<{ data: string }>`
   margin: 1rem 2rem;
   padding: 0.4rem 2rem;
   border-radius: 1rem;
+  &:hover {
+    background-color: #ddd;
+  }
 `;
 
 export const ManagementButtonContainer = styled.div`
@@ -225,11 +228,24 @@ export const ManagementButtonContainer = styled.div`
   z-index: 997;
 `;
 
-export const ManagementButton = styled.button<{ data: string }>`
-  font-size: 0.7rem;
+export const LevelUpButton = styled.button<{ data: string }>`
+  font-size: 1.3rem;
   margin: 1rem 2rem;
   padding: 0.4rem 2rem;
   border-radius: 1rem;
+  &:hover {
+    background-color: skyblue;
+  }
+`;
+
+export const RestrictButton = styled.button<{ data: string }>`
+  font-size: 1.3rem;
+  margin: 1rem 2rem;
+  padding: 0.4rem 2rem;
+  border-radius: 1rem;
+  &:hover {
+    background-color: rgb(255, 79, 79);
+  }
 `;
 
 export const ReturnButton = styled.button`
