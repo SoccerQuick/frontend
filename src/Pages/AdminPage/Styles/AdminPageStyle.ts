@@ -4,11 +4,14 @@ import styled from 'styled-components';
 export const AdminContainer = styled.div`
   margin-top: 5rem;
   font-size: 3rem;
-  height: 82vh;
+  height: 77rem;
+  display: flex;
+  justify-content: center;
 `;
 
 export const BodyContainer = styled.div`
   height: fit-content;
+  justify-content: center;
 `;
 
 export const BodyLeftBar = styled.div`
@@ -24,8 +27,9 @@ export const BodyLeftBar = styled.div`
 
 export const BodyMain = styled.div`
   background-color: rgb(245, 245, 245);
-  width: 159rem;
-  height: 90rem;
+  width: 131rem;
+  height: 72rem;
+  /* margin-left: 3rem; */
 `;
 
 export const MainButton = styled.button<{ state: string }>`
