@@ -79,7 +79,7 @@ function MyFavoriteGroundList({
                   </StyledCheckboxTd>
                   <StyledAddressTd>{item.address.area}</StyledAddressTd>
                   <StyledMainTd>
-                    <p>{item.title}</p>
+                    <span>{item.title}</span>
                     <StyledTableCell>
                       {Object.keys(ProvidedElementList).map(
                         (provided) =>
@@ -105,7 +105,6 @@ function MyFavoriteGroundList({
               ))
             ) : (
               <StyledTr>
-                {' '}
                 <td></td>
                 <td></td>
                 <StyledMessageTd>즐겨찾는 구장이 없습니다</StyledMessageTd>
@@ -169,11 +168,11 @@ const getBackgroundColorBydata = (data: string) => {
 
 const Searchpage = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   font-size: 1.7rem;
   width: 98.4rem;
+  height: 100rem;
   margin-top: 2rem;
 `;
 
@@ -224,7 +223,7 @@ const StyledLabelTr = styled.tr`
       padding-left: 4.5rem;
     }
     :nth-child(4) {
-      padding-right: 3rem;
+      padding-right: 5rem;
     }
   }
 `;
@@ -255,8 +254,7 @@ const StyledTable = styled.div<{ data: string }>`
 `;
 
 const StyledTr = styled.tr`
-  height: 10rem;
-  max-height: 10rem;
+  height: 13rem;
   margin: 1rem 1rem;
   padding: 2rem 1rem;
   font-size: 1.6rem;
@@ -294,8 +292,9 @@ const StyledAddressTd = styled.td`
 `;
 
 const StyledMainTd = styled.td`
-  padding-left: 5rem;
-  p {
+  padding-left: 6rem;
+  max-width: 48rem;
+  span {
     font-size: 1.9rem;
   }
 `;

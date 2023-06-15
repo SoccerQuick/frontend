@@ -36,7 +36,6 @@ function SearchMyApplicationPost() {
       })
       .then((res) => res.data.data)
       .then((result) => {
-        console.log(result);
         setGroupList(result);
       })
       .catch((err) => console.log(err));

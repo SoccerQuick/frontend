@@ -45,7 +45,7 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
                     return null;
                   } else if (index === 2) {
                     return (
-                      <td>
+                      <td key={`td-${idx}`}>
                         <StyledLongSpan>{value}</StyledLongSpan>
                         <span style={{ color: 'red' }}>{item[3]}</span>
                       </td>
