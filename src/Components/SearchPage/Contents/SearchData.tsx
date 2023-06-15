@@ -243,11 +243,9 @@ const StyledLabelTr = styled.tr`
 
 const StyledTableCell = styled.div`
   display: inline-block;
-  height: 2.5rem;
   padding: 0;
   margin: 1.2rem 1rem 0rem 0;
   border-radius: 0.4rem;
-  font-size: 1.5rem;
   font-weight: 400;
   color: #888888;
   line-height: 2.6rem;
@@ -256,12 +254,11 @@ const StyledTableCell = styled.div`
 
 const StyledTable = styled.div<{ data: string }>`
   display: inline;
-  height: 2rem;
   padding: 0.1rem 1rem 0.1rem 1rem;
   margin-right: 1.2rem;
   border: 0.1rem solid #eeeeee;
   border-radius: 2rem;
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 400;
   color: ${({ data }) => getColorBydata(data)};
   background-color: ${({ data }) => getBackgroundColorBydata(data)};
