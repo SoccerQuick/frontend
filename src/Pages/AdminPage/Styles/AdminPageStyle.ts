@@ -211,18 +211,20 @@ export const DetailButton = styled.button<{ data: string }>`
 export const ManagementButtonContainer = styled.div`
   display: flex;
   position: absolute;
-  width: 47.6rem;
+  width: 55.6rem;
   justify-content: center;
   z-index: 997;
 `;
 
 export const ManagementButton = styled.button<{ data: string }>`
+  font-size: 0.7rem;
   margin: 1rem 2rem;
   padding: 0.4rem 2rem;
   border-radius: 1rem;
 `;
 
 export const ReturnButton = styled.button`
-  margin: 1rem 2rem;
-  padding: 0rem 1.4rem;
+  background-color: white;
+  margin: 1rem 1rem;
+  padding: 0rem 1rem;
 `;
