@@ -91,15 +91,17 @@ const StyledProfileInfo = styled.div`
   margin-left: 1rem;
   margin-right: 1rem;
   cursor: pointer;
+  font-size: 1.4rem;
+  margin-bottom: 0.2rem;
 `;
 
 const StyledMenuItem = styled.div`
   flex: 2;
   text-align: center;
   cursor: pointer;
-  padding-top: 5px;
+  padding-top: 0.4rem;
   color: rgb(62, 84, 99);
-  font-size: 10px;
+  font-size: 1.4rem;
   &:first-child {
     margin-top: 15px;
   }
