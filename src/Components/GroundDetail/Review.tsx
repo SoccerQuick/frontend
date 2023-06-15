@@ -130,10 +130,13 @@ export default function Review(props: ReviewProps) {
 
   return (
     <StyledReviewContainer>
-      <h2>📄 리뷰 목록</h2>
+      <div className="review-header">
+        <h2>📄 리뷰 목록</h2>
+        <span>좋아요 순</span>
+      </div>
       {reviewData.map((item, index) => (
         <StyledReviews key={index}>
-          <div className="review-header">
+          <div className="review-contents-header">
             <span className="user-info">
               <span>
                 <img className="user-icon" src={item.user_icon} alt="avatar" />
@@ -208,10 +211,26 @@ const StyledReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  > h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin: 0.6rem 0;
+  .review-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    > h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0.6rem 0;
+    }
+
+    > span {
+      padding: 1rem;
+      font-size: 1.4rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 `;
 
@@ -224,7 +243,7 @@ const StyledReviews = styled.div`
   filter: drop-shadow(0 0 3px #dddddd);
   border-radius: 10px;
 
-  .review-header {
+  .review-contents-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -277,17 +296,31 @@ const StyledReviews = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     margin: 1rem;
-  }
 
-  .review-edit {
-    margin-right: 1rem;
-    font-size: 1.7rem;
-    border-radius: 5px;
-  }
+    .review-edit {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      margin-right: 1rem;
+      border: 0.5px solid #efefef;
+      border-radius: 5px;
+      background-color: white;
 
-  .review-delete {
-    font-size: 1.7rem;
-    border-radius: 5px;
+      &:hover {
+        background-color: #e7e7e7;
+      }
+    }
+
+    .review-delete {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border: 0.5px solid #efefef;
+      border-radius: 5px;
+      background-color: white;
+
+      &:hover {
+        background-color: #eeeeee;
+      }
+    }
   }
 `;
 
@@ -327,11 +360,19 @@ const StyledWriteReview = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin: 1rem;
   }
 
   .write-review-button {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    border: 0.5px solid #efefef;
     border-radius: 5px;
+    background-color: white;
+    color: #09cf00;
+
+    &:hover {
+      background-color: #09cf00;
+      color: white;
+    }
   }
 `;
