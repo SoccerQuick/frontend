@@ -130,6 +130,7 @@ export const PageSelect = styled.div`
   background-color: rgb(245, 245, 245);
 `;
 
+// 페이지네이션 컴포넌트를 사용하면서 사용하지 않게 된 부분
 export const PageButton = styled.button<{
   selected: number;
   currentPage: number;
