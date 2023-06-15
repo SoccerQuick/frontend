@@ -182,7 +182,7 @@ export default function Main() {
               </div>
               <div className="review-list-example">
                 <span>
-                  <img src={Avatar5} alt="avatar" />
+                  <img src={Avatar5} alt="avatar" className="small" />
                 </span>
                 <span className="review-list-examples-text">
                   플랩풋볼 권성경 매니저님 너무 친절하셨어요!
@@ -201,7 +201,7 @@ export default function Main() {
               </div>
               <div className="review-list-example">
                 <span>
-                  <img src={Avatar4} alt="avatar" />
+                  <img src={Avatar4} alt="avatar" className="big" />
                 </span>
                 <span className="review-list-examples-text">
                   풋살화 대여가 가능한가요?
@@ -371,6 +371,13 @@ const StyledReviewList = styled.div`
     align-items: center;
     > span > img {
       width: 7rem;
+    }
+    img.small {
+      width: 6rem;
+      margin-left: 1rem;
+    }
+    img.big {
+      width: 8rem;
     }
   }
 
