@@ -66,5 +66,6 @@ const FeildSearchBar = styled.div`
   }
   img {
     padding-top: 0.2rem;
+    cursor: pointer;
   }
 `;
