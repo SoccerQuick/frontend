@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 // Page 부분
 export const AdminContainer = styled.div`
-  margin-top: 5rem;
+  position: relative;
+  margin: auto;
   font-size: 3rem;
-  height: 77rem;
   display: flex;
   justify-content: center;
 `;
