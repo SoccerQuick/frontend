@@ -85,14 +85,15 @@ export default function LikeButton(props: LikeButtonProps) {
 
 const StyledLikeBtn = styled.button<{ isClicked: boolean }>`
   background-color: transparent;
+  font-size: 1.5rem;
 
   ${(props) =>
     props.isClicked &&
     css`
-      animation: scaleAnimation 0.5s linear;
+      animation: heartBeat 0.5s linear;
     `}
 
-  @keyframes scaleAnimation {
+  @keyframes heartBeat {
     0% {
       transform: scale(1);
     }
@@ -102,5 +103,9 @@ const StyledLikeBtn = styled.button<{ isClicked: boolean }>`
     100% {
       transform: scale(1);
     }
+  }
+
+  &:hover {
+    font-size: calc(1.5rem * 1.2);
   }
 `;
