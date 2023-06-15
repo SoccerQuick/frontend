@@ -8,7 +8,8 @@ import {
   DetailButtonContainer,
   DetailButton,
   ManagementButtonContainer,
-  ManagementButton,
+  LevelUpButton,
+  RestrictButton,
   ReturnButton,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
 import { DedatilModalProps } from '../../Types/AdminPageType';
@@ -173,7 +174,7 @@ function DetailModal(props: DedatilModalProps) {
               <DetailButton
                 data={showManagementModal ? 'false' : 'true'}
                 onClick={() => {
-                  alert('API미제공');
+                  alert('서비스 준비 중');
                 }}
               >
                 정보수정
@@ -191,24 +192,24 @@ function DetailModal(props: DedatilModalProps) {
 
           {showManagementModal && (
             <ManagementButtonContainer>
-              <ManagementButton
+              <LevelUpButton
                 data={showManagementModal ? 'true' : 'false'}
                 onClick={handleUserToManager}
               >
                 관리자 임명
-              </ManagementButton>
-              <ManagementButton
+              </LevelUpButton>
+              <RestrictButton
                 data={showManagementModal ? 'true' : 'false'}
                 onClick={handleUserBlockLogin}
               >
                 로그인 정지
-              </ManagementButton>
-              <ManagementButton
+              </RestrictButton>
+              <RestrictButton
                 data={showManagementModal ? 'true' : 'false'}
                 onClick={handleUserCommunityBan}
               >
                 커뮤니티 정지
-              </ManagementButton>
+              </RestrictButton>
               <ReturnButton
                 style={{ zIndex: 999, height: '2.8rem' }}
                 onClick={() => {
