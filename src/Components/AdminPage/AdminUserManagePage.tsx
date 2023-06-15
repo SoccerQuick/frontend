@@ -9,10 +9,10 @@ import {
   StyledTr,
   StyledButton,
   PageSelect,
-  PageButton,
   StyledTd,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
 import { UserData } from '../../Types/AdminPageType';
+import MyPagination from '../MyPage/MyPagination';
 
 function AdminUserManager() {
   const [showDetailModal, setShowDetailModal] = React.useState<boolean>(false);
@@ -50,7 +50,7 @@ function AdminUserManager() {
   // 페이지네이션 구현 부분
   const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
   const [currentData, setCurrentData] = React.useState<UserData[]>([]); // 초기 데이터
-  const [totalPage, setTotalPage] = React.useState(0);
+  // const [totalPage, setTotalPage] = React.useState(0);
 
   // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
   const [data, setData] = React.useState<UserData[]>([]);
@@ -63,7 +63,7 @@ function AdminUserManager() {
         if (currentData.length === 0) {
           setCurrentData(res.data.data.slice(0, 14));
         }
-        setTotalPage(Math.ceil(res.data.data.length / 14));
+        // setTotalPage(Math.ceil(res.data.data.length / 14));
       })
       .catch((error) => {
         console.error(error);
@@ -104,7 +104,7 @@ function AdminUserManager() {
       return false;
     });
     setFilteredData(newData);
-    setTotalPage(Math.ceil(newData.length / 12));
+    // setTotalPage(Math.ceil(newData.length / 12));
   }
   React.useEffect(() => {
     setCurrentData(
@@ -134,116 +134,113 @@ function AdminUserManager() {
         </form>
       </UserManageContainer>
       <UserManageContainerTable>
-        <table>
-          <thead>
-            <StyledTr>
-              <th style={{ width: '3rem' }}>순번</th>
-              <th style={{ width: '5rem' }}>권한</th>
-              <th style={{ width: '4rem' }}>이름</th>
-              <th style={{ width: '4.8rem' }}>닉네임</th>
-              <th style={{ width: '4.9rem' }}>E-mail</th>
-              <th style={{ width: '7rem' }}>상태</th>
-              <th style={{ width: '4rem' }}>정지기간</th>
-              <th style={{ width: '6rem' }}>가입일자</th>
-              <th style={{ width: '3rem' }}>회원관리</th>
-            </StyledTr>
-          </thead>
-          <tbody>
-            {currentData.length > 0 ? (
-              currentData.map((item, idx) => (
-                <StyledTr key={idx}>
-                  <td style={{ width: '3rem' }}>
-                    {idx + 1 + (currentPage - 1) * 12}
-                  </td>
-                  <StyledTd
-                    style={{
-                      width: '5rem',
-                    }}
-                  >
-                    {item.role === 'admin'
-                      ? '👑총 관리자'
-                      : item.role === 'manager'
-                      ? '🌟관리자'
-                      : '일반회원'}
-                  </StyledTd>
-                  <StyledTd style={{ width: '4rem' }}>{item.name}</StyledTd>
-                  <StyledTd
-                    style={{
-                      width: '4.8rem',
-                    }}
-                  >
-                    {item.nick_name}
-                  </StyledTd>
-                  <StyledTd style={{ width: '4.9rem' }}>{item.email}</StyledTd>
-                  <StyledTd
-                    style={{
-                      width: '7rem',
-                    }}
-                  >
-                    {item.login_banned
-                      ? '로그인 정지'
-                      : item.community_banned
-                      ? '커뮤니티 정지'
-                      : '정상'}
-                  </StyledTd>
-                  <StyledTd style={{ width: '4rem' }}>
-                    {item.login_banned
-                      ? item.login_banEndDate?.split('T')[0].slice(2)
-                      : item.community_banned
-                      ? item.community_banEndDate?.split('T')[0].slice(2)
-                      : '-'}
-                  </StyledTd>
-                  <StyledTd style={{ width: '6rem' }}>
-                    {item.createdAt.split('T')[0].slice(2)}
-                  </StyledTd>
-                  <StyledTd style={{ width: '3rem' }}>
-                    <StyledButton
-                      onClick={() => {
-                        setShowDetailModal(true);
-                        setModalData(item);
+        <div style={{ height: '55rem' }}>
+          <table>
+            <thead>
+              <StyledTr>
+                <th style={{ width: '3rem' }}>순번</th>
+                <th style={{ width: '5rem' }}>권한</th>
+                <th style={{ width: '4rem' }}>이름</th>
+                <th style={{ width: '4.8rem' }}>닉네임</th>
+                <th style={{ width: '4.9rem' }}>E-mail</th>
+                <th style={{ width: '7rem' }}>상태</th>
+                <th style={{ width: '4rem' }}>정지기간</th>
+                <th style={{ width: '6rem' }}>가입일자</th>
+                <th style={{ width: '3rem' }}>회원관리</th>
+              </StyledTr>
+            </thead>
+            <tbody>
+              {currentData.length > 0 ? (
+                currentData.map((item, idx) => (
+                  <StyledTr key={idx}>
+                    <td style={{ width: '3rem' }}>
+                      {idx + 1 + (currentPage - 1) * 12}
+                    </td>
+                    <StyledTd
+                      style={{
+                        width: '5rem',
                       }}
                     >
-                      🔍
-                    </StyledButton>
-                  </StyledTd>
-                </StyledTr>
-              ))
-            ) : (
-              <tr style={{ height: '52vh' }}>
-                <td colSpan={9}>
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'grey',
-                    }}
-                  >
-                    검색 결과가 없습니다.
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                      {item.role === 'admin'
+                        ? '👑총 관리자'
+                        : item.role === 'manager'
+                        ? '🌟관리자'
+                        : '일반회원'}
+                    </StyledTd>
+                    <StyledTd style={{ width: '4rem' }}>{item.name}</StyledTd>
+                    <StyledTd
+                      style={{
+                        width: '4.8rem',
+                      }}
+                    >
+                      {item.nick_name}
+                    </StyledTd>
+                    <StyledTd style={{ width: '4.9rem' }}>
+                      {item.email}
+                    </StyledTd>
+                    <StyledTd
+                      style={{
+                        width: '7rem',
+                      }}
+                    >
+                      {item.login_banned
+                        ? '로그인 정지'
+                        : item.community_banned
+                        ? '커뮤니티 정지'
+                        : '정상'}
+                    </StyledTd>
+                    <StyledTd style={{ width: '4rem' }}>
+                      {item.login_banned
+                        ? item.login_banEndDate?.split('T')[0].slice(2)
+                        : item.community_banned
+                        ? item.community_banEndDate?.split('T')[0].slice(2)
+                        : '-'}
+                    </StyledTd>
+                    <StyledTd style={{ width: '6rem' }}>
+                      {item.createdAt.split('T')[0].slice(2)}
+                    </StyledTd>
+                    <StyledTd style={{ width: '3rem' }}>
+                      <StyledButton
+                        onClick={() => {
+                          setShowDetailModal(true);
+                          setModalData(item);
+                        }}
+                      >
+                        🔍
+                      </StyledButton>
+                    </StyledTd>
+                  </StyledTr>
+                ))
+              ) : (
+                <tr style={{ height: '52vh' }}>
+                  <td colSpan={9}>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'grey',
+                      }}
+                    >
+                      검색 결과가 없습니다.
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <PageSelect>
-          {Array.from({ length: totalPage }, (_, index) => (
-            <PageButton
-              key={index + 1}
-              onClick={() => {
-                setCurrentPage(index + 1);
-              }}
-              selected={index + 1}
-              currentPage={currentPage}
-            >
-              [{index + 1}]
-            </PageButton>
-          ))}
+          <MyPagination
+            totalItemsCount={filteredData.length}
+            itemsPerPage={12}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
         </PageSelect>
       </UserManageContainerTable>
-
       {showDetailModal && (
         <UserDetailModal
           setShowDetailModal={setShowDetailModal}

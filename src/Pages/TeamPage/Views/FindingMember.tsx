@@ -123,7 +123,6 @@ function FindingMember() {
       <FindingMemberPageBoard
         dropdownList={dropdownList}
         handleReset={handleReset}
-        // setShowModal={setShowModal}
         filteredData={filteredData}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
