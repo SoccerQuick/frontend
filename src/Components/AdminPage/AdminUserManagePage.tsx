@@ -10,8 +10,9 @@ import {
   StyledButton,
   PageSelect,
   PageButton,
+  StyledTd,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
-import { UserData } from '../../Types/AdminPageTyle';
+import { UserData } from '../../Types/AdminPageType';
 
 function AdminUserManager() {
   const [showDetailModal, setShowDetailModal] = React.useState<boolean>(false);
@@ -103,11 +104,11 @@ function AdminUserManager() {
       return false;
     });
     setFilteredData(newData);
-    setTotalPage(Math.ceil(newData.length / 14));
+    setTotalPage(Math.ceil(newData.length / 12));
   }
   React.useEffect(() => {
     setCurrentData(
-      filteredData.slice((currentPage - 1) * 14, currentPage * 14)
+      filteredData.slice((currentPage - 1) * 12, currentPage * 12)
     );
   }, [currentPage, filteredData]);
 
@@ -136,15 +137,15 @@ function AdminUserManager() {
         <table>
           <thead>
             <StyledTr>
-              <th style={{ width: '4%' }}>순번</th>
-              <th style={{ width: '6%' }}>권한</th>
-              <th style={{ width: '6%' }}>이름</th>
-              <th style={{ width: '6%' }}>닉네임</th>
-              <th style={{ width: '10%' }}>E-mail</th>
-              <th style={{ width: '6%' }}>상태</th>
-              <th style={{ width: '6%' }}>정지기간</th>
-              <th style={{ width: '6%' }}>가입일자</th>
-              <th style={{ width: '4%' }}>회원관리</th>
+              <th style={{ width: '3rem' }}>순번</th>
+              <th style={{ width: '5rem' }}>권한</th>
+              <th style={{ width: '4rem' }}>이름</th>
+              <th style={{ width: '4.8rem' }}>닉네임</th>
+              <th style={{ width: '4.9rem' }}>E-mail</th>
+              <th style={{ width: '7rem' }}>상태</th>
+              <th style={{ width: '4rem' }}>정지기간</th>
+              <th style={{ width: '6rem' }}>가입일자</th>
+              <th style={{ width: '3rem' }}>회원관리</th>
             </StyledTr>
           </thead>
           <tbody>
@@ -152,36 +153,50 @@ function AdminUserManager() {
               currentData.map((item, idx) => (
                 <StyledTr key={idx}>
                   <td style={{ width: '3rem' }}>
-                    {idx + 1 + (currentPage - 1) * 14}
+                    {idx + 1 + (currentPage - 1) * 12}
                   </td>
-                  <td style={{ width: '5rem' }}>
+                  <StyledTd
+                    style={{
+                      width: '5rem',
+                    }}
+                  >
                     {item.role === 'admin'
                       ? '👑총 관리자'
                       : item.role === 'manager'
                       ? '🌟관리자'
                       : '일반회원'}
-                  </td>
-                  <td style={{ width: '4rem' }}>{item.name}</td>
-                  <td style={{ width: '4.8rem' }}>{item.nick_name}</td>
-                  <td style={{ width: '4.9rem' }}>{item.email}</td>
-                  <td style={{ width: '7rem' }}>
+                  </StyledTd>
+                  <StyledTd style={{ width: '4rem' }}>{item.name}</StyledTd>
+                  <StyledTd
+                    style={{
+                      width: '4.8rem',
+                    }}
+                  >
+                    {item.nick_name}
+                  </StyledTd>
+                  <StyledTd style={{ width: '4.9rem' }}>{item.email}</StyledTd>
+                  <StyledTd
+                    style={{
+                      width: '7rem',
+                    }}
+                  >
                     {item.login_banned
                       ? '로그인 정지'
                       : item.community_banned
                       ? '커뮤니티 정지'
                       : '정상'}
-                  </td>
-                  <td style={{ width: '4rem' }}>
+                  </StyledTd>
+                  <StyledTd style={{ width: '4rem' }}>
                     {item.login_banned
                       ? item.login_banEndDate?.split('T')[0].slice(2)
                       : item.community_banned
                       ? item.community_banEndDate?.split('T')[0].slice(2)
                       : '-'}
-                  </td>
-                  <td style={{ width: '6rem' }}>
+                  </StyledTd>
+                  <StyledTd style={{ width: '6rem' }}>
                     {item.createdAt.split('T')[0].slice(2)}
-                  </td>
-                  <td style={{ width: '3rem' }}>
+                  </StyledTd>
+                  <StyledTd style={{ width: '3rem' }}>
                     <StyledButton
                       onClick={() => {
                         setShowDetailModal(true);
@@ -190,12 +205,12 @@ function AdminUserManager() {
                     >
                       🔍
                     </StyledButton>
-                  </td>
+                  </StyledTd>
                 </StyledTr>
               ))
             ) : (
               <tr style={{ height: '52vh' }}>
-                <td colSpan={11}>
+                <td colSpan={9}>
                   <div
                     style={{
                       width: '100%',

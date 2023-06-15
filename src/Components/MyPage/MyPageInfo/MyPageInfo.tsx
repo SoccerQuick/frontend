@@ -44,13 +44,6 @@ export function MyPageInfo({
   const dispatch = useDispatch();
   const userInfo = useSelector(userSelector);
 
-  useEffect(() => {
-    if (!userInfo) {
-      alert('마이페이지는 로그인 후 사용해주세요.');
-      navigate('/');
-    }
-  }, [userInfo]);
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { newPassword, newPasswordConfirm } = passwordForm;
@@ -276,6 +269,9 @@ export const StyledInfoBox = styled.div`
   background: rgb(253, 253, 253);
   border-radius: 16px;
   margin-top: 2.5rem;
+  & > div:last-child {
+    margin-bottom: 1rem;
+  }
 `;
 
 export const StyledTitle = styled.div`
@@ -296,6 +292,7 @@ const StyledInfoForm = styled.form`
   height: 70%;
 
   & > div:last-child {
+    height: 100%;
     align-self: end;
   }
 `;
@@ -303,7 +300,7 @@ const StyledInfoForm = styled.form`
 const StyledSubmitButton = styled.button`
   align-self: end;
   width: 8rem;
-  margin: 1rem 1rem 0 0;
+  margin: 1.5rem 1rem 0 0;
   font-size: 1rem;
   background-color: #09cf00;
   color: #fff;
@@ -316,7 +313,8 @@ const StyledRedSubmitButton = styled(StyledSubmitButton)`
 
 const StyledErrorDiv = styled.div`
   color: red;
-  margin: 0.5rem 0;
+  padding-top: 1rem;
+  height: 3rem;
 `;
 
 const StyledShortInfoForm = styled(StyledInfoForm)`

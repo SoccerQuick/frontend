@@ -1,4 +1,5 @@
 import react, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../Components/Footer';
@@ -40,10 +41,15 @@ export function MyPage() {
   const [password, setPassword] = useState('');
   const [selectedImage, setSelectedImage] = useState<File>();
   const isLogIn = useSelector(isLogInSelector);
+  const [favoritePlaygounds, setFavoritePlaygrounds] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogIn) {
       getUserData();
+    } else {
+      alert('마이페이지는 로그인 후 사용해 주세요');
+      navigate('/');
     }
   }, [isLogIn]);
 
@@ -66,6 +72,7 @@ export function MyPage() {
       phone_number: userInfo.phone_number,
       gender: userInfo.gender,
     }));
+    setFavoritePlaygrounds(userInfo.favoritePlaygrounds);
   };
 
   return (
@@ -113,7 +120,7 @@ export function MyPage() {
       )}
       {checkedBarItem === 3 ? (
         <MyPageContainer>
-          <MyFavoriteGroundList />
+          <MyFavoriteGroundList favoritePlaygrounds={favoritePlaygounds} />
         </MyPageContainer>
       ) : (
         ''

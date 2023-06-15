@@ -23,6 +23,7 @@ function MyPageCheckPassword({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPassword(e.target.value);
+    setErrorMsg('');
   };
 
   const handlePasswordCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -74,10 +75,11 @@ function MyPageCheckPassword({
 export default MyPageCheckPassword;
 
 const StyledShortInfoBox = styled(StyledInfoBox)`
-  height: 22rem !important;
+  height: 20rem !important;
   & > div:last-child {
+    height: 5rem;
     color: red;
-    margin-bottom: 3rem;
+    padding-top: 1rem;
   }
 `;
 
@@ -86,5 +88,5 @@ const StyledMarginTopTitle = styled(StyledTitle)`
 `;
 
 const StyledMarginBottomInputBox = styled(StyledInputBox)`
-  margin-bottom: 4rem !important;
+  height: 6rem;
 `;

@@ -15,7 +15,7 @@ export const BodyLeftBar = styled.div`
   display: flex;
   float: left;
   width: 25rem;
-  height: 75rem;
+  height: 70rem;
   flex-direction: column;
   align-items: center;
   border-right: 1px solid #bbb;
@@ -25,7 +25,7 @@ export const BodyLeftBar = styled.div`
 export const BodyMain = styled.div`
   background-color: rgb(245, 245, 245);
   width: 159rem;
-  height: 100rem;
+  height: 90rem;
 `;
 
 export const MainButton = styled.button<{ state: string }>`
@@ -76,12 +76,14 @@ export const UserManageContainerTable = styled.div`
   display: grid;
   margin-top: 2rem;
   padding-left: 3rem;
-  width: 105rem;
+  width: 94rem;
   font-size: 2rem;
   table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
   }
+
   tr {
     border-bottom: 1px solid #000;
     justify-content: space-around;
@@ -91,7 +93,14 @@ export const UserManageContainerTable = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+    white-space: nowrap;
   }
+`;
+
+export const StyledTd = styled.td`
+  /* white-space: nowrap; */
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledTr = styled.tr`
@@ -211,18 +220,20 @@ export const DetailButton = styled.button<{ data: string }>`
 export const ManagementButtonContainer = styled.div`
   display: flex;
   position: absolute;
-  width: 47.6rem;
+  width: 55.6rem;
   justify-content: center;
   z-index: 997;
 `;
 
 export const ManagementButton = styled.button<{ data: string }>`
+  font-size: 0.7rem;
   margin: 1rem 2rem;
   padding: 0.4rem 2rem;
   border-radius: 1rem;
 `;
 
 export const ReturnButton = styled.button`
-  margin: 1rem 2rem;
-  padding: 0rem 1.4rem;
+  background-color: white;
+  margin: 1rem 1rem;
+  padding: 0rem 1rem;
 `;

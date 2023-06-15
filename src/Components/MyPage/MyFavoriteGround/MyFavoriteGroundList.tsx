@@ -12,8 +12,13 @@ import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
 import MyPagination from '../MyPagination';
 
-function MyFavoriteGroundList() {
-  const user = useSelector(userSelector);
+type MyFavoriteGroundListProps = {
+  favoritePlaygrounds: Array<string>;
+};
+
+function MyFavoriteGroundList({
+  favoritePlaygrounds,
+}: MyFavoriteGroundListProps) {
   const isLogIn = useSelector(isLogInSelector);
   const [filteredData, setFilteredData] = useState<DomDataType[]>([]);
 
@@ -32,31 +37,19 @@ function MyFavoriteGroundList() {
   }, [isLogIn]);
 
   const getDomData = async () => {
-    const domInfo = await axios
-      .get(`${process.env.REACT_APP_API_URL}/doms`, { withCredentials: true })
-      .then((res) => res.data.data)
-      .catch((err) => console.log(err));
-
-    // const filteredDomInfo = domInfo.reduce(
-    //   (acc: Array<DomDataType>, group: DomDataType) => {
-    //     const filteredUsersFavorites = group.usersFavorites?.filter(
-    //       (type) => type === user?.name
-    //     );
-
-    //     if (filteredUsersFavorites && filteredUsersFavorites.length > 0) {
-    //       const filteredGroup: DomDataType = {
-    //         ...group,
-    //         // usersFavorites: filteredUsersFavorites,
-    //       };
-    //       return [...acc, filteredGroup];
-    //     }
-    //     return acc;
-    //   },
-    //   []
-    // );
-    // setFilteredData(filteredDomInfo);
-
-    setFilteredData(domInfo);
+    const domarray: Array<DomDataType> = [];
+    for (let i = 0; i < favoritePlaygrounds.length; i++) {
+      await axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/doms/${favoritePlaygrounds[i]}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => domarray.push(res.data.data))
+        .catch((err) => console.log(err));
+    }
+    setFilteredData(domarray);
   };
 
   const navigate = useNavigate();
@@ -78,37 +71,47 @@ function MyFavoriteGroundList() {
             </StyledLabelTr>
           </thead>
           <tbody>
-            {currentData.map((item, idx) => (
-              <StyledTr key={item.title + idx}>
-                <StyledCheckboxTd>
-                  <label htmlFor={item.title}></label>
-                </StyledCheckboxTd>
-                <StyledAddressTd>{item.address.area}</StyledAddressTd>
-                <StyledMainTd>
-                  <p>{item.title}</p>
-                  <StyledTableCell>
-                    {Object.keys(ProvidedElementList).map(
-                      (provided) =>
-                        item[provided] && (
-                          <StyledTable key={provided} data={provided}>
-                            {ProvidedElementList[provided]}
-                          </StyledTable>
-                        )
-                    )}
-                  </StyledTableCell>
-                </StyledMainTd>
+            {currentData.length > 0 ? (
+              currentData.map((item, idx) => (
+                <StyledTr key={item.title + idx}>
+                  <StyledCheckboxTd>
+                    <label htmlFor={item.title}></label>
+                  </StyledCheckboxTd>
+                  <StyledAddressTd>{item.address.area}</StyledAddressTd>
+                  <StyledMainTd>
+                    <p>{item.title}</p>
+                    <StyledTableCell>
+                      {Object.keys(ProvidedElementList).map(
+                        (provided) =>
+                          item[provided] && (
+                            <StyledTable key={provided} data={provided}>
+                              {ProvidedElementList[provided]}
+                            </StyledTable>
+                          )
+                      )}
+                    </StyledTableCell>
+                  </StyledMainTd>
 
-                <td>
-                  <StyledButton
-                    onClick={() => {
-                      navigate(`/ground/${item.dom_id}`);
-                    }}
-                  >
-                    조회
-                  </StyledButton>
-                </td>
+                  <td>
+                    <StyledButton
+                      onClick={() => {
+                        navigate(`/ground/${item.dom_id}`);
+                      }}
+                    >
+                      조회
+                    </StyledButton>
+                  </td>
+                </StyledTr>
+              ))
+            ) : (
+              <StyledTr>
+                {' '}
+                <td></td>
+                <td></td>
+                <StyledMessageTd>즐겨찾는 구장이 없습니다</StyledMessageTd>
+                <td></td>
               </StyledTr>
-            ))}
+            )}
           </tbody>
         </table>
       </SearchPageBody>
@@ -253,10 +256,12 @@ const StyledTable = styled.div<{ data: string }>`
 
 const StyledTr = styled.tr`
   height: 10rem;
+  max-height: 10rem;
   margin: 1rem 1rem;
   padding: 2rem 1rem;
   font-size: 1.6rem;
   border-bottom: 0.1rem solid #dddddd;
+  background-color: #fff;
 `;
 
 const StyledCheckboxTd = styled.td`
@@ -304,4 +309,8 @@ const StyledButton = styled.button`
   font-size: 1.4rem;
   font-weight: 500;
   margin-right: 3rem;
+`;
+
+const StyledMessageTd = styled.td`
+  text-align: center;
 `;

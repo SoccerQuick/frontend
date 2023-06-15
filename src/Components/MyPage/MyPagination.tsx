@@ -1,6 +1,6 @@
 import react, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
 type MyPaginationProps = {
   totalItemsCount: number; // 총 데이터 수
@@ -23,12 +23,15 @@ function MyPagination({
       ? Math.floor(currentPage / pageGroup) * pageGroup + 1
       : Math.floor((currentPage - 1) / pageGroup) * pageGroup + 1;
   const lastIndexOfPage = Math.ceil(currentPage / pageGroup) * pageGroup;
-
   const pageNumbers = [];
+
+  // 현 url 체크
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const isGround = currentPath.includes('ground');
 
   useEffect(() => {
     const urlCurrentPage = (Number(searchParams.get('start')) + 10) / 10;
-    console.log(urlCurrentPage);
     setCurrentPage(urlCurrentPage);
   }, [searchParams]);
 
@@ -39,15 +42,23 @@ function MyPagination({
     pageNumbers.push(i);
   }
 
+  const handleSearchParams = (number: number) => {
+    searchParams.set('start', `${number}`);
+    setSearchParams(searchParams);
+  };
+
   const handlePrevClick = () => {
     setCurrentPage((prev) => {
       if (prev - 1 > 0) {
-        searchParams.set('start', `${(prev - 2) * 10}`);
-        setSearchParams(searchParams);
+        if (isGround) {
+          handleSearchParams((prev - 2) * 10);
+        }
         return prev - 1;
       } else {
-        searchParams.set('start', `0`);
-        setSearchParams(searchParams);
+        if (isGround) {
+          handleSearchParams(0);
+        }
+
         return 1;
       }
     });
@@ -56,13 +67,15 @@ function MyPagination({
   const handleNextClick = () => {
     setCurrentPage((prev) => {
       if (prev + 1 < pages) {
-        searchParams.set('start', `${prev * 10}`);
-        setSearchParams(searchParams);
+        if (isGround) {
+          handleSearchParams(prev * 10);
+        }
 
         return prev + 1;
       } else {
-        searchParams.set('start', `${(pages - 1) * 10}`);
-        setSearchParams(searchParams);
+        if (isGround) {
+          handleSearchParams((pages - 1) * 10);
+        }
 
         return pages;
       }
@@ -71,8 +84,9 @@ function MyPagination({
 
   const handlePageNumberClick = (number: number) => {
     setCurrentPage(number);
-    searchParams.set('start', `${(number - 1) * 10}`);
-    setSearchParams(searchParams);
+    if (isGround) {
+      handleSearchParams((number - 1) * 10);
+    }
   };
 
   return (
@@ -81,8 +95,9 @@ function MyPagination({
         <StyledLi
           onClick={() => {
             setCurrentPage(1);
-            searchParams.set('start', '0');
-            setSearchParams(searchParams);
+            if (isGround) {
+              handleSearchParams(0);
+            }
           }}
         >
           {'<<'}
@@ -111,8 +126,9 @@ function MyPagination({
         <StyledLi
           onClick={() => {
             setCurrentPage(pages);
-            searchParams.set('start', `${(Number(pages) - 1) * 10}`);
-            setSearchParams(searchParams);
+            if (isGround) {
+              handleSearchParams((pages - 1) * 10);
+            }
           }}
         >
           {'>>'}
