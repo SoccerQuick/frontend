@@ -5,6 +5,7 @@ import HtmlParser from '../../../Components/Commons/HtmlParser';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../../ReduxStore/modules/TeamPage/actions';
 import { RootState, AppDispatch } from '../../../ReduxStore/store';
+import Accepted from '../../../Components/TeamPage/AcceptedMembers';
 import {
   StyledWrap,
   StyledPost,
@@ -44,6 +45,7 @@ function DetailPage() {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(false);
+  const [acceptModal, setAcceptModal] = React.useState(false);
 
   // 최초 렌더링 시 데이터를 받아와서 저장하는 부분
   const location = useLocation();
@@ -188,7 +190,7 @@ function DetailPage() {
                 userData?.role === 'manager') && (
                 <button
                   onClick={() => {
-                    console.log(data.accept);
+                    setAcceptModal(true);
                   }}
                 >
                   조회
@@ -227,6 +229,14 @@ function DetailPage() {
               <SubmitForFindingMember
                 setShowModal={setShowModal}
                 groupId={data.group_id}
+              />
+            )}
+            {acceptModal && (
+              <Accepted
+                setAcceptModal={setAcceptModal}
+                accept={data.accept}
+                total={data.playerNeed + data.gkNeed}
+                now={data.player + data.gk}
               />
             )}
           </div>
