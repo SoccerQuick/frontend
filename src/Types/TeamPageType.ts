@@ -115,3 +115,17 @@ export interface CommentProps {
   data: SubmitApplicant[];
   user: string;
 }
+
+export interface Accept {
+  name: string;
+  position: string;
+  level: string;
+  contents: string;
+}
+
+export interface AcceptedModalProps {
+  setAcceptModal: React.Dispatch<React.SetStateAction<boolean>>;
+  accept: Accept[];
+  total: number;
+  now: number;
+}
