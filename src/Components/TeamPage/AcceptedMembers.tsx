@@ -48,12 +48,9 @@ function Accepted(props: AcceptedModalProps) {
   if (gridView) {
     if (total >= 9) {
       grid[0] = 3;
-      grid[1] = Math.ceil(total / 3);
-    } else if (total >= 4) {
-      grid[0] = 2;
-      grid[1] = Math.ceil(total / 2);
+      grid[1] = total;
     } else {
-      grid[0] = 1;
+      grid[0] = 2;
       grid[1] = total;
     }
   }
