@@ -17,7 +17,11 @@ function AdminPage() {
   const [mainButton, setMainButton] = React.useState(true);
   const [userButton, setUserButton] = React.useState(false);
   return (
-    <>
+    <div
+      style={{
+        overflow: 'hidden',
+      }}
+    >
       <Header />
       <AdminContainer>
         <BodyContainer>
@@ -56,7 +60,7 @@ function AdminPage() {
         </BodyContainer>
       </AdminContainer>
       <Footer />
-    </>
+    </div>
   );
 }
 
