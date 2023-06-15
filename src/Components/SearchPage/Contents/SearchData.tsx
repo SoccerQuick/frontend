@@ -244,11 +244,13 @@ const StyledLabelTr = styled.tr`
 const StyledTableCell = styled.div`
   display: inline-block;
   padding: 0;
+  height: 3rem;
+
   margin: 1.2rem 1rem 0rem 0;
   border-radius: 0.4rem;
   font-weight: 400;
   color: #888888;
-  line-height: 2.6rem;
+  line-height: 3rem;
   overflow: hidden;
 `;
 

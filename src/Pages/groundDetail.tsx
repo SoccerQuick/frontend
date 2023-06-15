@@ -272,8 +272,10 @@ const GroundDetailHeaderBtn = styled.div`
     color: white;
     font-weight: 500;
     background: #09cf00;
-    box-shadow: 0px 0px 2px 2px rgba(123, 123, 123, 0.4);
     border-radius: 4px;
+    :hover {
+      background: #1bbd1b;
+    }
     :not(:first-child) {
       width: 8rem;
       margin-left: 1.3rem;
@@ -282,7 +284,10 @@ const GroundDetailHeaderBtn = styled.div`
       width: 12rem;
       background: white;
       color: #0d9c05;
-      box-shadow: 0px 0px 2px 2px #dadada;
+      border: 0.1rem solid #dadada;
+      :hover {
+        background: #f0f0f08e;
+      }
     }
     > a {
       color: white;
