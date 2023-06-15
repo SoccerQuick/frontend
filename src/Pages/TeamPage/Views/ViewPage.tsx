@@ -174,8 +174,7 @@ function DetailPage() {
             </StyledBody>
             <StyledAuthorButtonContainer>
               {userData?.name === data.author && (
-                // 현재 location 객체를 통해 data 를 주고받고 있음.
-                <Link to={`/teampage/edit/${url}`} state={data}>
+                <Link to={`/teampage/edit/${url}`}>
                   <button>수정</button>
                 </Link>
               )}
