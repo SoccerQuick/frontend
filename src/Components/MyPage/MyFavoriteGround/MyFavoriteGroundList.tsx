@@ -308,6 +308,10 @@ const StyledButton = styled.button`
   font-size: 1.4rem;
   font-weight: 500;
   margin-right: 3rem;
+
+  &:hover {
+    background-color: #1bbd1b;
+  }
 `;
 
 const StyledMessageTd = styled.td`

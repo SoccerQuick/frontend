@@ -305,10 +305,24 @@ const StyledSubmitButton = styled.button`
   background-color: #09cf00;
   color: #fff;
   border-radius: 0.5rem;
+  border: 1px solid #09cf00;
+
+  &:hover {
+    background-color: #1bbd1b;
+    color: #fff;
+    border: 1px solid #1bbd1b;
+  }
 `;
 
 const StyledRedSubmitButton = styled(StyledSubmitButton)`
   background-color: #ec5d5e;
+  border: 1px solid #ec5d5e;
+
+  &:hover {
+    background-color: #fff;
+    color: #ec5d5e;
+    border: 1px solid #ec5d5e;
+  }
 `;
 
 const StyledErrorDiv = styled.div`

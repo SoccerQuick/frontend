@@ -191,4 +191,8 @@ const StyledButton = styled.button`
   color: white;
   font-size: 1.4rem;
   font-weight: 500;
+
+  &:hover {
+    background-color: #1bbd1b;
+  }
 `;

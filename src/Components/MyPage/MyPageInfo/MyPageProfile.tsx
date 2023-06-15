@@ -141,8 +141,8 @@ const StyledProfileImg = styled.input`
 `;
 
 const StyledInputLabel = styled.label`
-  width: 8rem;
-  height: 3rem;
+  width: 6.3rem;
+  height: 2.4rem;
   border: 1px solid #727f88;
   padding: 0.3rem;
   border-radius: 0.8rem;
@@ -150,6 +150,7 @@ const StyledInputLabel = styled.label`
   background-color: rgb(249, 249, 249);
   cursor: pointer;
   font-size: 5px;
+  text-align: center;
 
   &:hover {
     color: rgb(249, 249, 249);
