@@ -15,6 +15,9 @@ import Avatar1 from '../../styles/icon/avatar1.png';
 import Avatar2 from '../../styles/icon/avatar2.png';
 import Avatar3 from '../../styles/icon/avatar3.png';
 import Avatar4 from '../../styles/icon/avatar4.png';
+import sliderImg1 from '../../styles/icon/review_slider1.png';
+import sliderImg2 from '../../styles/icon/review_slider2.png';
+import sliderImg3 from '../../styles/icon/review_slider3.png';
 import Magnifier from '../../styles/icon/magnifier.png';
 
 const AVATARS = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar3];
@@ -201,16 +204,13 @@ export default function ReviewPage() {
                 <StyledImage>
                   <Slider {...settings}>
                     <StyledImage>
-                      <img src="Images/reviewMainImg.png" alt="reviewMainImg" />
+                      <img src={sliderImg2} alt="reviewMainImg" />
                     </StyledImage>
                     <StyledImage>
-                      <img src="Images/footy.png" alt="footy" />
+                      <img src={sliderImg3} alt="footy" />
                     </StyledImage>
                     <StyledImage>
-                      <img src="Images/reviewImg3.jpg" alt="reviewImg3" />
-                    </StyledImage>
-                    <StyledImage>
-                      <img src="Images/reviewImg4.jpg" alt="reviewImg4" />
+                      <img src={sliderImg1} alt="reviewImg3" />
                     </StyledImage>
                   </Slider>
                 </StyledImage>
