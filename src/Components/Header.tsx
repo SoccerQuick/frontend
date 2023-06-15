@@ -67,12 +67,12 @@ export default Header;
 const HeaderContainer = styled.div`
   width: 98.4rem;
   padding: 0 2rem;
-  height: 6rem;
+  height: 7rem;
   margin: 1.4rem auto;
 
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 `;
 
 const LogoMain = styled.div`
@@ -101,15 +101,16 @@ const HeaderMyPage = styled.div``;
 const HeaderLoginButton = styled.div`
   display: flex;
   position: relative;
-  width: 10rem;
-  padding: 1rem;
-  margin: 0.3rem 2rem 0 2rem;
+  width: 12rem;
+  padding: 0.7rem 0rem 0.7rem 1.5rem;
+  margin: 0.3rem 0;
   border-radius: 2.5rem;
   border: 1px solid #e5e5e5;
   & > div {
     text-align: center;
-    margin-top: 0.1rem;
-    width: 100%;
+    margin-top: 0.2rem;
+    padding-left: 1.5rem;
+    font-size: 1.4rem;
   }
 `;
 
