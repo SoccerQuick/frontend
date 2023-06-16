@@ -52,7 +52,7 @@ export function MyPageMenu() {
             navigate('/admin');
           }}
         >
-          <img src="/images/gear.png" alt="" />
+          <img src="Images/gear.png" alt="" />
         </AdminButton>
       )}
     </StyledMenu>
