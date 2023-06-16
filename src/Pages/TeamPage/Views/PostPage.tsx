@@ -79,9 +79,6 @@ function SubmitPage() {
       };
       console.log('자기어필 페이지는 아직 미구현');
     }
-
-    // 정상 출력되는지 테스트용 콘솔
-    console.log(data);
   };
 
   // 입력값을 검사하는 validator - 오류를 조금 더 상세하게 출력하는 것이 효과가 있을까?
