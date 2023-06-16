@@ -34,16 +34,26 @@ export function MyPageMenu() {
     <StyledMenu>
       <StyledMenuProfile>
         <StyledImgWrapper>
+          {(user?.role === 'admin' || user?.role === 'manager') && (
+            <AdminButton
+              onClick={() => {
+                navigate('/admin');
+              }}
+            >
+              A
+            </AdminButton>
+          )}
           <StyledProfileImg type="image" src={user?.profile} alt="profile" />
         </StyledImgWrapper>
         <StyledProfileInfo
+          title={user ? user.nickname : '미로그인'}
           onClick={() => {
             navigate('/mypage');
           }}
         >
           {user ? `${user.nickname}님` : '미로그인'}
         </StyledProfileInfo>
-      </StyledMenuProfile>{' '}
+      </StyledMenuProfile>
       <div>|</div>
       <StyledMenuItem onClick={handleLoginOutClick}>로그아웃</StyledMenuItem>
     </StyledMenu>
@@ -93,11 +103,18 @@ const StyledProfileInfo = styled.div`
   cursor: pointer;
   font-size: 1.4rem;
   margin-bottom: 0.2rem;
+  width: 6.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const StyledMenuItem = styled.div`
   flex: 2;
+  /* display: flex; */
   text-align: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   cursor: pointer;
   padding-top: 0.4rem;
   color: rgb(62, 84, 99);
@@ -105,4 +122,12 @@ const StyledMenuItem = styled.div`
   &:first-child {
     margin-top: 15px;
   }
+`;
+
+const AdminButton = styled.button`
+  background-color: transparent;
+  margin-left: 1rem;
+  border-radius: 3rem;
+  border: 1px solid;
+  text-align: center;
 `;
