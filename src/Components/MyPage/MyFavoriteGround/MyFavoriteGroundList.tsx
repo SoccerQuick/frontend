@@ -4,10 +4,7 @@ import styled from 'styled-components';
 import checkIcon from '../../../styles/icon/check.svg';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  isLogInSelector,
-  userSelector,
-} from '../../../store/selectors/authSelectors';
+import { isLogInSelector } from '../../../store/selectors/authSelectors';
 import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
 import MyPagination from '../MyPagination';
@@ -79,7 +76,7 @@ function MyFavoriteGroundList({
                   </StyledCheckboxTd>
                   <StyledAddressTd>{item.address.area}</StyledAddressTd>
                   <StyledMainTd>
-                    <span>{item.title}</span>
+                    <p>{item.title}</p>
                     <StyledTableCell>
                       {Object.keys(ProvidedElementList).map(
                         (provided) =>
@@ -294,7 +291,7 @@ const StyledAddressTd = styled.td`
 const StyledMainTd = styled.td`
   padding-left: 6rem;
   max-width: 48rem;
-  span {
+  p {
     font-size: 1.9rem;
   }
 `;

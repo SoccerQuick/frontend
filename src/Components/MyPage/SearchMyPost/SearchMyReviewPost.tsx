@@ -4,11 +4,12 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selectors/authSelectors';
 import { changeReviewObjectToArray } from '../changeObjectToArray';
+import { DomDataType } from '../../../Pages/SearchPage';
 
 export type ReviewPost = {
   review_id: string;
   contents: string;
-  dom_id: string;
+  ground_id: string;
   createdAt: string;
   name: string;
   rating: number;
@@ -20,9 +21,11 @@ function SearchMyReviewPost() {
   const [reviewList, setReviewList] = useState<ReviewPost[]>([]);
   const properties = ['작성자', '코멘트', '구장', '좋아요'];
   const user = useSelector(userSelector);
+
   const filteredItems = reviewList
     .filter((item: ReviewPost) => item.name === user?.name)
     .map((item: ReviewPost) => changeReviewObjectToArray(item));
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/reviews`, {

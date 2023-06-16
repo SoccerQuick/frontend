@@ -67,7 +67,7 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
                       <td key={`item-${index}`}>
                         <StyledButton
                           onClick={() => {
-                            navigate(`/teampage/team/${value}`);
+                            navigate(`/ground/${value}`);
                           }}
                         >
                           조회

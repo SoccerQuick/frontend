@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MypageIcon from '../styles/icon/mypage.svg';
 import SoccerquickLogo from '../styles/icon/soccerquick-logo.png';
-import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
 import { useSelector } from 'react-redux';
@@ -106,20 +105,11 @@ const HeaderLoginButton = styled.div`
   margin: 0.3rem 0;
   border-radius: 2.5rem;
   border: 1px solid #e5e5e5;
+  cursor: pointer;
   & > div {
     text-align: center;
     margin-top: 0.2rem;
     padding-left: 1.5rem;
     font-size: 1.4rem;
   }
-`;
-
-const HeaderMyPageButton = styled.div`
-  display: flex;
-  position: relative;
-  padding: 0.5rem;
-  margin: 0.3rem 2rem 0 2rem;
-  border-radius: 2.5rem;
-  border: 1px solid #e5e5e5;
-  cursor: pointer;
 `;

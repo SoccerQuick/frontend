@@ -44,7 +44,6 @@ export function MyPageMenu() {
           {user ? `${user.nickname}님` : '미로그인'}
         </StyledProfileInfo>
       </StyledMenuProfile>{' '}
-      <div>|</div>
       <StyledMenuItem onClick={handleLoginOutClick}>로그아웃</StyledMenuItem>
     </StyledMenu>
   );
