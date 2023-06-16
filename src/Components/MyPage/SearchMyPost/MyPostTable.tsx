@@ -141,7 +141,6 @@ const StyledTitleTr = styled.tr`
   & > th:nth-child(2) {
     flex: 4;
     text-align: start;
-    padding-left: 1rem;
   }
 
   & > th:first-child {
