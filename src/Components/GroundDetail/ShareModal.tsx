@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { DomDataType } from '../../Pages/SearchPage';
 import kakaoIcon from '../../styles/icon/kakao.svg';
+import alertModal from '../Commons/alertModal';
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -27,7 +28,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
   const clipUrl = () => {
     window.navigator.clipboard.writeText(currentUrl).then(() => {
-      alert('링크가 복사되었습니다.');
+      alertModal('링크가 복사되었습니다.', 'success');
     });
   };
 

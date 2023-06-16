@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import LikeButton from '../Commons/LikeButton';
+import alertModal from '../Commons/alertModal';
 import {
   isLogInSelector,
   userSelector,
@@ -42,7 +43,7 @@ export default function Review(props: ReviewProps) {
   function handleEditReview(index: number, reviewId: string | undefined) {
     if (isReviewEditable) {
       if (editReview === '') {
-        return alert('내용을 입력해주세요!');
+        return alertModal('내용을 입력해주세요!', 'warning');
       }
 
       axios
@@ -64,7 +65,7 @@ export default function Review(props: ReviewProps) {
         })
         .catch((error) => {
           console.error(error);
-          alert('수정에 실패하였습니다.');
+          alertModal('수정에 실패하였습니다.', 'error');
         });
     } else {
       setEditReview(reviewData[index].contents || '');
@@ -72,8 +73,11 @@ export default function Review(props: ReviewProps) {
     }
   }
 
-  function handleDeleteReview(index: number, reviewId: string | undefined) {
-    const confirmed = window.confirm('삭제하시겠습니까?');
+  async function handleDeleteReview(
+    index: number,
+    reviewId: string | undefined
+  ) {
+    const confirmed = await alertModal('삭제하시겠습니까?', 'submit');
 
     confirmed &&
       axios
@@ -92,10 +96,10 @@ export default function Review(props: ReviewProps) {
 
   function handleWriteReview() {
     if (!isLogin) {
-      return alert('로그인이 필요한 서비스입니다.');
+      return alertModal('로그인이 필요한 서비스입니다.', 'warning');
     }
     if (review === '') {
-      return alert('내용을 입력해주세요!');
+      return alertModal('내용을 입력해주세요!', 'warning');
     }
 
     // 작성한 리뷰가 이미 존재하는지 검사
@@ -103,7 +107,7 @@ export default function Review(props: ReviewProps) {
       (item) => item.user_name === userName
     );
     if (existingReview) {
-      return alert('1개의 리뷰만 작성 가능합니다.');
+      return alertModal('1개의 리뷰만 작성 가능합니다.', 'warning');
     }
 
     // 작성한 리뷰를 서버에 등록

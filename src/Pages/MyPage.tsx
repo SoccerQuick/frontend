@@ -14,6 +14,7 @@ import SearchMyReviewPost from '../Components/MyPage/SearchMyPost/SearchMyReview
 import { useSelector } from 'react-redux';
 import { isLogInSelector } from '../ReduxStore/modules/Auth/authSelectors';
 import SearchMyApplicationPost from '../Components/MyPage/SearchMyPost/SearchMyApplicationPost';
+import alertModal from '../Components/Commons/alertModal';
 
 export type FormDataType = {
   user_id: string;
@@ -48,7 +49,7 @@ export function MyPage() {
     if (isLogIn) {
       getUserData();
     } else {
-      alert('마이페이지는 로그인 후 사용해 주세요');
+      alertModal('마이페이지는 로그인 후 사용해 주세요', 'warning');
       navigate('/');
     }
   }, [isLogIn]);
