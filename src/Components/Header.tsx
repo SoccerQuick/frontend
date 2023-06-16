@@ -87,10 +87,15 @@ const HeaderLoginButton = styled.div`
   border-radius: 2.5rem;
   border: 1px solid #e5e5e5;
   cursor: pointer;
+  transition: background-color 0.3s ease;
   & > div {
     text-align: center;
     margin-top: 0.2rem;
     padding-left: 1.5rem;
     font-size: 1.4rem;
+  }
+
+  &:hover {
+    background-color: #e5e5e5;
   }
 `;
