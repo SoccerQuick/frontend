@@ -1,4 +1,3 @@
-import React from 'react';
 import { combineReducers } from 'redux';
 import fetchDataReducer from './TeamPage/reducer';
 import authSlice from './Auth/authSlice';

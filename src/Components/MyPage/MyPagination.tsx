@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSearchParams, useLocation } from 'react-router-dom';
 
@@ -153,7 +153,7 @@ const StyledLi = styled.li`
   align-items: center;
   margin: 0 0.3rem;
   cursor: pointer;
-  width: 2rem;
+  width: 3rem;
   height: 2rem;
   color: grey;
 `;
