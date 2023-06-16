@@ -131,7 +131,6 @@ export default function ReviewPage() {
       .get(`${process.env.REACT_APP_API_URL}/reviews`, config)
       .then((res) => {
         if (res.status === 200) {
-          // console.log(res);
           res.data.data.map((v: any) =>
             axios
               .get(
