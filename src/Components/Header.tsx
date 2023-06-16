@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MypageIcon from '../styles/icon/mypage.svg';
@@ -10,31 +10,12 @@ import { isLogInSelector } from '../ReduxStore/modules/Auth/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);
-  const [myPageMenu, setMyPageMenu] = useState<boolean>(false);
-  const myPageMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const isLogin = useSelector(isLogInSelector);
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleLoginModal = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setAuthModal((prev) => !prev);
-    setMyPageMenu((prev) => !prev);
-  };
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      myPageMenuRef.current &&
-      !myPageMenuRef.current.contains(e.target as Node)
-    ) {
-      setMyPageMenu(false);
-    }
   };
 
   return (

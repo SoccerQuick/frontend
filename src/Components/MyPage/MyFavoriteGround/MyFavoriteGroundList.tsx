@@ -56,11 +56,11 @@ function MyFavoriteGroundList({
 
   return (
     <Searchpage>
-      <StyledTitleDiv>
-        즐겨찾는 경기장
-        <span> ( 총 {totalItemsCount} )</span>
-      </StyledTitleDiv>
       <SearchPageBody>
+        <StyledTitleDiv>
+          즐겨찾는 경기장
+          <span> ( 총 {totalItemsCount} )</span>
+        </StyledTitleDiv>
         <table>
           <thead>
             <StyledLabelTr>
@@ -169,15 +169,17 @@ const getBackgroundColorBydata = (data: string) => {
 const Searchpage = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   font-size: 1.7rem;
   width: 98.4rem;
-  height: 100rem;
+  min-height: 100rem;
   margin-top: 2rem;
 `;
 
 const SearchPageBody = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 2rem;
@@ -200,6 +202,7 @@ const StyledTitleDiv = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  padding-left: 4rem;
 
   > span {
     padding-left: 1rem;
