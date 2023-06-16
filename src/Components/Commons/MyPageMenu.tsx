@@ -52,7 +52,7 @@ export function MyPageMenu() {
             navigate('/admin');
           }}
         >
-          <img src="/images/gear.png" alt="" />
+          <ImgDiv />
         </AdminButton>
       )}
     </StyledMenu>
@@ -131,7 +131,23 @@ const AdminButton = styled.button`
   background-color: #fff;
 
   & > img {
-    width: 2rem;
-    height: 2rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background-image: url('/images/gear.png');
+    background-size: cover;
+    transition: background-image 0.3s ease;
+  }
+`;
+
+const ImgDiv = styled.div`
+  width: 1.7rem;
+  height: 1.7rem;
+  background-image: url('/Images/settings.png');
+  background-size: cover;
+  transition: background-image 0.1s ease, transform 0.5s ease;
+
+  &:hover {
+    background-image: url('/images/settings2.png');
+    transform: rotate(45deg);
   }
 `;

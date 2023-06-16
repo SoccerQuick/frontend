@@ -37,51 +37,57 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
           </StyledTitleTr>
         </thead>
         <tbody>
-          {currentData?.map((item, idx) => {
-            return (
-              <StyledItemTr key={`data-${idx}`}>
-                {item &&
-                  item.map((value, index) => {
-                    if (index === 0) {
-                      return null;
-                    } else if (index === 2) {
-                      return (
-                        <td key={`td-${idx}`}>
-                          <StyledLongSpan>{value}</StyledLongSpan>
-                          <span style={{ color: 'red' }}>{item[3]}</span>
-                        </td>
-                      );
-                    } else if (index === 3) {
-                      return null;
-                    } else if (index === item.length - 1) {
-                      return item[0] === 'teamPage' ? (
-                        <td key={`item-${index}`}>
-                          <StyledButton
-                            onClick={() => {
-                              navigate(`/teampage/team/${value}`);
-                            }}
-                          >
-                            조회
-                          </StyledButton>
-                        </td>
-                      ) : (
-                        <td key={`item-${index}`}>
-                          <StyledButton
-                            onClick={() => {
-                              navigate(`/ground/${value}`);
-                            }}
-                          >
-                            조회
-                          </StyledButton>
-                        </td>
-                      );
-                    } else {
-                      return <td key={`item-${index}`}>{value}</td>;
-                    }
-                  })}
-              </StyledItemTr>
-            );
-          })}
+          {currentData && currentData?.length > 0 ? (
+            currentData.map((item, idx) => {
+              return (
+                <StyledItemTr key={`data-${idx}`}>
+                  {item &&
+                    item.map((value, index) => {
+                      if (index === 0) {
+                        return null;
+                      } else if (index === 2) {
+                        return (
+                          <td key={`td-${idx}`}>
+                            <StyledLongSpan>{value}</StyledLongSpan>
+                            <span style={{ color: 'red' }}>{item[3]}</span>
+                          </td>
+                        );
+                      } else if (index === 3) {
+                        return null;
+                      } else if (index === item.length - 1) {
+                        return item[0] === 'teamPage' ? (
+                          <td key={`item-${index}`}>
+                            <StyledButton
+                              onClick={() => {
+                                navigate(`/teampage/team/${value}`);
+                              }}
+                            >
+                              조회
+                            </StyledButton>
+                          </td>
+                        ) : (
+                          <td key={`item-${index}`}>
+                            <StyledButton
+                              onClick={() => {
+                                navigate(`/ground/${value}`);
+                              }}
+                            >
+                              조회
+                            </StyledButton>
+                          </td>
+                        );
+                      } else {
+                        return <td key={`item-${index}`}>{value}</td>;
+                      }
+                    })}
+                </StyledItemTr>
+              );
+            })
+          ) : (
+            <StyledNoItemTr>
+              <td>조회된 글이 없습니다.</td>
+            </StyledNoItemTr>
+          )}
         </tbody>
       </table>
       <MyPagination
@@ -199,4 +205,12 @@ const StyledButton = styled.button`
   &:hover {
     background-color: #1bbd1b;
   }
+`;
+
+const StyledNoItemTr = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #fff;
 `;
