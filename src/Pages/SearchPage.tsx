@@ -113,6 +113,7 @@ function SearchPage() {
           <SearchData
             checkedArray={checkedArray}
             setCheckedArray={setCheckedArray}
+            setCheckedInModal={setCheckedInModal}
             sortedDomData={sortedDomData}
             setSortedDomData={setSortedDomData}
             isLoading={isLoading}
