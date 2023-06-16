@@ -4,31 +4,44 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
 import { changeReviewObjectToArray } from '../changeObjectToArray';
-import { DomDataType } from '../../../Pages/SearchPage';
+
+export type DomReviewType = {
+  address: { area: string; fullAddress: string };
+  dom_id: string;
+  title: string;
+  reviews: Array<ReviewPost>;
+};
 
 export type ReviewPost = {
   review_id: string;
   contents: string;
   ground_id: string;
   createdAt: string;
-  name: string;
-  rating: number;
-  userslikes: Array<string>;
-  updatedAt: string;
+  user_name: string;
+  likedreviews: Array<string>;
 };
 
 function SearchMyReviewPost() {
-  const [reviewList, setReviewList] = useState<ReviewPost[]>([]);
-  const properties = ['작성자', '코멘트', '구장', '좋아요'];
+  const [reviewList, setReviewList] = useState<DomReviewType[]>([]);
+  const properties = ['작성자', '코멘트', '구장', '지역', '좋아요'];
   const user = useSelector(userSelector);
 
   const filteredItems = reviewList
-    .filter((item: ReviewPost) => item.name === user?.name)
-    .map((item: ReviewPost) => changeReviewObjectToArray(item));
+    .map((domInfo: DomReviewType) => {
+      const reviews = domInfo.reviews.filter(
+        (item: ReviewPost) => item.user_name === user?.name
+      );
+      if (reviews.length === 1) {
+        const myReview = reviews[0];
+        return changeReviewObjectToArray(domInfo, myReview);
+      }
+      return null;
+    })
+    .filter(Boolean);
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/reviews`, {
+      .get(`${process.env.REACT_APP_API_URL}/doms`, {
         withCredentials: true,
       })
       .then((res) => res.data.data)

@@ -1,6 +1,5 @@
 import { GroupPost } from './SearchMyPost/SearchMyTeamPost';
-import { ReviewPost } from './SearchMyPost/SearchMyReviewPost';
-import axios from 'axios';
+import { DomReviewType, ReviewPost } from './SearchMyPost/SearchMyReviewPost';
 
 export const changeGroupObjectToArray = (item: GroupPost): Array<string> => {
   return [
@@ -16,14 +15,18 @@ export const changeGroupObjectToArray = (item: GroupPost): Array<string> => {
   ];
 };
 
-export const changeReviewObjectToArray = (item: ReviewPost): Array<string> => {
+export const changeReviewObjectToArray = (
+  domInfo: DomReviewType,
+  myReview: ReviewPost
+): Array<string> => {
   return [
     'ground',
-    item.name,
-    item.contents,
+    myReview.user_name,
+    myReview.contents,
     '',
-    `${item.ground_id}`,
-    `${item.userslikes.length}`,
-    `${item.review_id}`,
+    domInfo.title,
+    domInfo.address.area,
+    `${myReview.likedreviews.length}`,
+    domInfo.dom_id,
   ];
 };
