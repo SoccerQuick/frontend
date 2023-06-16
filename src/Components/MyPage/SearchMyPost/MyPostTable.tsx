@@ -45,7 +45,7 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
                     return null;
                   } else if (index === 2) {
                     return (
-                      <td>
+                      <td key={`td-${idx}`}>
                         <StyledLongSpan>{value}</StyledLongSpan>
                         <span style={{ color: 'red' }}>{item[3]}</span>
                       </td>
@@ -67,7 +67,7 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
                       <td key={`item-${index}`}>
                         <StyledButton
                           onClick={() => {
-                            navigate(`/teampage/team/${value}`);
+                            navigate(`/ground/${value}`);
                           }}
                         >
                           조회
@@ -191,4 +191,8 @@ const StyledButton = styled.button`
   color: white;
   font-size: 1.4rem;
   font-weight: 500;
+
+  &:hover {
+    background-color: #1bbd1b;
+  }
 `;
