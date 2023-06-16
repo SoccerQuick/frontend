@@ -13,6 +13,8 @@ import {
   ReturnButton,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
 import { DedatilModalProps } from '../../Types/AdminPageType';
+import { userSelector } from '../../ReduxStore/modules/Auth/authSelectors';
+import { useSelector } from 'react-redux';
 
 function DetailModal(props: DedatilModalProps) {
   const {
@@ -22,6 +24,7 @@ function DetailModal(props: DedatilModalProps) {
     modalData,
   } = props;
   const navigate = useNavigate();
+  const userData = useSelector(userSelector);
 
   // 헤더 및 쿠키 설정 부분
   const config = {
@@ -192,12 +195,14 @@ function DetailModal(props: DedatilModalProps) {
 
           {showManagementModal && (
             <ManagementButtonContainer>
-              <LevelUpButton
-                data={showManagementModal ? 'true' : 'false'}
-                onClick={handleUserToManager}
-              >
-                관리자 임명
-              </LevelUpButton>
+              {userData?.role === 'admin' && (
+                <LevelUpButton
+                  data={showManagementModal ? 'true' : 'false'}
+                  onClick={handleUserToManager}
+                >
+                  관리자 임명
+                </LevelUpButton>
+              )}
               <RestrictButton
                 data={showManagementModal ? 'true' : 'false'}
                 onClick={handleUserBlockLogin}
