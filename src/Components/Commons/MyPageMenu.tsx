@@ -34,15 +34,6 @@ export function MyPageMenu() {
     <StyledMenu>
       <StyledMenuProfile>
         <StyledImgWrapper>
-          {(user?.role === 'admin' || user?.role === 'manager') && (
-            <AdminButton
-              onClick={() => {
-                navigate('/admin');
-              }}
-            >
-              A
-            </AdminButton>
-          )}
           <StyledProfileImg type="image" src={user?.profile} alt="profile" />
         </StyledImgWrapper>
         <StyledProfileInfo
@@ -54,25 +45,33 @@ export function MyPageMenu() {
           {user ? `${user.nickname}님` : '미로그인'}
         </StyledProfileInfo>
       </StyledMenuProfile>
-      <div>|</div>
       <StyledMenuItem onClick={handleLoginOutClick}>로그아웃</StyledMenuItem>
+      {(user?.role === 'admin' || user?.role === 'manager') && (
+        <AdminButton
+          onClick={() => {
+            navigate('/admin');
+          }}
+        >
+          <img src="Images/gear.png" alt="" />
+        </AdminButton>
+      )}
     </StyledMenu>
   );
 }
 
 const StyledMenu = styled.div`
   display: flex;
-  width: 23rem;
   padding: 0.5rem 0;
   justify-content: center;
   background-color: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 2rem;
 
-  & > div:nth-child(2) {
+  & > div:nth-child(1)::after {
+    content: '|';
     align-self: center;
+    padding-bottom: 0.3rem;
     color: #e5e5e5;
-    font-weight: bold;
   }
 `;
 
@@ -87,6 +86,7 @@ const StyledImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 1.5rem;
 `;
 
 const StyledProfileImg = styled.input`
@@ -111,12 +111,11 @@ const StyledProfileInfo = styled.div`
 
 const StyledMenuItem = styled.div`
   flex: 2;
-  /* display: flex; */
   text-align: center;
-  /* align-items: center; */
-  /* justify-content: center; */
   cursor: pointer;
   padding-top: 0.4rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
   color: rgb(62, 84, 99);
   font-size: 1.4rem;
   &:first-child {
@@ -125,9 +124,14 @@ const StyledMenuItem = styled.div`
 `;
 
 const AdminButton = styled.button`
-  background-color: transparent;
-  margin-left: 1rem;
-  border-radius: 3rem;
-  border: 1px solid;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: #fff;
+
+  & > img {
+    width: 2rem;
+    height: 2rem;
+  }
 `;

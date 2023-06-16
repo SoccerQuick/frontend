@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MyPostTable from './MyPostTable';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
