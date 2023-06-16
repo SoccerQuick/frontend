@@ -9,6 +9,10 @@ type Applicant = {
   name: string;
 };
 
+type Accept = {
+  name: string;
+};
+
 export type GroupPost = {
   group_id: string;
   leader_name: string;
@@ -20,6 +24,7 @@ export type GroupPost = {
   gk_current_count: number;
   player_current_count: number;
   applicant: Array<Applicant>;
+  accept: Array<Accept>;
   createdAt: string;
   updatedAt: string;
 };
