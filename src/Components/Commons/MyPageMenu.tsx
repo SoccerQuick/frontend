@@ -144,10 +144,10 @@ const ImgDiv = styled.div`
   height: 1.7rem;
   background-image: url('/Images/settings.png');
   background-size: cover;
-  transition: background-image 0.1s ease, transform 0.5s ease;
+  transition: background-image 0.1s ease, transform 1s ease;
 
   &:hover {
     background-image: url('/images/settings2.png');
-    transform: rotate(45deg);
+    transform: rotate(360deg);
   }
 `;
