@@ -7,7 +7,7 @@ import MoreIcon from '../styles/icon/more.svg';
 import AuthModal from './AuthModal/AuthModal';
 import { MyPageMenu } from './Commons/MyPageMenu';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../store/selectors/authSelectors';
+import { isLogInSelector } from '../ReduxStore/modules/Auth/authSelectors';
 
 const Header = () => {
   const [authModal, setAuthModal] = useState<boolean>(false);

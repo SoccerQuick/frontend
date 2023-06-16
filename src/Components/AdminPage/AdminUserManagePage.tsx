@@ -13,8 +13,14 @@ import {
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
 import { UserData } from '../../Types/AdminPageType';
 import MyPagination from '../MyPage/MyPagination';
+import { userSelector } from '../../ReduxStore/modules/Auth/authSelectors';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function AdminUserManager() {
+  const userData = useSelector(userSelector);
+  const navigate = useNavigate();
+
   const [showDetailModal, setShowDetailModal] = React.useState<boolean>(false);
   const [showManagementModal, setShowManagementModal] =
     React.useState<boolean>(false);
@@ -37,6 +43,12 @@ function AdminUserManager() {
 
   // 검색어를 설정하는 부분
   const [inputValue, setInputValue] = React.useState<string>('');
+  const [filteredData, setFilteredData] = React.useState<UserData[]>([]);
+  // 페이지네이션 구현 부분
+  const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
+  const [currentData, setCurrentData] = React.useState<UserData[]>([]); // 초기 데이터
+  // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
+  const [data, setData] = React.useState<UserData[]>([]);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -46,30 +58,26 @@ function AdminUserManager() {
     withCredentials: true,
   };
 
-  const [filteredData, setFilteredData] = React.useState<UserData[]>([]);
-  // 페이지네이션 구현 부분
-  const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
-  const [currentData, setCurrentData] = React.useState<UserData[]>([]); // 초기 데이터
-  // const [totalPage, setTotalPage] = React.useState(0);
-
-  // 새로고침할때 팀모집 관련 데이터를 가져오고 정렬하는 부분
-  const [data, setData] = React.useState<UserData[]>([]);
   React.useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/admins`, config)
-      .then((res) => {
-        setData(res.data.data);
-        setFilteredData(res.data.data);
-        if (currentData.length === 0) {
-          setCurrentData(res.data.data.slice(0, 14));
-        }
-        // setTotalPage(Math.ceil(res.data.data.length / 14));
-      })
-      .catch((error) => {
-        console.error(error);
-        setData([]);
-      });
-  }, [currentPage, inputValue]);
+    if (userData?.role === 'admin' || userData?.role === 'manager') {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/admins`, config)
+        .then((res) => {
+          setData(res.data.data);
+          setFilteredData(res.data.data);
+          if (currentData.length === 0) {
+            setCurrentData(res.data.data.slice(0, 14));
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          setData([]);
+        });
+    } else {
+      setData([]);
+      navigate('/');
+    }
+  }, [userData, currentPage, inputValue]);
 
   function filter(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

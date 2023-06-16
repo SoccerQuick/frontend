@@ -19,7 +19,7 @@ import {
 } from '../Styles/ViewsStyle';
 import { BoardProps } from '../../../Types/TeamPageType';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../../../store/selectors/authSelectors';
+import { isLogInSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
 import MyPagination from '../../../Components/MyPage/MyPagination';
 
 function FindinMemberPageBoard(props: BoardProps) {

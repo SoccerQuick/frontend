@@ -13,10 +13,23 @@ import {
   MainButton,
   UserButton,
 } from '../Styles/AdminPageStyle';
+import { userSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function AdminPage() {
   const [mainButton, setMainButton] = React.useState(true);
   const [userButton, setUserButton] = React.useState(false);
+  const userData = useSelector(userSelector);
+  const navigate = useNavigate();
+
+  // 현재 권한이 관리자가 아닐 경우 메인 페이지로 팅기도록 설정
+  React.useEffect(() => {
+    if (userData?.role === 'admin' || userData?.role === 'manager') {
+    } else {
+      navigate('/');
+    }
+  }, [userData]);
   return (
     <Container>
       <Header />
