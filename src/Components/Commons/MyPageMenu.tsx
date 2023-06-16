@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
+import { AUTH_ACTIONS } from '../../ReduxStore/modules/Auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { userSelector } from '../../store/selectors/authSelectors';
+import { userSelector } from '../../ReduxStore/modules/Auth/authSelectors';
 import axios from 'axios';
 
 export function MyPageMenu() {

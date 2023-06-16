@@ -29,7 +29,7 @@ import {
 import {
   isLogInSelector,
   userSelector,
-} from '../../../store/selectors/authSelectors';
+} from '../../../ReduxStore/modules/Auth/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitForFindingMember';
 import TeamPageComments from '../../../Components/TeamPage/TeamPageComments';
 import chevronIcon from '../../../styles/icon/chevron_green.svg';

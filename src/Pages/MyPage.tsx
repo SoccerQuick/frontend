@@ -12,7 +12,7 @@ import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavori
 import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost';
 import SearchMyReviewPost from '../Components/MyPage/SearchMyPost/SearchMyReviewPost';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../store/selectors/authSelectors';
+import { isLogInSelector } from '../ReduxStore/modules/Auth/authSelectors';
 import SearchMyApplicationPost from '../Components/MyPage/SearchMyPost/SearchMyApplicationPost';
 
 export type FormDataType = {

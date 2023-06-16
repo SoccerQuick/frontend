@@ -6,7 +6,7 @@ import LikeButton from '../Commons/LikeButton';
 import {
   isLogInSelector,
   userSelector,
-} from '../../store/selectors/authSelectors';
+} from '../../ReduxStore/modules/Auth/authSelectors';
 
 interface ReviewProps {
   dom_id: string;
