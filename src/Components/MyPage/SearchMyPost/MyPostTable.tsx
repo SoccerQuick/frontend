@@ -30,7 +30,6 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
       <table>
         <thead>
           <StyledTitleTr key={title}>
-            {''}
             {properties &&
               properties.map((property, idx) => <th key={idx}>{property}</th>)}
             <th></th>
@@ -85,7 +84,7 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
             })
           ) : (
             <StyledNoItemTr>
-              <td>조회된 글이 없습니다.</td>
+              <td>{'조회된 글이 없습니다.'}</td>
             </StyledNoItemTr>
           )}
         </tbody>
@@ -207,7 +206,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const StyledNoItemTr = styled.td`
+const StyledNoItemTr = styled.tr`
   display: flex;
   justify-content: center;
   align-items: center;
