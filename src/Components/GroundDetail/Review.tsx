@@ -18,6 +18,7 @@ interface reviewData {
   user_icon?: string;
   review_id?: string;
   contents?: string;
+  createdAt?: string;
   likedreviews: string[];
 }
 
@@ -36,7 +37,6 @@ export default function Review(props: ReviewProps) {
   const userName = userData?.name || ''; // 빈 문자열로 대체
   const domId = props.dom_id;
 
-  // url 주소 수정 필요
   useEffect(() => {}, [reviewData]);
 
   function handleEditReview(index: number, reviewId: string | undefined) {
@@ -141,7 +141,12 @@ export default function Review(props: ReviewProps) {
               <span>
                 <img className="user-icon" src={item.user_icon} alt="avatar" />
               </span>
-              <span className="user-name">{item.user_name}</span>
+              <span className="user-name">
+                <p>{item.user_name}</p>
+                <p className="review-time">
+                  {item.createdAt?.split(' ').splice(0, 4).join(' ')}
+                </p>
+              </span>
             </span>
             <span className="likes">
               <LikeButton
@@ -265,6 +270,11 @@ const StyledReviews = styled.div`
   .user-name {
     font-size: 1.7rem;
     font-weight: 700;
+  }
+
+  .review-time {
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   .review-content {
