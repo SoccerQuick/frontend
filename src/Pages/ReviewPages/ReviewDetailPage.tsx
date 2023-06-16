@@ -8,6 +8,7 @@ import Avatar1 from '../../styles/icon/avatar1.png';
 import Avatar2 from '../../styles/icon/avatar2.png';
 import Avatar3 from '../../styles/icon/avatar3.png';
 import Avatar4 from '../../styles/icon/avatar4.png';
+import alertModal from '../../Components/Commons/alertModal';
 
 interface Review {
   userIcon: string;
@@ -39,11 +40,11 @@ export default function ReviewDetailPage() {
     try {
       axios.patch('url').then((res) => {
         console.log(res);
-        if (res.status === 200) alert('수정이 완료되었습니다!');
+        if (res.status === 200) alertModal('수정이 완료되었습니다!', 'success');
       });
     } catch (e) {
       console.log('서버야 일해!!!');
-      alert('서버야 일해!!!');
+      alertModal('서버야 일해!!!', 'error');
     }
     setIsEditable(!isEditable);
   }

@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { AUTH_ACTIONS } from '../../ReduxStore/modules/Auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../ReduxStore/modules/Auth/authSelectors';
+import alertModal from './alertModal';
 import axios from 'axios';
 
 export function MyPageMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
-  const handleLoginOutClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleLoginOutClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    // eslint-disable-next-line no-restricted-globals
-    const result = confirm('로그아웃 하시겠습니까?');
+    const result = await alertModal('로그아웃 하시겠습니까?', 'submit');
     if (result) {
       handleAlertConfirm();
     }

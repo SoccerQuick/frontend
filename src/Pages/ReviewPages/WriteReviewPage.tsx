@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import alertModal from '../../Components/Commons/alertModal';
 import axios from 'axios';
 
 export default function WriteReviewPage() {
@@ -13,10 +14,11 @@ export default function WriteReviewPage() {
   function handleSubmit() {
     axios.post('url', { value, title }).then((res) => {
       if (res.status === 200) {
-        alert('작성 완료');
+        alertModal('작성 완료', 'success');
         return navigate(-1);
       }
-      return alert('다시 작성해주세요.');
+      alertModal('다시 작성해주세요.', 'warning');
+      return;
     });
   }
 

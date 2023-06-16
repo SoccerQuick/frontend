@@ -5,6 +5,7 @@ import { RootState } from '../../../ReduxStore/store';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import FindingMembers from '../../../Components/TeamPage/FindingMembers';
+import alertModal from '../../../Components/Commons/alertModal';
 import axios from 'axios';
 import {
   StyledContainer,
@@ -73,10 +74,11 @@ function EditPage() {
         )
         .then((res) => {
           console.log('수정 요청 성공 : ', res.data);
-          alert('글 수정이 완료되었습니다.');
+          alertModal('글 수정이 완료되었습니다.', 'success');
           navigate(`/teampage/team/${url}`);
         })
         .catch((e) => {
+          console.log(e);
           console.error('글 수정 실패 : ', e);
         });
     } else if (category === '팀 구해요') {
@@ -222,7 +224,7 @@ function EditPage() {
                   handlePatchRequest();
                 }
               } catch (error) {
-                alert(error);
+                error && alertModal('입력값을 확인해주세요.', 'warning');
               }
             }}
           >
