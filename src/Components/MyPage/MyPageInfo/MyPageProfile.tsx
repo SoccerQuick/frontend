@@ -141,7 +141,7 @@ const StyledProfileImg = styled.input`
 `;
 
 const StyledInputLabel = styled.label`
-  width: 6.3rem;
+  width: 8rem;
   height: 2.4rem;
   border: 1px solid #727f88;
   padding: 0.3rem;
