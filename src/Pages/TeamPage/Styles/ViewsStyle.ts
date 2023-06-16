@@ -97,7 +97,6 @@ export const StyledTotalNumber = styled.p`
 `;
 
 export const TeamPageBody = styled.div`
-  display: flex;
   justify-content: space-between;
   height: 70rem;
   width: 100%;
