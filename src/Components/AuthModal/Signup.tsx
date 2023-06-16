@@ -10,6 +10,7 @@ import {
   ModalSelectBox,
   ModalTerms,
 } from '../Commons/AuthComponents';
+import alertModal from '../Commons/alertModal';
 
 const postSignupUrl = `${process.env.REACT_APP_API_URL}/auths/signup`; // signup api url
 const postIdCheckUrl = `${process.env.REACT_APP_API_URL}/auths/id`; // id-check api url
@@ -155,7 +156,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
         }
       );
       const data = response.data;
-      alert(data.message);
+      alertModal(data.message, 'text');
       setAuthModal(false);
       setResponseMsg('');
     } catch (error) {

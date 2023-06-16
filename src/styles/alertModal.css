@@ -11,6 +11,7 @@
 
 .swal2-confirm {
   border: 0.2rem solid var(--color--green) !important;
+  background-color: var(--color--green) !important;
 }
 .swal2-cancel {
   background-color: white !important;
@@ -24,4 +25,7 @@
 
 .swal2-container {
   padding-top: 4rem !important;
+}
+.swal2-popup {
+  width: 40rem !important;
 }

@@ -5,6 +5,7 @@ import chevronIcon from '../../../styles/icon/chevron_down.svg';
 import checkIcon from '../../../styles/icon/check.svg';
 import deleteIcon from '../../../styles/icon/delete.svg';
 import logo from '../../../styles/icon/exampleImg.svg';
+import alertModal from '../../Commons/alertModal';
 
 interface GroundComparisonProps {
   checkedArray: DomDataType[];
@@ -49,7 +50,7 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
     if (checkedInModal.length > 1) {
       setShowComparisonData(true);
     } else {
-      alert('비교할 구장을 2개 이상 선택해주세요.');
+      alertModal('비교할 구장을 2개 이상 선택해주세요.', 'warning');
     }
   };
 

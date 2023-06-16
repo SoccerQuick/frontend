@@ -17,6 +17,7 @@ import Review from '../Components/GroundDetail/Review';
 import starIcon from '../styles/icon/star.svg';
 import starFilledIcon from '../styles/icon/star_filled.svg';
 import homeIcon from '../styles/icon/home.svg';
+import alertModal from '../Components/Commons/alertModal';
 
 const GroundDetail = () => {
   const [groundData, setGroundData] = useState<DomDataType>();
@@ -62,14 +63,14 @@ const GroundDetail = () => {
           config
         )
         .then((res: any) => {
-          alert(res.data.message);
+          alertModal(res.data.message, 'success');
           setIsFavorite(true);
         })
         .catch((e: any) => {
           if (e.response.data.statusCode === 401) {
-            alert('로그인 후 이용해주세요.');
+            alertModal('로그인 후 이용해주세요.', 'warning');
           } else {
-            alert(e.response.data.message);
+            alertModal(e.response.data.message, 'warning');
           }
         });
     } else {
@@ -80,9 +81,9 @@ const GroundDetail = () => {
         })
         .catch((e: any) => {
           if (e.response.data.statusCode === 401) {
-            alert('로그인 후 이용해주세요.');
+            alertModal('로그인 후 이용해주세요.', 'warning');
           } else {
-            alert(e.response.data.message);
+            alertModal(e.response.data.message, 'warning');
           }
         });
     }
@@ -93,7 +94,7 @@ const GroundDetail = () => {
       window.navigator.clipboard
         .writeText(groundData.address.fullAddress)
         .then(() => {
-          alert('주소가 복사되었습니다.');
+          alertModal('주소가 복사되었습니다.', 'success');
         });
   };
 

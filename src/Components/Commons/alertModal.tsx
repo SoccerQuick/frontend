@@ -17,9 +17,13 @@ function alertModal(text: string, type: string) {
   });
 
   if (type === 'text') {
-    return Swal.fire(text);
+    return new Promise<boolean>((resolve) => {
+      Swal.fire(text).then((res) => {
+        resolve(true);
+      });
+    });
   }
-  if (type === 'success' || type === 'error') {
+  if (type === 'success' || type === 'error' || type === 'warning') {
     return Toast.fire({
       icon: type,
       text: text,
@@ -35,7 +39,6 @@ function alertModal(text: string, type: string) {
         confirmButtonColor: 'var(--color--green)',
         confirmButtonText: '확인',
       }).then((res) => {
-        console.log(res);
         if (res.isConfirmed) {
           resolve(true);
         } else {
