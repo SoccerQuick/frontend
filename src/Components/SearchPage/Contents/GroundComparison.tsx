@@ -54,13 +54,13 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
     }
   };
 
-  useEffect(() => {
+  const checkAllHandler = () => {
     if (isAllChecked) {
       setCheckedInModal(() => checkedArray.map((item) => item.title));
     } else {
       setCheckedInModal([]);
     }
-  }, [isAllChecked]);
+  };
 
   return (
     <StyledContainer>
@@ -115,10 +115,20 @@ const GroundComparison: React.FC<GroundComparisonProps> = ({
                   type="checkbox"
                   id="selectAll"
                   checked={isAllChecked}
-                  onChange={() => setIsAllChecked(!isAllChecked)}
+                  onChange={() => {
+                    setIsAllChecked(!isAllChecked);
+                    checkAllHandler();
+                  }}
                 />
                 <label htmlFor="selectAll"></label>
-                <p onClick={() => setIsAllChecked(!isAllChecked)}>전체 선택</p>
+                <p
+                  onClick={() => {
+                    setIsAllChecked(!isAllChecked);
+                    checkAllHandler();
+                  }}
+                >
+                  전체 선택
+                </p>
               </div>
               <div onClick={() => deleteSelectedItemHandler()}>
                 <img src={deleteIcon} alt="deleteIcon" />
