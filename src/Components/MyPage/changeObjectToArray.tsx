@@ -24,6 +24,6 @@ export const changeReviewObjectToArray = (item: ReviewPost): Array<string> => {
     '',
     `${item.ground_id}`,
     `${item.userslikes.length}`,
-    `${item.review_id}`,
+    `${item.ground_id}`,
   ];
 };

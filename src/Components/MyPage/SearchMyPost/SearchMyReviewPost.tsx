@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
 import { changeReviewObjectToArray } from '../changeObjectToArray';
-import { DomDataType } from '../../../Pages/SearchPage';
 
 export type ReviewPost = {
   review_id: string;
