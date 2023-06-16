@@ -51,7 +51,12 @@ export default function Main() {
             <div className="field-list">
               <div className="field-list-text">
                 <span className="field-list-text-title">🏙️ in 서울</span>
-                <span className="field-list-text-content">
+                <span
+                  className="field-list-text-content"
+                  onClick={() => {
+                    clickBtnHandler('서울');
+                  }}
+                >
                   서울에서 진행되는 매치 모아보기
                 </span>
                 <span>
@@ -59,15 +64,17 @@ export default function Main() {
                     className="move-to-list-page"
                     src="Images/cramp.png"
                     alt="cramp"
-                    onClick={() => {
-                      clickBtnHandler('서울');
-                    }}
                   />
                 </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">🛬 in 인천</span>
-                <span className="field-list-text-content">
+                <span
+                  className="field-list-text-content"
+                  onClick={() => {
+                    clickBtnHandler('인천');
+                  }}
+                >
                   인천에서 진행되는 매치 모아보기
                 </span>
                 <span>
@@ -75,15 +82,17 @@ export default function Main() {
                     className="move-to-list-page"
                     src="Images/cramp.png"
                     alt="cramp"
-                    onClick={() => {
-                      clickBtnHandler('인천');
-                    }}
                   />
                 </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">👩🏻‍🔬 in 대전</span>
-                <span className="field-list-text-content">
+                <span
+                  className="field-list-text-content"
+                  onClick={() => {
+                    clickBtnHandler('대전');
+                  }}
+                >
                   대전에서 진행되는 매치 모아보기
                 </span>
                 <span>
@@ -91,15 +100,17 @@ export default function Main() {
                     className="move-to-list-page"
                     src="Images/cramp.png"
                     alt="cramp"
-                    onClick={() => {
-                      clickBtnHandler('대전');
-                    }}
                   />
                 </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">🍎 in 대구</span>
-                <span className="field-list-text-content">
+                <span
+                  className="field-list-text-content"
+                  onClick={() => {
+                    clickBtnHandler('대구');
+                  }}
+                >
                   대구에서 진행되는 매치 모아보기
                 </span>
                 <span>
@@ -107,15 +118,17 @@ export default function Main() {
                     className="move-to-list-page"
                     src="Images/cramp.png"
                     alt="cramp"
-                    onClick={() => {
-                      clickBtnHandler('대구');
-                    }}
                   />
                 </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">🚢 in 부산</span>
-                <span className="field-list-text-content">
+                <span
+                  className="field-list-text-content"
+                  onClick={() => {
+                    clickBtnHandler('부산');
+                  }}
+                >
                   부산에서 진행되는 매치 모아보기
                 </span>
                 <span>
@@ -123,15 +136,17 @@ export default function Main() {
                     className="move-to-list-page"
                     src="Images/cramp.png"
                     alt="cramp"
-                    onClick={() => {
-                      clickBtnHandler('부산');
-                    }}
                   />
                 </span>
               </div>
               <div className="field-list-text">
                 <span className="field-list-text-title">🌊 in 제주</span>
-                <span className="field-list-text-content">
+                <span
+                  className="field-list-text-content"
+                  onClick={() => {
+                    clickBtnHandler('제주');
+                  }}
+                >
                   제주에서 진행되는 매치 모아보기
                 </span>
                 <span>
@@ -139,9 +154,6 @@ export default function Main() {
                     className="move-to-list-page"
                     src="Images/cramp.png"
                     alt="cramp"
-                    onClick={() => {
-                      clickBtnHandler('제주');
-                    }}
                   />
                 </span>
               </div>
@@ -282,6 +294,11 @@ const StyledListTitleContainer = styled.div`
   .viewAll {
     color: var(--color--green);
     cursor: pointer;
+
+    &:hover {
+      font-size: calc(1.5rem * 1.2);
+    }
+
     > img {
       margin-left: 1rem;
     }
@@ -324,6 +341,11 @@ const StyledFieldList = styled.div`
     padding: 2rem;
     border: 2px solid #eeeeee;
     border-radius: 2rem;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #eeeeee;
+    }
   }
 
   .field-list-text-title {
