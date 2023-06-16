@@ -47,6 +47,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
         imageUrl: `${groundData.stadiums[0].images[0].image}`,
         link: {
           mobileWebUrl: currentUrl,
+          webUrl: currentUrl,
         },
       },
       social: {
@@ -58,11 +59,13 @@ const ShareModal: React.FC<ShareModalProps> = ({
           title: '풋살장 보러가기',
           link: {
             mobileWebUrl: currentUrl,
+            webUrl: currentUrl,
           },
         },
       ],
     });
   };
+  console.log(currentUrl);
 
   return (
     <>
@@ -222,7 +225,7 @@ const KakaoShareButton = styled.button`
   background: transparent;
   padding: 0;
   img {
-    width: 6.7rem;
+    width: 48px;
     border-radius: 100%;
   }
 `;
