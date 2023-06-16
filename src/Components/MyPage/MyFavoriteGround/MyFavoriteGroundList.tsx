@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import checkIcon from '../../../styles/icon/check.svg';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../../../store/selectors/authSelectors';
+import {
+  isLogInSelector,
+  userSelector,
+} from '../../../ReduxStore/modules/Auth/authSelectors';
 import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
 import MyPagination from '../MyPagination';

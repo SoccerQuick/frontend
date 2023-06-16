@@ -97,8 +97,8 @@ export const StyledTotalNumber = styled.p`
 `;
 
 export const TeamPageBody = styled.div`
-  display: flex;
   justify-content: space-between;
+  height: 70rem;
   width: 100%;
   table {
     width: 100%;
@@ -233,7 +233,7 @@ export const TeamPageFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   width: fit-content;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-right: 3rem;
   float: right;
 `;
@@ -250,9 +250,10 @@ export const StyledWriteButton = styled.button`
 
 export const PageSelect = styled.div`
   clear: both;
-  margin-top: 11rem;
+  margin-top: 9rem;
   justify-content: center;
   display: flex;
+  font-size: 1.8rem;
   border-top: 1px solid #ddd;
 `;
 

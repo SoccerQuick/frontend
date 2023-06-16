@@ -16,11 +16,11 @@ import {
   TeamPageFooter,
   StyledWriteButton,
   PageSelect,
-  PageButton,
 } from '../Styles/ViewsStyle';
 import { BoardProps } from '../../../Types/TeamPageType';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../../../store/selectors/authSelectors';
+import { isLogInSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
+import MyPagination from '../../../Components/MyPage/MyPagination';
 
 function FindinMemberPageBoard(props: BoardProps) {
   const isLogin = useSelector(isLogInSelector);
@@ -92,7 +92,7 @@ function FindinMemberPageBoard(props: BoardProps) {
   };
 
   return (
-    <div style={{ width: '101rem', height: '65vh' }}>
+    <div style={{ width: '101rem', height: '65rem' }}>
       <Teampage>
         <StyledTotalNumber>
           총&nbsp; <b>{filteredData.length}</b>건
@@ -161,7 +161,7 @@ function FindinMemberPageBoard(props: BoardProps) {
                     <div
                       style={{
                         width: '100%',
-                        height: '100%',
+                        height: '63.8rem',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -190,19 +190,14 @@ function FindinMemberPageBoard(props: BoardProps) {
           </Link>
         )}
       </TeamPageFooter>
+
       <PageSelect>
-        {Array.from({ length: totalPage }, (_, index) => (
-          <PageButton
-            key={index + 1}
-            onClick={() => {
-              setCurrentPage(index + 1);
-            }}
-            selected={index + 1}
-            currentPage={currentPage}
-          >
-            [{index + 1}]
-          </PageButton>
-        ))}
+        <MyPagination
+          totalItemsCount={filteredData.length}
+          itemsPerPage={8}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </PageSelect>
     </div>
   );

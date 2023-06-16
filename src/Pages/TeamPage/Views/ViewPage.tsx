@@ -5,6 +5,7 @@ import HtmlParser from '../../../Components/Commons/HtmlParser';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../../ReduxStore/modules/TeamPage/actions';
 import { RootState, AppDispatch } from '../../../ReduxStore/store';
+import Accepted from '../../../Components/TeamPage/AcceptedMembers';
 import {
   StyledWrap,
   StyledPost,
@@ -28,7 +29,7 @@ import {
 import {
   isLogInSelector,
   userSelector,
-} from '../../../store/selectors/authSelectors';
+} from '../../../ReduxStore/modules/Auth/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitForFindingMember';
 import TeamPageComments from '../../../Components/TeamPage/TeamPageComments';
 import chevronIcon from '../../../styles/icon/chevron_green.svg';
@@ -44,6 +45,7 @@ function DetailPage() {
   // 이전페이지로 돌아가는 명령을 내리기 위한 nav
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(false);
+  const [acceptModal, setAcceptModal] = React.useState(false);
 
   // 최초 렌더링 시 데이터를 받아와서 저장하는 부분
   const location = useLocation();
@@ -174,8 +176,7 @@ function DetailPage() {
             </StyledBody>
             <StyledAuthorButtonContainer>
               {userData?.name === data.author && (
-                // 현재 location 객체를 통해 data 를 주고받고 있음.
-                <Link to={`/teampage/edit/${url}`} state={data}>
+                <Link to={`/teampage/edit/${url}`}>
                   <button>수정</button>
                 </Link>
               )}
@@ -189,7 +190,7 @@ function DetailPage() {
                 userData?.role === 'manager') && (
                 <button
                   onClick={() => {
-                    console.log(data.accept);
+                    setAcceptModal(true);
                   }}
                 >
                   조회
@@ -228,6 +229,14 @@ function DetailPage() {
               <SubmitForFindingMember
                 setShowModal={setShowModal}
                 groupId={data.group_id}
+              />
+            )}
+            {acceptModal && (
+              <Accepted
+                setAcceptModal={setAcceptModal}
+                accept={data.accept}
+                total={data.playerNeed + data.gkNeed}
+                now={data.player + data.gk}
               />
             )}
           </div>

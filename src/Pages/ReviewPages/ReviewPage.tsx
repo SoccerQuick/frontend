@@ -15,6 +15,9 @@ import Avatar1 from '../../styles/icon/avatar1.png';
 import Avatar2 from '../../styles/icon/avatar2.png';
 import Avatar3 from '../../styles/icon/avatar3.png';
 import Avatar4 from '../../styles/icon/avatar4.png';
+import sliderImg1 from '../../styles/icon/review_slider1.png';
+import sliderImg2 from '../../styles/icon/review_slider2.png';
+import sliderImg3 from '../../styles/icon/review_slider3.png';
 import Magnifier from '../../styles/icon/magnifier.png';
 
 const AVATARS = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar3];
@@ -101,6 +104,8 @@ export default function ReviewPage() {
   const [stadium, setStadium] = useState('구장');
   const [searchInput, setSearchInput] = useState('');
   const [clicked, setClicked] = useState(Array(reviewList.length).fill(false));
+  const [reviewId, setReviewId] = useState<string>('');
+
   const navigate = useNavigate();
 
   let settings = {
@@ -126,6 +131,17 @@ export default function ReviewPage() {
       .get(`${process.env.REACT_APP_API_URL}/reviews`, config)
       .then((res) => {
         if (res.status === 200) {
+          // console.log(res);
+          res.data.data.map((v: any) =>
+            axios
+              .get(
+                `${process.env.REACT_APP_API_URL}/reviews/${v.review_id}`,
+                config
+              )
+              .then((res: any) => {
+                console.log(res);
+              })
+          );
         }
       });
   });
@@ -163,22 +179,6 @@ export default function ReviewPage() {
     navigate(`/review/detail/${index}`, { state: reviewList[index] });
   }
 
-  function handleLikeButtonClick(index: number) {
-    setReviewList((prevList) => {
-      const updatedList = [...prevList];
-      const updatedItem = { ...updatedList[index] };
-      if (clicked[index]) updatedItem.like -= 1;
-      else updatedItem.like += 1;
-      updatedList[index] = updatedItem;
-
-      const updatedClicked = [...clicked];
-      updatedClicked[index] = !clicked[index];
-      setClicked(updatedClicked);
-
-      return updatedList;
-    });
-  }
-
   function handleScrollToTop() {
     window.scrollTo({
       top: 0,
@@ -201,16 +201,13 @@ export default function ReviewPage() {
                 <StyledImage>
                   <Slider {...settings}>
                     <StyledImage>
-                      <img src="Images/reviewMainImg.png" alt="reviewMainImg" />
+                      <img src={sliderImg2} alt="reviewMainImg" />
                     </StyledImage>
                     <StyledImage>
-                      <img src="Images/footy.png" alt="footy" />
+                      <img src={sliderImg3} alt="footy" />
                     </StyledImage>
                     <StyledImage>
-                      <img src="Images/reviewImg3.jpg" alt="reviewImg3" />
-                    </StyledImage>
-                    <StyledImage>
-                      <img src="Images/reviewImg4.jpg" alt="reviewImg4" />
+                      <img src={sliderImg1} alt="reviewImg3" />
                     </StyledImage>
                   </Slider>
                 </StyledImage>
@@ -223,6 +220,7 @@ export default function ReviewPage() {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <p
+                        className="area"
                         onClick={() => {
                           if (stadiumFilterView) {
                             setStadiumFilterView(false);
@@ -237,7 +235,7 @@ export default function ReviewPage() {
                       {areaFilterView &&
                         areaList.map((item, index) => (
                           <li
-                            className="area"
+                            className="area-list"
                             key={index}
                             onClick={() => {
                               setArea(item);
@@ -254,6 +252,7 @@ export default function ReviewPage() {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <p
+                        className="stadium"
                         onClick={() => {
                           if (areaFilterView) {
                             setAreaFilterView(false);
@@ -268,7 +267,7 @@ export default function ReviewPage() {
                       {stadiumFilterView &&
                         filterList[area].map((item, index) => (
                           <li
-                            className="stadium"
+                            className="stadium-list"
                             key={index}
                             onClick={() => {
                               area === '지역'
@@ -299,8 +298,8 @@ export default function ReviewPage() {
                   <p>🥅 리뷰 리스트</p>
                 </StyledListTitle>
                 <StyledReviewListHeader>
-                  <span></span>
-                  <span></span>
+                  <span>순번</span>
+                  <span>리뷰</span>
                   <span>작성자</span>
                   <span>지역</span>
                   <span>구장</span>
@@ -309,9 +308,7 @@ export default function ReviewPage() {
                 {searchInput.length === 0
                   ? filteredReviewList.map((item, index) => (
                       <StyledReviewList key={index}>
-                        <span className="review-user-icon">
-                          {<img src={AVATARS[index]} alt="userIcon" />}
-                        </span>
+                        <span className="review-user-icon">{index + 1}</span>
                         <span
                           className="review-title"
                           onClick={() => handleReviewTitleClick(index)}
@@ -395,37 +392,66 @@ const StyledReviewHeader = styled.div`
     z-index: 2;
 
     .areaFilter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: absolute;
-      padding: 1rem 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 2rem;
       box-shadow: 2px 2px #e0e0e0;
       background-color: white;
       left: 0;
+      overflow: hidden;
+    }
+
+    .area {
+      padding: 1rem 2.5rem;
+      &:hover {
+        background-color: #e0e0e0;
+      }
     }
 
     .stadiumFilter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: absolute;
-      padding: 1rem 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 2rem;
       box-shadow: 2px 2px #e0e0e0;
       background-color: white;
+      left: 0;
+      overflow: hidden;
       left: 10rem;
     }
-  }
 
-  .area {
-    padding: 1rem 0;
-    &:hover {
-      background-color: #dedede;
+    .stadium {
+      padding: 1rem 2.5rem;
+      &:hover {
+        background-color: #e0e0e0;
+      }
     }
   }
 
-  .stadium {
+  .area-list {
+    width: 100%;
     padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+
     &:hover {
-      background-color: #dedede;
+      background-color: #e0e0e0;
+    }
+  }
+
+  .stadium-list {
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      background-color: #e0e0e0;
     }
   }
 
@@ -481,7 +507,9 @@ const StyledReviewList = styled.div`
   }
 
   .review-user-icon {
+    font-weight: bold;
     padding: 1rem;
+    border: none;
   }
 
   .review-title {

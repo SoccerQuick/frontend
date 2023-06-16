@@ -189,6 +189,7 @@ export const StyledAuthorButtonContainer = styled.div`
   display: flex;
   height: 3rem;
   justify-content: flex-end;
+  align-items: center;
   button {
     color: gray;
     background-color: white;

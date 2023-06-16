@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../../store/selectors/authSelectors';
+import { userSelector } from '../../ReduxStore/modules/Auth/authSelectors';
 import ballIcon from '../../styles/icon/soccerball.svg';
 import checkIcon from '../../styles/icon/check_white.svg';
 import commentIcon from '../../styles/icon/comment.svg';
@@ -16,10 +16,7 @@ import {
   StyledCommentDetailDiv,
   StyledGender,
   StyledPosition,
-  getColorByPosition,
   StyledLevel,
-  getColorBySkill,
-  getBackgroundColorBySkill,
   StyledContents,
   StyledCommentButtons,
 } from '../../Pages/TeamPage/Styles/ComponentStyle';
