@@ -284,7 +284,7 @@ const GroundDetailHeaderBtn = styled.div`
       width: 12rem;
       background: white;
       color: #0d9c05;
-      border: 0.1rem solid #dadada;
+      border: 0.2rem solid #bacdae;
       :hover {
         background: #f0f0f08e;
       }
