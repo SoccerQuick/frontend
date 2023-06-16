@@ -27,5 +27,11 @@
   padding-top: 4rem !important;
 }
 .swal2-popup {
+  width: 50rem !important;
+}
+.swal2-modal {
   width: 40rem !important;
+}
+.swal2-timer-progress-bar {
+  background: rgb(137, 230, 137);
 }
