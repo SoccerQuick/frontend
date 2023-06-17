@@ -158,43 +158,74 @@ function EditPage() {
       },
     };
   }, []);
+  console.log(data);
 
   return (
     <>
       <StyledContainer style={{ marginTop: '3rem' }}>
         <StyledBox
           style={{
-            width: '98.4rem',
-            marginLeft: '4rem',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
+            flexDirection: 'column',
           }}
         >
-          <StyledDiv
-            style={{ width: '20rem', height: '5rem', fontSize: '1.9rem' }}
+          <div
+            style={{
+              width: '98.4rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              padding: '0.5rem 0',
+            }}
           >
-            카테고리 : {category}
-          </StyledDiv>
-          <StyledTitle>활동지역</StyledTitle>
-          <StyledInputText
-            defaultValue={data.location}
-            onChange={(e) => {
-              setArea(e.target.value);
-            }}
-          />
+            <StyledTitle>카테고리</StyledTitle>
+            <StyledInputText
+              onChange={(e) => {
+                setArea(e.target.value);
+              }}
+              value={category}
+              style={{
+                cursor: 'pointer',
+                border: 'none',
+                borderBottom: '0.3rem solid #bbdbb9',
+                paddingBottom: '0.4rem',
+              }}
+            />
 
-          <StyledTitle style={{ marginLeft: '4rem' }}>작성자</StyledTitle>
-          <StyledInputText
-            defaultValue={data.location}
-            onChange={(e) => {
-              setArea(e.target.value);
+            <StyledTitle style={{ marginLeft: '4rem' }}>작성자</StyledTitle>
+            <StyledInputText
+              onChange={(e) => {
+                setArea(e.target.value);
+              }}
+              value={data.author}
+              style={{
+                cursor: 'pointer',
+                border: 'none',
+                borderBottom: '0.3rem solid #bbdbb9',
+                paddingBottom: '0.4rem',
+              }}
+            />
+          </div>
+          <div
+            style={{
+              width: '98.4rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              padding: '0.5rem 0',
             }}
-            value="ㄱㅁㅇ"
-          />
+          >
+            <StyledTitle>활동지역</StyledTitle>
+            <StyledInputText
+              defaultValue={data.location}
+              onChange={(e) => {
+                setArea(e.target.value);
+              }}
+            />
+          </div>
         </StyledBox>
       </StyledContainer>
-      <StyledTitleBox>
+      <StyledTitleBox style={{ paddingTop: '1rem' }}>
         <StyledTitle style={{ width: '8rem' }}>제목</StyledTitle>
         <StyledTitleInputText
           defaultValue={title}
@@ -230,6 +261,14 @@ function EditPage() {
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
           <StyledButton
+            color="white"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            취소하기
+          </StyledButton>
+          <StyledButton
             onClick={() => {
               try {
                 const validationResult = submitValidator();
@@ -242,13 +281,6 @@ function EditPage() {
             }}
           >
             수정하기
-          </StyledButton>
-          <StyledButton
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            취소하기
           </StyledButton>
         </StyledBox>
       </StyledContainer>
