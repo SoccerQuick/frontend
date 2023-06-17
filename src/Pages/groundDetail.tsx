@@ -92,9 +92,11 @@ const GroundDetail = () => {
   const clipUrl = () => {
     const currentUrl = window.location.href;
     if (groundData)
-      window.navigator.clipboard.writeText(currentUrl).then(() => {
-        alertModal('주소가 복사되었습니다.', 'success');
-      });
+      window.navigator.clipboard
+        .writeText(`http://kdt-sw-4-team02.elicecoding.com/ground/${dom_id}`)
+        .then(() => {
+          alertModal('주소가 복사되었습니다.', 'success');
+        });
   };
 
   return (

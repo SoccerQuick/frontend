@@ -27,9 +27,13 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const currentUrl = window.location.href;
 
   const clipUrl = () => {
-    window.navigator.clipboard.writeText(currentUrl).then(() => {
-      alertModal('링크가 복사되었습니다.', 'success');
-    });
+    window.navigator.clipboard
+      .writeText(
+        `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData.dom_id}`
+      )
+      .then(() => {
+        alertModal('링크가 복사되었습니다.', 'success');
+      });
   };
 
   useEffect(() => {
