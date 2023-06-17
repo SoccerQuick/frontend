@@ -57,7 +57,7 @@ function FindingMember() {
   // 필터링 된 데이터를 관리하는 상태
   const [filteredData, setFilteredData] = React.useState(data);
   // 페이지네이션 구현 부분
-  const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태
+  const [currentPage, setCurrentPage] = React.useState(0); // 현재 페이지 상태
   const [currentData, setCurrentData] = React.useState<DataProps[]>([]); // 초기 데이터
   const [totalPage, setTotalPage] = React.useState(0);
 

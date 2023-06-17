@@ -190,10 +190,9 @@ function FindinMemberPageBoard(props: BoardProps) {
           </Link>
         )}
       </TeamPageFooter>
-
       <PageSelect>
         <MyPagination
-          totalItemsCount={filteredData.length}
+          totalItemsCount={filteredData ? filteredData.length : 100}
           itemsPerPage={8}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
