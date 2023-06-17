@@ -56,7 +56,6 @@ function DetailModal(props: SumbitModalProps) {
           config
         )
         .then(async (res) => {
-          console.log('신청 성공 : ', res.data);
           const confirm = await alertModal(
             '가입 신청에 성공하였습니다.',
             'text'
@@ -67,7 +66,6 @@ function DetailModal(props: SumbitModalProps) {
           }
         })
         .catch((e) => {
-          console.log(e.response.data.message);
           console.error('신청 실패 : ', e);
           alertModal(
             `가입 신청에 실패했습니다. ${e.response.data.message}.`,

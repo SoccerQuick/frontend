@@ -65,7 +65,6 @@ const ShareModal: React.FC<ShareModalProps> = ({
       ],
     });
   };
-  console.log(currentUrl);
 
   return (
     <>

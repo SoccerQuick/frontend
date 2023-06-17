@@ -64,7 +64,6 @@ function SubmitPage() {
       axios
         .post(`${process.env.REACT_APP_API_URL}/groups`, data, config)
         .then((res) => {
-          console.log('POST 요청 성공 : ', res.data);
           alertModal('팀원 모집글이 등록되었습니다.', 'success');
           navigate('/teampage/team');
         })
@@ -80,7 +79,6 @@ function SubmitPage() {
         position: position,
         contents: content,
       };
-      console.log('자기어필 페이지는 아직 미구현');
     }
   };
 
