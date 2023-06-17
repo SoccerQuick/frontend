@@ -91,7 +91,6 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         navigate(currentPath, { replace: true });
       })
       .catch((err) => {
-        console.log(err);
         setLoginError('존재하지 않는 계정입니다.');
       });
   };

@@ -31,7 +31,6 @@ interface ReviewList {
 
 export default function ReviewPage() {
   const [reviewList, setReviewList] = useState<ReviewList[]>([]);
-  console.log(reviewList);
   const [filteredReviewList, setFilteredReviewList] =
     useState<ReviewList[]>(reviewList);
   const [filteredReviewListBySearch, setFilteredReviewListBySearch] =
@@ -91,9 +90,7 @@ export default function ReviewPage() {
       setReviewList(allReviews);
       setFilteredReviewList(allReviews);
 
-      // console.log(areaData);
       const areaSet = new Set(areaData);
-      // console.log(areaSet);
       setAreaList(Array.from(areaSet));
 
       const newFilterList: { [key: string]: any[] } = {};
@@ -106,7 +103,6 @@ export default function ReviewPage() {
           stadium.includes(area) && newFilterList[area].push(stadium);
         });
       });
-      // console.log(newFilterList);
       setFilterList(newFilterList);
     });
   }, []);

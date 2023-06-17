@@ -10,7 +10,9 @@ import axios from 'axios';
 import {
   StyledContainer,
   StyledBox,
+  StyledTitleBox,
   StyledTitle,
+  StyledTitleInputText,
   StyledDiv,
   StyledInputText,
   StyledButton,
@@ -73,7 +75,6 @@ function EditPage() {
           config
         )
         .then((res) => {
-          console.log('수정 요청 성공 : ', res.data);
           alertModal('글 수정이 완료되었습니다.', 'success');
           navigate(`/teampage/team/${url}`);
         })
@@ -89,11 +90,7 @@ function EditPage() {
         position: position,
         contents: body,
       };
-      console.log('자기어필 페이지는 아직 미구현');
     }
-
-    // 정상 출력되는지 테스트용 콘솔
-    console.log(postData);
   };
 
   // 입력값을 검사하는 validator - 오류를 조금 더 상세하게 출력하는 것이 효과가 있을까?
@@ -165,7 +162,15 @@ function EditPage() {
   return (
     <>
       <StyledContainer style={{ marginTop: '3rem' }}>
-        <StyledBox>
+        <StyledBox
+          style={{
+            width: '98.4rem',
+            marginLeft: '4rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}
+        >
           <StyledDiv
             style={{ width: '20rem', height: '5rem', fontSize: '1.9rem' }}
           >
@@ -178,18 +183,26 @@ function EditPage() {
               setArea(e.target.value);
             }}
           />
-          <StyledTitle>제목</StyledTitle>
-          <StyledInputText
-            defaultValue={title}
-            style={{ textAlign: 'left', width: '32rem' }}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
+
           <StyledTitle style={{ marginLeft: '4rem' }}>작성자</StyledTitle>
-          <StyledDiv style={{ border: '1px solid #eee' }}>ㄱㅁㅇ</StyledDiv>
+          <StyledInputText
+            defaultValue={data.location}
+            onChange={(e) => {
+              setArea(e.target.value);
+            }}
+            value="ㄱㅁㅇ"
+          />
         </StyledBox>
       </StyledContainer>
+      <StyledTitleBox>
+        <StyledTitle style={{ width: '8rem' }}>제목</StyledTitle>
+        <StyledTitleInputText
+          defaultValue={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+      </StyledTitleBox>
 
       <StyledContainer>
         {category === '팀원 구해요' && (

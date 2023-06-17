@@ -18,7 +18,6 @@ export const changeGroupObjectToArray = (item: GroupPost): Array<string> => {
 export const changeMyApplicantObjectToArray = (
   item: GroupPost
 ): Array<string> => {
-  console.log(item);
   return [
     'teamPage',
     item.leader_name,

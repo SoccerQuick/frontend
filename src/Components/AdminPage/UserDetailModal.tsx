@@ -44,7 +44,6 @@ function DetailModal(props: DedatilModalProps) {
       axios
         .patch(`${process.env.REACT_APP_API_URL}/admins/role`, data, config)
         .then(async (res) => {
-          console.log('관리자 등업 성공 : ', res.data);
           const confirm = await alertModal(
             `${modalData.nick_name}유저를 관리자로 임명하였습니다.`,
             'text'
@@ -80,7 +79,6 @@ function DetailModal(props: DedatilModalProps) {
           config
         )
         .then(async (res) => {
-          console.log('해당 유저의 로그인 정지 완료 : ', res.data);
           const confirm = await alertModal(
             `${modalData.nick_name}유저의 로그인 기능이 정지되었습니다.`,
             'text'
@@ -115,7 +113,6 @@ function DetailModal(props: DedatilModalProps) {
           config
         )
         .then(async (res) => {
-          console.log('해당 유저의 커뮤니티 정지 완료 : ', res.data);
           const confirm = await alertModal(
             `${modalData.nick_name}유저의 커뮤니티 기능이 정지되었습니다.`,
             'text'

@@ -53,7 +53,6 @@ function Comment(props: CommentProps) {
           config
         )
         .then(async (res) => {
-          console.log('멤버 수락 완료!: ', res.data);
           const confirm = await alertModal('멤버 수락 완료!', 'text');
           if (confirm) window.location.reload();
         })
@@ -78,7 +77,6 @@ function Comment(props: CommentProps) {
           config
         )
         .then(async (res) => {
-          console.log('멤버 거절 완료!: ', res.data);
           const confirm = await alertModal('멤버 거절 완료!', 'text');
           if (confirm) window.location.reload();
         })
