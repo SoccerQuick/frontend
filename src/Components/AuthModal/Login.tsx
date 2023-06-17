@@ -117,7 +117,15 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         />
 
         {<LoginError>{loginError}</LoginError>}
-        <ModalSubmitButton>로그인</ModalSubmitButton>
+        <ModalSubmitButton
+          term={
+            formData.userId.length > 0 && formData.password.length > 0
+              ? true
+              : false
+          }
+        >
+          로그인
+        </ModalSubmitButton>
       </ModalForm>
     </Modal>
   );
