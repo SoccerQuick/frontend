@@ -100,7 +100,7 @@ const GroundDetail = () => {
     var textarea = document.createElement('textarea');
 
     document.body.appendChild(textarea);
-    textarea.value = `http://kdt-sw-4-team02.elicecoding.com/ground/${dom_id}`;
+    textarea.value = `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData?.address.fullAddress}`;
     textarea.select();
     document.execCommand('copy');
 
