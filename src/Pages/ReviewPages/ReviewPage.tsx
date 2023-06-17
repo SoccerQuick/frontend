@@ -31,7 +31,6 @@ interface ReviewList {
 
 export default function ReviewPage() {
   const [reviewList, setReviewList] = useState<ReviewList[]>([]);
-  console.log(reviewList);
   const [filteredReviewList, setFilteredReviewList] =
     useState<ReviewList[]>(reviewList);
   const [filteredReviewListBySearch, setFilteredReviewListBySearch] =
@@ -91,9 +90,7 @@ export default function ReviewPage() {
       setReviewList(allReviews);
       setFilteredReviewList(allReviews);
 
-      // console.log(areaData);
       const areaSet = new Set(areaData);
-      // console.log(areaSet);
       setAreaList(Array.from(areaSet));
 
       const newFilterList: { [key: string]: any[] } = {};
@@ -106,7 +103,6 @@ export default function ReviewPage() {
           stadium.includes(area) && newFilterList[area].push(stadium);
         });
       });
-      // console.log(newFilterList);
       setFilterList(newFilterList);
     });
   }, []);
@@ -316,7 +312,9 @@ export default function ReviewPage() {
                   : reviewList.length > 0 &&
                     filteredReviewListBySearch.map((item, index) => (
                       <StyledReviewList key={index}>
-                        <span className="review-user-icon">{index + 1}</span>
+                        <span className="review-user-icon">
+                          <img src={item.user_icon} alt="user-icon" />
+                        </span>
                         <span
                           className="review-title"
                           onClick={() => handleReviewTitleClick(item.ground_id)}
@@ -350,7 +348,7 @@ const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
   width: 98.4rem;
-  margin: 0 auto; /* 좌우 여백 자동 조정 */
+  margin: 0 auto;
 `;
 
 const StyledCarousel = styled.div`
