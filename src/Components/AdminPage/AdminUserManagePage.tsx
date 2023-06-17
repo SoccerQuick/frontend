@@ -112,7 +112,6 @@ function AdminUserManager() {
       return false;
     });
     setFilteredData(newData);
-    // setTotalPage(Math.ceil(newData.length / 12));
   }
   React.useEffect(() => {
     setCurrentData(
