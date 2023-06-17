@@ -27,13 +27,23 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const currentUrl = window.location.href;
 
   const clipUrl = () => {
-    window.navigator.clipboard
-      .writeText(
-        `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData.dom_id}`
-      )
-      .then(() => {
-        alertModal('링크가 복사되었습니다.', 'success');
-      });
+    // window.navigator.clipboard
+    //   .writeText(
+    //     `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData.dom_id}`
+    //   )
+    //   .then(() => {
+    //     alertModal('링크가 복사되었습니다.', 'success');
+    //   });
+    var textarea = document.createElement('textarea');
+
+    document.body.appendChild(textarea);
+    textarea.value = `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData.dom_id}`;
+    textarea.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(textarea);
+
+    alertModal('링크가 복사되었습니다.', 'success');
   };
 
   useEffect(() => {
