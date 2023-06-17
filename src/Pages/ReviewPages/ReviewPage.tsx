@@ -147,8 +147,8 @@ export default function ReviewPage() {
     setStadiumFilterView(false);
   }
 
-  function handleReviewTitleClick() {
-    navigate(`/ground`);
+  function handleReviewTitleClick(ground_id: string) {
+    navigate(`/ground/${ground_id}`);
   }
 
   function handleScrollToTop() {
@@ -301,7 +301,7 @@ export default function ReviewPage() {
                         </span>
                         <span
                           className="review-title"
-                          onClick={() => handleReviewTitleClick()}
+                          onClick={() => handleReviewTitleClick(item.ground_id)}
                         >
                           {item.contents}
                         </span>
@@ -319,7 +319,7 @@ export default function ReviewPage() {
                         <span className="review-user-icon">{index + 1}</span>
                         <span
                           className="review-title"
-                          onClick={() => handleReviewTitleClick()}
+                          onClick={() => handleReviewTitleClick(item.ground_id)}
                         >
                           {item.contents}
                         </span>
