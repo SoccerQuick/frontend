@@ -32,13 +32,13 @@ function FindinMemberPageBoard(props: BoardProps) {
     currentPage,
     setCurrentPage,
     currentData,
-    setCurrentData,
+    // setCurrentData,
     totalPage,
   } = props;
 
-  React.useEffect(() => {
-    setCurrentData(filteredData.slice((currentPage - 1) * 8, currentPage * 8));
-  }, [currentPage]);
+  // React.useEffect(() => {
+  //   setCurrentData(filteredData.slice((currentPage - 1) * 8, currentPage * 8));
+  // }, [currentPage]);
 
   // 포지션 체크하는 부분
   const checkPosition = (
