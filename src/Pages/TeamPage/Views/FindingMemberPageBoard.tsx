@@ -92,7 +92,7 @@ function FindinMemberPageBoard(props: BoardProps) {
   };
 
   return (
-    <div style={{ width: '101rem', height: '65rem' }}>
+    <div style={{ width: '101rem', height: '80rem' }}>
       <Teampage>
         <StyledTotalNumber>
           총&nbsp; <b>{filteredData.length}</b>건
