@@ -59,7 +59,6 @@ function DetailPage() {
     dispatch(fetchData(url));
   }, [dispatch, url]);
 
-  console.log(data);
   useEffect(() => {
     axios
       .get(
@@ -89,7 +88,6 @@ function DetailPage() {
         .delete(`${process.env.REACT_APP_API_URL}/groups/${url}`, config)
         .then((res) => {
           alertModal('게시글이 삭제되었습니다.', 'success');
-          console.log('삭제 성공');
           navigate('/teampage/team');
         })
         .catch((error) => {
@@ -97,7 +95,6 @@ function DetailPage() {
         });
     }
   };
-
   return (
     <StyledWrap>
       {!data ? (

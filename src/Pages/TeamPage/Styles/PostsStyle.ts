@@ -45,7 +45,7 @@ export const StyledInputText = styled.input`
   padding-left: 1rem;
   width: 20rem;
   height: 4.5rem;
-  text-align: center;
+  text-align: start;
   align-items: center;
   border: 0.1rem solid #b2b2b2;
 `;
