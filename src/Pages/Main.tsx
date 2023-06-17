@@ -6,7 +6,6 @@ import HeaderCategory from '../Components/Commons/HeaderCategory';
 import Footer from '../Components/Footer';
 import MainSearch from '../Components/Search/MainSearch';
 import Avatar1 from '../styles/icon/avatar1.png';
-import Avatar2 from '../styles/icon/avatar2.png';
 import Avatar3 from '../styles/icon/avatar3.png';
 import Avatar4 from '../styles/icon/avatar4.png';
 import Avatar5 from '../styles/icon/avatar5.png';
@@ -14,7 +13,7 @@ import Avatar5 from '../styles/icon/avatar5.png';
 export default function Main() {
   const navigate = useNavigate();
   const clickBtnHandler = (searchValue: string) => {
-    navigate('/ground', { state: { searchValue } });
+    navigate(`/ground?q=${searchValue}&start=0`);
   };
   return (
     <>
