@@ -2,18 +2,21 @@ import react, { useState, useEffect } from 'react';
 import MyPostTable from './MyPostTable';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../../../store/selectors/authSelectors';
-import { changeGroupObjectToArray } from '../changeObjectToArray';
+import { userSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
+import { changeMyApplicantObjectToArray } from '../changeObjectToArray';
 import { GroupPost } from './SearchMyTeamPost';
 
 function SearchMyApplicationPost() {
   const [groupList, setGroupList] = useState<GroupPost[]>([]);
-  const properties = ['작성자', '제목', '지역', '모집 상태', 'Player', 'GK'];
+  const properties = ['작성자', '제목', '지역', '신청 상태', 'Player', 'GK'];
   const user = useSelector(userSelector);
   const filteredItems = groupList
     .reduce((acc: Array<GroupPost>, group: GroupPost) => {
       const filteredApplicants = group.applicant?.filter(
         (applicant) => applicant.name === user?.name
+      );
+      const fillterdAcceptedApplicants = group.accept?.filter(
+        (accept) => accept.name === user?.name
       );
 
       if (filteredApplicants && filteredApplicants.length > 0) {
@@ -23,11 +26,21 @@ function SearchMyApplicationPost() {
         };
 
         return [...acc, filteredGroup];
+      } else if (
+        fillterdAcceptedApplicants &&
+        fillterdAcceptedApplicants.length > 0
+      ) {
+        const filteredGroup: GroupPost = {
+          ...group,
+          accept: fillterdAcceptedApplicants,
+        };
+
+        return [...acc, filteredGroup];
       }
 
       return acc;
     }, [])
-    .map((item: GroupPost) => changeGroupObjectToArray(item));
+    .map((item: GroupPost) => changeMyApplicantObjectToArray(item));
 
   useEffect(() => {
     axios
@@ -36,7 +49,6 @@ function SearchMyApplicationPost() {
       })
       .then((res) => res.data.data)
       .then((result) => {
-        console.log(result);
         setGroupList(result);
       })
       .catch((err) => console.log(err));

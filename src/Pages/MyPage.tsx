@@ -12,8 +12,9 @@ import MyFavoriteGroundList from '../Components/MyPage/MyFavoriteGround/MyFavori
 import SearchMyTeamPost from '../Components/MyPage/SearchMyPost/SearchMyTeamPost';
 import SearchMyReviewPost from '../Components/MyPage/SearchMyPost/SearchMyReviewPost';
 import { useSelector } from 'react-redux';
-import { isLogInSelector } from '../store/selectors/authSelectors';
+import { isLogInSelector } from '../ReduxStore/modules/Auth/authSelectors';
 import SearchMyApplicationPost from '../Components/MyPage/SearchMyPost/SearchMyApplicationPost';
+import alertModal from '../Components/Commons/alertModal';
 
 export type FormDataType = {
   user_id: string;
@@ -48,7 +49,7 @@ export function MyPage() {
     if (isLogIn) {
       getUserData();
     } else {
-      alert('마이페이지는 로그인 후 사용해 주세요');
+      alertModal('마이페이지는 로그인 후 사용해 주세요', 'warning');
       navigate('/');
     }
   }, [isLogIn]);
@@ -140,6 +141,12 @@ const MyPageInfoContainer = styled.div`
   padding: 0 2rem;
   margin: 2rem auto;
   background-color: rgb(247 247 247);
+
+  @media (max-width: 768px) {
+    width: 70rem;
+    height: 130rem;
+    flex-direction: column;
+  }
 `;
 
 const MyPageContainer = styled.div`
@@ -148,7 +155,6 @@ const MyPageContainer = styled.div`
   justify-content: flex-start;
   align-items: space-evenly;
   width: 98.4rem;
-  height: 100%;
   padding: 0 2rem;
   margin: 2rem auto;
   position: relative;

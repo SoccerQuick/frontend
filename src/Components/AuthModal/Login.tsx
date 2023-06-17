@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { AUTH_ACTIONS } from '../../store/reducers/authSlice';
+import { AUTH_ACTIONS } from '../../ReduxStore/modules/Auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -77,6 +77,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
           nickname: userData.nick_name,
           profile: userData.profile,
           role: userData.role,
+          applicant_status: userData.applicant_status,
         };
 
         dispatch(
@@ -90,7 +91,6 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         navigate(currentPath, { replace: true });
       })
       .catch((err) => {
-        console.log(err);
         setLoginError('존재하지 않는 계정입니다.');
       });
   };
@@ -117,7 +117,15 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
         />
 
         {<LoginError>{loginError}</LoginError>}
-        <ModalSubmitButton>로그인</ModalSubmitButton>
+        <ModalSubmitButton
+          term={
+            formData.userId.length > 0 && formData.password.length > 0
+              ? true
+              : false
+          }
+        >
+          로그인
+        </ModalSubmitButton>
       </ModalForm>
     </Modal>
   );

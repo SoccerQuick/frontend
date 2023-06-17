@@ -2,10 +2,14 @@ import react, { useState, useEffect } from 'react';
 import MyPostTable from './MyPostTable';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../../../store/selectors/authSelectors';
+import { userSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
 import { changeGroupObjectToArray } from '../changeObjectToArray';
 
 type Applicant = {
+  name: string;
+};
+
+type Accept = {
   name: string;
 };
 
@@ -20,6 +24,7 @@ export type GroupPost = {
   gk_current_count: number;
   player_current_count: number;
   applicant: Array<Applicant>;
+  accept: Array<Accept>;
   createdAt: string;
   updatedAt: string;
 };

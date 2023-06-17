@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { DomDataType } from '../../Pages/SearchPage';
 import kakaoIcon from '../../styles/icon/kakao.svg';
+import alertModal from '../Commons/alertModal';
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -26,9 +27,23 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const currentUrl = window.location.href;
 
   const clipUrl = () => {
-    window.navigator.clipboard.writeText(currentUrl).then(() => {
-      alert('링크가 복사되었습니다.');
-    });
+    // window.navigator.clipboard
+    //   .writeText(
+    //     `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData.dom_id}`
+    //   )
+    //   .then(() => {
+    //     alertModal('링크가 복사되었습니다.', 'success');
+    //   });
+    var textarea = document.createElement('textarea');
+
+    document.body.appendChild(textarea);
+    textarea.value = `http://kdt-sw-4-team02.elicecoding.com/ground/${groundData.dom_id}`;
+    textarea.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(textarea);
+
+    alertModal('링크가 복사되었습니다.', 'success');
   };
 
   useEffect(() => {
@@ -46,6 +61,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
         imageUrl: `${groundData.stadiums[0].images[0].image}`,
         link: {
           mobileWebUrl: currentUrl,
+          webUrl: currentUrl,
         },
       },
       social: {
@@ -57,6 +73,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
           title: '풋살장 보러가기',
           link: {
             mobileWebUrl: currentUrl,
+            webUrl: currentUrl,
           },
         },
       ],
@@ -221,7 +238,7 @@ const KakaoShareButton = styled.button`
   background: transparent;
   padding: 0;
   img {
-    width: 6.7rem;
+    width: 48px;
     border-radius: 100%;
   }
 `;

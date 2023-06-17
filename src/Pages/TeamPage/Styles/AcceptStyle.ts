@@ -29,7 +29,7 @@ export const StyledAcceptedMember = styled.div<{ row: number }>`
   border: 1px solid lightgray;
   border-radius: 2rem;
   /* background-color: rgb(244, 255, 247); */
-  width: ${({ row }) => 55 / row}rem;
+  width: ${({ row }) => 54 / row}rem;
   height: ${({ row }) => (row === 1 ? 5 : 8)}rem;
 `;
 

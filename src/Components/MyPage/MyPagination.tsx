@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSearchParams, useLocation } from 'react-router-dom';
 
@@ -28,10 +28,12 @@ function MyPagination({
   // 현 url 체크
   const location = useLocation();
   const currentPath = location.pathname;
-  const isGround = currentPath.includes('ground');
+  const isGround =
+    currentPath.includes('ground') || currentPath.includes('teampage');
 
   useEffect(() => {
-    const urlCurrentPage = (Number(searchParams.get('start')) + 10) / 10;
+    const urlCurrentPage =
+      (Number(searchParams.get('start')) + itemsPerPage) / itemsPerPage;
     setCurrentPage(urlCurrentPage);
   }, [searchParams]);
 
@@ -43,15 +45,16 @@ function MyPagination({
   }
 
   const handleSearchParams = (number: number) => {
-    searchParams.set('start', `${number}`);
-    setSearchParams(searchParams);
+    const updatedSearchParams = new URLSearchParams(searchParams);
+    updatedSearchParams.set('start', `${number}`);
+    setSearchParams(updatedSearchParams);
   };
 
   const handlePrevClick = () => {
     setCurrentPage((prev) => {
       if (prev - 1 > 0) {
         if (isGround) {
-          handleSearchParams((prev - 2) * 10);
+          handleSearchParams((prev - 2) * itemsPerPage);
         }
         return prev - 1;
       } else {
@@ -68,13 +71,13 @@ function MyPagination({
     setCurrentPage((prev) => {
       if (prev + 1 < pages) {
         if (isGround) {
-          handleSearchParams(prev * 10);
+          handleSearchParams(prev * itemsPerPage);
         }
 
         return prev + 1;
       } else {
         if (isGround) {
-          handleSearchParams((pages - 1) * 10);
+          handleSearchParams((pages - 1) * itemsPerPage);
         }
 
         return pages;
@@ -85,7 +88,7 @@ function MyPagination({
   const handlePageNumberClick = (number: number) => {
     setCurrentPage(number);
     if (isGround) {
-      handleSearchParams((number - 1) * 10);
+      handleSearchParams((number - 1) * itemsPerPage);
     }
   };
 
@@ -127,7 +130,7 @@ function MyPagination({
           onClick={() => {
             setCurrentPage(pages);
             if (isGround) {
-              handleSearchParams((pages - 1) * 10);
+              handleSearchParams((pages - 1) * itemsPerPage);
             }
           }}
         >
@@ -151,7 +154,7 @@ const StyledLi = styled.li`
   align-items: center;
   margin: 0 0.3rem;
   cursor: pointer;
-  width: 2rem;
+  width: 3rem;
   height: 2rem;
   color: grey;
 `;
