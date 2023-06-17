@@ -6,7 +6,7 @@ import MyPagination from '../MyPagination';
 type MyPostTableProps = {
   title?: string;
   properties?: string[];
-  data?: Array<string[]>;
+  data?: Array<string[] | null>;
 };
 
 function MyPostTable({ title, properties, data }: MyPostTableProps) {
@@ -30,57 +30,63 @@ function MyPostTable({ title, properties, data }: MyPostTableProps) {
       <table>
         <thead>
           <StyledTitleTr key={title}>
-            {''}
             {properties &&
               properties.map((property, idx) => <th key={idx}>{property}</th>)}
             <th></th>
           </StyledTitleTr>
         </thead>
         <tbody>
-          {currentData?.map((item, idx) => {
-            return (
-              <StyledItemTr key={`data-${idx}`}>
-                {item.map((value, index) => {
-                  if (index === 0) {
-                    return null;
-                  } else if (index === 2) {
-                    return (
-                      <td>
-                        <StyledLongSpan>{value}</StyledLongSpan>
-                        <span style={{ color: 'red' }}>{item[3]}</span>
-                      </td>
-                    );
-                  } else if (index === 3) {
-                    return null;
-                  } else if (index === item.length - 1) {
-                    return item[0] === 'teamPage' ? (
-                      <td key={`item-${index}`}>
-                        <StyledButton
-                          onClick={() => {
-                            navigate(`/teampage/team/${value}`);
-                          }}
-                        >
-                          조회
-                        </StyledButton>
-                      </td>
-                    ) : (
-                      <td key={`item-${index}`}>
-                        <StyledButton
-                          onClick={() => {
-                            navigate(`/teampage/team/${value}`);
-                          }}
-                        >
-                          조회
-                        </StyledButton>
-                      </td>
-                    );
-                  } else {
-                    return <td key={`item-${index}`}>{value}</td>;
-                  }
-                })}
-              </StyledItemTr>
-            );
-          })}
+          {currentData && currentData?.length > 0 ? (
+            currentData.map((item, idx) => {
+              return (
+                <StyledItemTr key={`data-${idx}`}>
+                  {item &&
+                    item.map((value, index) => {
+                      if (index === 0) {
+                        return null;
+                      } else if (index === 2) {
+                        return (
+                          <td key={`td-${idx}`}>
+                            <StyledLongSpan>{value}</StyledLongSpan>
+                            <span style={{ color: 'red' }}>{item[3]}</span>
+                          </td>
+                        );
+                      } else if (index === 3) {
+                        return null;
+                      } else if (index === item.length - 1) {
+                        return item[0] === 'teamPage' ? (
+                          <td key={`item-${index}`}>
+                            <StyledButton
+                              onClick={() => {
+                                navigate(`/teampage/team/${value}`);
+                              }}
+                            >
+                              조회
+                            </StyledButton>
+                          </td>
+                        ) : (
+                          <td key={`item-${index}`}>
+                            <StyledButton
+                              onClick={() => {
+                                navigate(`/ground/${value}`);
+                              }}
+                            >
+                              조회
+                            </StyledButton>
+                          </td>
+                        );
+                      } else {
+                        return <td key={`item-${index}`}>{value}</td>;
+                      }
+                    })}
+                </StyledItemTr>
+              );
+            })
+          ) : (
+            <StyledNoItemTr>
+              <td>{'조회된 글이 없습니다.'}</td>
+            </StyledNoItemTr>
+          )}
         </tbody>
       </table>
       <MyPagination
@@ -140,7 +146,6 @@ const StyledTitleTr = styled.tr`
   & > th:nth-child(2) {
     flex: 4;
     text-align: start;
-    padding-left: 1rem;
   }
 
   & > th:first-child {
@@ -161,6 +166,10 @@ const StyledItemTr = styled.tr`
   & > td {
     flex: 2;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 25rem;
   }
 
   & > td:nth-child(2) {
@@ -191,4 +200,16 @@ const StyledButton = styled.button`
   color: white;
   font-size: 1.4rem;
   font-weight: 500;
+
+  &:hover {
+    background-color: #1bbd1b;
+  }
+`;
+
+const StyledNoItemTr = styled.tr`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #fff;
 `;

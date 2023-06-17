@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import {
   isLogInSelector,
   userSelector,
-} from '../../../store/selectors/authSelectors';
+} from '../../../ReduxStore/modules/Auth/authSelectors';
 import { DomDataType } from '../../../Pages/SearchPage';
 import { ProvidedElementList } from '../../SearchPage/Contents/SearchData';
 import MyPagination from '../MyPagination';
@@ -46,7 +46,11 @@ function MyFavoriteGroundList({
             withCredentials: true,
           }
         )
-        .then((res) => domarray.push(res.data.data))
+        .then((res) => {
+          if (!domarray.includes(res.data.data)) {
+            domarray.push(res.data.data);
+          }
+        })
         .catch((err) => console.log(err));
     }
     setFilteredData(domarray);
@@ -56,11 +60,11 @@ function MyFavoriteGroundList({
 
   return (
     <Searchpage>
-      <StyledTitleDiv>
-        즐겨찾는 경기장
-        <span> ( 총 {totalItemsCount} )</span>
-      </StyledTitleDiv>
       <SearchPageBody>
+        <StyledTitleDiv>
+          즐겨찾는 경기장
+          <span> ( 총 {totalItemsCount} )</span>
+        </StyledTitleDiv>
         <table>
           <thead>
             <StyledLabelTr>
@@ -105,7 +109,6 @@ function MyFavoriteGroundList({
               ))
             ) : (
               <StyledTr>
-                {' '}
                 <td></td>
                 <td></td>
                 <StyledMessageTd>즐겨찾는 구장이 없습니다</StyledMessageTd>
@@ -116,7 +119,7 @@ function MyFavoriteGroundList({
         </table>
       </SearchPageBody>
       <MyPagination
-        totalItemsCount={totalItemsCount ? totalItemsCount : 100}
+        totalItemsCount={totalItemsCount ? totalItemsCount : 1}
         itemsPerPage={itemsPerPage}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
@@ -169,16 +172,18 @@ const getBackgroundColorBydata = (data: string) => {
 
 const Searchpage = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   font-size: 1.7rem;
   width: 98.4rem;
+  min-height: 100rem;
   margin-top: 2rem;
 `;
 
 const SearchPageBody = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 2rem;
@@ -201,6 +206,7 @@ const StyledTitleDiv = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  padding-left: 4rem;
 
   > span {
     padding-left: 1rem;
@@ -224,7 +230,7 @@ const StyledLabelTr = styled.tr`
       padding-left: 4.5rem;
     }
     :nth-child(4) {
-      padding-right: 3rem;
+      padding-right: 5rem;
     }
   }
 `;
@@ -255,8 +261,7 @@ const StyledTable = styled.div<{ data: string }>`
 `;
 
 const StyledTr = styled.tr`
-  height: 10rem;
-  max-height: 10rem;
+  height: 13rem;
   margin: 1rem 1rem;
   padding: 2rem 1rem;
   font-size: 1.6rem;
@@ -294,7 +299,8 @@ const StyledAddressTd = styled.td`
 `;
 
 const StyledMainTd = styled.td`
-  padding-left: 5rem;
+  padding-left: 6rem;
+  max-width: 48rem;
   p {
     font-size: 1.9rem;
   }
@@ -309,6 +315,10 @@ const StyledButton = styled.button`
   font-size: 1.4rem;
   font-weight: 500;
   margin-right: 3rem;
+
+  &:hover {
+    background-color: #1bbd1b;
+  }
 `;
 
 const StyledMessageTd = styled.td`

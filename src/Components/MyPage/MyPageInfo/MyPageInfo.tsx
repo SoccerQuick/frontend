@@ -5,9 +5,10 @@ import { FormDataType } from '../../../Pages/MyPage';
 import { MyPageInput } from './MyPageInput';
 import { checkNewPassword } from '../checkPassword';
 import { useNavigate } from 'react-router-dom';
-import { AUTH_ACTIONS } from '../../../store/reducers/authSlice';
+import { AUTH_ACTIONS } from '../../../ReduxStore/modules/Auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { userSelector } from '../../../store/selectors/authSelectors';
+import { userSelector } from '../../../ReduxStore/modules/Auth/authSelectors';
+import alertModal from '../../Commons/alertModal';
 
 type MyPageInfoProps = {
   userData: FormDataType;
@@ -60,7 +61,8 @@ export function MyPageInfo({
     }
 
     // eslint-disable-next-line no-restricted-globals
-    const result = confirm('정보를 수정 하시겠습니까?');
+    const result = await alertModal('정보를 수정 하시겠습니까?', 'submit');
+
     if (result) {
       handleMyInfoChangeConfirm(newPassword, oldPassword);
     }
@@ -98,7 +100,7 @@ export function MyPageInfo({
       };
 
       const response = await axios.patch(url, formData, config);
-      alert(response.data.message);
+      alertModal(response.data.message, 'text');
 
       if (selectedImage && userInfo) {
         const userProfile = URL.createObjectURL(selectedImage);
@@ -109,6 +111,7 @@ export function MyPageInfo({
           nickname: userInfo.nickname,
           profile: userProfile,
           role: userInfo.role,
+          applicant_status: userInfo.applicant_status,
         };
         dispatch(AUTH_ACTIONS.updateUser({ user }));
       }
@@ -140,10 +143,13 @@ export function MyPageInfo({
     }
   };
 
-  const handleWithDrawalClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleWithDrawalClick = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
     // eslint-disable-next-line no-restricted-globals
-    const result = confirm('정말 탈퇴 하시겠습니까?');
+    const result = await alertModal('정말 탈퇴 하시겠습니까?', 'submit');
+
     if (result) {
       handleAlertWithDrawalConfirm(oldPassword);
     }
@@ -163,7 +169,7 @@ export function MyPageInfo({
         withCredentials: headers.withCredentials,
       })
       .then(() => {
-        alert('탈퇴 되었습니다.');
+        alertModal('탈퇴 되었습니다.', 'success');
         navigate('/', { replace: true });
       })
       .catch((e) => console.log(e));
@@ -305,10 +311,24 @@ const StyledSubmitButton = styled.button`
   background-color: #09cf00;
   color: #fff;
   border-radius: 0.5rem;
+  border: 1px solid #09cf00;
+
+  &:hover {
+    background-color: #1bbd1b;
+    color: #fff;
+    border: 1px solid #1bbd1b;
+  }
 `;
 
 const StyledRedSubmitButton = styled(StyledSubmitButton)`
   background-color: #ec5d5e;
+  border: 1px solid #ec5d5e;
+
+  &:hover {
+    background-color: #fff;
+    color: #ec5d5e;
+    border: 1px solid #ec5d5e;
+  }
 `;
 
 const StyledErrorDiv = styled.div`

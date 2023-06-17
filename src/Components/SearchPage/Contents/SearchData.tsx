@@ -6,10 +6,13 @@ import GroundListSkeleton from './groundListSkeleton';
 import MyPagination from '../../MyPage/MyPagination';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
+import alertModal from '../../Commons/alertModal';
+// import { checkHandler } from './GroundComparison';
 
 type FindingGroundProps = {
   checkedArray: DomDataType[];
   setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+  setCheckedInModal: React.Dispatch<React.SetStateAction<string[]>>;
   sortedDomData: DomDataType[];
   setSortedDomData: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   isLoading: boolean;
@@ -42,6 +45,7 @@ function FindingGround(props: FindingGroundProps) {
   const navigate = useNavigate();
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
+  const setCheckedInModal = props.setCheckedInModal;
   const sortedDomData = props.sortedDomData;
   const isLoading = props.isLoading;
   const setIsLoading = props.setIsLoading;
@@ -70,14 +74,16 @@ function FindingGround(props: FindingGroundProps) {
         setCheckedArray((prev) =>
           prev.filter((item) => item.title !== value.title)
         );
-        alert('구장 비교는 최대 5개까지 가능합니다.');
+        alertModal('구장 비교는 최대 5개까지 가능합니다.', 'warning');
       } else {
         setCheckedArray((prev) => [...prev, value]);
+        setCheckedInModal((prev) => [...prev, value.title]);
       }
     } else {
       setCheckedArray((prev) =>
         prev.filter((item) => item.title !== value.title)
       );
+      setCheckedInModal((prev) => prev.filter((item) => item !== value.title));
     }
   };
 
@@ -244,11 +250,13 @@ const StyledLabelTr = styled.tr`
 const StyledTableCell = styled.div`
   display: inline-block;
   padding: 0;
+  height: 3rem;
+
   margin: 1.2rem 1rem 0rem 0;
   border-radius: 0.4rem;
   font-weight: 400;
   color: #888888;
-  line-height: 2.6rem;
+  line-height: 3rem;
   overflow: hidden;
 `;
 

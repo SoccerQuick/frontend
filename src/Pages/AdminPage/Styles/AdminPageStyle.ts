@@ -2,13 +2,16 @@ import styled from 'styled-components';
 
 // Page 부분
 export const AdminContainer = styled.div`
-  margin-top: 5rem;
+  position: relative;
+  margin: auto;
   font-size: 3rem;
-  height: 82vh;
+  display: flex;
+  justify-content: center;
 `;
 
 export const BodyContainer = styled.div`
   height: fit-content;
+  justify-content: center;
 `;
 
 export const BodyLeftBar = styled.div`
@@ -24,8 +27,9 @@ export const BodyLeftBar = styled.div`
 
 export const BodyMain = styled.div`
   background-color: rgb(245, 245, 245);
-  width: 159rem;
-  height: 90rem;
+  width: 131rem;
+  height: 72rem;
+  /* margin-left: 3rem; */
 `;
 
 export const MainButton = styled.button<{ state: string }>`
@@ -126,6 +130,7 @@ export const PageSelect = styled.div`
   background-color: rgb(245, 245, 245);
 `;
 
+// 페이지네이션 컴포넌트를 사용하면서 사용하지 않게 된 부분
 export const PageButton = styled.button<{
   selected: number;
   currentPage: number;
@@ -215,6 +220,9 @@ export const DetailButton = styled.button<{ data: string }>`
   margin: 1rem 2rem;
   padding: 0.4rem 2rem;
   border-radius: 1rem;
+  &:hover {
+    background-color: #ddd;
+  }
 `;
 
 export const ManagementButtonContainer = styled.div`
@@ -225,11 +233,24 @@ export const ManagementButtonContainer = styled.div`
   z-index: 997;
 `;
 
-export const ManagementButton = styled.button<{ data: string }>`
-  font-size: 0.7rem;
+export const LevelUpButton = styled.button<{ data: string }>`
+  font-size: 1.3rem;
   margin: 1rem 2rem;
   padding: 0.4rem 2rem;
   border-radius: 1rem;
+  &:hover {
+    background-color: skyblue;
+  }
+`;
+
+export const RestrictButton = styled.button<{ data: string }>`
+  font-size: 1.3rem;
+  margin: 1rem 2rem;
+  padding: 0.4rem 2rem;
+  border-radius: 1rem;
+  &:hover {
+    background-color: rgb(255, 79, 79);
+  }
 `;
 
 export const ReturnButton = styled.button`

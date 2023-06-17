@@ -3,10 +3,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import LikeButton from '../Commons/LikeButton';
+import alertModal from '../Commons/alertModal';
 import {
   isLogInSelector,
   userSelector,
-} from '../../store/selectors/authSelectors';
+} from '../../ReduxStore/modules/Auth/authSelectors';
 
 interface ReviewProps {
   dom_id: string;
@@ -18,6 +19,7 @@ interface reviewData {
   user_icon?: string;
   review_id?: string;
   contents?: string;
+  createdAt?: string;
   likedreviews: string[];
 }
 
@@ -36,13 +38,12 @@ export default function Review(props: ReviewProps) {
   const userName = userData?.name || ''; // 빈 문자열로 대체
   const domId = props.dom_id;
 
-  // url 주소 수정 필요
   useEffect(() => {}, [reviewData]);
 
   function handleEditReview(index: number, reviewId: string | undefined) {
     if (isReviewEditable) {
       if (editReview === '') {
-        return alert('내용을 입력해주세요!');
+        return alertModal('내용을 입력해주세요!', 'warning');
       }
 
       axios
@@ -64,7 +65,7 @@ export default function Review(props: ReviewProps) {
         })
         .catch((error) => {
           console.error(error);
-          alert('수정에 실패하였습니다.');
+          alertModal('수정에 실패하였습니다.', 'error');
         });
     } else {
       setEditReview(reviewData[index].contents || '');
@@ -72,8 +73,11 @@ export default function Review(props: ReviewProps) {
     }
   }
 
-  function handleDeleteReview(index: number, reviewId: string | undefined) {
-    const confirmed = window.confirm('삭제하시겠습니까?');
+  async function handleDeleteReview(
+    index: number,
+    reviewId: string | undefined
+  ) {
+    const confirmed = await alertModal('삭제하시겠습니까?', 'submit');
 
     confirmed &&
       axios
@@ -92,10 +96,10 @@ export default function Review(props: ReviewProps) {
 
   function handleWriteReview() {
     if (!isLogin) {
-      return alert('로그인이 필요한 서비스입니다.');
+      return alertModal('로그인이 필요한 서비스입니다.', 'warning');
     }
     if (review === '') {
-      return alert('내용을 입력해주세요!');
+      return alertModal('내용을 입력해주세요!', 'warning');
     }
 
     // 작성한 리뷰가 이미 존재하는지 검사
@@ -103,7 +107,7 @@ export default function Review(props: ReviewProps) {
       (item) => item.user_name === userName
     );
     if (existingReview) {
-      return alert('1개의 리뷰만 작성 가능합니다.');
+      return alertModal('1개의 리뷰만 작성 가능합니다.', 'warning');
     }
 
     // 작성한 리뷰를 서버에 등록
@@ -130,15 +134,28 @@ export default function Review(props: ReviewProps) {
 
   return (
     <StyledReviewContainer>
-      <h2>📄 리뷰 목록</h2>
+      <div className="review-header">
+        <h2>📄 리뷰 목록</h2>
+        <span>좋아요 순</span>
+      </div>
       {reviewData.map((item, index) => (
         <StyledReviews key={index}>
-          <div className="review-header">
+          <div className="review-contents-header">
             <span className="user-info">
               <span>
                 <img className="user-icon" src={item.user_icon} alt="avatar" />
               </span>
-              <span className="user-name">{item.user_name}</span>
+              <span className="user-name">
+                <p>{item.user_name}</p>
+                <p className="review-time">
+                  {item.createdAt &&
+                    new Date(item.createdAt).toLocaleDateString('ko-KR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                </p>
+              </span>
             </span>
             <span className="likes">
               <LikeButton
@@ -208,10 +225,26 @@ const StyledReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  > h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin: 0.6rem 0;
+  .review-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    > h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0.6rem 0;
+    }
+
+    > span {
+      padding: 1rem;
+      font-size: 1.4rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 `;
 
@@ -224,7 +257,7 @@ const StyledReviews = styled.div`
   filter: drop-shadow(0 0 3px #dddddd);
   border-radius: 10px;
 
-  .review-header {
+  .review-contents-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -241,11 +274,17 @@ const StyledReviews = styled.div`
     width: 4rem;
     height: auto;
     margin-right: 1rem;
+    border-radius: 5rem;
   }
 
   .user-name {
     font-size: 1.7rem;
     font-weight: 700;
+  }
+
+  .review-time {
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   .review-content {
@@ -277,17 +316,31 @@ const StyledReviews = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     margin: 1rem;
-  }
 
-  .review-edit {
-    margin-right: 1rem;
-    font-size: 1.7rem;
-    border-radius: 5px;
-  }
+    .review-edit {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      margin-right: 1rem;
+      border: 0.5px solid #cfcfcf;
+      border-radius: 5px;
+      background-color: white;
 
-  .review-delete {
-    font-size: 1.7rem;
-    border-radius: 5px;
+      &:hover {
+        background-color: #e7e7e7;
+      }
+    }
+
+    .review-delete {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border: 0.5px solid #cfcfcf;
+      border-radius: 5px;
+      background-color: white;
+
+      &:hover {
+        background-color: #eeeeee;
+      }
+    }
   }
 `;
 
@@ -327,11 +380,19 @@ const StyledWriteReview = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin: 1rem;
   }
 
   .write-review-button {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    border: 0.5px solid #cfcfcf;
     border-radius: 5px;
+    background-color: white;
+    color: #09cf00;
+
+    &:hover {
+      background-color: #09cf00;
+      color: white;
+    }
   }
 `;

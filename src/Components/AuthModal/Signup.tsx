@@ -10,6 +10,7 @@ import {
   ModalSelectBox,
   ModalTerms,
 } from '../Commons/AuthComponents';
+import alertModal from '../Commons/alertModal';
 
 const postSignupUrl = `${process.env.REACT_APP_API_URL}/auths/signup`; // signup api url
 const postIdCheckUrl = `${process.env.REACT_APP_API_URL}/auths/id`; // id-check api url
@@ -155,7 +156,7 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
         }
       );
       const data = response.data;
-      alert(data.message);
+      alertModal(data.message, 'text');
       setAuthModal(false);
       setResponseMsg('');
     } catch (error) {
@@ -252,11 +253,12 @@ function Signup({ handleIsLogin, setAuthModal }: SignupProps) {
         <ModalTerms onClick={handleTermCheck} term={termCheck}>
           싸커퀵 서비스 이용 약관 및 개인 정보 수집 및 이용에 동의합니다.
         </ModalTerms>
+
         <RegisterText>
           회원가입 시 <span>매치 찜하기</span> 기능과{' '}
-          <span>싸커퀵 커뮤니티</span>를 이용할 수 있어요.
+          <span>싸커퀵 커뮤니티</span>를 이용할 수 있어요.{' '}
         </RegisterText>
-        <ModalSubmitButton>회원가입</ModalSubmitButton>
+        <ModalSubmitButton term={termCheck}>회원가입</ModalSubmitButton>
       </ModalForm>
     </Modal>
   );

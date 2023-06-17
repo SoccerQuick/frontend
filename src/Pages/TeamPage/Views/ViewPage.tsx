@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
@@ -29,7 +29,7 @@ import {
 import {
   isLogInSelector,
   userSelector,
-} from '../../../store/selectors/authSelectors';
+} from '../../../ReduxStore/modules/Auth/authSelectors';
 import SubmitForFindingMember from '../../../Components/TeamPage/SubmitForFindingMember';
 import TeamPageComments from '../../../Components/TeamPage/TeamPageComments';
 import chevronIcon from '../../../styles/icon/chevron_green.svg';
@@ -37,6 +37,7 @@ import ballIcon from '../../../styles/icon/soccerball.svg';
 import playerIcon from '../../../styles/icon/player.svg';
 import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
+import alertModal from '../../../Components/Commons/alertModal';
 
 function DetailPage() {
   // 글 작성자인지 확인하기 위한 데이터
@@ -52,10 +53,25 @@ function DetailPage() {
   const url = location.pathname.split('/').pop();
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.data.data);
+  const [leaderProfile, setLeaderProfile] = useState('');
 
   React.useEffect(() => {
     dispatch(fetchData(url));
   }, [dispatch, url]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/groups/${data.group_id}/leader`,
+        config
+      )
+      .then((res) => {
+        setLeaderProfile(res.data.data.profile);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const config = {
     headers: {
@@ -64,14 +80,14 @@ function DetailPage() {
     withCredentials: true,
   };
   // 삭제 요청을 보내는 버튼
-  const deletePostHandler = () => {
-    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+  const deletePostHandler = async () => {
+    const confirmed = await alertModal('정말로 삭제하시겠습니까?', 'submit');
+
     if (confirmed) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}/groups/${url}`, config)
         .then((res) => {
-          alert('게시글이 삭제되었습니다.');
-          console.log('삭제 성공');
+          alertModal('게시글이 삭제되었습니다.', 'success');
           navigate('/teampage/team');
         })
         .catch((error) => {
@@ -79,7 +95,6 @@ function DetailPage() {
         });
     }
   };
-
   return (
     <StyledWrap>
       {!data ? (
@@ -105,7 +120,7 @@ function DetailPage() {
               </h1>
               <StyledAuthorDiv>
                 <StyledImgDiv>
-                  <img src={ballIcon} alt="BallIcon" />
+                  <img src={leaderProfile} alt="BallIcon" />
                 </StyledImgDiv>
                 <p>{data.author}</p>
               </StyledAuthorDiv>
@@ -215,15 +230,17 @@ function DetailPage() {
               >
                 목록으로
               </button>
-              {isLogin && userData?.nickname !== data.author && (
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                >
-                  함께하기
-                </button>
-              )}
+              {isLogin &&
+                userData?.nickname !== data.author &&
+                userData?.applicant_status !== '모집 불가능' && (
+                  <button
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
+                  >
+                    함께하기
+                  </button>
+                )}
             </StyledFooter>
             {showModal && (
               <SubmitForFindingMember

@@ -72,7 +72,7 @@ export interface BoardProps {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   currentData: DataProps[];
-  setCurrentData: React.Dispatch<React.SetStateAction<DataProps[]>>;
+  // setCurrentData: React.Dispatch<React.SetStateAction<DataProps[]>>;
   totalPage: number;
 }
 
