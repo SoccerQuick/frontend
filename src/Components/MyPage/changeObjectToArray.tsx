@@ -5,10 +5,27 @@ export const changeGroupObjectToArray = (item: GroupPost): Array<string> => {
   return [
     'teamPage',
     item.leader_name,
-    `${item.title}${item.applicant.length}`,
+    `${item.title}`,
     `[${item.applicant.length}]`,
     item.location,
     item.status,
+    `${item.player_current_count}/${item.player_count}`,
+    `${item.gk_current_count}/${item.gk_count}`,
+    item.group_id,
+  ];
+};
+
+export const changeMyApplicantObjectToArray = (
+  item: GroupPost
+): Array<string> => {
+  console.log(item);
+  return [
+    'teamPage',
+    item.leader_name,
+    `${item.title}`,
+    `[${item.applicant.length}]`,
+    item.location,
+    item.accept.length === 1 ? '수락됨' : '신청중',
     `${item.player_current_count}/${item.player_count}`,
     `${item.gk_current_count}/${item.gk_count}`,
     item.group_id,

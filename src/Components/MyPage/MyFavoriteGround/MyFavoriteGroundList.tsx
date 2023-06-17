@@ -115,7 +115,7 @@ function MyFavoriteGroundList({
         </table>
       </SearchPageBody>
       <MyPagination
-        totalItemsCount={totalItemsCount ? totalItemsCount : 100}
+        totalItemsCount={totalItemsCount ? totalItemsCount : 1}
         itemsPerPage={itemsPerPage}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}

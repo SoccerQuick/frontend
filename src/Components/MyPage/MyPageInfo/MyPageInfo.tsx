@@ -111,6 +111,7 @@ export function MyPageInfo({
           nickname: userInfo.nickname,
           profile: userProfile,
           role: userInfo.role,
+          applicant_status: userInfo.applicant_status,
         };
         dispatch(AUTH_ACTIONS.updateUser({ user }));
       }

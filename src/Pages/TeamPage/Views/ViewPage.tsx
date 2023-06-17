@@ -217,15 +217,17 @@ function DetailPage() {
               >
                 목록으로
               </button>
-              {isLogin && userData?.nickname !== data.author && (
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                >
-                  함께하기
-                </button>
-              )}
+              {isLogin &&
+                userData?.nickname !== data.author &&
+                userData?.applicant_status !== '모집 불가능' && (
+                  <button
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
+                  >
+                    함께하기
+                  </button>
+                )}
             </StyledFooter>
             {showModal && (
               <SubmitForFindingMember

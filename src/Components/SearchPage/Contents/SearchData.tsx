@@ -7,10 +7,12 @@ import MyPagination from '../../MyPage/MyPagination';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
 import alertModal from '../../Commons/alertModal';
+// import { checkHandler } from './GroundComparison';
 
 type FindingGroundProps = {
   checkedArray: DomDataType[];
   setCheckedArray: React.Dispatch<React.SetStateAction<DomDataType[]>>;
+  setCheckedInModal: React.Dispatch<React.SetStateAction<string[]>>;
   sortedDomData: DomDataType[];
   setSortedDomData: React.Dispatch<React.SetStateAction<DomDataType[]>>;
   isLoading: boolean;
@@ -43,6 +45,7 @@ function FindingGround(props: FindingGroundProps) {
   const navigate = useNavigate();
   const checkedArray = props.checkedArray;
   const setCheckedArray = props.setCheckedArray;
+  const setCheckedInModal = props.setCheckedInModal;
   const sortedDomData = props.sortedDomData;
   const isLoading = props.isLoading;
   const setIsLoading = props.setIsLoading;
@@ -74,11 +77,13 @@ function FindingGround(props: FindingGroundProps) {
         alertModal('구장 비교는 최대 5개까지 가능합니다.', 'warning');
       } else {
         setCheckedArray((prev) => [...prev, value]);
+        setCheckedInModal((prev) => [...prev, value.title]);
       }
     } else {
       setCheckedArray((prev) =>
         prev.filter((item) => item.title !== value.title)
       );
+      setCheckedInModal((prev) => prev.filter((item) => item !== value.title));
     }
   };
 
