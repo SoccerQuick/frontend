@@ -46,7 +46,11 @@ function MyFavoriteGroundList({
             withCredentials: true,
           }
         )
-        .then((res) => domarray.push(res.data.data))
+        .then((res) => {
+          if (!domarray.includes(res.data.data)) {
+            domarray.push(res.data.data);
+          }
+        })
         .catch((err) => console.log(err));
     }
     setFilteredData(domarray);
