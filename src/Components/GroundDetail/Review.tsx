@@ -148,7 +148,12 @@ export default function Review(props: ReviewProps) {
               <span className="user-name">
                 <p>{item.user_name}</p>
                 <p className="review-time">
-                  {item.createdAt?.split(' ').splice(0, 4).join(' ')}
+                  {item.createdAt &&
+                    new Date(item.createdAt).toLocaleDateString('ko-KR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
                 </p>
               </span>
             </span>
