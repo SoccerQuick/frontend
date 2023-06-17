@@ -51,7 +51,7 @@ const GroundDetail = () => {
           setIsFavorite(true);
         }
       })
-      .catch((e: any) => console.log(e));
+      .catch((e) => {});
   }, []);
 
   const clickFavoriteHandler = () => {
