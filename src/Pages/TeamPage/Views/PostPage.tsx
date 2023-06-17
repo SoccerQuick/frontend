@@ -7,7 +7,9 @@ import 'react-quill/dist/quill.snow.css';
 import {
   StyledContainer,
   StyledBox,
+  StyledTitleBox,
   StyledTitle,
+  StyledTitleInputText,
   StyledInputText,
   StyledButton,
 } from '../Styles/PostsStyle';
@@ -172,11 +174,14 @@ function SubmitPage() {
       >
         <StyledBox
           style={{
+            width: '98.4rem',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
           }}
         >
+          <StyledTitle>카테고리</StyledTitle>
+
           <DropDown
             list={FilteringOptions.submit.category}
             selected={boardCategory}
@@ -189,15 +194,18 @@ function SubmitPage() {
               setArea(e.target.value);
             }}
           />
-          <StyledTitle>제목</StyledTitle>
-          <StyledInputText
-            style={{ textAlign: 'left', width: '32rem' }}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
         </StyledBox>
       </StyledContainer>
+
+      <StyledTitleBox>
+        <StyledTitle style={{ width: '8rem' }}>제목</StyledTitle>
+        <StyledTitleInputText
+          style={{ textAlign: 'left' }}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+      </StyledTitleBox>
 
       <StyledContainer>
         {boardCategory === '팀원 구해요' && (
@@ -220,10 +228,18 @@ function SubmitPage() {
             value={content}
             onChange={handleEditorChange}
             modules={quillModules}
-            style={{ width: '100rem', height: '45rem' }}
+            style={{ width: '98.4rem', height: '45rem', padding: '0 2rem' }}
           />
         </StyledBox>
         <StyledBox style={{ justifyContent: 'center' }}>
+          <StyledButton
+            color="white"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            취소하기
+          </StyledButton>
           <StyledButton
             onClick={() => {
               const validationResult = submitValidator();
@@ -235,13 +251,6 @@ function SubmitPage() {
             }}
           >
             작성하기
-          </StyledButton>
-          <StyledButton
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            취소하기
           </StyledButton>
         </StyledBox>
       </StyledContainer>

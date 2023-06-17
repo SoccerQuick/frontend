@@ -109,7 +109,6 @@ const DropdownButton = styled.button`
   width: 100%;
   height: 100%;
   border: 1px solid #ddd;
-  border-radius: 1rem;
   font-size: ${(props) =>
     props.style?.fontSize ? props.style.fontSize : ' 1.6rem'};
   cursor: pointer;
