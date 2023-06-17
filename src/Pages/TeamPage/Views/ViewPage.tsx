@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import HtmlParser from '../../../Components/Commons/HtmlParser';
@@ -53,10 +53,26 @@ function DetailPage() {
   const url = location.pathname.split('/').pop();
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.data.data);
+  const [leaderProfile, setLeaderProfile] = useState('');
 
   React.useEffect(() => {
     dispatch(fetchData(url));
   }, [dispatch, url]);
+
+  console.log(data);
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/groups/${data.group_id}/leader`,
+        config
+      )
+      .then((res) => {
+        setLeaderProfile(res.data.data.profile);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const config = {
     headers: {
@@ -107,7 +123,7 @@ function DetailPage() {
               </h1>
               <StyledAuthorDiv>
                 <StyledImgDiv>
-                  <img src={ballIcon} alt="BallIcon" />
+                  <img src={leaderProfile} alt="BallIcon" />
                 </StyledImgDiv>
                 <p>{data.author}</p>
               </StyledAuthorDiv>
