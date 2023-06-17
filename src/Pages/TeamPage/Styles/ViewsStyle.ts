@@ -233,7 +233,7 @@ export const TeamPageFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   width: fit-content;
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-right: 3rem;
   float: right;
 `;
@@ -254,7 +254,6 @@ export const PageSelect = styled.div`
   justify-content: center;
   display: flex;
   font-size: 1.8rem;
-  border-top: 1px solid #ddd;
 `;
 
 export const PageButton = styled.button<{
