@@ -106,7 +106,7 @@ const GroundDetail = () => {
 
     document.body.removeChild(textarea);
 
-    alertModal('링크가 복사되었습니다.', 'success');
+    alertModal('주소가 복사되었습니다.', 'success');
   };
 
   return (
