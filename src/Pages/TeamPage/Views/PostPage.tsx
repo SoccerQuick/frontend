@@ -12,6 +12,7 @@ import {
   StyledButton,
 } from '../Styles/PostsStyle';
 import SubmitFindingMembers from '../../../Components/TeamPage/FindingMembers';
+import alertModal from '../../../Components/Commons/alertModal';
 import axios from 'axios';
 
 function SubmitPage() {
@@ -62,7 +63,7 @@ function SubmitPage() {
         .post(`${process.env.REACT_APP_API_URL}/groups`, data, config)
         .then((res) => {
           console.log('POST 요청 성공 : ', res.data);
-          alert('팀원 모집글이 등록되었습니다.');
+          alertModal('팀원 모집글이 등록되었습니다.', 'success');
           navigate('/teampage/team');
         })
         .catch((e) => {
@@ -229,7 +230,7 @@ function SubmitPage() {
               if (validationResult === '통과') {
                 handlePostRequest();
               } else {
-                alert(validationResult);
+                validationResult && alertModal(validationResult, 'warning');
               }
             }}
           >

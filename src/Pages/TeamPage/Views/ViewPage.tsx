@@ -37,6 +37,7 @@ import ballIcon from '../../../styles/icon/soccerball.svg';
 import playerIcon from '../../../styles/icon/player.svg';
 import goalKeeperIcon from '../../../styles/icon/goalkeeper.svg';
 import axios from 'axios';
+import alertModal from '../../../Components/Commons/alertModal';
 
 function DetailPage() {
   // 글 작성자인지 확인하기 위한 데이터
@@ -64,13 +65,14 @@ function DetailPage() {
     withCredentials: true,
   };
   // 삭제 요청을 보내는 버튼
-  const deletePostHandler = () => {
-    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+  const deletePostHandler = async () => {
+    const confirmed = await alertModal('정말로 삭제하시겠습니까?', 'submit');
+
     if (confirmed) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}/groups/${url}`, config)
         .then((res) => {
-          alert('게시글이 삭제되었습니다.');
+          alertModal('게시글이 삭제되었습니다.', 'success');
           console.log('삭제 성공');
           navigate('/teampage/team');
         })

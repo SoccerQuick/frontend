@@ -1,6 +1,6 @@
 import react from 'react';
 import styled from 'styled-components';
-
+import alertModal from '../../Commons/alertModal';
 import { FormDataType } from '../../../Pages/MyPage';
 
 type MyProfileProps = {
@@ -26,7 +26,7 @@ function MyProfile({
     if (file) {
       setSelectedImage(file);
     } else {
-      alert('이미지를 선택해주세요.');
+      alertModal('이미지를 선택해주세요.', 'warning');
     }
   };
 

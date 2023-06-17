@@ -12,7 +12,10 @@ import {
   RestrictButton,
   ReturnButton,
 } from '../../Pages/AdminPage/Styles/AdminPageStyle';
+import alertModal from '../Commons/alertModal';
 import { DedatilModalProps } from '../../Types/AdminPageType';
+import { userSelector } from '../../ReduxStore/modules/Auth/authSelectors';
+import { useSelector } from 'react-redux';
 
 function DetailModal(props: DedatilModalProps) {
   const {
@@ -22,15 +25,17 @@ function DetailModal(props: DedatilModalProps) {
     modalData,
   } = props;
   const navigate = useNavigate();
+  const userData = useSelector(userSelector);
 
   // 헤더 및 쿠키 설정 부분
   const config = {
     withCredentials: true,
   };
   // 관리자 임명 API
-  const handleUserToManager = () => {
-    const confirmed = window.confirm(
-      `${modalData.nick_name}유저를 임명하려고 합니다. 동의하십니까? 신중하게 결정해 주세요.`
+  const handleUserToManager = async () => {
+    const confirmed = await alertModal(
+      `${modalData.nick_name}유저를 임명하려고 합니다. 동의하십니까? 신중하게 결정해 주세요.`,
+      'submit'
     );
     if (confirmed) {
       const data = {
@@ -38,24 +43,32 @@ function DetailModal(props: DedatilModalProps) {
       };
       axios
         .patch(`${process.env.REACT_APP_API_URL}/admins/role`, data, config)
-        .then((res) => {
+        .then(async (res) => {
           console.log('관리자 등업 성공 : ', res.data);
-          alert(`${modalData.nick_name}유저를 관리자로 임명하였습니다.`);
-          setShowDetailModal(false);
-          setShowManagementModal(false);
-          window.location.reload();
+          const confirm = await alertModal(
+            `${modalData.nick_name}유저를 관리자로 임명하였습니다.`,
+            'text'
+          );
+          if (confirm) {
+            setShowDetailModal(false);
+            setShowManagementModal(false);
+            window.location.reload();
+          }
         })
         .catch((e) => {
           console.error('권한 변경 실패 : ', e);
+          alertModal(`권한 변경 실패: ${e.response.data.message}`, 'text');
         });
     }
   };
 
   // 관리자 임명 API
-  const handleUserBlockLogin = () => {
-    const confirmed = window.confirm(
-      `⚠️${modalData.nick_name}유저의 로그인을 금지하려고 합니다. 신중하게 결정해 주세요.`
+  const handleUserBlockLogin = async () => {
+    const confirmed = await alertModal(
+      `⚠️${modalData.nick_name}유저의 로그인을 금지하려고 합니다. 신중하게 결정해 주세요.`,
+      'submit'
     );
+
     if (confirmed) {
       const data = {
         banUserId: modalData.user_id,
@@ -66,23 +79,30 @@ function DetailModal(props: DedatilModalProps) {
           data,
           config
         )
-        .then((res) => {
+        .then(async (res) => {
           console.log('해당 유저의 로그인 정지 완료 : ', res.data);
-          alert(`${modalData.nick_name}유저의 로그인 기능이 정지되었습니다.`);
-          setShowDetailModal(false);
-          setShowManagementModal(false);
-          window.location.reload();
+          const confirm = await alertModal(
+            `${modalData.nick_name}유저의 로그인 기능이 정지되었습니다.`,
+            'text'
+          );
+          if (confirm) {
+            setShowDetailModal(false);
+            setShowManagementModal(false);
+            window.location.reload();
+          }
         })
         .catch((e) => {
           console.error('사용자 정지 실패 : ', e);
+          alertModal(`사용자 정지 실패: ${e.response.data.message}`, 'text');
         });
     }
   };
 
   // 관리자 임명 API
-  const handleUserCommunityBan = () => {
-    const confirmed = window.confirm(
-      `⚠️${modalData.nick_name}유저의 커뮤니티 작성을 금지하려고 합니다. 신중하게 결정해 주세요.`
+  const handleUserCommunityBan = async () => {
+    const confirmed = await alertModal(
+      `⚠️${modalData.nick_name}유저의 커뮤니티 작성을 금지하려고 합니다. 신중하게 결정해 주세요.`,
+      'submit'
     );
     if (confirmed) {
       const data = {
@@ -94,15 +114,21 @@ function DetailModal(props: DedatilModalProps) {
           data,
           config
         )
-        .then((res) => {
+        .then(async (res) => {
           console.log('해당 유저의 커뮤니티 정지 완료 : ', res.data);
-          alert(`${modalData.nick_name}유저의 커뮤니티 기능이 정지되었습니다.`);
-          setShowDetailModal(false);
-          setShowManagementModal(false);
-          window.location.reload();
+          const confirm = await alertModal(
+            `${modalData.nick_name}유저의 커뮤니티 기능이 정지되었습니다.`,
+            'text'
+          );
+          if (confirm) {
+            setShowDetailModal(false);
+            setShowManagementModal(false);
+            window.location.reload();
+          }
         })
         .catch((e) => {
-          console.error('사용자 정지 실패 : ', e);
+          console.error('커뮤니티 정지 실패 : ', e);
+          alertModal(`커뮤니티 정지 실패: ${e.response.data.message}`, 'text');
         });
     }
   };
@@ -174,7 +200,7 @@ function DetailModal(props: DedatilModalProps) {
               <DetailButton
                 data={showManagementModal ? 'false' : 'true'}
                 onClick={() => {
-                  alert('서비스 준비 중');
+                  alertModal('서비스 준비 중', 'warning');
                 }}
               >
                 정보수정
@@ -192,12 +218,14 @@ function DetailModal(props: DedatilModalProps) {
 
           {showManagementModal && (
             <ManagementButtonContainer>
-              <LevelUpButton
-                data={showManagementModal ? 'true' : 'false'}
-                onClick={handleUserToManager}
-              >
-                관리자 임명
-              </LevelUpButton>
+              {userData?.role === 'admin' && (
+                <LevelUpButton
+                  data={showManagementModal ? 'true' : 'false'}
+                  onClick={handleUserToManager}
+                >
+                  관리자 임명
+                </LevelUpButton>
+              )}
               <RestrictButton
                 data={showManagementModal ? 'true' : 'false'}
                 onClick={handleUserBlockLogin}

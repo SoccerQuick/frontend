@@ -6,6 +6,7 @@ import GroundListSkeleton from './groundListSkeleton';
 import MyPagination from '../../MyPage/MyPagination';
 import checkIcon from '../../../styles/icon/check.svg';
 import { DomDataType } from '../../../Pages/SearchPage';
+import alertModal from '../../Commons/alertModal';
 
 type FindingGroundProps = {
   checkedArray: DomDataType[];
@@ -70,7 +71,7 @@ function FindingGround(props: FindingGroundProps) {
         setCheckedArray((prev) =>
           prev.filter((item) => item.title !== value.title)
         );
-        alert('구장 비교는 최대 5개까지 가능합니다.');
+        alertModal('구장 비교는 최대 5개까지 가능합니다.', 'warning');
       } else {
         setCheckedArray((prev) => [...prev, value]);
       }
