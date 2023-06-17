@@ -45,8 +45,9 @@ function MyPagination({
   }
 
   const handleSearchParams = (number: number) => {
-    searchParams.set('start', `${number}`);
-    setSearchParams(searchParams);
+    const updatedSearchParams = new URLSearchParams(searchParams);
+    updatedSearchParams.set('start', `${number}`);
+    setSearchParams(updatedSearchParams);
   };
 
   const handlePrevClick = () => {
