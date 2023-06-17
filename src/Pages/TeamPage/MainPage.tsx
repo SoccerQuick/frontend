@@ -23,9 +23,9 @@ function TeamPage() {
           <MainPageBody>
             <Routes>
               <Route path="/submit" element={<SubmitPage />} />
-              <Route path="/edit/:id" element={<EditPage />} />
+              <Route path="/edit/*" element={<EditPage />} />
               <Route path="/team" element={<FindingMember />} />
-              <Route path="/team/:id" element={<ViewPage />} />
+              <Route path="/team/*" element={<ViewPage />} />
               <Route
                 path="/"
                 element={

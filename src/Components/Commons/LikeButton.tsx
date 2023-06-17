@@ -77,6 +77,7 @@ export default function LikeButton(props: LikeButtonProps) {
     <>
       <StyledLikeBtn onClick={handleOnClick} isClicked={isClicked}>
         {isClicked && isLogin ? '🧡' : '🤍'}
+        &nbsp;
         {likesCount}
       </StyledLikeBtn>
     </>

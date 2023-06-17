@@ -77,6 +77,7 @@ function Login({ handleIsLogin, setAuthModal }: LoginProps) {
           nickname: userData.nick_name,
           profile: userData.profile,
           role: userData.role,
+          applicant_status: userData.applicant_status,
         };
 
         dispatch(
