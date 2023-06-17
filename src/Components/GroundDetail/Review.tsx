@@ -269,6 +269,7 @@ const StyledReviews = styled.div`
     width: 4rem;
     height: auto;
     margin-right: 1rem;
+    border-radius: 5rem;
   }
 
   .user-name {
@@ -315,7 +316,7 @@ const StyledReviews = styled.div`
       font-size: 1.2rem;
       padding: 0.5rem 1rem;
       margin-right: 1rem;
-      border: 0.5px solid #efefef;
+      border: 0.5px solid #cfcfcf;
       border-radius: 5px;
       background-color: white;
 
@@ -327,7 +328,7 @@ const StyledReviews = styled.div`
     .review-delete {
       font-size: 1.2rem;
       padding: 0.5rem 1rem;
-      border: 0.5px solid #efefef;
+      border: 0.5px solid #cfcfcf;
       border-radius: 5px;
       background-color: white;
 
@@ -379,7 +380,7 @@ const StyledWriteReview = styled.div`
   .write-review-button {
     font-size: 1.5rem;
     padding: 1rem 2rem;
-    border: 0.5px solid #efefef;
+    border: 0.5px solid #cfcfcf;
     border-radius: 5px;
     background-color: white;
     color: #09cf00;
