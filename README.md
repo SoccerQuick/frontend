@@ -218,66 +218,8 @@
 
 ---
 
-### API 명세서
-
-#### 유저
-
-#### 커뮤니티
-
-#### 경기장
-
-#### 팀게시판
-
-#### 관리자
-
----
-
-### 팀 구성
-
-|  이름  |   파트   | 담당 업무      |
-| :----: | :-------: | -------------- |
-| 최도원 | Front-End | 👑팀장, 🔊발표 |
-| 김승섭 | Front-End | ?              |
-| 권성경 | Front-End | ?              |
-| 이민우 | Front-End | ?              |
-| 안동현 | Back-End | ?              |
-| 신성민 | Back-End | ?              |
-
----
-
-### 기술 스택
-
-##### FrontEnd
-
-- React.js
-- TypeScript
-- Styled Component
-  ...
-
-##### BackEnd
-
-- Node.js + Express
-  ...
-
-##### Deploy
-
-- GCP VM (pm2)
-
-##### Collaboration Tools
-
-- Figma
-- Discord
-- Gather
-
----
-
-### .env 설정
-
----
 
 ### Git Branch 관리
-
-##### FrontEnd branch
 
 ```
 master
@@ -288,8 +230,6 @@ master
 │   │   ├── feature_sk
 │___│___└── feature_mw
 ```
-
-##### BackEnd branch
 
 ---
 
